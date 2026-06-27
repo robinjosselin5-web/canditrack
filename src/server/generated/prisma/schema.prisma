@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/server/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CompanyStatus {
+  DRAFT       @map("draft")
+  PENDING     @map("pending")
+  NO_RESPONSE @map("no_response")
+  FOLLOW_UP   @map("follow_up")
+  INTERVIEW   @map("interview")
+  REJECTED    @map("rejected")
+  ACCEPTED    @map("accepted")
+
+  @@map("company_status")
+}
+
+model User {
+  id                     String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstname              String     @db.VarChar(100)
+  lastname               String     @db.VarChar(100)
+  email                  String     @unique @db.VarChar(255)
+  passwordHash           String     @map("password_hash") @db.VarChar(255)
+  passwordResetToken     String?    @map("password_reset_token") @db.VarChar(255)
+  passwordResetExpiresAt DateTime?  @map("password_reset_expires_at") @db.Timestamp(6)
+  createdAt              DateTime   @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt              DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  categories             Category[]
+  companies              Company[]
+  resumes                Resume[]
+
+  @@index([email], map: "users_email_idx")
+  @@index([passwordResetToken], map: "users_password_reset_token_idx")
+  @@map("users")
+}
+
+model Category {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  name      String    @db.VarChar(100)
+  color     String    @db.VarChar(30)
+  position  Int       @default(0)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companies Company[]
+
+  @@index([userId], map: "categories_user_id_idx")
+  @@map("categories")
+}
+
+model Company {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String          @map("user_id") @db.Uuid
+  categoryId    String?         @map("category_id") @db.Uuid
+  name          String          @db.VarChar(255)
+  website       String?         @db.VarChar(255)
+  sector        String?         @db.VarChar(150)
+  city          String?         @db.VarChar(100)
+  country       String?         @db.VarChar(100)
+  email         String?         @db.VarChar(255)
+  phone         String?         @db.VarChar(50)
+  recruiterName String?         @map("recruiter_name") @db.VarChar(150)
+  aiSummary     String?         @map("ai_summary")
+  status        CompanyStatus   @default(DRAFT)
+  isFavorite    Boolean         @default(false) @map("is_favorite")
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  applications  Application[]
+  notes         Note[]
+  actionHistory ActionHistory[]
+
+  @@index([userId], map: "companies_user_id_idx")
+  @@index([categoryId], map: "companies_category_id_idx")
+  @@index([status], map: "companies_status_idx")
+  @@index([createdAt], map: "companies_created_at_idx")
+  @@index([name], map: "companies_name_idx")
+  @@map("companies")
+}
+
+model Resume {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String        @map("user_id") @db.Uuid
+  name         String        @db.VarChar(150)
+  fileUrl      String        @map("file_url")
+  fileType     String        @map("file_type") @db.VarChar(20)
+  fileSize     Int           @map("file_size")
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
+  uploadedAt   DateTime      @default(now()) @map("uploaded_at") @db.Timestamp(6)
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications Application[]
+
+  @@index([userId], map: "resumes_user_id_idx")
+  @@map("resumes")
+}
+
+model Application {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId    String        @map("company_id") @db.Uuid
+  resumeId     String        @map("resume_id") @db.Uuid
+  emailSubject String        @map("email_subject") @db.VarChar(255)
+  emailBody    String        @map("email_body")
+  status       CompanyStatus @default(PENDING)
+  sentAt       DateTime?     @map("sent_at") @db.Timestamp(6)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
+  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  resume       Resume        @relation(fields: [resumeId], references: [id], onDelete: Restrict)
+
+  @@index([companyId], map: "applications_company_id_idx")
+  @@map("applications")
+}
+
+model Note {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId String   @map("company_id") @db.Uuid
+  content   String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId], map: "notes_company_id_idx")
+  @@map("notes")
+}
+
+model ActionHistory {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId   String   @map("company_id") @db.Uuid
+  actionType  String   @map("action_type") @db.VarChar(100)
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@map("action_history")
+}
