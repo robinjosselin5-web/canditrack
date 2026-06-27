@@ -6,6 +6,22 @@ Projet : CandiTrack
 
 ---
 
+Le projet utilise PostgreSQL.
+
+Codex ne doit jamais tenter d'installer PostgreSQL.
+
+Il doit uniquement :
+
+- générer les fichiers Prisma
+
+- générer les migrations
+
+- générer le schéma SQL
+
+- configurer DATABASE_URL
+
+L'installation de PostgreSQL est réalisée manuellement par le développeur.
+
 # Objectif
 
 Ce document décrit le modèle de données officiel de CandiTrack.
