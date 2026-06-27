@@ -21,6 +21,104 @@ Une application SaaS moderne permettant de gérer ses candidatures grâce à l'i
 
 ---
 
+# Backend local
+
+## Variables d'environnement backend
+
+Creer un fichier `.env` a la racine du projet en partant de `.env.example`.
+
+```env
+PORT=3000
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:5173
+FRONTEND_URL=http://localhost:5173
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/canditrack
+JWT_SECRET=change-this-development-secret-with-at-least-32-characters
+PASSWORD_RESET_EXPIRES_MINUTES=30
+VITE_API_URL=http://localhost:3000/api/v1
+```
+
+## Lancer l'API Express
+
+```bash
+npm run server:dev
+```
+
+L'API locale est disponible sur :
+
+```text
+http://localhost:3000/api/v1
+```
+
+Health check :
+
+```text
+GET http://localhost:3000/api/v1/health
+```
+
+Reponse attendue :
+
+```json
+{
+  "success": true,
+  "data": {
+    "status": "ok",
+    "service": "candytrack-api",
+    "timestamp": "2026-06-27T00:00:00.000Z"
+  }
+}
+```
+
+## Scripts backend
+
+```bash
+npm run server:dev
+npm run server:build
+npm run server:start
+```
+
+## Base de donnees locale
+
+PostgreSQL doit etre installe et demarre manuellement par le developpeur.
+Codex fournit uniquement les fichiers SQL, les migrations et la configuration.
+
+Creer la base :
+
+```sql
+CREATE DATABASE canditrack;
+```
+
+Appliquer les scripts SQL dans cet ordre :
+
+```text
+src/server/database/migrations/000_create_users_table.sql
+src/server/database/migrations/001_add_password_reset_columns.sql
+src/server/database/migrations/002_create_core_domain_tables.sql
+```
+
+Le schema SQL complet est disponible ici :
+
+```text
+src/server/database/schema.sql
+```
+
+Schema Prisma :
+
+```text
+prisma/schema.prisma
+```
+
+Commandes Prisma :
+
+```bash
+npm run prisma:validate
+npm run prisma:generate
+npm run prisma:migrate
+npm run prisma:studio
+```
+
+---
+
 # 📖 Présentation
 
 **CandiTrack** est une application web permettant de gérer efficacement l'ensemble de ses candidatures.
