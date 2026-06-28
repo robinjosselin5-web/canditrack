@@ -1,6 +1,7 @@
-export { Alert } from './Alert'
-export { Button } from './Button'
-export { Card } from './Card'
-export { Checkbox } from './Checkbox'
-export { Input } from './Input'
-export { Loader } from './Loader'
+export { Alert } from "./Alert";
+export { Button } from "./Button";
+export { Card } from "./Card";
+export { Checkbox } from "./Checkbox";
+export { Input } from "./Input";
+export { Loader } from "./Loader";
+export { Modal } from "./Modal";
