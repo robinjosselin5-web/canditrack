@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Card, Modal } from '@/components/ui'
 import { PageHeader } from '@/components/PageHeader'
 import { CompanyCard } from '../components/CompanyCard'
@@ -10,6 +10,7 @@ import { useDeleteCompany } from '../hooks/useDeleteCompany'
 import type { ICompanyListItem } from '../types/company.types'
 
 export function CompaniesPage() {
+  const navigate = useNavigate()
   const { data, isError, isLoading } = useCompanies()
   const deleteCompanyMutation = useDeleteCompany()
   const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(
@@ -44,6 +45,9 @@ export function CompaniesPage() {
               <CompanyCard
                 key={company.id}
                 company={company}
+                onClick={() => {
+                  navigate(`/companies/${company.id}`)
+                }}
                 onEdit={() => {
                   setSelectedCompany(company)
                 }}

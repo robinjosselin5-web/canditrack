@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   deleteCompanyController,
   createCompanyController,
+  getCompanyController,
   getCompaniesController,
   updateCompanyController,
 } from '../controllers/companyController.js'
@@ -14,6 +15,12 @@ import { updateCompanyBodySchema } from '../validators/companyUpdateValidators.j
 export const companyRoutes = Router()
 
 companyRoutes.get('/companies', authJwt, asyncHandler(getCompaniesController))
+
+companyRoutes.get(
+  '/companies/:id',
+  authJwt,
+  asyncHandler(getCompanyController),
+)
 
 companyRoutes.post(
   '/companies',
