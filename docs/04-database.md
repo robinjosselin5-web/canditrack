@@ -107,6 +107,12 @@ email VARCHAR(255)
 
 password_hash VARCHAR(255)
 
+email_verified_at TIMESTAMP NULL
+
+email_verification_code VARCHAR(255) NULL
+
+email_verification_expires_at TIMESTAMP NULL
+
 created_at TIMESTAMP
 
 updated_at TIMESTAMP
@@ -116,6 +122,10 @@ Contraintes
 email UNIQUE
 
 password_hash NOT NULL
+
+email_verification_code contient uniquement un hash du code de validation.
+
+Le code de validation expire apres 30 minutes.
 
 ---
 

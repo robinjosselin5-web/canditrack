@@ -6,6 +6,7 @@ import {
   LoginPage,
   RegisterPage,
   ResetPasswordPage,
+  VerifyEmailPage,
 } from '@/features/auth'
 import { Applications } from '../pages/Applications'
 import { Companies } from '../pages/Companies'
@@ -16,6 +17,7 @@ import { Settings } from '../pages/Settings'
 import { Statistics } from '../pages/Statistics'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
+import { CreateCompanyPage } from '@/features/companies'
 
 export function AppRoutes() {
   return (
@@ -24,6 +26,7 @@ export function AppRoutes() {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         </Route>
@@ -34,6 +37,7 @@ export function AppRoutes() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/companies" element={<Companies />} />
+          <Route path="/companies/new" element={<CreateCompanyPage />} />
           <Route path="/companies/:companyId" element={<CompanyDetails />} />
           <Route path="/resumes" element={<Resumes />} />
           <Route path="/applications" element={<Applications />} />
