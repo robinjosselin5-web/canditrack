@@ -38,7 +38,11 @@ export function CreateCompanyPage() {
         </Alert>
 
         <div className="mt-6">
-          <CompanyForm />
+          <CompanyForm
+            onSuccess={() => {
+              navigate('/companies')
+            }}
+          />
         </div>
       </Card>
     </section>
