@@ -9,6 +9,7 @@ import type {
 import type { CreateCompanyBody } from '../validators/companyValidators.js'
 import { createCompany as createCompanyRecord } from '../repositories/companyRepository.js'
 import {
+  deleteCompanyForUser,
   getCompaniesForUser,
   updateCompanyForUser,
 } from '../services/companyService.js'
@@ -82,5 +83,27 @@ export async function updateCompanyController(
   response.status(200).json({
     success: true,
     data: company,
+  })
+}
+
+export async function deleteCompanyController(
+  request: Request<{ id: string }>,
+  response: Response<IApiSuccessResponse<{ message: string }>>,
+): Promise<void> {
+  if (!request.user) {
+    throw new AppError('Non autorise.', 401)
+  }
+
+  const deleted = await deleteCompanyForUser(request.params.id, request.user.id)
+
+  if (!deleted) {
+    throw new AppError('Entreprise introuvable.', 404)
+  }
+
+  response.status(200).json({
+    success: true,
+    data: {
+      message: 'Entreprise supprimée avec succès.',
+    },
   })
 }
