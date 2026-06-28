@@ -136,8 +136,57 @@ Response
 
 ```json
 {
+    "email": ""
+}
+```
+
+Un code alphanumerique de 5 caracteres est envoye par e-mail.
+
+Le code expire apres 30 minutes.
+
+---
+
+## POST /auth/email-verification/verify
+
+Valider l'adresse e-mail apres inscription.
+
+Body
+
+```json
+{
+    "email": "",
+    "code": ""
+}
+```
+
+Response
+
+```json
+{
     "user": {},
     "token": ""
+}
+```
+
+---
+
+## POST /auth/email-verification/resend
+
+Renvoyer un code de validation pour un compte non valide.
+
+Body
+
+```json
+{
+    "email": ""
+}
+```
+
+Response
+
+```json
+{
+    "email": ""
 }
 ```
 
@@ -164,6 +213,8 @@ Response
     "token": ""
 }
 ```
+
+Si le compte n'est pas valide, la connexion retourne 403 et aucun token n'est genere.
 
 ---
 

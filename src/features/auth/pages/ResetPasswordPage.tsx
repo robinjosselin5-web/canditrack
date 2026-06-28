@@ -1,54 +1,50 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
-import { BarChart3, LockKeyhole } from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { Alert, Button, Card, Input } from '@/components/ui'
-import type { IApiResponse } from '@/types/api'
-import { useResetPassword } from '../hooks/useResetPassword'
-import type { IResetPasswordFormValues } from '../types/passwordReset.types'
-import { resetPasswordSchema } from '../utils/passwordResetSchema'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
+import { LockKeyhole } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { BrandLogoLink } from "@/components/BrandLogoLink";
+import { Alert, Button, Card, Input } from "@/components/ui";
+import type { IApiResponse } from "@/types/api";
+import { useResetPassword } from "../hooks/useResetPassword";
+import type { IResetPasswordFormValues } from "../types/passwordReset.types";
+import { resetPasswordSchema } from "../utils/passwordResetSchema";
 
 export function ResetPasswordPage() {
-  const { token } = useParams()
-  const resetPasswordMutation = useResetPassword(token ?? '')
+  const { token } = useParams();
+  const resetPasswordMutation = useResetPassword(token ?? "");
   const {
     formState: { errors },
     handleSubmit,
     register,
   } = useForm<IResetPasswordFormValues>({
     defaultValues: {
-      confirmPassword: '',
-      password: '',
+      confirmPassword: "",
+      password: "",
     },
     resolver: zodResolver(resetPasswordSchema),
-  })
+  });
 
   const onSubmit = (values: IResetPasswordFormValues) => {
     if (!token) {
-      return
+      return;
     }
 
-    resetPasswordMutation.mutate(values)
-  }
+    resetPasswordMutation.mutate(values);
+  };
 
   const errorMessage = !token
-    ? 'Le lien de reinitialisation est invalide.'
-    : getResetPasswordErrorMessage(resetPasswordMutation.error)
+    ? "Le lien de reinitialisation est invalide."
+    : getResetPasswordErrorMessage(resetPasswordMutation.error);
 
   return (
-    <Card className="mx-auto w-full max-w-[450px]">
-      <div className="mb-8 text-center">
-        <div className="mx-auto flex size-20 items-center justify-center rounded-card bg-accent/25 text-primary shadow-small">
-          <BarChart3 className="size-9" aria-hidden="true" />
-        </div>
-        <p className="mt-4 text-2xl font-bold text-text-primary">
-          CandiTrack
-        </p>
-        <h1 className="mt-8 text-3xl font-bold tracking-normal text-text-primary">
+    <Card className="mx-auto w-full max-w-[560px] border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
+      <div className="mb-6 text-center">
+        <BrandLogoLink variant="stacked" />
+        <h1 className="mt-6 text-4xl font-bold tracking-normal text-text-primary">
           Nouveau mot de passe
         </h1>
-        <p className="mt-2 text-sm leading-6 text-text-secondary">
+        <p className="mt-3 text-base leading-7 text-text-secondary">
           Choisissez un mot de passe fort pour proteger votre compte.
         </p>
       </div>
@@ -64,7 +60,7 @@ export function ResetPasswordPage() {
           label="Nouveau mot de passe"
           placeholder="Votre nouveau mot de passe"
           type="password"
-          {...register('password')}
+          {...register("password")}
         />
 
         <Input
@@ -75,10 +71,11 @@ export function ResetPasswordPage() {
           label="Confirmation"
           placeholder="Confirmez votre mot de passe"
           type="password"
-          {...register('confirmPassword')}
+          {...register("confirmPassword")}
         />
 
         <Button
+          className="min-h-16 text-lg shadow-large"
           disabled={!token}
           loading={resetPasswordMutation.isPending}
           type="submit"
@@ -96,30 +93,30 @@ export function ResetPasswordPage() {
         </Link>
       </p>
     </Card>
-  )
+  );
 }
 
 function getResetPasswordErrorMessage(error: unknown): string | null {
   if (!error) {
-    return null
+    return null;
   }
 
   if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined
+    const response = error.response?.data as IApiResponse<unknown> | undefined;
 
     if (!error.response) {
-      return "L'API est indisponible. Verifiez que le backend est demarre."
+      return "L'API est indisponible. Verifiez que le backend est demarre.";
     }
 
     if (error.response.status === 400 || error.response.status === 422) {
-      return response?.message ?? 'Le lien de reinitialisation est invalide.'
+      return response?.message ?? "Le lien de reinitialisation est invalide.";
     }
 
     return (
       response?.message ??
-      'Impossible de reinitialiser le mot de passe. Reessayez.'
-    )
+      "Impossible de reinitialiser le mot de passe. Reessayez."
+    );
   }
 
-  return 'Impossible de reinitialiser le mot de passe. Reessayez.'
+  return "Impossible de reinitialiser le mot de passe. Reessayez.";
 }
