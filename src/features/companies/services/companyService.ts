@@ -28,6 +28,14 @@ export async function getCompanies(): Promise<ICompanyListItem[]> {
   return response.data.data
 }
 
+export async function getCompany(companyId: string): Promise<ICompanyListItem> {
+  const response = await httpClient.get<IApiResponse<ICompanyListItem>>(
+    `/companies/${companyId}`,
+  )
+
+  return response.data.data
+}
+
 export async function updateCompany(
   companyId: string,
   payload: IUpdateCompanyPayload,
