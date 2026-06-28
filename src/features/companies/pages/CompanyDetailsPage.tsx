@@ -28,6 +28,12 @@ export function CompanyDetailsPage() {
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const createdAt = data
+    ? new Date(data.createdAt).toLocaleDateString('fr-FR')
+    : null
+  const updatedAt = data
+    ? new Date(data.updatedAt).toLocaleDateString('fr-FR')
+    : null
 
   useEffect(() => {
     if (!toastMessage) {
@@ -134,6 +140,14 @@ export function CompanyDetailsPage() {
             <div>
               <p className="text-sm text-text-secondary">Recruteur</p>
               <p className="mt-1 text-text-primary">{data.recruiterName ?? '—'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-text-secondary">Créée le</p>
+              <p className="mt-1 text-text-primary">{createdAt}</p>
+            </div>
+            <div>
+              <p className="text-sm text-text-secondary">Mise à jour le</p>
+              <p className="mt-1 text-text-primary">{updatedAt}</p>
             </div>
           </Card>
         </div>
