@@ -11,7 +11,7 @@ export function AppLayout() {
   const userLabel = user ? `${user.firstname} ${user.lastname}` : "Utilisateur";
 
   return (
-    <div className="h-dvh overflow-hidden bg-background text-text-primary">
+    <div className="bg-background text-text-primary">
       <aside className="fixed inset-y-0 left-0 hidden w-[260px] border-r border-border bg-surface px-5 py-6 lg:flex lg:flex-col">
         <div className="mb-16">
           <BrandLogoLink />
