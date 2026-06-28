@@ -1,17 +1,26 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { Alert, Card } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { CompanyForm } from '../components/CompanyForm'
 
 export function CreateCompanyPage() {
+  const navigate = useNavigate()
+
   return (
     <section className="mx-auto w-full max-w-2xl">
       <div className="mb-6">
-        <Link
-          to="/companies"
-          className="text-sm font-semibold text-primary transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        <Button
+          aria-label="Retour aux entreprises"
+          className="w-auto"
+          onClick={() => {
+            navigate('/companies')
+          }}
+          variant="secondary"
         >
+          <ArrowLeft className="size-4" aria-hidden="true" />
           Retour aux entreprises
-        </Link>
+        </Button>
       </div>
 
       <Card>
