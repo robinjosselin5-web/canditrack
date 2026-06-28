@@ -3,7 +3,7 @@ import type { InputHTMLAttributes, ReactNode } from "react";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   iconLeft?: ReactNode;
-  label: string;
+  label: ReactNode;
 }
 
 export function Input({
