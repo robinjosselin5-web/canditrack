@@ -7,12 +7,14 @@ import { ConfirmationModal } from '../components/ConfirmationModal'
 import { CompanyForm } from '../components/CompanyForm'
 import { useCompanies } from '../hooks/useCompanies'
 import { useDeleteCompany } from '../hooks/useDeleteCompany'
+import { useToggleCompanyFavorite } from '../hooks/useToggleCompanyFavorite'
 import type { ICompanyListItem } from '../types/company.types'
 
 export function CompaniesPage() {
   const navigate = useNavigate()
   const { data, isError, isLoading } = useCompanies()
   const deleteCompanyMutation = useDeleteCompany()
+  const toggleCompanyFavoriteMutation = useToggleCompanyFavorite()
   const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(
     null,
   )
@@ -45,8 +47,15 @@ export function CompaniesPage() {
               <CompanyCard
                 key={company.id}
                 company={company}
+                isFavorite={company.isFavorite}
                 onClick={() => {
                   navigate(`/companies/${company.id}`)
+                }}
+                onFavorite={() => {
+                  toggleCompanyFavoriteMutation.mutate({
+                    companyId: company.id,
+                    isFavorite: !company.isFavorite,
+                  })
                 }}
                 onEdit={() => {
                   setSelectedCompany(company)

@@ -12,9 +12,14 @@ import {
   deleteCompanyForUser,
   getCompanyForUser,
   getCompaniesForUser,
+  updateCompanyFavoriteForUser,
   updateCompanyForUser,
 } from '../services/companyService.js'
 import type { UpdateCompanyBody } from '../validators/companyUpdateValidators.js'
+
+interface UpdateFavoriteBody {
+  isFavorite: boolean
+}
 
 export async function createCompanyController(
   request: Request<unknown, unknown, CreateCompanyBody>,
@@ -125,6 +130,32 @@ export async function deleteCompanyController(
     success: true,
     data: {
       message: 'Entreprise supprimée avec succès.',
+    },
+  })
+}
+
+export async function updateCompanyFavoriteController(
+  request: Request<{ id: string }, unknown, UpdateFavoriteBody>,
+  response: Response<IApiSuccessResponse<{ isFavorite: boolean }>>,
+): Promise<void> {
+  if (!request.user) {
+    throw new AppError('Non autorise.', 401)
+  }
+
+  const updated = await updateCompanyFavoriteForUser(
+    request.params.id,
+    request.user.id,
+    request.body.isFavorite,
+  )
+
+  if (!updated) {
+    throw new AppError('Entreprise introuvable.', 404)
+  }
+
+  response.status(200).json({
+    success: true,
+    data: {
+      isFavorite: request.body.isFavorite,
     },
   })
 }
