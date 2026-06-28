@@ -151,7 +151,7 @@ function EmptyCompaniesState() {
       <div className="mt-6">
         <Link
           to="/companies/new"
-          className="inline-flex min-h-12 items-center justify-center rounded-button bg-gradient-to-r from-primary to-accent px-4 text-sm font-semibold text-white shadow-small transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="inline-flex min-h-12 items-center justify-center rounded-button bg-linear-to-r from-primary to-accent px-4 text-sm font-semibold text-white shadow-small transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           Ajouter une entreprise
         </Link>
