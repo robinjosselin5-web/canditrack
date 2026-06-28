@@ -151,3 +151,17 @@ export async function updateCompanyById(
     updatedAt: updatedCompany.updatedAt.toISOString(),
   }
 }
+
+export async function deleteCompanyById(
+  companyId: string,
+  userId: string,
+): Promise<boolean> {
+  const result = await prisma.company.deleteMany({
+    where: {
+      id: companyId,
+      userId,
+    },
+  })
+
+  return result.count > 0
+}

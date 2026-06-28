@@ -1,4 +1,5 @@
 import {
+  deleteCompanyById,
   findCompaniesByUserId,
   updateCompanyById,
 } from '../repositories/companyRepository.js'
@@ -30,4 +31,11 @@ export async function updateCompanyForUser(
   data: IUpdateCompanyInput,
 ): Promise<ICompanyUpdatedResponse | null> {
   return updateCompanyById(companyId, userId, data)
+}
+
+export async function deleteCompanyForUser(
+  companyId: string,
+  userId: string,
+): Promise<boolean> {
+  return deleteCompanyById(companyId, userId)
 }

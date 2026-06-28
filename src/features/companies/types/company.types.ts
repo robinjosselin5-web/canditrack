@@ -73,3 +73,7 @@ export interface IUpdateCompanyResponse {
   updatedAt: string
 }
 
+export interface IDeleteCompanyResponse {
+  message: string
+}
+

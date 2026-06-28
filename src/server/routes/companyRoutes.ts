@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import {
+  deleteCompanyController,
   createCompanyController,
   getCompaniesController,
   updateCompanyController,
@@ -26,5 +27,11 @@ companyRoutes.patch(
   authJwt,
   validateBody(updateCompanyBodySchema),
   asyncHandler(updateCompanyController),
+)
+
+companyRoutes.delete(
+  '/companies/:id',
+  authJwt,
+  asyncHandler(deleteCompanyController),
 )
 
