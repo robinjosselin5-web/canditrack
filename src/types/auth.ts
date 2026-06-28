@@ -5,6 +5,10 @@ export interface IAuthSession {
   token: string
 }
 
+export interface IEmailVerificationPending {
+  email: string
+}
+
 export interface IAuthState {
   user: IUser | null
   token: string | null
@@ -31,4 +35,13 @@ export interface IForgotPasswordPayload {
 export interface IResetPasswordPayload {
   token: string
   password: string
+}
+
+export interface IVerifyEmailPayload {
+  email: string
+  code: string
+}
+
+export interface IResendEmailVerificationPayload {
+  email: string
 }

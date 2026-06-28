@@ -1,25 +1,32 @@
 import type { Request, Response } from 'express'
 import type {
+  EmailVerificationBody,
   ForgotPasswordBody,
   LoginBody,
   RegisterBody,
+  ResendEmailVerificationBody,
   ResetPasswordBody,
 } from '../validators/index.js'
 import {
   loginUser,
   logoutUser,
   registerUser,
+  requestEmailVerificationCode,
   requestPasswordReset,
   resetPassword,
+  verifyEmail,
 } from '../services/authService.js'
 import type { IApiSuccessResponse } from '../types/api.types.js'
-import type { IAuthSession } from '../types/user.types.js'
+import type {
+  IAuthSession,
+  IEmailVerificationPending,
+} from '../types/user.types.js'
 
 export async function registerController(
   request: Request<unknown, unknown, RegisterBody>,
-  response: Response<IApiSuccessResponse<IAuthSession>>,
+  response: Response<IApiSuccessResponse<IEmailVerificationPending>>,
 ): Promise<void> {
-  const session = await registerUser(
+  const pendingVerification = await registerUser(
     request.body.firstname,
     request.body.lastname,
     request.body.email,
@@ -28,7 +35,7 @@ export async function registerController(
 
   response.status(201).json({
     success: true,
-    data: session,
+    data: pendingVerification,
   })
 }
 
@@ -51,6 +58,32 @@ export function logoutController(
   response.status(200).json({
     success: true,
     data: logoutUser(),
+  })
+}
+
+export async function verifyEmailController(
+  request: Request<unknown, unknown, EmailVerificationBody>,
+  response: Response<IApiSuccessResponse<IAuthSession>>,
+): Promise<void> {
+  const session = await verifyEmail(request.body.email, request.body.code)
+
+  response.status(200).json({
+    success: true,
+    data: session,
+  })
+}
+
+export async function resendEmailVerificationController(
+  request: Request<unknown, unknown, ResendEmailVerificationBody>,
+  response: Response<IApiSuccessResponse<IEmailVerificationPending>>,
+): Promise<void> {
+  const pendingVerification = await requestEmailVerificationCode(
+    request.body.email,
+  )
+
+  response.status(200).json({
+    success: true,
+    data: pendingVerification,
   })
 }
 
