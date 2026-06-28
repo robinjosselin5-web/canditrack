@@ -38,6 +38,7 @@ export interface ICompanyListItem {
   city: string | null
   country: string | null
   recruiterName: string | null
+  isFavorite: boolean
   status: 'draft' | 'pending' | 'no_response' | 'follow_up' | 'interview' | 'rejected' | 'accepted'
   createdAt: string
   updatedAt: string

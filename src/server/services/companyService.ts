@@ -2,6 +2,7 @@ import {
   deleteCompanyById,
   findCompaniesByUserId,
   findCompanyByIdForUser,
+  updateCompanyFavoriteById,
   updateCompanyById,
 } from '../repositories/companyRepository.js'
 import type {
@@ -46,6 +47,7 @@ export async function getCompanyForUser(
     city: company.city,
     country: company.country,
     recruiterName: company.recruiterName,
+    isFavorite: company.isFavorite,
     status: company.status.toLowerCase() as ICompanyDetails['status'],
     createdAt: company.createdAt.toISOString(),
     updatedAt: company.updatedAt.toISOString(),
@@ -65,4 +67,12 @@ export async function deleteCompanyForUser(
   userId: string,
 ): Promise<boolean> {
   return deleteCompanyById(companyId, userId)
+}
+
+export async function updateCompanyFavoriteForUser(
+  companyId: string,
+  userId: string,
+  isFavorite: boolean,
+): Promise<boolean> {
+  return updateCompanyFavoriteById(companyId, userId, isFavorite)
 }
