@@ -1,15 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createCompany } from '../services'
-import type { ICreateCompanyPayload } from '../types/company.types'
+import { deleteCompany } from '../services/companyService'
 
-export function useCreateCompany() {
+export function useDeleteCompany() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (values: ICreateCompanyPayload) => createCompany(values),
+    mutationFn: (companyId: string) => deleteCompany(companyId),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['companies'] })
     },
   })
 }
-

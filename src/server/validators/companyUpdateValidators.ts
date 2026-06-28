@@ -23,12 +23,12 @@ const requiredText = (maxLength: number, requiredMessage: string) =>
       const trimmed = value.trim()
       return trimmed.length === 0 ? undefined : trimmed
     },
-    z.string({
-      error: requiredMessage,
-    }).max(maxLength, requiredMessage),
+    z
+      .string({ error: requiredMessage })
+      .max(maxLength, requiredMessage),
   )
 
-export const createCompanyBodySchema = z.object({
+export const updateCompanyBodySchema = z.object({
   name: requiredText(255, "Le nom de l'entreprise est obligatoire."),
   website: requiredText(255, 'Le site web est obligatoire').refine(
     (value) =>
@@ -62,5 +62,4 @@ export const createCompanyBodySchema = z.object({
   recruiterName: optionalText(150),
 })
 
-export type CreateCompanyBody = z.infer<typeof createCompanyBodySchema>
-
+export type UpdateCompanyBody = z.infer<typeof updateCompanyBodySchema>

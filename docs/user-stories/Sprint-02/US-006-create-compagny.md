@@ -38,16 +38,16 @@ En tant qu'utilisateur connecté, je souhaite ajouter une entreprise afin de sui
 
 ## Champs du formulaire
 
-| Champ         | Obligatoire | Validation         |
-| ------------- | ----------: | ------------------ |
-| name          |         Oui | max 255 caractères |
-| website       |         Non | URL valide         |
-| email         |         Non | email valide       |
-| phone         |         Non | texte              |
-| city          |         Non | texte              |
-| country       |         Non | texte              |
-| categoryId    |         Non | UUID               |
-| recruiterName |         Non | texte              |
+| Champ | Obligatoire | Validation |
+|---|---:|---|
+| name | ✅ Oui | max 255 caractères |
+| website | ✅ Oui | URL valide (https:// ajouté automatiquement si absent) |
+| email | ✅ Oui | Format e-mail valide |
+| phone | Non | Texte |
+| city | Non | Texte |
+| country | Non | Texte |
+| categoryId | Non | UUID |
+| recruiterName | Non | Texte |
 
 ## API
 

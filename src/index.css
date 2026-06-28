@@ -33,16 +33,9 @@
   --shadow-large: 0 16px 40px rgba(15, 23, 42, 0.08);
 }
 
-html,
-body,
-#root {
-  height: 100%;
-}
-
 body {
   margin: 0;
   min-width: 320px;
-  overflow: hidden;
   background: #fafafc;
   color: #2e3440;
   font-family:

@@ -13,12 +13,10 @@ export {
   type ResetPasswordBody,
 } from './authValidators.js'
 export {
-<<<<<<< HEAD
   createCompanyBodySchema,
   type CreateCompanyBody,
 } from './companyValidators.js'
-=======
+export {
   updateUserProfileBodySchema,
   type UpdateUserProfileBody,
 } from './userValidators.js'
->>>>>>> 2ca2a38b6d0d6a47edb7c60cbc71841305ff6423
