@@ -62,13 +62,13 @@ Should Have
 Mobile
 
 ```
-docs/wireframes/Sprint-01/profile-mobile.png
+docs/wireframes/manage-profile-mobile.png
 ```
 
 Desktop
 
 ```
-docs/wireframes/Sprint-01/profile-desktop.png
+docs/wireframes/manage-profile-desktop.png
 ```
 
 ---

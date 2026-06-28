@@ -47,12 +47,42 @@ export const loginBodySchema = z.object({
   password: z.string().min(1, 'Le mot de passe est obligatoire.'),
 })
 
+export const emailVerificationBodySchema = z.object({
+  code: z
+    .string()
+    .trim()
+    .length(5, 'Le code doit contenir 5 caracteres.')
+    .regex(/^[a-zA-Z0-9]+$/, 'Le code doit etre alphanumerique.')
+    .transform((code) => code.toUpperCase()),
+  email: z
+    .string()
+    .trim()
+    .min(1, "L'adresse e-mail est obligatoire.")
+    .email("L'adresse e-mail doit etre valide.")
+    .transform((email) => email.toLowerCase()),
+})
+
+export const resendEmailVerificationBodySchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, "L'adresse e-mail est obligatoire.")
+    .email("L'adresse e-mail doit etre valide.")
+    .transform((email) => email.toLowerCase()),
+})
+
 export const resetPasswordBodySchema = z.object({
   token: z.string().min(1, 'Le token est obligatoire.'),
   password: strongPasswordSchema,
 })
 
 export type ForgotPasswordBody = z.infer<typeof forgotPasswordBodySchema>
+export type EmailVerificationBody = z.infer<
+  typeof emailVerificationBodySchema
+>
 export type LoginBody = z.infer<typeof loginBodySchema>
 export type RegisterBody = z.infer<typeof registerBodySchema>
+export type ResendEmailVerificationBody = z.infer<
+  typeof resendEmailVerificationBodySchema
+>
 export type ResetPasswordBody = z.infer<typeof resetPasswordBodySchema>

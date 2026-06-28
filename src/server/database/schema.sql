@@ -23,6 +23,9 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash VARCHAR(255) NOT NULL,
   password_reset_token VARCHAR(255),
   password_reset_expires_at TIMESTAMP,
+  email_verified_at TIMESTAMP,
+  email_verification_code VARCHAR(255),
+  email_verification_expires_at TIMESTAMP,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -96,6 +99,9 @@ CREATE TABLE IF NOT EXISTS action_history (
 
 CREATE INDEX IF NOT EXISTS users_email_idx
 ON users(email);
+
+CREATE INDEX IF NOT EXISTS users_email_verification_code_idx
+ON users(email_verification_code);
 
 CREATE INDEX IF NOT EXISTS users_password_reset_token_idx
 ON users(password_reset_token);
