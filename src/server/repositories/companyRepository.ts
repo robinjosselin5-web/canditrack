@@ -71,6 +71,7 @@ export async function findCompaniesByUserId(
       city: true,
       country: true,
       recruiterName: true,
+      isFavorite: true,
       status: true,
       createdAt: true,
       updatedAt: true,
@@ -86,10 +87,29 @@ export async function findCompaniesByUserId(
     city: company.city,
     country: company.country,
     recruiterName: company.recruiterName,
+    isFavorite: company.isFavorite,
     status: company.status.toLowerCase() as ICompanyListItem['status'],
     createdAt: company.createdAt.toISOString(),
     updatedAt: company.updatedAt.toISOString(),
   }))
+}
+
+export async function updateCompanyFavoriteById(
+  companyId: string,
+  userId: string,
+  isFavorite: boolean,
+): Promise<boolean> {
+  const result = await prisma.company.updateMany({
+    where: {
+      id: companyId,
+      userId,
+    },
+    data: {
+      isFavorite,
+    },
+  })
+
+  return result.count > 0
 }
 
 export async function updateCompanyById(

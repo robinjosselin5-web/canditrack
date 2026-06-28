@@ -44,6 +44,7 @@ export interface ICompanyListItem {
   city: string | null
   country: string | null
   recruiterName: string | null
+  isFavorite: boolean
   status: CompanyStatus
   createdAt: string
   updatedAt: string
@@ -75,5 +76,13 @@ export interface IUpdateCompanyResponse {
 
 export interface IDeleteCompanyResponse {
   message: string
+}
+
+export interface IUpdateCompanyFavoritePayload {
+  isFavorite: boolean
+}
+
+export interface IUpdateCompanyFavoriteResponse {
+  isFavorite: boolean
 }
 
