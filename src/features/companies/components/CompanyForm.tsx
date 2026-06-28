@@ -1,9 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { Building2, Globe, Mail, MapPin, Phone, UserRound } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { Alert, Button, Input } from '@/components/ui'
+import type { IApiResponse } from '@/types/api'
 import { useCreateCompany } from '../hooks/useCreateCompany'
-import type { ICreateCompanyFormValues } from '../types/company.types'
+import type { ICreateCompanyPayload } from '../types/company.types'
 import { companySchema } from '../utils/companySchema'
 
 export function CompanyForm() {
@@ -11,10 +14,10 @@ export function CompanyForm() {
   const {
     formState: { errors },
     handleSubmit,
+    setError,
     register,
-  } = useForm<ICreateCompanyFormValues>({
+  } = useForm<z.input<typeof companySchema>, unknown, ICreateCompanyPayload>({
     defaultValues: {
-      categoryId: '',
       city: '',
       country: '',
       email: '',
@@ -26,8 +29,12 @@ export function CompanyForm() {
     resolver: zodResolver(companySchema),
   })
 
-  const onSubmit = (values: ICreateCompanyFormValues) => {
-    createCompanyMutation.mutate(values)
+  const onSubmit = (values: ICreateCompanyPayload) => {
+    createCompanyMutation.mutate(values, {
+      onError: (error) => {
+        applyBackendErrors(error, setError)
+      },
+    })
   }
 
   return (
@@ -42,7 +49,11 @@ export function CompanyForm() {
         aria-label="Nom de lentreprise"
         error={errors.name?.message}
         iconLeft={<Building2 className="size-5" />}
-        label="Nom"
+        label={
+          <>
+            Nom de l&apos;entreprise <span className="text-red-600">*</span>
+          </>
+        }
         placeholder="Nom de lentreprise"
         {...register('name')}
       />
@@ -51,7 +62,11 @@ export function CompanyForm() {
         aria-label="Site web"
         error={errors.website?.message}
         iconLeft={<Globe className="size-5" />}
-        label="Site web"
+        label={
+          <>
+            Site web <span className="text-red-600">*</span>
+          </>
+        }
         placeholder="https://..."
         {...register('website')}
       />
@@ -60,7 +75,11 @@ export function CompanyForm() {
         aria-label="Adresse e-mail"
         error={errors.email?.message}
         iconLeft={<Mail className="size-5" />}
-        label="Email"
+        label={
+          <>
+            Adresse e-mail <span className="text-red-600">*</span>
+          </>
+        }
         placeholder="contact@entreprise.com"
         type="email"
         {...register('email')}
@@ -94,15 +113,6 @@ export function CompanyForm() {
       />
 
       <Input
-        aria-label="Categorie"
-        error={errors.categoryId?.message}
-        iconLeft={<Building2 className="size-5" />}
-        label="Categorie"
-        placeholder="UUID de la categorie"
-        {...register('categoryId')}
-      />
-
-      <Input
         aria-label="Nom du recruteur"
         error={errors.recruiterName?.message}
         iconLeft={<UserRound className="size-5" />}
@@ -112,9 +122,38 @@ export function CompanyForm() {
       />
 
       <Button loading={createCompanyMutation.isPending} type="submit">
-        Ajouter lentreprise
+        Créer
       </Button>
     </form>
   )
+}
+
+function applyBackendErrors(
+  error: unknown,
+  setError: ReturnType<typeof useForm<ICreateCompanyPayload>>['setError'],
+): void {
+  if (!(error instanceof AxiosError)) {
+    return
+  }
+
+  const response = error.response?.data as IApiResponse<unknown> | undefined
+  const fieldErrors = response?.errors ?? []
+
+  for (const fieldError of fieldErrors) {
+    if (
+      fieldError.field === 'name' ||
+      fieldError.field === 'website' ||
+      fieldError.field === 'email' ||
+      fieldError.field === 'phone' ||
+      fieldError.field === 'city' ||
+      fieldError.field === 'country' ||
+      fieldError.field === 'recruiterName'
+    ) {
+      setError(fieldError.field, {
+        type: 'server',
+        message: fieldError.message,
+      })
+    }
+  }
 }
 

@@ -16,7 +16,6 @@ export interface ICreateCompanyPayload {
   phone?: string
   city?: string
   country?: string
-  categoryId?: string
   recruiterName?: string
 }
 

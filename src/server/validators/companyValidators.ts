@@ -1,25 +1,56 @@
 import { z } from 'zod'
 
 const optionalText = (maxLength: number) =>
-  z
-    .string()
-    .trim()
-    .transform((value) => (value.length === 0 ? undefined : value))
-    .pipe(z.string().max(maxLength).optional())
+  z.preprocess(
+    (value) => {
+      if (typeof value !== 'string') {
+        return undefined
+      }
+
+      const trimmed = value.trim()
+      return trimmed.length === 0 ? undefined : trimmed
+    },
+    z.string().max(maxLength).optional(),
+  )
+
+const requiredText = (maxLength: number, requiredMessage: string) =>
+  z.preprocess(
+    (value) => {
+      if (typeof value !== 'string') {
+        return undefined
+      }
+
+      const trimmed = value.trim()
+      return trimmed.length === 0 ? undefined : trimmed
+    },
+    z.string({
+      error: requiredMessage,
+    }).max(maxLength, requiredMessage),
+  )
 
 export const createCompanyBodySchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, 'Le nom de lentreprise est obligatoire.')
-    .max(255, 'Le nom de lentreprise ne peut pas depasser 255 caracteres.'),
-  website: optionalText(255).refine(
-    (value) => !value || /^https?:\/\/.+/i.test(value),
+  name: requiredText(255, "Le nom de l'entreprise est obligatoire."),
+  website: requiredText(255, 'Le site web est obligatoire').refine(
+    (value) =>
+      /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/.*)?$/i.test(value),
     'Le site web doit etre une URL valide.',
   ),
-  email: optionalText(255).refine(
-    (value) => !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-    'Ladresse e-mail doit etre valide.',
+  email: z.preprocess(
+    (value) => {
+      if (typeof value !== 'string') {
+        return undefined
+      }
+
+      const trimmed = value.trim()
+      return trimmed.length === 0 ? undefined : trimmed
+    },
+    z
+      .string({ error: "L'adresse e-mail est obligatoire." })
+      .max(255, "L'adresse e-mail ne peut pas depasser 255 caracteres.")
+      .refine(
+        (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+        "L'adresse e-mail doit etre valide.",
+      ),
   ),
   phone: optionalText(50),
   city: optionalText(100),

@@ -4,6 +4,7 @@ import type {
   ICreateCompanyInput,
   ICompanyCreatedResponse,
 } from '../types/company.types.js'
+import { normalizeWebsiteUrl } from '../utils/normalizeWebsiteUrl.js'
 
 export async function createCompany(
   data: ICreateCompanyInput,
@@ -19,7 +20,7 @@ export async function createCompany(
       recruiterName: data.recruiterName,
       status: 'DRAFT',
       userId: data.userId,
-      website: data.website,
+      website: normalizeWebsiteUrl(data.website),
     },
     select: {
       id: true,
