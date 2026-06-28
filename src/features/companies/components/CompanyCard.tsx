@@ -120,7 +120,7 @@ export function CompanyCard({
                   role="menuitem"
                   type="button"
                 >
-                  Supprimer l&apos;entreprise
+                  Supprimer
                 </button>
               </div>
             ) : null}
