@@ -61,13 +61,13 @@ Cette User Story est la première à développer.
 # Wireframes
 
 ```
-docs/wireframes/Sprint-01/login-mobile.png
+docs/wireframes/login-mobile.png
 ```
 
 Desktop
 
 ```
-docs/wireframes/Sprint-01/login-desktop.png
+docs/wireframes/login-desktop.png
 ```
 
 ---

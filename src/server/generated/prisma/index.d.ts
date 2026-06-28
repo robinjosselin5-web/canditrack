@@ -1611,6 +1611,9 @@ export namespace Prisma {
     passwordHash: string | null
     passwordResetToken: string | null
     passwordResetExpiresAt: Date | null
+    emailVerifiedAt: Date | null
+    emailVerificationCode: string | null
+    emailVerificationExpiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1623,6 +1626,9 @@ export namespace Prisma {
     passwordHash: string | null
     passwordResetToken: string | null
     passwordResetExpiresAt: Date | null
+    emailVerifiedAt: Date | null
+    emailVerificationCode: string | null
+    emailVerificationExpiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1635,6 +1641,9 @@ export namespace Prisma {
     passwordHash: number
     passwordResetToken: number
     passwordResetExpiresAt: number
+    emailVerifiedAt: number
+    emailVerificationCode: number
+    emailVerificationExpiresAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1649,6 +1658,9 @@ export namespace Prisma {
     passwordHash?: true
     passwordResetToken?: true
     passwordResetExpiresAt?: true
+    emailVerifiedAt?: true
+    emailVerificationCode?: true
+    emailVerificationExpiresAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1661,6 +1673,9 @@ export namespace Prisma {
     passwordHash?: true
     passwordResetToken?: true
     passwordResetExpiresAt?: true
+    emailVerifiedAt?: true
+    emailVerificationCode?: true
+    emailVerificationExpiresAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1673,6 +1688,9 @@ export namespace Prisma {
     passwordHash?: true
     passwordResetToken?: true
     passwordResetExpiresAt?: true
+    emailVerifiedAt?: true
+    emailVerificationCode?: true
+    emailVerificationExpiresAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1758,6 +1776,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken: string | null
     passwordResetExpiresAt: Date | null
+    emailVerifiedAt: Date | null
+    emailVerificationCode: string | null
+    emailVerificationExpiresAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1787,6 +1808,9 @@ export namespace Prisma {
     passwordHash?: boolean
     passwordResetToken?: boolean
     passwordResetExpiresAt?: boolean
+    emailVerifiedAt?: boolean
+    emailVerificationCode?: boolean
+    emailVerificationExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     categories?: boolean | User$categoriesArgs<ExtArgs>
@@ -1803,6 +1827,9 @@ export namespace Prisma {
     passwordHash?: boolean
     passwordResetToken?: boolean
     passwordResetExpiresAt?: boolean
+    emailVerifiedAt?: boolean
+    emailVerificationCode?: boolean
+    emailVerificationExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1815,6 +1842,9 @@ export namespace Prisma {
     passwordHash?: boolean
     passwordResetToken?: boolean
     passwordResetExpiresAt?: boolean
+    emailVerifiedAt?: boolean
+    emailVerificationCode?: boolean
+    emailVerificationExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1827,11 +1857,14 @@ export namespace Prisma {
     passwordHash?: boolean
     passwordResetToken?: boolean
     passwordResetExpiresAt?: boolean
+    emailVerifiedAt?: boolean
+    emailVerificationCode?: boolean
+    emailVerificationExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "passwordHash" | "passwordResetToken" | "passwordResetExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "passwordHash" | "passwordResetToken" | "passwordResetExpiresAt" | "emailVerifiedAt" | "emailVerificationCode" | "emailVerificationExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     categories?: boolean | User$categoriesArgs<ExtArgs>
     companies?: boolean | User$companiesArgs<ExtArgs>
@@ -1856,6 +1889,9 @@ export namespace Prisma {
       passwordHash: string
       passwordResetToken: string | null
       passwordResetExpiresAt: Date | null
+      emailVerifiedAt: Date | null
+      emailVerificationCode: string | null
+      emailVerificationExpiresAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2291,6 +2327,9 @@ export namespace Prisma {
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly passwordResetToken: FieldRef<"User", 'String'>
     readonly passwordResetExpiresAt: FieldRef<"User", 'DateTime'>
+    readonly emailVerifiedAt: FieldRef<"User", 'DateTime'>
+    readonly emailVerificationCode: FieldRef<"User", 'String'>
+    readonly emailVerificationExpiresAt: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -9672,6 +9711,9 @@ export namespace Prisma {
     passwordHash: 'passwordHash',
     passwordResetToken: 'passwordResetToken',
     passwordResetExpiresAt: 'passwordResetExpiresAt',
+    emailVerifiedAt: 'emailVerifiedAt',
+    emailVerificationCode: 'emailVerificationCode',
+    emailVerificationExpiresAt: 'emailVerificationExpiresAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9884,6 +9926,9 @@ export namespace Prisma {
     passwordHash?: StringFilter<"User"> | string
     passwordResetToken?: StringNullableFilter<"User"> | string | null
     passwordResetExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    emailVerifiedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    emailVerificationCode?: StringNullableFilter<"User"> | string | null
+    emailVerificationExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     categories?: CategoryListRelationFilter
@@ -9899,6 +9944,9 @@ export namespace Prisma {
     passwordHash?: SortOrder
     passwordResetToken?: SortOrderInput | SortOrder
     passwordResetExpiresAt?: SortOrderInput | SortOrder
+    emailVerifiedAt?: SortOrderInput | SortOrder
+    emailVerificationCode?: SortOrderInput | SortOrder
+    emailVerificationExpiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     categories?: CategoryOrderByRelationAggregateInput
@@ -9917,6 +9965,9 @@ export namespace Prisma {
     passwordHash?: StringFilter<"User"> | string
     passwordResetToken?: StringNullableFilter<"User"> | string | null
     passwordResetExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    emailVerifiedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    emailVerificationCode?: StringNullableFilter<"User"> | string | null
+    emailVerificationExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     categories?: CategoryListRelationFilter
@@ -9932,6 +9983,9 @@ export namespace Prisma {
     passwordHash?: SortOrder
     passwordResetToken?: SortOrderInput | SortOrder
     passwordResetExpiresAt?: SortOrderInput | SortOrder
+    emailVerifiedAt?: SortOrderInput | SortOrder
+    emailVerificationCode?: SortOrderInput | SortOrder
+    emailVerificationExpiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -9950,6 +10004,9 @@ export namespace Prisma {
     passwordHash?: StringWithAggregatesFilter<"User"> | string
     passwordResetToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordResetExpiresAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    emailVerifiedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    emailVerificationCode?: StringNullableWithAggregatesFilter<"User"> | string | null
+    emailVerificationExpiresAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -10412,6 +10469,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoryCreateNestedManyWithoutUserInput
@@ -10427,6 +10487,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -10442,6 +10505,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUpdateManyWithoutUserNestedInput
@@ -10457,6 +10523,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -10472,6 +10541,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10484,6 +10556,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10496,6 +10571,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11088,6 +11166,9 @@ export namespace Prisma {
     passwordHash?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetExpiresAt?: SortOrder
+    emailVerifiedAt?: SortOrder
+    emailVerificationCode?: SortOrder
+    emailVerificationExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11100,6 +11181,9 @@ export namespace Prisma {
     passwordHash?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetExpiresAt?: SortOrder
+    emailVerifiedAt?: SortOrder
+    emailVerificationCode?: SortOrder
+    emailVerificationExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11112,6 +11196,9 @@ export namespace Prisma {
     passwordHash?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetExpiresAt?: SortOrder
+    emailVerifiedAt?: SortOrder
+    emailVerificationCode?: SortOrder
+    emailVerificationExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12488,6 +12575,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     companies?: CompanyCreateNestedManyWithoutUserInput
@@ -12502,6 +12592,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     companies?: CompanyUncheckedCreateNestedManyWithoutUserInput
@@ -12584,6 +12677,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     companies?: CompanyUpdateManyWithoutUserNestedInput
@@ -12598,6 +12694,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     companies?: CompanyUncheckedUpdateManyWithoutUserNestedInput
@@ -12628,6 +12727,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoryCreateNestedManyWithoutUserInput
@@ -12642,6 +12744,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -12775,6 +12880,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUpdateManyWithoutUserNestedInput
@@ -12789,6 +12897,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -12918,6 +13029,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoryCreateNestedManyWithoutUserInput
@@ -12932,6 +13046,9 @@ export namespace Prisma {
     passwordHash: string
     passwordResetToken?: string | null
     passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -12992,6 +13109,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUpdateManyWithoutUserNestedInput
@@ -13006,6 +13126,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
