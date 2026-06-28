@@ -16,6 +16,7 @@ import { Settings } from '../pages/Settings'
 import { Statistics } from '../pages/Statistics'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
+import { CreateCompanyPage } from '@/features/companies'
 
 export function AppRoutes() {
   return (
@@ -34,6 +35,7 @@ export function AppRoutes() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/companies" element={<Companies />} />
+          <Route path="/companies/new" element={<CreateCompanyPage />} />
           <Route path="/companies/:companyId" element={<CompanyDetails />} />
           <Route path="/resumes" element={<Resumes />} />
           <Route path="/applications" element={<Applications />} />
