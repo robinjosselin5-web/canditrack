@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Alert, Card, Modal } from '@/components/ui'
+import { Search } from 'lucide-react'
+import { Alert, Button, Card, Input, Modal } from '@/components/ui'
 import { PageHeader } from '@/components/PageHeader'
 import { CompanyCard } from '../components/CompanyCard'
 import { ConfirmationModal } from '../components/ConfirmationModal'
@@ -15,11 +16,54 @@ export function CompaniesPage() {
   const { data, isError, isLoading } = useCompanies()
   const deleteCompanyMutation = useDeleteCompany()
   const toggleCompanyFavoriteMutation = useToggleCompanyFavorite()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
+  const [favoriteFilter, setFavoriteFilter] = useState<'all' | 'favorites'>(
+    'all',
+  )
   const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(
     null,
   )
   const [companyToDelete, setCompanyToDelete] =
     useState<ICompanyListItem | null>(null)
+
+  const filteredCompanies = useMemo(() => {
+    if (!data) {
+      return []
+    }
+
+    const normalizedQuery = searchQuery.trim().toLowerCase()
+
+    const searchFilteredCompanies = normalizedQuery
+      ? data.filter((company) => {
+          const searchText = [
+            company.name,
+            company.email,
+            company.recruiterName,
+            company.phone,
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase()
+
+          return searchText.includes(normalizedQuery)
+        })
+      : data
+
+    const favoriteFilteredCompanies =
+      favoriteFilter === 'favorites'
+        ? searchFilteredCompanies.filter((company) => company.isFavorite)
+        : searchFilteredCompanies
+
+    return [...favoriteFilteredCompanies].sort((firstCompany, secondCompany) => {
+      const firstDate = new Date(firstCompany.createdAt).getTime()
+      const secondDate = new Date(secondCompany.createdAt).getTime()
+
+      return sortOrder === 'newest'
+        ? secondDate - firstDate
+        : firstDate - secondDate
+    })
+  }, [data, favoriteFilter, searchQuery, sortOrder])
 
   return (
     <section>
@@ -37,13 +81,71 @@ export function CompaniesPage() {
         </Link>
       </div>
 
+      <div className="mb-6 flex max-w-5xl flex-col gap-4">
+        <Input
+          aria-label="Rechercher une entreprise"
+          iconLeft={<Search className="size-5" />}
+          label="Rechercher"
+          placeholder="Nom, email, contact ou téléphone"
+          className="max-w-md"
+          value={searchQuery}
+          onChange={(event) => {
+            setSearchQuery(event.target.value)
+          }}
+        />
+
+        <div className="flex w-full flex-col gap-3 rounded-card border border-border bg-surface p-4 lg:flex-row lg:items-center">
+          <div className="flex flex-1 flex-wrap gap-2">
+            <Button
+              className="w-auto min-w-0 text-xs"
+              onClick={() => {
+                setSortOrder('newest')
+              }}
+              variant={sortOrder === 'newest' ? 'primary' : 'secondary'}
+            >
+              Plus récent
+            </Button>
+            <Button
+              className="w-auto min-w-0 text-xs"
+              onClick={() => {
+                setSortOrder('oldest')
+              }}
+              variant={sortOrder === 'oldest' ? 'primary' : 'secondary'}
+            >
+              Plus ancien
+            </Button>
+          </div>
+
+          <div className="flex flex-1 flex-wrap gap-2 lg:justify-end">
+            <Button
+              className="w-auto min-w-0 text-xs"
+              onClick={() => {
+                setFavoriteFilter('all')
+              }}
+              variant={favoriteFilter === 'all' ? 'primary' : 'secondary'}
+            >
+              Toutes les entreprises
+            </Button>
+            <Button
+              className="w-auto min-w-0 text-xs"
+              onClick={() => {
+                setFavoriteFilter('favorites')
+              }}
+              variant={favoriteFilter === 'favorites' ? 'primary' : 'secondary'}
+            >
+              Favoris uniquement
+            </Button>
+          </div>
+        </div>
+      </div>
+
       {isLoading ? <CompaniesSkeleton /> : null}
       {isError ? <CompaniesErrorState /> : null}
 
       {!isLoading && !isError && data ? (
-        data.length > 0 ? (
+        filteredCompanies.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-            {data.map((company) => (
+            {filteredCompanies.map((company) => (
               <CompanyCard
                 key={company.id}
                 company={company}

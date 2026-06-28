@@ -56,7 +56,7 @@ export function CompanyCard({
 
   return (
     <Card
-      className="relative h-full cursor-pointer p-5 sm:p-6"
+      className="relative h-full cursor-pointer p-5 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-large sm:p-6"
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       onKeyDown={(event) => {
@@ -91,7 +91,7 @@ export function CompanyCard({
             aria-label={
               isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'
             }
-            className="inline-flex size-10 items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             title={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
             onClick={(event) => {
               event.stopPropagation()
@@ -111,7 +111,7 @@ export function CompanyCard({
               aria-controls={menuId}
               aria-expanded={isMenuOpen}
               aria-label="Ouvrir le menu d'actions"
-              className="inline-flex size-10 items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               title="Ouvrir le menu d'actions"
               onClick={(event) => {
                 event.stopPropagation()
