@@ -15,6 +15,7 @@ import type { ICompanyListItem } from '../types/company.types'
 interface CompanyCardProps {
   company: ICompanyListItem
   isFavorite?: boolean
+  onClick?: () => void
   onEdit?: () => void
   onDelete?: () => void
 }
@@ -42,6 +43,7 @@ const statusStyles: Record<ICompanyListItem['status'], string> = {
 export function CompanyCard({
   company,
   isFavorite = false,
+  onClick,
   onEdit,
   onDelete,
 }: CompanyCardProps) {
@@ -51,7 +53,22 @@ export function CompanyCard({
   const addedAt = new Date(company.createdAt).toLocaleDateString('fr-FR')
 
   return (
-    <Card className="relative h-full p-5 sm:p-6">
+    <Card
+      className="relative h-full cursor-pointer p-5 sm:p-6"
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      onKeyDown={(event) => {
+        if (!onClick) {
+          return
+        }
+
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          onClick()
+        }
+      }}
+      tabIndex={onClick ? 0 : undefined}
+    >
       <div className="mb-4 flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h2 className="truncate text-lg font-semibold text-text-primary">
@@ -69,9 +86,14 @@ export function CompanyCard({
 
         <div className="flex items-center gap-1">
           <button
-            aria-label={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+            aria-label={
+              isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'
+            }
             className="inline-flex size-10 items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+            title={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+            onClick={(event) => {
+              event.stopPropagation()
+            }}
             type="button"
           >
             {isFavorite ? (
@@ -88,7 +110,10 @@ export function CompanyCard({
               aria-label="Ouvrir le menu d'actions"
               className="inline-flex size-10 items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               title="Ouvrir le menu d'actions"
-              onClick={() => setIsMenuOpen((value) => !value)}
+              onClick={(event) => {
+                event.stopPropagation()
+                setIsMenuOpen((value) => !value)
+              }}
               type="button"
             >
               <MoreHorizontal className="size-5" aria-hidden="true" />
@@ -102,7 +127,8 @@ export function CompanyCard({
               >
                 <button
                   className="flex w-full items-center rounded-button px-3 py-2 text-left text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation()
                     setIsMenuOpen(false)
                     onEdit?.()
                   }}
@@ -113,7 +139,8 @@ export function CompanyCard({
                 </button>
                 <button
                   className="flex w-full items-center rounded-button px-3 py-2 text-left text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation()
                     setIsMenuOpen(false)
                     onDelete?.()
                   }}

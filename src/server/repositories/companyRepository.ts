@@ -44,6 +44,18 @@ export async function findCompanyById(companyId: string): Promise<Company | null
   })
 }
 
+export async function findCompanyByIdForUser(
+  companyId: string,
+  userId: string,
+): Promise<Company | null> {
+  return prisma.company.findFirst({
+    where: {
+      id: companyId,
+      userId,
+    },
+  })
+}
+
 export async function findCompaniesByUserId(
   userId: string,
 ): Promise<ICompanyListItem[]> {

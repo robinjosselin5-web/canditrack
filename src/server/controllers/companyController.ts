@@ -10,6 +10,7 @@ import type { CreateCompanyBody } from '../validators/companyValidators.js'
 import { createCompany as createCompanyRecord } from '../repositories/companyRepository.js'
 import {
   deleteCompanyForUser,
+  getCompanyForUser,
   getCompaniesForUser,
   updateCompanyForUser,
 } from '../services/companyService.js'
@@ -54,6 +55,26 @@ export async function getCompaniesController(
   response.status(200).json({
     success: true,
     data: companies,
+  })
+}
+
+export async function getCompanyController(
+  request: Request<{ id: string }>,
+  response: Response<IApiSuccessResponse<ICompanyListItem>>,
+): Promise<void> {
+  if (!request.user) {
+    throw new AppError('Non autorise.', 401)
+  }
+
+  const company = await getCompanyForUser(request.params.id, request.user.id)
+
+  if (!company) {
+    throw new AppError('Entreprise introuvable.', 404)
+  }
+
+  response.status(200).json({
+    success: true,
+    data: company,
   })
 }
 
