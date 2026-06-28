@@ -1,2 +1,2 @@
-export { createCompany } from './companyService'
+export { createCompany, getCompanies } from './companyService'
 

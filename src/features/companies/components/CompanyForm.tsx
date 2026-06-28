@@ -1,47 +1,101 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
 import { Building2, Globe, Mail, MapPin, Phone, UserRound } from 'lucide-react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Alert, Button, Input } from '@/components/ui'
 import type { IApiResponse } from '@/types/api'
 import { useCreateCompany } from '../hooks/useCreateCompany'
-import type { ICreateCompanyPayload } from '../types/company.types'
+import { useUpdateCompany } from '../hooks/useUpdateCompany'
+import type {
+  ICreateCompanyPayload,
+  IUpdateCompanyPayload,
+} from '../types/company.types'
 import { companySchema } from '../utils/companySchema'
 
-export function CompanyForm() {
+type CompanyFormValues = z.input<typeof companySchema>
+
+interface CompanyFormProps {
+  companyId?: string
+  initialValues?: CompanyFormValues
+  mode?: 'create' | 'update'
+  onCancel?: () => void
+  onSuccess?: () => void
+}
+
+const defaultValues: CompanyFormValues = {
+  city: '',
+  country: '',
+  email: '',
+  name: '',
+  phone: '',
+  recruiterName: '',
+  website: '',
+}
+
+export function CompanyForm({
+  companyId,
+  initialValues,
+  mode = 'create',
+  onCancel,
+  onSuccess,
+}: CompanyFormProps) {
   const createCompanyMutation = useCreateCompany()
+  const updateCompanyMutation = useUpdateCompany()
+  const isUpdateMode = mode === 'update'
+  const activeMutation = isUpdateMode ? updateCompanyMutation : createCompanyMutation
+
   const {
     formState: { errors },
     handleSubmit,
+    reset,
     setError,
     register,
-  } = useForm<z.input<typeof companySchema>, unknown, ICreateCompanyPayload>({
-    defaultValues: {
-      city: '',
-      country: '',
-      email: '',
-      name: '',
-      phone: '',
-      recruiterName: '',
-      website: '',
-    },
+  } = useForm<CompanyFormValues, unknown, ICreateCompanyPayload>({
+    defaultValues: initialValues ?? defaultValues,
     resolver: zodResolver(companySchema),
   })
 
+  useEffect(() => {
+    reset(initialValues ?? defaultValues)
+  }, [initialValues, reset])
+
   const onSubmit = (values: ICreateCompanyPayload) => {
+    if (isUpdateMode) {
+      if (!companyId) {
+        return
+      }
+
+      updateCompanyMutation.mutate(
+        { companyId, payload: values as IUpdateCompanyPayload },
+        {
+          onError: (error) => {
+            applyBackendErrors(error, setError)
+          },
+          onSuccess: () => {
+            onSuccess?.()
+          },
+        },
+      )
+      return
+    }
+
     createCompanyMutation.mutate(values, {
       onError: (error) => {
         applyBackendErrors(error, setError)
+      },
+      onSuccess: () => {
+        onSuccess?.()
       },
     })
   }
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-      {createCompanyMutation.isError ? (
+      {activeMutation.isError ? (
         <Alert variant="error">
-          Impossible de creer lentreprise. Verifiez les informations saisies.
+          Impossible de sauvegarder lentreprise. Verifiez les informations saisies.
         </Alert>
       ) : null}
 
@@ -121,16 +175,27 @@ export function CompanyForm() {
         {...register('recruiterName')}
       />
 
-      <Button loading={createCompanyMutation.isPending} type="submit">
-        Créer
-      </Button>
+      <div className="flex gap-3">
+        {onCancel ? (
+          <Button className="w-auto flex-1" onClick={onCancel} type="button" variant="secondary">
+            Annuler
+          </Button>
+        ) : null}
+        <Button
+          className="w-auto flex-1"
+          loading={activeMutation.isPending}
+          type="submit"
+        >
+          {isUpdateMode ? 'Enregistrer' : 'Créer'}
+        </Button>
+      </div>
     </form>
   )
 }
 
 function applyBackendErrors(
   error: unknown,
-  setError: ReturnType<typeof useForm<ICreateCompanyPayload>>['setError'],
+  setError: ReturnType<typeof useForm<CompanyFormValues>>['setError'],
 ): void {
   if (!(error instanceof AxiosError)) {
     return
@@ -156,4 +221,3 @@ function applyBackendErrors(
     }
   }
 }
-
