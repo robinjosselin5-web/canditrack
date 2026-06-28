@@ -16,6 +16,7 @@ interface CompanyCardProps {
   company: ICompanyListItem
   isFavorite?: boolean
   onClick?: () => void
+  onFavorite?: () => void
   onEdit?: () => void
   onDelete?: () => void
 }
@@ -44,6 +45,7 @@ export function CompanyCard({
   company,
   isFavorite = false,
   onClick,
+  onFavorite,
   onEdit,
   onDelete,
 }: CompanyCardProps) {
@@ -93,6 +95,7 @@ export function CompanyCard({
             title={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
             onClick={(event) => {
               event.stopPropagation()
+              onFavorite?.()
             }}
             type="button"
           >

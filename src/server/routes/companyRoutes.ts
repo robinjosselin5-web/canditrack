@@ -4,6 +4,7 @@ import {
   createCompanyController,
   getCompanyController,
   getCompaniesController,
+  updateCompanyFavoriteController,
   updateCompanyController,
 } from '../controllers/companyController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
@@ -34,6 +35,12 @@ companyRoutes.patch(
   authJwt,
   validateBody(updateCompanyBodySchema),
   asyncHandler(updateCompanyController),
+)
+
+companyRoutes.patch(
+  '/companies/:id/favorite',
+  authJwt,
+  asyncHandler(updateCompanyFavoriteController),
 )
 
 companyRoutes.delete(

@@ -5,6 +5,8 @@ import type {
   ICreateCompanyResponse,
   ICompanyListItem,
   IDeleteCompanyResponse,
+  IUpdateCompanyFavoritePayload,
+  IUpdateCompanyFavoriteResponse,
   IUpdateCompanyPayload,
   IUpdateCompanyResponse,
 } from '../types/company.types'
@@ -53,5 +55,16 @@ export async function deleteCompany(companyId: string): Promise<string> {
   )
 
   return response.data.data.message
+}
+
+export async function updateCompanyFavorite(
+  companyId: string,
+  payload: IUpdateCompanyFavoritePayload,
+): Promise<IUpdateCompanyFavoriteResponse> {
+  const response = await httpClient.patch<
+    IApiResponse<IUpdateCompanyFavoriteResponse>
+  >(`/companies/${companyId}/favorite`, payload)
+
+  return response.data.data
 }
 
