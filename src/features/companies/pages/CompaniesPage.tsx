@@ -3,15 +3,20 @@ import { Link } from 'react-router-dom'
 import { Alert, Card, Modal } from '@/components/ui'
 import { PageHeader } from '@/components/PageHeader'
 import { CompanyCard } from '../components/CompanyCard'
+import { ConfirmationModal } from '../components/ConfirmationModal'
 import { CompanyForm } from '../components/CompanyForm'
 import { useCompanies } from '../hooks/useCompanies'
+import { useDeleteCompany } from '../hooks/useDeleteCompany'
 import type { ICompanyListItem } from '../types/company.types'
 
 export function CompaniesPage() {
   const { data, isError, isLoading } = useCompanies()
+  const deleteCompanyMutation = useDeleteCompany()
   const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(
     null,
   )
+  const [companyToDelete, setCompanyToDelete] =
+    useState<ICompanyListItem | null>(null)
 
   return (
     <section>
@@ -41,6 +46,9 @@ export function CompaniesPage() {
                 company={company}
                 onEdit={() => {
                   setSelectedCompany(company)
+                }}
+                onDelete={() => {
+                  setCompanyToDelete(company)
                 }}
               />
             ))}
@@ -75,6 +83,36 @@ export function CompaniesPage() {
           />
         ) : null}
       </Modal>
+
+      <ConfirmationModal
+        confirmLabel="Supprimer"
+        isLoading={deleteCompanyMutation.isPending}
+        isOpen={companyToDelete !== null}
+        message="Cette suppression est définitive. L'entreprise sera retirée de la liste et ne pourra pas être restaurée."
+        onClose={() => {
+          if (!deleteCompanyMutation.isPending) {
+            setCompanyToDelete(null)
+          }
+        }}
+        onConfirm={() => {
+          if (!companyToDelete) {
+            return
+          }
+
+          deleteCompanyMutation.mutate(companyToDelete.id, {
+            onSuccess: () => {
+              setCompanyToDelete(null)
+            },
+          })
+        }}
+        title="Supprimer une entreprise"
+      />
+
+      {deleteCompanyMutation.isError ? (
+        <Alert variant="error">
+          Impossible de supprimer l&apos;entreprise. Veuillez réessayer.
+        </Alert>
+      ) : null}
     </section>
   )
 }

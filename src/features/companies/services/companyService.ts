@@ -4,6 +4,7 @@ import type {
   ICreateCompanyPayload,
   ICreateCompanyResponse,
   ICompanyListItem,
+  IDeleteCompanyResponse,
   IUpdateCompanyPayload,
   IUpdateCompanyResponse,
 } from '../types/company.types'
@@ -36,5 +37,13 @@ export async function updateCompany(
   >(`/companies/${companyId}`, payload)
 
   return response.data.data
+}
+
+export async function deleteCompany(companyId: string): Promise<string> {
+  const response = await httpClient.delete<IApiResponse<IDeleteCompanyResponse>>(
+    `/companies/${companyId}`,
+  )
+
+  return response.data.data.message
 }
 
