@@ -34,7 +34,12 @@ CORS_ORIGIN=http://localhost:5173
 FRONTEND_URL=http://localhost:5173
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/canditrack
 JWT_SECRET=change-this-development-secret-with-at-least-32-characters
+EMAIL_VERIFICATION_EXPIRES_MINUTES=30
 PASSWORD_RESET_EXPIRES_MINUTES=30
+SMTP_HOST=localhost
+SMTP_PORT=1025
+SMTP_SECURE=false
+MAIL_FROM=CandiTrack <noreply@canditrack.local>
 VITE_API_URL=http://localhost:3000/api/v1
 ```
 
@@ -54,6 +59,20 @@ Health check :
 
 ```text
 GET http://localhost:3000/api/v1/health
+```
+
+## E-mails locaux
+
+Lancer MailDev avant de tester la reinitialisation du mot de passe :
+
+```bash
+npm run mail:dev
+```
+
+Les e-mails envoyes par l'API sont consultables sur :
+
+```text
+http://localhost:1080
 ```
 
 Reponse attendue :
