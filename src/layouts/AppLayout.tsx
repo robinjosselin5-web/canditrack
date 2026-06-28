@@ -63,7 +63,7 @@ export function AppLayout() {
         </button>
       </aside>
 
-      <div className="flex h-full min-h-0 flex-col lg:pl-[260px]">
+      <div className="flex min-h-0 flex-col lg:pl-[260px]">
         <header className="sticky top-0 z-10 flex min-h-24 items-center border-b border-border bg-surface/90 px-5 backdrop-blur sm:px-8 lg:px-10">
           <div className="flex w-full items-center justify-between gap-4">
             <div className="lg:hidden">
