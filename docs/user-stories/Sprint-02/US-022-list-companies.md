@@ -39,6 +39,36 @@ Route recommandée :
 ```text
 /companies
 ```
+# Wireframes
+
+Mobile
+
+```
+docs/wireframes/company-list-mobile.png
+```
+
+Desktop
+
+```
+docs/wireframes/company-list-desktop.png
+```
+
+---
+
+# Mockups
+
+Mobile
+
+```
+docs/mockups/company-list-mobile.png
+```
+
+Desktop
+
+```
+docs/mockups/company-list-desktop.png
+```
+
 
 ## API
 
