@@ -75,11 +75,25 @@ export namespace $Enums {
 
 export type CompanyStatus = (typeof CompanyStatus)[keyof typeof CompanyStatus]
 
+
+export const CandidateCvAnalysisStatus: {
+  NOT_ANALYZED: 'NOT_ANALYZED',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+};
+
+export type CandidateCvAnalysisStatus = (typeof CandidateCvAnalysisStatus)[keyof typeof CandidateCvAnalysisStatus]
+
 }
 
 export type CompanyStatus = $Enums.CompanyStatus
 
 export const CompanyStatus: typeof $Enums.CompanyStatus
+
+export type CandidateCvAnalysisStatus = $Enums.CandidateCvAnalysisStatus
+
+export const CandidateCvAnalysisStatus: typeof $Enums.CandidateCvAnalysisStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -4162,6 +4176,9 @@ export namespace Prisma {
     mimeType: string | null
     fileSize: number | null
     isDefault: boolean | null
+    analysisStatus: $Enums.CandidateCvAnalysisStatus | null
+    extractedText: string | null
+    lastAnalyzedAt: Date | null
     uploadedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4178,6 +4195,9 @@ export namespace Prisma {
     mimeType: string | null
     fileSize: number | null
     isDefault: boolean | null
+    analysisStatus: $Enums.CandidateCvAnalysisStatus | null
+    extractedText: string | null
+    lastAnalyzedAt: Date | null
     uploadedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4194,6 +4214,9 @@ export namespace Prisma {
     mimeType: number
     fileSize: number
     isDefault: number
+    analysisStatus: number
+    extractedText: number
+    lastAnalyzedAt: number
     uploadedAt: number
     createdAt: number
     updatedAt: number
@@ -4220,6 +4243,9 @@ export namespace Prisma {
     mimeType?: true
     fileSize?: true
     isDefault?: true
+    analysisStatus?: true
+    extractedText?: true
+    lastAnalyzedAt?: true
     uploadedAt?: true
     createdAt?: true
     updatedAt?: true
@@ -4236,6 +4262,9 @@ export namespace Prisma {
     mimeType?: true
     fileSize?: true
     isDefault?: true
+    analysisStatus?: true
+    extractedText?: true
+    lastAnalyzedAt?: true
     uploadedAt?: true
     createdAt?: true
     updatedAt?: true
@@ -4252,6 +4281,9 @@ export namespace Prisma {
     mimeType?: true
     fileSize?: true
     isDefault?: true
+    analysisStatus?: true
+    extractedText?: true
+    lastAnalyzedAt?: true
     uploadedAt?: true
     createdAt?: true
     updatedAt?: true
@@ -4355,6 +4387,9 @@ export namespace Prisma {
     mimeType: string
     fileSize: number
     isDefault: boolean
+    analysisStatus: $Enums.CandidateCvAnalysisStatus
+    extractedText: string | null
+    lastAnalyzedAt: Date | null
     uploadedAt: Date
     createdAt: Date
     updatedAt: Date
@@ -4390,6 +4425,9 @@ export namespace Prisma {
     mimeType?: boolean
     fileSize?: boolean
     isDefault?: boolean
+    analysisStatus?: boolean
+    extractedText?: boolean
+    lastAnalyzedAt?: boolean
     uploadedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4407,6 +4445,9 @@ export namespace Prisma {
     mimeType?: boolean
     fileSize?: boolean
     isDefault?: boolean
+    analysisStatus?: boolean
+    extractedText?: boolean
+    lastAnalyzedAt?: boolean
     uploadedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4424,6 +4465,9 @@ export namespace Prisma {
     mimeType?: boolean
     fileSize?: boolean
     isDefault?: boolean
+    analysisStatus?: boolean
+    extractedText?: boolean
+    lastAnalyzedAt?: boolean
     uploadedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4441,12 +4485,15 @@ export namespace Prisma {
     mimeType?: boolean
     fileSize?: boolean
     isDefault?: boolean
+    analysisStatus?: boolean
+    extractedText?: boolean
+    lastAnalyzedAt?: boolean
     uploadedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CandidateCvOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateProfileId" | "label" | "originalFilename" | "storageFilename" | "storageKey" | "fileHash" | "mimeType" | "fileSize" | "isDefault" | "uploadedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["candidateCv"]>
+  export type CandidateCvOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateProfileId" | "label" | "originalFilename" | "storageFilename" | "storageKey" | "fileHash" | "mimeType" | "fileSize" | "isDefault" | "analysisStatus" | "extractedText" | "lastAnalyzedAt" | "uploadedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["candidateCv"]>
   export type CandidateCvInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
   }
@@ -4473,6 +4520,9 @@ export namespace Prisma {
       mimeType: string
       fileSize: number
       isDefault: boolean
+      analysisStatus: $Enums.CandidateCvAnalysisStatus
+      extractedText: string | null
+      lastAnalyzedAt: Date | null
       uploadedAt: Date
       createdAt: Date
       updatedAt: Date
@@ -4910,6 +4960,9 @@ export namespace Prisma {
     readonly mimeType: FieldRef<"CandidateCv", 'String'>
     readonly fileSize: FieldRef<"CandidateCv", 'Int'>
     readonly isDefault: FieldRef<"CandidateCv", 'Boolean'>
+    readonly analysisStatus: FieldRef<"CandidateCv", 'CandidateCvAnalysisStatus'>
+    readonly extractedText: FieldRef<"CandidateCv", 'String'>
+    readonly lastAnalyzedAt: FieldRef<"CandidateCv", 'DateTime'>
     readonly uploadedAt: FieldRef<"CandidateCv", 'DateTime'>
     readonly createdAt: FieldRef<"CandidateCv", 'DateTime'>
     readonly updatedAt: FieldRef<"CandidateCv", 'DateTime'>
@@ -12259,6 +12312,9 @@ export namespace Prisma {
     mimeType: 'mimeType',
     fileSize: 'fileSize',
     isDefault: 'isDefault',
+    analysisStatus: 'analysisStatus',
+    extractedText: 'extractedText',
+    lastAnalyzedAt: 'lastAnalyzedAt',
     uploadedAt: 'uploadedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -12427,6 +12483,20 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'CandidateCvAnalysisStatus'
+   */
+  export type EnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CandidateCvAnalysisStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'CandidateCvAnalysisStatus[]'
+   */
+  export type ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CandidateCvAnalysisStatus[]'>
     
 
 
@@ -12627,6 +12697,9 @@ export namespace Prisma {
     mimeType?: StringFilter<"CandidateCv"> | string
     fileSize?: IntFilter<"CandidateCv"> | number
     isDefault?: BoolFilter<"CandidateCv"> | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFilter<"CandidateCv"> | $Enums.CandidateCvAnalysisStatus
+    extractedText?: StringNullableFilter<"CandidateCv"> | string | null
+    lastAnalyzedAt?: DateTimeNullableFilter<"CandidateCv"> | Date | string | null
     uploadedAt?: DateTimeFilter<"CandidateCv"> | Date | string
     createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
     updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
@@ -12644,6 +12717,9 @@ export namespace Prisma {
     mimeType?: SortOrder
     fileSize?: SortOrder
     isDefault?: SortOrder
+    analysisStatus?: SortOrder
+    extractedText?: SortOrderInput | SortOrder
+    lastAnalyzedAt?: SortOrderInput | SortOrder
     uploadedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12664,6 +12740,9 @@ export namespace Prisma {
     mimeType?: StringFilter<"CandidateCv"> | string
     fileSize?: IntFilter<"CandidateCv"> | number
     isDefault?: BoolFilter<"CandidateCv"> | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFilter<"CandidateCv"> | $Enums.CandidateCvAnalysisStatus
+    extractedText?: StringNullableFilter<"CandidateCv"> | string | null
+    lastAnalyzedAt?: DateTimeNullableFilter<"CandidateCv"> | Date | string | null
     uploadedAt?: DateTimeFilter<"CandidateCv"> | Date | string
     createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
     updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
@@ -12681,6 +12760,9 @@ export namespace Prisma {
     mimeType?: SortOrder
     fileSize?: SortOrder
     isDefault?: SortOrder
+    analysisStatus?: SortOrder
+    extractedText?: SortOrderInput | SortOrder
+    lastAnalyzedAt?: SortOrderInput | SortOrder
     uploadedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12705,6 +12787,9 @@ export namespace Prisma {
     mimeType?: StringWithAggregatesFilter<"CandidateCv"> | string
     fileSize?: IntWithAggregatesFilter<"CandidateCv"> | number
     isDefault?: BoolWithAggregatesFilter<"CandidateCv"> | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusWithAggregatesFilter<"CandidateCv"> | $Enums.CandidateCvAnalysisStatus
+    extractedText?: StringNullableWithAggregatesFilter<"CandidateCv"> | string | null
+    lastAnalyzedAt?: DateTimeNullableWithAggregatesFilter<"CandidateCv"> | Date | string | null
     uploadedAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
@@ -13343,6 +13428,9 @@ export namespace Prisma {
     mimeType: string
     fileSize: number
     isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13360,6 +13448,9 @@ export namespace Prisma {
     mimeType: string
     fileSize: number
     isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13375,6 +13466,9 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13392,6 +13486,9 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13408,6 +13505,9 @@ export namespace Prisma {
     mimeType: string
     fileSize: number
     isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13423,6 +13523,9 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13439,6 +13542,9 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14205,6 +14311,13 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type EnumCandidateCvAnalysisStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CandidateCvAnalysisStatus | EnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel> | $Enums.CandidateCvAnalysisStatus
+  }
+
   export type CandidateProfileScalarRelationFilter = {
     is?: CandidateProfileWhereInput
     isNot?: CandidateProfileWhereInput
@@ -14221,6 +14334,9 @@ export namespace Prisma {
     mimeType?: SortOrder
     fileSize?: SortOrder
     isDefault?: SortOrder
+    analysisStatus?: SortOrder
+    extractedText?: SortOrder
+    lastAnalyzedAt?: SortOrder
     uploadedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14241,6 +14357,9 @@ export namespace Prisma {
     mimeType?: SortOrder
     fileSize?: SortOrder
     isDefault?: SortOrder
+    analysisStatus?: SortOrder
+    extractedText?: SortOrder
+    lastAnalyzedAt?: SortOrder
     uploadedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14257,6 +14376,9 @@ export namespace Prisma {
     mimeType?: SortOrder
     fileSize?: SortOrder
     isDefault?: SortOrder
+    analysisStatus?: SortOrder
+    extractedText?: SortOrder
+    lastAnalyzedAt?: SortOrder
     uploadedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14288,6 +14410,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type EnumCandidateCvAnalysisStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CandidateCvAnalysisStatus | EnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCandidateCvAnalysisStatusWithAggregatesFilter<$PrismaModel> | $Enums.CandidateCvAnalysisStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel>
+    _max?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel>
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -14844,6 +14976,10 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput = {
+    set?: $Enums.CandidateCvAnalysisStatus
+  }
+
   export type CandidateProfileUpdateOneRequiredWithoutCvsNestedInput = {
     create?: XOR<CandidateProfileCreateWithoutCvsInput, CandidateProfileUncheckedCreateWithoutCvsInput>
     connectOrCreate?: CandidateProfileCreateOrConnectWithoutCvsInput
@@ -15344,6 +15480,13 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CandidateCvAnalysisStatus | EnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel> | $Enums.CandidateCvAnalysisStatus
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -15377,6 +15520,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumCandidateCvAnalysisStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CandidateCvAnalysisStatus | EnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CandidateCvAnalysisStatus[] | ListEnumCandidateCvAnalysisStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCandidateCvAnalysisStatusWithAggregatesFilter<$PrismaModel> | $Enums.CandidateCvAnalysisStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel>
+    _max?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel>
   }
 
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
@@ -15727,6 +15880,9 @@ export namespace Prisma {
     mimeType: string
     fileSize: number
     isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15742,6 +15898,9 @@ export namespace Prisma {
     mimeType: string
     fileSize: number
     isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15834,6 +15993,9 @@ export namespace Prisma {
     mimeType?: StringFilter<"CandidateCv"> | string
     fileSize?: IntFilter<"CandidateCv"> | number
     isDefault?: BoolFilter<"CandidateCv"> | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFilter<"CandidateCv"> | $Enums.CandidateCvAnalysisStatus
+    extractedText?: StringNullableFilter<"CandidateCv"> | string | null
+    lastAnalyzedAt?: DateTimeNullableFilter<"CandidateCv"> | Date | string | null
     uploadedAt?: DateTimeFilter<"CandidateCv"> | Date | string
     createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
     updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
@@ -17007,6 +17169,9 @@ export namespace Prisma {
     mimeType: string
     fileSize: number
     isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -17022,6 +17187,9 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17037,6 +17205,9 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17052,6 +17223,9 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     fileSize?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -18,6 +18,8 @@ import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { CreateCompanyPage } from '@/features/companies'
 import { MyCVs } from '../pages/MyCVs'
+import { ExtractedData } from '../pages/ExtractedData'
+import { Training } from '../pages/Training'
 
 export function AppRoutes() {
   return (
@@ -40,6 +42,11 @@ export function AppRoutes() {
           <Route path="/companies/new" element={<CreateCompanyPage />} />
           <Route path="/companies/:companyId" element={<CompanyDetails />} />
           <Route path="/profile/cv" element={<MyCVs />} />
+          <Route path="/profile/cv/extracted-data" element={<ExtractedData />} />
+          <Route
+            path="/profile/cv/extracted-data/training"
+            element={<Training />}
+          />
           <Route path="/applications" element={<Applications />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/settings" element={<Settings />} />

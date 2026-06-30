@@ -1,16 +1,17 @@
 import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import {
   BarChart3,
   BriefcaseBusiness,
   Building2,
   CircleUserRound,
   ChevronDown,
+  FileSearch,
   FileText,
   Folder,
   Home,
   LogOut,
-  MoreHorizontal,
+  Menu,
   Settings,
   X,
   type LucideIcon,
@@ -39,13 +40,13 @@ const desktopNavigationItems: DesktopNavigationItem[] = [
   { to: '/settings', label: 'Paramètres', icon: Settings },
 ]
 
-const cvSubmenuItems = [{ to: '/profile/cv', label: 'Mes CV', icon: FileText }]
-
-const mobileNavigationItems = [
-  { to: '/dashboard', label: 'Accueil', icon: Home },
-  { to: '/companies', label: 'Entreprises', icon: Building2 },
-  { to: '/applications', label: 'Candidatures', icon: BriefcaseBusiness },
-  { to: '/settings', label: 'Plus', icon: MoreHorizontal },
+const cvSubmenuItems = [
+  { to: '/profile/cv', label: 'Mes CV', icon: FileText },
+  {
+    to: '/profile/cv/extracted-data',
+    label: 'Données extraites',
+    icon: FileSearch,
+  },
 ]
 
 function isNavigationLink(
@@ -59,11 +60,13 @@ export interface IAppLayoutOutletContext {
 }
 
 export function AppLayout() {
+  const location = useLocation()
   const { user } = useAuthStore()
   const logoutMutation = useLogout()
   const userLabel = user ? `${user.firstname} ${user.lastname}` : 'Utilisateur'
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isCvMenuOpen, setIsCvMenuOpen] = useState(true)
+  const mobilePageTitle = getMobilePageTitle(location.pathname)
 
   return (
     <div className="min-h-dvh bg-background text-text-primary">
@@ -135,6 +138,7 @@ export function AppLayout() {
                 {cvSubmenuItems.map((item) => (
                   <NavLink
                     key={item.label}
+                    end={item.to === '/profile/cv'}
                     to={item.to}
                     className={({ isActive }) =>
                       [
@@ -165,7 +169,26 @@ export function AppLayout() {
         </button>
       </aside>
 
-      <div className="min-h-dvh pb-24 lg:pb-0 lg:pl-[280px]">
+      <div className="min-h-dvh lg:pb-0 lg:pl-[280px]">
+        <div className="sticky top-0 z-30 bg-background/95 px-4 py-4 backdrop-blur lg:hidden">
+          <div className="grid grid-cols-[40px_1fr_40px] items-center gap-4">
+            <button
+              aria-label="Ouvrir le menu"
+              className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              onClick={() => {
+                setIsMobileMenuOpen(true)
+              }}
+              type="button"
+            >
+              <Menu className="size-6" aria-hidden="true" />
+            </button>
+            <p className="truncate text-center text-lg font-bold text-text-primary">
+              {mobilePageTitle}
+            </p>
+            <span aria-hidden="true" />
+          </div>
+        </div>
+
         <main className="min-h-dvh px-4 py-6 sm:px-8 lg:px-10 lg:py-16">
           <Outlet
             context={{
@@ -275,6 +298,7 @@ export function AppLayout() {
                     {cvSubmenuItems.map((item) => (
                       <NavLink
                         key={item.label}
+                        end={item.to === '/profile/cv'}
                         to={item.to}
                         className={({ isActive }) =>
                           [
@@ -310,28 +334,30 @@ export function AppLayout() {
         </div>
       ) : null}
 
-      <nav
-        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 rounded-t-card border border-border bg-surface px-2 pb-4 pt-3 shadow-large lg:hidden"
-        aria-label="Navigation mobile"
-      >
-        {mobileNavigationItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            className={({ isActive }) =>
-              [
-                'flex min-h-14 cursor-pointer flex-col items-center justify-center gap-1 rounded-button text-xs font-semibold transition',
-                isActive
-                  ? 'text-primary'
-                  : 'text-text-secondary hover:text-text-primary',
-              ].join(' ')
-            }
-          >
-            <item.icon className="size-5" aria-hidden="true" />
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
     </div>
   )
+}
+
+function getMobilePageTitle(pathname: string): string {
+  if (pathname.startsWith('/profile/cv')) {
+    return 'CV'
+  }
+
+  if (pathname.startsWith('/companies')) {
+    return 'Entreprises'
+  }
+
+  if (pathname.startsWith('/applications')) {
+    return 'Candidatures'
+  }
+
+  if (pathname.startsWith('/statistics')) {
+    return 'Statistiques'
+  }
+
+  if (pathname.startsWith('/settings')) {
+    return 'Paramètres'
+  }
+
+  return 'CandiTrack'
 }

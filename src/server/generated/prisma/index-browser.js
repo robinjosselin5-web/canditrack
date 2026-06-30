@@ -153,6 +153,9 @@ exports.Prisma.CandidateCvScalarFieldEnum = {
   mimeType: 'mimeType',
   fileSize: 'fileSize',
   isDefault: 'isDefault',
+  analysisStatus: 'analysisStatus',
+  extractedText: 'extractedText',
+  lastAnalyzedAt: 'lastAnalyzedAt',
   uploadedAt: 'uploadedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -239,6 +242,13 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.CandidateCvAnalysisStatus = exports.$Enums.CandidateCvAnalysisStatus = {
+  NOT_ANALYZED: 'NOT_ANALYZED',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+};
+
 exports.CompanyStatus = exports.$Enums.CompanyStatus = {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',

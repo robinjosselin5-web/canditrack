@@ -19,6 +19,15 @@ enum CompanyStatus {
   @@map("company_status")
 }
 
+enum CandidateCvAnalysisStatus {
+  NOT_ANALYZED @map("not_analyzed")
+  PROCESSING   @map("processing")
+  COMPLETED    @map("completed")
+  FAILED       @map("failed")
+
+  @@map("candidate_cv_analysis_status")
+}
+
 model User {
   id                     String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firstname              String     @db.VarChar(100)
@@ -65,6 +74,9 @@ model CandidateCv {
   mimeType           String           @map("mime_type") @db.VarChar(100)
   fileSize           Int              @map("file_size")
   isDefault          Boolean          @default(false) @map("is_default")
+  analysisStatus     CandidateCvAnalysisStatus @default(NOT_ANALYZED) @map("analysis_status")
+  extractedText      String?          @map("extracted_text")
+  lastAnalyzedAt     DateTime?        @map("last_analyzed_at") @db.Timestamp(6)
   uploadedAt         DateTime         @default(now()) @map("uploaded_at") @db.Timestamp(6)
   createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt          DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)

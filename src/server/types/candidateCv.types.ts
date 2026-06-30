@@ -10,3 +10,19 @@ export interface ICandidateCvPublic {
   createdAt: string
   updatedAt: string
 }
+
+export interface ICandidateCvListItem {
+  id: string
+  label: string
+  originalFilename: string
+  mimeType: string
+  fileSize: number
+  uploadedAt: string
+  isDefault: boolean
+  analysisStatus: 'NOT_ANALYZED' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
+  lastAnalyzedAt: string | null
+}
+
+export interface ICandidateCvListResponse {
+  cvs: ICandidateCvListItem[]
+}
