@@ -135,6 +135,29 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CandidateProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CandidateCvScalarFieldEnum = {
+  id: 'id',
+  candidateProfileId: 'candidateProfileId',
+  label: 'label',
+  originalFilename: 'originalFilename',
+  storageFilename: 'storageFilename',
+  storageKey: 'storageKey',
+  fileHash: 'fileHash',
+  mimeType: 'mimeType',
+  fileSize: 'fileSize',
+  isDefault: 'isDefault',
+  uploadedAt: 'uploadedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -228,6 +251,8 @@ exports.CompanyStatus = exports.$Enums.CompanyStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  CandidateProfile: 'CandidateProfile',
+  CandidateCv: 'CandidateCv',
   Category: 'Category',
   Company: 'Company',
   Resume: 'Resume',

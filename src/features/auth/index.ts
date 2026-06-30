@@ -9,7 +9,6 @@ export { useResendEmailVerificationCode } from './hooks/useResendEmailVerificati
 export { useResetPassword } from './hooks/useResetPassword'
 export { useVerifyEmail } from './hooks/useVerifyEmail'
 export {
-  getCurrentUser,
   loginUser,
   logoutUser,
   registerUser,

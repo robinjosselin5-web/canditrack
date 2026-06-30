@@ -19,6 +19,16 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model CandidateProfile
+ * 
+ */
+export type CandidateProfile = $Result.DefaultSelection<Prisma.$CandidateProfilePayload>
+/**
+ * Model CandidateCv
+ * 
+ */
+export type CandidateCv = $Result.DefaultSelection<Prisma.$CandidateCvPayload>
+/**
  * Model Category
  * 
  */
@@ -201,6 +211,26 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.candidateProfile`: Exposes CRUD operations for the **CandidateProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CandidateProfiles
+    * const candidateProfiles = await prisma.candidateProfile.findMany()
+    * ```
+    */
+  get candidateProfile(): Prisma.CandidateProfileDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.candidateCv`: Exposes CRUD operations for the **CandidateCv** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CandidateCvs
+    * const candidateCvs = await prisma.candidateCv.findMany()
+    * ```
+    */
+  get candidateCv(): Prisma.CandidateCvDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.category`: Exposes CRUD operations for the **Category** model.
@@ -696,6 +726,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    CandidateProfile: 'CandidateProfile',
+    CandidateCv: 'CandidateCv',
     Category: 'Category',
     Company: 'Company',
     Resume: 'Resume',
@@ -717,7 +749,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "company" | "resume" | "application" | "note" | "actionHistory"
+      modelProps: "user" | "candidateProfile" | "candidateCv" | "category" | "company" | "resume" | "application" | "note" | "actionHistory"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -792,6 +824,154 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      CandidateProfile: {
+        payload: Prisma.$CandidateProfilePayload<ExtArgs>
+        fields: Prisma.CandidateProfileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CandidateProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CandidateProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>
+          }
+          findFirst: {
+            args: Prisma.CandidateProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CandidateProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>
+          }
+          findMany: {
+            args: Prisma.CandidateProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>[]
+          }
+          create: {
+            args: Prisma.CandidateProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>
+          }
+          createMany: {
+            args: Prisma.CandidateProfileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CandidateProfileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>[]
+          }
+          delete: {
+            args: Prisma.CandidateProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>
+          }
+          update: {
+            args: Prisma.CandidateProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>
+          }
+          deleteMany: {
+            args: Prisma.CandidateProfileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CandidateProfileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CandidateProfileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>[]
+          }
+          upsert: {
+            args: Prisma.CandidateProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateProfilePayload>
+          }
+          aggregate: {
+            args: Prisma.CandidateProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCandidateProfile>
+          }
+          groupBy: {
+            args: Prisma.CandidateProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CandidateProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CandidateProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<CandidateProfileCountAggregateOutputType> | number
+          }
+        }
+      }
+      CandidateCv: {
+        payload: Prisma.$CandidateCvPayload<ExtArgs>
+        fields: Prisma.CandidateCvFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CandidateCvFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CandidateCvFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>
+          }
+          findFirst: {
+            args: Prisma.CandidateCvFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CandidateCvFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>
+          }
+          findMany: {
+            args: Prisma.CandidateCvFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>[]
+          }
+          create: {
+            args: Prisma.CandidateCvCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>
+          }
+          createMany: {
+            args: Prisma.CandidateCvCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CandidateCvCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>[]
+          }
+          delete: {
+            args: Prisma.CandidateCvDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>
+          }
+          update: {
+            args: Prisma.CandidateCvUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>
+          }
+          deleteMany: {
+            args: Prisma.CandidateCvDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CandidateCvUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CandidateCvUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>[]
+          }
+          upsert: {
+            args: Prisma.CandidateCvUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidateCvPayload>
+          }
+          aggregate: {
+            args: Prisma.CandidateCvAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCandidateCv>
+          }
+          groupBy: {
+            args: Prisma.CandidateCvGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CandidateCvGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CandidateCvCountArgs<ExtArgs>
+            result: $Utils.Optional<CandidateCvCountAggregateOutputType> | number
           }
         }
       }
@@ -1348,6 +1528,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    candidateProfile?: CandidateProfileOmit
+    candidateCv?: CandidateCvOmit
     category?: CategoryOmit
     company?: CompanyOmit
     resume?: ResumeOmit
@@ -1475,6 +1657,37 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountResumesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResumeWhereInput
+  }
+
+
+  /**
+   * Count Type CandidateProfileCountOutputType
+   */
+
+  export type CandidateProfileCountOutputType = {
+    cvs: number
+  }
+
+  export type CandidateProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cvs?: boolean | CandidateProfileCountOutputTypeCountCvsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CandidateProfileCountOutputType without action
+   */
+  export type CandidateProfileCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfileCountOutputType
+     */
+    select?: CandidateProfileCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CandidateProfileCountOutputType without action
+   */
+  export type CandidateProfileCountOutputTypeCountCvsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidateCvWhereInput
   }
 
 
@@ -1816,6 +2029,7 @@ export namespace Prisma {
     categories?: boolean | User$categoriesArgs<ExtArgs>
     companies?: boolean | User$companiesArgs<ExtArgs>
     resumes?: boolean | User$resumesArgs<ExtArgs>
+    candidateProfile?: boolean | User$candidateProfileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1869,6 +2083,7 @@ export namespace Prisma {
     categories?: boolean | User$categoriesArgs<ExtArgs>
     companies?: boolean | User$companiesArgs<ExtArgs>
     resumes?: boolean | User$resumesArgs<ExtArgs>
+    candidateProfile?: boolean | User$candidateProfileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1880,6 +2095,7 @@ export namespace Prisma {
       categories: Prisma.$CategoryPayload<ExtArgs>[]
       companies: Prisma.$CompanyPayload<ExtArgs>[]
       resumes: Prisma.$ResumePayload<ExtArgs>[]
+      candidateProfile: Prisma.$CandidateProfilePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2291,6 +2507,7 @@ export namespace Prisma {
     categories<T extends User$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     companies<T extends User$companiesArgs<ExtArgs> = {}>(args?: Subset<T, User$companiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resumes<T extends User$resumesArgs<ExtArgs> = {}>(args?: Subset<T, User$resumesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    candidateProfile<T extends User$candidateProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$candidateProfileArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2797,6 +3014,25 @@ export namespace Prisma {
   }
 
   /**
+   * User.candidateProfile
+   */
+  export type User$candidateProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    where?: CandidateProfileWhereInput
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2812,6 +3048,2287 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CandidateProfile
+   */
+
+  export type AggregateCandidateProfile = {
+    _count: CandidateProfileCountAggregateOutputType | null
+    _min: CandidateProfileMinAggregateOutputType | null
+    _max: CandidateProfileMaxAggregateOutputType | null
+  }
+
+  export type CandidateProfileMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CandidateProfileMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CandidateProfileCountAggregateOutputType = {
+    id: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CandidateProfileMinAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CandidateProfileMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CandidateProfileCountAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CandidateProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidateProfile to aggregate.
+     */
+    where?: CandidateProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateProfiles to fetch.
+     */
+    orderBy?: CandidateProfileOrderByWithRelationInput | CandidateProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CandidateProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CandidateProfiles
+    **/
+    _count?: true | CandidateProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CandidateProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CandidateProfileMaxAggregateInputType
+  }
+
+  export type GetCandidateProfileAggregateType<T extends CandidateProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateCandidateProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCandidateProfile[P]>
+      : GetScalarType<T[P], AggregateCandidateProfile[P]>
+  }
+
+
+
+
+  export type CandidateProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidateProfileWhereInput
+    orderBy?: CandidateProfileOrderByWithAggregationInput | CandidateProfileOrderByWithAggregationInput[]
+    by: CandidateProfileScalarFieldEnum[] | CandidateProfileScalarFieldEnum
+    having?: CandidateProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CandidateProfileCountAggregateInputType | true
+    _min?: CandidateProfileMinAggregateInputType
+    _max?: CandidateProfileMaxAggregateInputType
+  }
+
+  export type CandidateProfileGroupByOutputType = {
+    id: string
+    userId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: CandidateProfileCountAggregateOutputType | null
+    _min: CandidateProfileMinAggregateOutputType | null
+    _max: CandidateProfileMaxAggregateOutputType | null
+  }
+
+  type GetCandidateProfileGroupByPayload<T extends CandidateProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CandidateProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CandidateProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CandidateProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], CandidateProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CandidateProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    cvs?: boolean | CandidateProfile$cvsArgs<ExtArgs>
+    _count?: boolean | CandidateProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidateProfile"]>
+
+  export type CandidateProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidateProfile"]>
+
+  export type CandidateProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidateProfile"]>
+
+  export type CandidateProfileSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CandidateProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["candidateProfile"]>
+  export type CandidateProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    cvs?: boolean | CandidateProfile$cvsArgs<ExtArgs>
+    _count?: boolean | CandidateProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CandidateProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CandidateProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CandidateProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CandidateProfile"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      cvs: Prisma.$CandidateCvPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["candidateProfile"]>
+    composites: {}
+  }
+
+  type CandidateProfileGetPayload<S extends boolean | null | undefined | CandidateProfileDefaultArgs> = $Result.GetResult<Prisma.$CandidateProfilePayload, S>
+
+  type CandidateProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CandidateProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CandidateProfileCountAggregateInputType | true
+    }
+
+  export interface CandidateProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CandidateProfile'], meta: { name: 'CandidateProfile' } }
+    /**
+     * Find zero or one CandidateProfile that matches the filter.
+     * @param {CandidateProfileFindUniqueArgs} args - Arguments to find a CandidateProfile
+     * @example
+     * // Get one CandidateProfile
+     * const candidateProfile = await prisma.candidateProfile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CandidateProfileFindUniqueArgs>(args: SelectSubset<T, CandidateProfileFindUniqueArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CandidateProfile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CandidateProfileFindUniqueOrThrowArgs} args - Arguments to find a CandidateProfile
+     * @example
+     * // Get one CandidateProfile
+     * const candidateProfile = await prisma.candidateProfile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CandidateProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, CandidateProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidateProfile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateProfileFindFirstArgs} args - Arguments to find a CandidateProfile
+     * @example
+     * // Get one CandidateProfile
+     * const candidateProfile = await prisma.candidateProfile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CandidateProfileFindFirstArgs>(args?: SelectSubset<T, CandidateProfileFindFirstArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidateProfile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateProfileFindFirstOrThrowArgs} args - Arguments to find a CandidateProfile
+     * @example
+     * // Get one CandidateProfile
+     * const candidateProfile = await prisma.candidateProfile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CandidateProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, CandidateProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CandidateProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CandidateProfiles
+     * const candidateProfiles = await prisma.candidateProfile.findMany()
+     * 
+     * // Get first 10 CandidateProfiles
+     * const candidateProfiles = await prisma.candidateProfile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const candidateProfileWithIdOnly = await prisma.candidateProfile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CandidateProfileFindManyArgs>(args?: SelectSubset<T, CandidateProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CandidateProfile.
+     * @param {CandidateProfileCreateArgs} args - Arguments to create a CandidateProfile.
+     * @example
+     * // Create one CandidateProfile
+     * const CandidateProfile = await prisma.candidateProfile.create({
+     *   data: {
+     *     // ... data to create a CandidateProfile
+     *   }
+     * })
+     * 
+     */
+    create<T extends CandidateProfileCreateArgs>(args: SelectSubset<T, CandidateProfileCreateArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CandidateProfiles.
+     * @param {CandidateProfileCreateManyArgs} args - Arguments to create many CandidateProfiles.
+     * @example
+     * // Create many CandidateProfiles
+     * const candidateProfile = await prisma.candidateProfile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CandidateProfileCreateManyArgs>(args?: SelectSubset<T, CandidateProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CandidateProfiles and returns the data saved in the database.
+     * @param {CandidateProfileCreateManyAndReturnArgs} args - Arguments to create many CandidateProfiles.
+     * @example
+     * // Create many CandidateProfiles
+     * const candidateProfile = await prisma.candidateProfile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CandidateProfiles and only return the `id`
+     * const candidateProfileWithIdOnly = await prisma.candidateProfile.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CandidateProfileCreateManyAndReturnArgs>(args?: SelectSubset<T, CandidateProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CandidateProfile.
+     * @param {CandidateProfileDeleteArgs} args - Arguments to delete one CandidateProfile.
+     * @example
+     * // Delete one CandidateProfile
+     * const CandidateProfile = await prisma.candidateProfile.delete({
+     *   where: {
+     *     // ... filter to delete one CandidateProfile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CandidateProfileDeleteArgs>(args: SelectSubset<T, CandidateProfileDeleteArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CandidateProfile.
+     * @param {CandidateProfileUpdateArgs} args - Arguments to update one CandidateProfile.
+     * @example
+     * // Update one CandidateProfile
+     * const candidateProfile = await prisma.candidateProfile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CandidateProfileUpdateArgs>(args: SelectSubset<T, CandidateProfileUpdateArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CandidateProfiles.
+     * @param {CandidateProfileDeleteManyArgs} args - Arguments to filter CandidateProfiles to delete.
+     * @example
+     * // Delete a few CandidateProfiles
+     * const { count } = await prisma.candidateProfile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CandidateProfileDeleteManyArgs>(args?: SelectSubset<T, CandidateProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CandidateProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CandidateProfiles
+     * const candidateProfile = await prisma.candidateProfile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CandidateProfileUpdateManyArgs>(args: SelectSubset<T, CandidateProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CandidateProfiles and returns the data updated in the database.
+     * @param {CandidateProfileUpdateManyAndReturnArgs} args - Arguments to update many CandidateProfiles.
+     * @example
+     * // Update many CandidateProfiles
+     * const candidateProfile = await prisma.candidateProfile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CandidateProfiles and only return the `id`
+     * const candidateProfileWithIdOnly = await prisma.candidateProfile.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CandidateProfileUpdateManyAndReturnArgs>(args: SelectSubset<T, CandidateProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CandidateProfile.
+     * @param {CandidateProfileUpsertArgs} args - Arguments to update or create a CandidateProfile.
+     * @example
+     * // Update or create a CandidateProfile
+     * const candidateProfile = await prisma.candidateProfile.upsert({
+     *   create: {
+     *     // ... data to create a CandidateProfile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CandidateProfile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CandidateProfileUpsertArgs>(args: SelectSubset<T, CandidateProfileUpsertArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CandidateProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateProfileCountArgs} args - Arguments to filter CandidateProfiles to count.
+     * @example
+     * // Count the number of CandidateProfiles
+     * const count = await prisma.candidateProfile.count({
+     *   where: {
+     *     // ... the filter for the CandidateProfiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends CandidateProfileCountArgs>(
+      args?: Subset<T, CandidateProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CandidateProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CandidateProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CandidateProfileAggregateArgs>(args: Subset<T, CandidateProfileAggregateArgs>): Prisma.PrismaPromise<GetCandidateProfileAggregateType<T>>
+
+    /**
+     * Group by CandidateProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CandidateProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CandidateProfileGroupByArgs['orderBy'] }
+        : { orderBy?: CandidateProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CandidateProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCandidateProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CandidateProfile model
+   */
+  readonly fields: CandidateProfileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CandidateProfile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CandidateProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    cvs<T extends CandidateProfile$cvsArgs<ExtArgs> = {}>(args?: Subset<T, CandidateProfile$cvsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CandidateProfile model
+   */
+  interface CandidateProfileFieldRefs {
+    readonly id: FieldRef<"CandidateProfile", 'String'>
+    readonly userId: FieldRef<"CandidateProfile", 'String'>
+    readonly createdAt: FieldRef<"CandidateProfile", 'DateTime'>
+    readonly updatedAt: FieldRef<"CandidateProfile", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CandidateProfile findUnique
+   */
+  export type CandidateProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateProfile to fetch.
+     */
+    where: CandidateProfileWhereUniqueInput
+  }
+
+  /**
+   * CandidateProfile findUniqueOrThrow
+   */
+  export type CandidateProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateProfile to fetch.
+     */
+    where: CandidateProfileWhereUniqueInput
+  }
+
+  /**
+   * CandidateProfile findFirst
+   */
+  export type CandidateProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateProfile to fetch.
+     */
+    where?: CandidateProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateProfiles to fetch.
+     */
+    orderBy?: CandidateProfileOrderByWithRelationInput | CandidateProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidateProfiles.
+     */
+    cursor?: CandidateProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidateProfiles.
+     */
+    distinct?: CandidateProfileScalarFieldEnum | CandidateProfileScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateProfile findFirstOrThrow
+   */
+  export type CandidateProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateProfile to fetch.
+     */
+    where?: CandidateProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateProfiles to fetch.
+     */
+    orderBy?: CandidateProfileOrderByWithRelationInput | CandidateProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidateProfiles.
+     */
+    cursor?: CandidateProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidateProfiles.
+     */
+    distinct?: CandidateProfileScalarFieldEnum | CandidateProfileScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateProfile findMany
+   */
+  export type CandidateProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateProfiles to fetch.
+     */
+    where?: CandidateProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateProfiles to fetch.
+     */
+    orderBy?: CandidateProfileOrderByWithRelationInput | CandidateProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CandidateProfiles.
+     */
+    cursor?: CandidateProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidateProfiles.
+     */
+    distinct?: CandidateProfileScalarFieldEnum | CandidateProfileScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateProfile create
+   */
+  export type CandidateProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CandidateProfile.
+     */
+    data: XOR<CandidateProfileCreateInput, CandidateProfileUncheckedCreateInput>
+  }
+
+  /**
+   * CandidateProfile createMany
+   */
+  export type CandidateProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CandidateProfiles.
+     */
+    data: CandidateProfileCreateManyInput | CandidateProfileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CandidateProfile createManyAndReturn
+   */
+  export type CandidateProfileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * The data used to create many CandidateProfiles.
+     */
+    data: CandidateProfileCreateManyInput | CandidateProfileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CandidateProfile update
+   */
+  export type CandidateProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CandidateProfile.
+     */
+    data: XOR<CandidateProfileUpdateInput, CandidateProfileUncheckedUpdateInput>
+    /**
+     * Choose, which CandidateProfile to update.
+     */
+    where: CandidateProfileWhereUniqueInput
+  }
+
+  /**
+   * CandidateProfile updateMany
+   */
+  export type CandidateProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CandidateProfiles.
+     */
+    data: XOR<CandidateProfileUpdateManyMutationInput, CandidateProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which CandidateProfiles to update
+     */
+    where?: CandidateProfileWhereInput
+    /**
+     * Limit how many CandidateProfiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidateProfile updateManyAndReturn
+   */
+  export type CandidateProfileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * The data used to update CandidateProfiles.
+     */
+    data: XOR<CandidateProfileUpdateManyMutationInput, CandidateProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which CandidateProfiles to update
+     */
+    where?: CandidateProfileWhereInput
+    /**
+     * Limit how many CandidateProfiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CandidateProfile upsert
+   */
+  export type CandidateProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CandidateProfile to update in case it exists.
+     */
+    where: CandidateProfileWhereUniqueInput
+    /**
+     * In case the CandidateProfile found by the `where` argument doesn't exist, create a new CandidateProfile with this data.
+     */
+    create: XOR<CandidateProfileCreateInput, CandidateProfileUncheckedCreateInput>
+    /**
+     * In case the CandidateProfile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CandidateProfileUpdateInput, CandidateProfileUncheckedUpdateInput>
+  }
+
+  /**
+   * CandidateProfile delete
+   */
+  export type CandidateProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+    /**
+     * Filter which CandidateProfile to delete.
+     */
+    where: CandidateProfileWhereUniqueInput
+  }
+
+  /**
+   * CandidateProfile deleteMany
+   */
+  export type CandidateProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidateProfiles to delete
+     */
+    where?: CandidateProfileWhereInput
+    /**
+     * Limit how many CandidateProfiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidateProfile.cvs
+   */
+  export type CandidateProfile$cvsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    where?: CandidateCvWhereInput
+    orderBy?: CandidateCvOrderByWithRelationInput | CandidateCvOrderByWithRelationInput[]
+    cursor?: CandidateCvWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CandidateCvScalarFieldEnum | CandidateCvScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateProfile without action
+   */
+  export type CandidateProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateProfile
+     */
+    select?: CandidateProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateProfile
+     */
+    omit?: CandidateProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateProfileInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CandidateCv
+   */
+
+  export type AggregateCandidateCv = {
+    _count: CandidateCvCountAggregateOutputType | null
+    _avg: CandidateCvAvgAggregateOutputType | null
+    _sum: CandidateCvSumAggregateOutputType | null
+    _min: CandidateCvMinAggregateOutputType | null
+    _max: CandidateCvMaxAggregateOutputType | null
+  }
+
+  export type CandidateCvAvgAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type CandidateCvSumAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type CandidateCvMinAggregateOutputType = {
+    id: string | null
+    candidateProfileId: string | null
+    label: string | null
+    originalFilename: string | null
+    storageFilename: string | null
+    storageKey: string | null
+    fileHash: string | null
+    mimeType: string | null
+    fileSize: number | null
+    isDefault: boolean | null
+    uploadedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CandidateCvMaxAggregateOutputType = {
+    id: string | null
+    candidateProfileId: string | null
+    label: string | null
+    originalFilename: string | null
+    storageFilename: string | null
+    storageKey: string | null
+    fileHash: string | null
+    mimeType: string | null
+    fileSize: number | null
+    isDefault: boolean | null
+    uploadedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CandidateCvCountAggregateOutputType = {
+    id: number
+    candidateProfileId: number
+    label: number
+    originalFilename: number
+    storageFilename: number
+    storageKey: number
+    fileHash: number
+    mimeType: number
+    fileSize: number
+    isDefault: number
+    uploadedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CandidateCvAvgAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type CandidateCvSumAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type CandidateCvMinAggregateInputType = {
+    id?: true
+    candidateProfileId?: true
+    label?: true
+    originalFilename?: true
+    storageFilename?: true
+    storageKey?: true
+    fileHash?: true
+    mimeType?: true
+    fileSize?: true
+    isDefault?: true
+    uploadedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CandidateCvMaxAggregateInputType = {
+    id?: true
+    candidateProfileId?: true
+    label?: true
+    originalFilename?: true
+    storageFilename?: true
+    storageKey?: true
+    fileHash?: true
+    mimeType?: true
+    fileSize?: true
+    isDefault?: true
+    uploadedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CandidateCvCountAggregateInputType = {
+    id?: true
+    candidateProfileId?: true
+    label?: true
+    originalFilename?: true
+    storageFilename?: true
+    storageKey?: true
+    fileHash?: true
+    mimeType?: true
+    fileSize?: true
+    isDefault?: true
+    uploadedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CandidateCvAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidateCv to aggregate.
+     */
+    where?: CandidateCvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateCvs to fetch.
+     */
+    orderBy?: CandidateCvOrderByWithRelationInput | CandidateCvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CandidateCvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateCvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateCvs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CandidateCvs
+    **/
+    _count?: true | CandidateCvCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CandidateCvAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CandidateCvSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CandidateCvMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CandidateCvMaxAggregateInputType
+  }
+
+  export type GetCandidateCvAggregateType<T extends CandidateCvAggregateArgs> = {
+        [P in keyof T & keyof AggregateCandidateCv]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCandidateCv[P]>
+      : GetScalarType<T[P], AggregateCandidateCv[P]>
+  }
+
+
+
+
+  export type CandidateCvGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidateCvWhereInput
+    orderBy?: CandidateCvOrderByWithAggregationInput | CandidateCvOrderByWithAggregationInput[]
+    by: CandidateCvScalarFieldEnum[] | CandidateCvScalarFieldEnum
+    having?: CandidateCvScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CandidateCvCountAggregateInputType | true
+    _avg?: CandidateCvAvgAggregateInputType
+    _sum?: CandidateCvSumAggregateInputType
+    _min?: CandidateCvMinAggregateInputType
+    _max?: CandidateCvMaxAggregateInputType
+  }
+
+  export type CandidateCvGroupByOutputType = {
+    id: string
+    candidateProfileId: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash: string | null
+    mimeType: string
+    fileSize: number
+    isDefault: boolean
+    uploadedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: CandidateCvCountAggregateOutputType | null
+    _avg: CandidateCvAvgAggregateOutputType | null
+    _sum: CandidateCvSumAggregateOutputType | null
+    _min: CandidateCvMinAggregateOutputType | null
+    _max: CandidateCvMaxAggregateOutputType | null
+  }
+
+  type GetCandidateCvGroupByPayload<T extends CandidateCvGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CandidateCvGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CandidateCvGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CandidateCvGroupByOutputType[P]>
+            : GetScalarType<T[P], CandidateCvGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CandidateCvSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateProfileId?: boolean
+    label?: boolean
+    originalFilename?: boolean
+    storageFilename?: boolean
+    storageKey?: boolean
+    fileHash?: boolean
+    mimeType?: boolean
+    fileSize?: boolean
+    isDefault?: boolean
+    uploadedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidateCv"]>
+
+  export type CandidateCvSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateProfileId?: boolean
+    label?: boolean
+    originalFilename?: boolean
+    storageFilename?: boolean
+    storageKey?: boolean
+    fileHash?: boolean
+    mimeType?: boolean
+    fileSize?: boolean
+    isDefault?: boolean
+    uploadedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidateCv"]>
+
+  export type CandidateCvSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateProfileId?: boolean
+    label?: boolean
+    originalFilename?: boolean
+    storageFilename?: boolean
+    storageKey?: boolean
+    fileHash?: boolean
+    mimeType?: boolean
+    fileSize?: boolean
+    isDefault?: boolean
+    uploadedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidateCv"]>
+
+  export type CandidateCvSelectScalar = {
+    id?: boolean
+    candidateProfileId?: boolean
+    label?: boolean
+    originalFilename?: boolean
+    storageFilename?: boolean
+    storageKey?: boolean
+    fileHash?: boolean
+    mimeType?: boolean
+    fileSize?: boolean
+    isDefault?: boolean
+    uploadedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CandidateCvOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateProfileId" | "label" | "originalFilename" | "storageFilename" | "storageKey" | "fileHash" | "mimeType" | "fileSize" | "isDefault" | "uploadedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["candidateCv"]>
+  export type CandidateCvInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+  }
+  export type CandidateCvIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+  }
+  export type CandidateCvIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+  }
+
+  export type $CandidateCvPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CandidateCv"
+    objects: {
+      candidateProfile: Prisma.$CandidateProfilePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      candidateProfileId: string
+      label: string
+      originalFilename: string
+      storageFilename: string
+      storageKey: string
+      fileHash: string | null
+      mimeType: string
+      fileSize: number
+      isDefault: boolean
+      uploadedAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["candidateCv"]>
+    composites: {}
+  }
+
+  type CandidateCvGetPayload<S extends boolean | null | undefined | CandidateCvDefaultArgs> = $Result.GetResult<Prisma.$CandidateCvPayload, S>
+
+  type CandidateCvCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CandidateCvFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CandidateCvCountAggregateInputType | true
+    }
+
+  export interface CandidateCvDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CandidateCv'], meta: { name: 'CandidateCv' } }
+    /**
+     * Find zero or one CandidateCv that matches the filter.
+     * @param {CandidateCvFindUniqueArgs} args - Arguments to find a CandidateCv
+     * @example
+     * // Get one CandidateCv
+     * const candidateCv = await prisma.candidateCv.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CandidateCvFindUniqueArgs>(args: SelectSubset<T, CandidateCvFindUniqueArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CandidateCv that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CandidateCvFindUniqueOrThrowArgs} args - Arguments to find a CandidateCv
+     * @example
+     * // Get one CandidateCv
+     * const candidateCv = await prisma.candidateCv.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CandidateCvFindUniqueOrThrowArgs>(args: SelectSubset<T, CandidateCvFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidateCv that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateCvFindFirstArgs} args - Arguments to find a CandidateCv
+     * @example
+     * // Get one CandidateCv
+     * const candidateCv = await prisma.candidateCv.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CandidateCvFindFirstArgs>(args?: SelectSubset<T, CandidateCvFindFirstArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidateCv that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateCvFindFirstOrThrowArgs} args - Arguments to find a CandidateCv
+     * @example
+     * // Get one CandidateCv
+     * const candidateCv = await prisma.candidateCv.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CandidateCvFindFirstOrThrowArgs>(args?: SelectSubset<T, CandidateCvFindFirstOrThrowArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CandidateCvs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateCvFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CandidateCvs
+     * const candidateCvs = await prisma.candidateCv.findMany()
+     * 
+     * // Get first 10 CandidateCvs
+     * const candidateCvs = await prisma.candidateCv.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const candidateCvWithIdOnly = await prisma.candidateCv.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CandidateCvFindManyArgs>(args?: SelectSubset<T, CandidateCvFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CandidateCv.
+     * @param {CandidateCvCreateArgs} args - Arguments to create a CandidateCv.
+     * @example
+     * // Create one CandidateCv
+     * const CandidateCv = await prisma.candidateCv.create({
+     *   data: {
+     *     // ... data to create a CandidateCv
+     *   }
+     * })
+     * 
+     */
+    create<T extends CandidateCvCreateArgs>(args: SelectSubset<T, CandidateCvCreateArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CandidateCvs.
+     * @param {CandidateCvCreateManyArgs} args - Arguments to create many CandidateCvs.
+     * @example
+     * // Create many CandidateCvs
+     * const candidateCv = await prisma.candidateCv.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CandidateCvCreateManyArgs>(args?: SelectSubset<T, CandidateCvCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CandidateCvs and returns the data saved in the database.
+     * @param {CandidateCvCreateManyAndReturnArgs} args - Arguments to create many CandidateCvs.
+     * @example
+     * // Create many CandidateCvs
+     * const candidateCv = await prisma.candidateCv.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CandidateCvs and only return the `id`
+     * const candidateCvWithIdOnly = await prisma.candidateCv.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CandidateCvCreateManyAndReturnArgs>(args?: SelectSubset<T, CandidateCvCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CandidateCv.
+     * @param {CandidateCvDeleteArgs} args - Arguments to delete one CandidateCv.
+     * @example
+     * // Delete one CandidateCv
+     * const CandidateCv = await prisma.candidateCv.delete({
+     *   where: {
+     *     // ... filter to delete one CandidateCv
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CandidateCvDeleteArgs>(args: SelectSubset<T, CandidateCvDeleteArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CandidateCv.
+     * @param {CandidateCvUpdateArgs} args - Arguments to update one CandidateCv.
+     * @example
+     * // Update one CandidateCv
+     * const candidateCv = await prisma.candidateCv.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CandidateCvUpdateArgs>(args: SelectSubset<T, CandidateCvUpdateArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CandidateCvs.
+     * @param {CandidateCvDeleteManyArgs} args - Arguments to filter CandidateCvs to delete.
+     * @example
+     * // Delete a few CandidateCvs
+     * const { count } = await prisma.candidateCv.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CandidateCvDeleteManyArgs>(args?: SelectSubset<T, CandidateCvDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CandidateCvs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateCvUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CandidateCvs
+     * const candidateCv = await prisma.candidateCv.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CandidateCvUpdateManyArgs>(args: SelectSubset<T, CandidateCvUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CandidateCvs and returns the data updated in the database.
+     * @param {CandidateCvUpdateManyAndReturnArgs} args - Arguments to update many CandidateCvs.
+     * @example
+     * // Update many CandidateCvs
+     * const candidateCv = await prisma.candidateCv.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CandidateCvs and only return the `id`
+     * const candidateCvWithIdOnly = await prisma.candidateCv.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CandidateCvUpdateManyAndReturnArgs>(args: SelectSubset<T, CandidateCvUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CandidateCv.
+     * @param {CandidateCvUpsertArgs} args - Arguments to update or create a CandidateCv.
+     * @example
+     * // Update or create a CandidateCv
+     * const candidateCv = await prisma.candidateCv.upsert({
+     *   create: {
+     *     // ... data to create a CandidateCv
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CandidateCv we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CandidateCvUpsertArgs>(args: SelectSubset<T, CandidateCvUpsertArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CandidateCvs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateCvCountArgs} args - Arguments to filter CandidateCvs to count.
+     * @example
+     * // Count the number of CandidateCvs
+     * const count = await prisma.candidateCv.count({
+     *   where: {
+     *     // ... the filter for the CandidateCvs we want to count
+     *   }
+     * })
+    **/
+    count<T extends CandidateCvCountArgs>(
+      args?: Subset<T, CandidateCvCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CandidateCvCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CandidateCv.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateCvAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CandidateCvAggregateArgs>(args: Subset<T, CandidateCvAggregateArgs>): Prisma.PrismaPromise<GetCandidateCvAggregateType<T>>
+
+    /**
+     * Group by CandidateCv.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidateCvGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CandidateCvGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CandidateCvGroupByArgs['orderBy'] }
+        : { orderBy?: CandidateCvGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CandidateCvGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCandidateCvGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CandidateCv model
+   */
+  readonly fields: CandidateCvFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CandidateCv.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CandidateCvClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    candidateProfile<T extends CandidateProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidateProfileDefaultArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CandidateCv model
+   */
+  interface CandidateCvFieldRefs {
+    readonly id: FieldRef<"CandidateCv", 'String'>
+    readonly candidateProfileId: FieldRef<"CandidateCv", 'String'>
+    readonly label: FieldRef<"CandidateCv", 'String'>
+    readonly originalFilename: FieldRef<"CandidateCv", 'String'>
+    readonly storageFilename: FieldRef<"CandidateCv", 'String'>
+    readonly storageKey: FieldRef<"CandidateCv", 'String'>
+    readonly fileHash: FieldRef<"CandidateCv", 'String'>
+    readonly mimeType: FieldRef<"CandidateCv", 'String'>
+    readonly fileSize: FieldRef<"CandidateCv", 'Int'>
+    readonly isDefault: FieldRef<"CandidateCv", 'Boolean'>
+    readonly uploadedAt: FieldRef<"CandidateCv", 'DateTime'>
+    readonly createdAt: FieldRef<"CandidateCv", 'DateTime'>
+    readonly updatedAt: FieldRef<"CandidateCv", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CandidateCv findUnique
+   */
+  export type CandidateCvFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateCv to fetch.
+     */
+    where: CandidateCvWhereUniqueInput
+  }
+
+  /**
+   * CandidateCv findUniqueOrThrow
+   */
+  export type CandidateCvFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateCv to fetch.
+     */
+    where: CandidateCvWhereUniqueInput
+  }
+
+  /**
+   * CandidateCv findFirst
+   */
+  export type CandidateCvFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateCv to fetch.
+     */
+    where?: CandidateCvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateCvs to fetch.
+     */
+    orderBy?: CandidateCvOrderByWithRelationInput | CandidateCvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidateCvs.
+     */
+    cursor?: CandidateCvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateCvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateCvs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidateCvs.
+     */
+    distinct?: CandidateCvScalarFieldEnum | CandidateCvScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateCv findFirstOrThrow
+   */
+  export type CandidateCvFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateCv to fetch.
+     */
+    where?: CandidateCvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateCvs to fetch.
+     */
+    orderBy?: CandidateCvOrderByWithRelationInput | CandidateCvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidateCvs.
+     */
+    cursor?: CandidateCvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateCvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateCvs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidateCvs.
+     */
+    distinct?: CandidateCvScalarFieldEnum | CandidateCvScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateCv findMany
+   */
+  export type CandidateCvFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidateCvs to fetch.
+     */
+    where?: CandidateCvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidateCvs to fetch.
+     */
+    orderBy?: CandidateCvOrderByWithRelationInput | CandidateCvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CandidateCvs.
+     */
+    cursor?: CandidateCvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidateCvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidateCvs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidateCvs.
+     */
+    distinct?: CandidateCvScalarFieldEnum | CandidateCvScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateCv create
+   */
+  export type CandidateCvCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CandidateCv.
+     */
+    data: XOR<CandidateCvCreateInput, CandidateCvUncheckedCreateInput>
+  }
+
+  /**
+   * CandidateCv createMany
+   */
+  export type CandidateCvCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CandidateCvs.
+     */
+    data: CandidateCvCreateManyInput | CandidateCvCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CandidateCv createManyAndReturn
+   */
+  export type CandidateCvCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * The data used to create many CandidateCvs.
+     */
+    data: CandidateCvCreateManyInput | CandidateCvCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CandidateCv update
+   */
+  export type CandidateCvUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CandidateCv.
+     */
+    data: XOR<CandidateCvUpdateInput, CandidateCvUncheckedUpdateInput>
+    /**
+     * Choose, which CandidateCv to update.
+     */
+    where: CandidateCvWhereUniqueInput
+  }
+
+  /**
+   * CandidateCv updateMany
+   */
+  export type CandidateCvUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CandidateCvs.
+     */
+    data: XOR<CandidateCvUpdateManyMutationInput, CandidateCvUncheckedUpdateManyInput>
+    /**
+     * Filter which CandidateCvs to update
+     */
+    where?: CandidateCvWhereInput
+    /**
+     * Limit how many CandidateCvs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidateCv updateManyAndReturn
+   */
+  export type CandidateCvUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * The data used to update CandidateCvs.
+     */
+    data: XOR<CandidateCvUpdateManyMutationInput, CandidateCvUncheckedUpdateManyInput>
+    /**
+     * Filter which CandidateCvs to update
+     */
+    where?: CandidateCvWhereInput
+    /**
+     * Limit how many CandidateCvs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CandidateCv upsert
+   */
+  export type CandidateCvUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CandidateCv to update in case it exists.
+     */
+    where: CandidateCvWhereUniqueInput
+    /**
+     * In case the CandidateCv found by the `where` argument doesn't exist, create a new CandidateCv with this data.
+     */
+    create: XOR<CandidateCvCreateInput, CandidateCvUncheckedCreateInput>
+    /**
+     * In case the CandidateCv was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CandidateCvUpdateInput, CandidateCvUncheckedUpdateInput>
+  }
+
+  /**
+   * CandidateCv delete
+   */
+  export type CandidateCvDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
+    /**
+     * Filter which CandidateCv to delete.
+     */
+    where: CandidateCvWhereUniqueInput
+  }
+
+  /**
+   * CandidateCv deleteMany
+   */
+  export type CandidateCvDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidateCvs to delete
+     */
+    where?: CandidateCvWhereInput
+    /**
+     * Limit how many CandidateCvs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidateCv without action
+   */
+  export type CandidateCvDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCv
+     */
+    select?: CandidateCvSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidateCv
+     */
+    omit?: CandidateCvOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidateCvInclude<ExtArgs> | null
   }
 
 
@@ -9721,6 +12238,35 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const CandidateProfileScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CandidateProfileScalarFieldEnum = (typeof CandidateProfileScalarFieldEnum)[keyof typeof CandidateProfileScalarFieldEnum]
+
+
+  export const CandidateCvScalarFieldEnum: {
+    id: 'id',
+    candidateProfileId: 'candidateProfileId',
+    label: 'label',
+    originalFilename: 'originalFilename',
+    storageFilename: 'storageFilename',
+    storageKey: 'storageKey',
+    fileHash: 'fileHash',
+    mimeType: 'mimeType',
+    fileSize: 'fileSize',
+    isDefault: 'isDefault',
+    uploadedAt: 'uploadedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CandidateCvScalarFieldEnum = (typeof CandidateCvScalarFieldEnum)[keyof typeof CandidateCvScalarFieldEnum]
+
+
   export const CategoryScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -9878,6 +12424,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'CompanyStatus'
    */
   export type EnumCompanyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyStatus'>
@@ -9888,13 +12441,6 @@ export namespace Prisma {
    * Reference to a field of type 'CompanyStatus[]'
    */
   export type ListEnumCompanyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -9934,6 +12480,7 @@ export namespace Prisma {
     categories?: CategoryListRelationFilter
     companies?: CompanyListRelationFilter
     resumes?: ResumeListRelationFilter
+    candidateProfile?: XOR<CandidateProfileNullableScalarRelationFilter, CandidateProfileWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9952,6 +12499,7 @@ export namespace Prisma {
     categories?: CategoryOrderByRelationAggregateInput
     companies?: CompanyOrderByRelationAggregateInput
     resumes?: ResumeOrderByRelationAggregateInput
+    candidateProfile?: CandidateProfileOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -9973,6 +12521,7 @@ export namespace Prisma {
     categories?: CategoryListRelationFilter
     companies?: CompanyListRelationFilter
     resumes?: ResumeListRelationFilter
+    candidateProfile?: XOR<CandidateProfileNullableScalarRelationFilter, CandidateProfileWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -10009,6 +12558,156 @@ export namespace Prisma {
     emailVerificationExpiresAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type CandidateProfileWhereInput = {
+    AND?: CandidateProfileWhereInput | CandidateProfileWhereInput[]
+    OR?: CandidateProfileWhereInput[]
+    NOT?: CandidateProfileWhereInput | CandidateProfileWhereInput[]
+    id?: UuidFilter<"CandidateProfile"> | string
+    userId?: UuidFilter<"CandidateProfile"> | string
+    createdAt?: DateTimeFilter<"CandidateProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidateProfile"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    cvs?: CandidateCvListRelationFilter
+  }
+
+  export type CandidateProfileOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    cvs?: CandidateCvOrderByRelationAggregateInput
+  }
+
+  export type CandidateProfileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: CandidateProfileWhereInput | CandidateProfileWhereInput[]
+    OR?: CandidateProfileWhereInput[]
+    NOT?: CandidateProfileWhereInput | CandidateProfileWhereInput[]
+    createdAt?: DateTimeFilter<"CandidateProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidateProfile"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    cvs?: CandidateCvListRelationFilter
+  }, "id" | "userId">
+
+  export type CandidateProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CandidateProfileCountOrderByAggregateInput
+    _max?: CandidateProfileMaxOrderByAggregateInput
+    _min?: CandidateProfileMinOrderByAggregateInput
+  }
+
+  export type CandidateProfileScalarWhereWithAggregatesInput = {
+    AND?: CandidateProfileScalarWhereWithAggregatesInput | CandidateProfileScalarWhereWithAggregatesInput[]
+    OR?: CandidateProfileScalarWhereWithAggregatesInput[]
+    NOT?: CandidateProfileScalarWhereWithAggregatesInput | CandidateProfileScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"CandidateProfile"> | string
+    userId?: UuidWithAggregatesFilter<"CandidateProfile"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CandidateProfile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CandidateProfile"> | Date | string
+  }
+
+  export type CandidateCvWhereInput = {
+    AND?: CandidateCvWhereInput | CandidateCvWhereInput[]
+    OR?: CandidateCvWhereInput[]
+    NOT?: CandidateCvWhereInput | CandidateCvWhereInput[]
+    id?: UuidFilter<"CandidateCv"> | string
+    candidateProfileId?: UuidFilter<"CandidateCv"> | string
+    label?: StringFilter<"CandidateCv"> | string
+    originalFilename?: StringFilter<"CandidateCv"> | string
+    storageFilename?: StringFilter<"CandidateCv"> | string
+    storageKey?: StringFilter<"CandidateCv"> | string
+    fileHash?: StringNullableFilter<"CandidateCv"> | string | null
+    mimeType?: StringFilter<"CandidateCv"> | string
+    fileSize?: IntFilter<"CandidateCv"> | number
+    isDefault?: BoolFilter<"CandidateCv"> | boolean
+    uploadedAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    candidateProfile?: XOR<CandidateProfileScalarRelationFilter, CandidateProfileWhereInput>
+  }
+
+  export type CandidateCvOrderByWithRelationInput = {
+    id?: SortOrder
+    candidateProfileId?: SortOrder
+    label?: SortOrder
+    originalFilename?: SortOrder
+    storageFilename?: SortOrder
+    storageKey?: SortOrder
+    fileHash?: SortOrderInput | SortOrder
+    mimeType?: SortOrder
+    fileSize?: SortOrder
+    isDefault?: SortOrder
+    uploadedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    candidateProfile?: CandidateProfileOrderByWithRelationInput
+  }
+
+  export type CandidateCvWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CandidateCvWhereInput | CandidateCvWhereInput[]
+    OR?: CandidateCvWhereInput[]
+    NOT?: CandidateCvWhereInput | CandidateCvWhereInput[]
+    candidateProfileId?: UuidFilter<"CandidateCv"> | string
+    label?: StringFilter<"CandidateCv"> | string
+    originalFilename?: StringFilter<"CandidateCv"> | string
+    storageFilename?: StringFilter<"CandidateCv"> | string
+    storageKey?: StringFilter<"CandidateCv"> | string
+    fileHash?: StringNullableFilter<"CandidateCv"> | string | null
+    mimeType?: StringFilter<"CandidateCv"> | string
+    fileSize?: IntFilter<"CandidateCv"> | number
+    isDefault?: BoolFilter<"CandidateCv"> | boolean
+    uploadedAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    candidateProfile?: XOR<CandidateProfileScalarRelationFilter, CandidateProfileWhereInput>
+  }, "id">
+
+  export type CandidateCvOrderByWithAggregationInput = {
+    id?: SortOrder
+    candidateProfileId?: SortOrder
+    label?: SortOrder
+    originalFilename?: SortOrder
+    storageFilename?: SortOrder
+    storageKey?: SortOrder
+    fileHash?: SortOrderInput | SortOrder
+    mimeType?: SortOrder
+    fileSize?: SortOrder
+    isDefault?: SortOrder
+    uploadedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CandidateCvCountOrderByAggregateInput
+    _avg?: CandidateCvAvgOrderByAggregateInput
+    _max?: CandidateCvMaxOrderByAggregateInput
+    _min?: CandidateCvMinOrderByAggregateInput
+    _sum?: CandidateCvSumOrderByAggregateInput
+  }
+
+  export type CandidateCvScalarWhereWithAggregatesInput = {
+    AND?: CandidateCvScalarWhereWithAggregatesInput | CandidateCvScalarWhereWithAggregatesInput[]
+    OR?: CandidateCvScalarWhereWithAggregatesInput[]
+    NOT?: CandidateCvScalarWhereWithAggregatesInput | CandidateCvScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"CandidateCv"> | string
+    candidateProfileId?: UuidWithAggregatesFilter<"CandidateCv"> | string
+    label?: StringWithAggregatesFilter<"CandidateCv"> | string
+    originalFilename?: StringWithAggregatesFilter<"CandidateCv"> | string
+    storageFilename?: StringWithAggregatesFilter<"CandidateCv"> | string
+    storageKey?: StringWithAggregatesFilter<"CandidateCv"> | string
+    fileHash?: StringNullableWithAggregatesFilter<"CandidateCv"> | string | null
+    mimeType?: StringWithAggregatesFilter<"CandidateCv"> | string
+    fileSize?: IntWithAggregatesFilter<"CandidateCv"> | number
+    isDefault?: BoolWithAggregatesFilter<"CandidateCv"> | boolean
+    uploadedAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
   }
 
   export type CategoryWhereInput = {
@@ -10477,6 +13176,7 @@ export namespace Prisma {
     categories?: CategoryCreateNestedManyWithoutUserInput
     companies?: CompanyCreateNestedManyWithoutUserInput
     resumes?: ResumeCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10495,6 +13195,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     companies?: CompanyUncheckedCreateNestedManyWithoutUserInput
     resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -10513,6 +13214,7 @@ export namespace Prisma {
     categories?: CategoryUpdateManyWithoutUserNestedInput
     companies?: CompanyUpdateManyWithoutUserNestedInput
     resumes?: ResumeUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10531,6 +13233,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     companies?: CompanyUncheckedUpdateManyWithoutUserNestedInput
     resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10574,6 +13277,169 @@ export namespace Prisma {
     emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateProfileCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCandidateProfileInput
+    cvs?: CandidateCvCreateNestedManyWithoutCandidateProfileInput
+  }
+
+  export type CandidateProfileUncheckedCreateInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cvs?: CandidateCvUncheckedCreateNestedManyWithoutCandidateProfileInput
+  }
+
+  export type CandidateProfileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCandidateProfileNestedInput
+    cvs?: CandidateCvUpdateManyWithoutCandidateProfileNestedInput
+  }
+
+  export type CandidateProfileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvs?: CandidateCvUncheckedUpdateManyWithoutCandidateProfileNestedInput
+  }
+
+  export type CandidateProfileCreateManyInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidateProfileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateProfileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateCvCreateInput = {
+    id?: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidateProfile: CandidateProfileCreateNestedOneWithoutCvsInput
+  }
+
+  export type CandidateCvUncheckedCreateInput = {
+    id?: string
+    candidateProfileId: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidateCvUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidateProfile?: CandidateProfileUpdateOneRequiredWithoutCvsNestedInput
+  }
+
+  export type CandidateCvUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateProfileId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateCvCreateManyInput = {
+    id?: string
+    candidateProfileId: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidateCvUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateCvUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateProfileId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11141,6 +14007,11 @@ export namespace Prisma {
     none?: ResumeWhereInput
   }
 
+  export type CandidateProfileNullableScalarRelationFilter = {
+    is?: CandidateProfileWhereInput | null
+    isNot?: CandidateProfileWhereInput | null
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -11282,6 +14153,42 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type CandidateCvListRelationFilter = {
+    every?: CandidateCvWhereInput
+    some?: CandidateCvWhereInput
+    none?: CandidateCvWhereInput
+  }
+
+  export type CandidateCvOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CandidateProfileCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CandidateProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CandidateProfileMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -11293,9 +14200,94 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type CandidateProfileScalarRelationFilter = {
+    is?: CandidateProfileWhereInput
+    isNot?: CandidateProfileWhereInput
+  }
+
+  export type CandidateCvCountOrderByAggregateInput = {
+    id?: SortOrder
+    candidateProfileId?: SortOrder
+    label?: SortOrder
+    originalFilename?: SortOrder
+    storageFilename?: SortOrder
+    storageKey?: SortOrder
+    fileHash?: SortOrder
+    mimeType?: SortOrder
+    fileSize?: SortOrder
+    isDefault?: SortOrder
+    uploadedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CandidateCvAvgOrderByAggregateInput = {
+    fileSize?: SortOrder
+  }
+
+  export type CandidateCvMaxOrderByAggregateInput = {
+    id?: SortOrder
+    candidateProfileId?: SortOrder
+    label?: SortOrder
+    originalFilename?: SortOrder
+    storageFilename?: SortOrder
+    storageKey?: SortOrder
+    fileHash?: SortOrder
+    mimeType?: SortOrder
+    fileSize?: SortOrder
+    isDefault?: SortOrder
+    uploadedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CandidateCvMinOrderByAggregateInput = {
+    id?: SortOrder
+    candidateProfileId?: SortOrder
+    label?: SortOrder
+    originalFilename?: SortOrder
+    storageFilename?: SortOrder
+    storageKey?: SortOrder
+    fileHash?: SortOrder
+    mimeType?: SortOrder
+    fileSize?: SortOrder
+    isDefault?: SortOrder
+    uploadedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CandidateCvSumOrderByAggregateInput = {
+    fileSize?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -11336,22 +14328,6 @@ export namespace Prisma {
     position?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
   export type UuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -11369,11 +14345,6 @@ export namespace Prisma {
     in?: $Enums.CompanyStatus[] | ListEnumCompanyStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.CompanyStatus[] | ListEnumCompanyStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumCompanyStatusFilter<$PrismaModel> | $Enums.CompanyStatus
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type CategoryNullableScalarRelationFilter = {
@@ -11491,14 +14462,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumCompanyStatusFilter<$PrismaModel>
     _max?: NestedEnumCompanyStatusFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ResumeCountOrderByAggregateInput = {
@@ -11654,6 +14617,12 @@ export namespace Prisma {
     connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
   }
 
+  export type CandidateProfileCreateNestedOneWithoutUserInput = {
+    create?: XOR<CandidateProfileCreateWithoutUserInput, CandidateProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CandidateProfileCreateOrConnectWithoutUserInput
+    connect?: CandidateProfileWhereUniqueInput
+  }
+
   export type CategoryUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
@@ -11673,6 +14642,12 @@ export namespace Prisma {
     connectOrCreate?: ResumeCreateOrConnectWithoutUserInput | ResumeCreateOrConnectWithoutUserInput[]
     createMany?: ResumeCreateManyUserInputEnvelope
     connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+  }
+
+  export type CandidateProfileUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<CandidateProfileCreateWithoutUserInput, CandidateProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CandidateProfileCreateOrConnectWithoutUserInput
+    connect?: CandidateProfileWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11733,6 +14708,16 @@ export namespace Prisma {
     deleteMany?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
   }
 
+  export type CandidateProfileUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CandidateProfileCreateWithoutUserInput, CandidateProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CandidateProfileCreateOrConnectWithoutUserInput
+    upsert?: CandidateProfileUpsertWithoutUserInput
+    disconnect?: CandidateProfileWhereInput | boolean
+    delete?: CandidateProfileWhereInput | boolean
+    connect?: CandidateProfileWhereUniqueInput
+    update?: XOR<XOR<CandidateProfileUpdateToOneWithWhereWithoutUserInput, CandidateProfileUpdateWithoutUserInput>, CandidateProfileUncheckedUpdateWithoutUserInput>
+  }
+
   export type CategoryUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
@@ -11775,6 +14760,98 @@ export namespace Prisma {
     deleteMany?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
   }
 
+  export type CandidateProfileUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CandidateProfileCreateWithoutUserInput, CandidateProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CandidateProfileCreateOrConnectWithoutUserInput
+    upsert?: CandidateProfileUpsertWithoutUserInput
+    disconnect?: CandidateProfileWhereInput | boolean
+    delete?: CandidateProfileWhereInput | boolean
+    connect?: CandidateProfileWhereUniqueInput
+    update?: XOR<XOR<CandidateProfileUpdateToOneWithWhereWithoutUserInput, CandidateProfileUpdateWithoutUserInput>, CandidateProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserCreateNestedOneWithoutCandidateProfileInput = {
+    create?: XOR<UserCreateWithoutCandidateProfileInput, UserUncheckedCreateWithoutCandidateProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCandidateProfileInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CandidateCvCreateNestedManyWithoutCandidateProfileInput = {
+    create?: XOR<CandidateCvCreateWithoutCandidateProfileInput, CandidateCvUncheckedCreateWithoutCandidateProfileInput> | CandidateCvCreateWithoutCandidateProfileInput[] | CandidateCvUncheckedCreateWithoutCandidateProfileInput[]
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCandidateProfileInput | CandidateCvCreateOrConnectWithoutCandidateProfileInput[]
+    createMany?: CandidateCvCreateManyCandidateProfileInputEnvelope
+    connect?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+  }
+
+  export type CandidateCvUncheckedCreateNestedManyWithoutCandidateProfileInput = {
+    create?: XOR<CandidateCvCreateWithoutCandidateProfileInput, CandidateCvUncheckedCreateWithoutCandidateProfileInput> | CandidateCvCreateWithoutCandidateProfileInput[] | CandidateCvUncheckedCreateWithoutCandidateProfileInput[]
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCandidateProfileInput | CandidateCvCreateOrConnectWithoutCandidateProfileInput[]
+    createMany?: CandidateCvCreateManyCandidateProfileInputEnvelope
+    connect?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutCandidateProfileNestedInput = {
+    create?: XOR<UserCreateWithoutCandidateProfileInput, UserUncheckedCreateWithoutCandidateProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCandidateProfileInput
+    upsert?: UserUpsertWithoutCandidateProfileInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCandidateProfileInput, UserUpdateWithoutCandidateProfileInput>, UserUncheckedUpdateWithoutCandidateProfileInput>
+  }
+
+  export type CandidateCvUpdateManyWithoutCandidateProfileNestedInput = {
+    create?: XOR<CandidateCvCreateWithoutCandidateProfileInput, CandidateCvUncheckedCreateWithoutCandidateProfileInput> | CandidateCvCreateWithoutCandidateProfileInput[] | CandidateCvUncheckedCreateWithoutCandidateProfileInput[]
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCandidateProfileInput | CandidateCvCreateOrConnectWithoutCandidateProfileInput[]
+    upsert?: CandidateCvUpsertWithWhereUniqueWithoutCandidateProfileInput | CandidateCvUpsertWithWhereUniqueWithoutCandidateProfileInput[]
+    createMany?: CandidateCvCreateManyCandidateProfileInputEnvelope
+    set?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    disconnect?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    delete?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    connect?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    update?: CandidateCvUpdateWithWhereUniqueWithoutCandidateProfileInput | CandidateCvUpdateWithWhereUniqueWithoutCandidateProfileInput[]
+    updateMany?: CandidateCvUpdateManyWithWhereWithoutCandidateProfileInput | CandidateCvUpdateManyWithWhereWithoutCandidateProfileInput[]
+    deleteMany?: CandidateCvScalarWhereInput | CandidateCvScalarWhereInput[]
+  }
+
+  export type CandidateCvUncheckedUpdateManyWithoutCandidateProfileNestedInput = {
+    create?: XOR<CandidateCvCreateWithoutCandidateProfileInput, CandidateCvUncheckedCreateWithoutCandidateProfileInput> | CandidateCvCreateWithoutCandidateProfileInput[] | CandidateCvUncheckedCreateWithoutCandidateProfileInput[]
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCandidateProfileInput | CandidateCvCreateOrConnectWithoutCandidateProfileInput[]
+    upsert?: CandidateCvUpsertWithWhereUniqueWithoutCandidateProfileInput | CandidateCvUpsertWithWhereUniqueWithoutCandidateProfileInput[]
+    createMany?: CandidateCvCreateManyCandidateProfileInputEnvelope
+    set?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    disconnect?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    delete?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    connect?: CandidateCvWhereUniqueInput | CandidateCvWhereUniqueInput[]
+    update?: CandidateCvUpdateWithWhereUniqueWithoutCandidateProfileInput | CandidateCvUpdateWithWhereUniqueWithoutCandidateProfileInput[]
+    updateMany?: CandidateCvUpdateManyWithWhereWithoutCandidateProfileInput | CandidateCvUpdateManyWithWhereWithoutCandidateProfileInput[]
+    deleteMany?: CandidateCvScalarWhereInput | CandidateCvScalarWhereInput[]
+  }
+
+  export type CandidateProfileCreateNestedOneWithoutCvsInput = {
+    create?: XOR<CandidateProfileCreateWithoutCvsInput, CandidateProfileUncheckedCreateWithoutCvsInput>
+    connectOrCreate?: CandidateProfileCreateOrConnectWithoutCvsInput
+    connect?: CandidateProfileWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type CandidateProfileUpdateOneRequiredWithoutCvsNestedInput = {
+    create?: XOR<CandidateProfileCreateWithoutCvsInput, CandidateProfileUncheckedCreateWithoutCvsInput>
+    connectOrCreate?: CandidateProfileCreateOrConnectWithoutCvsInput
+    upsert?: CandidateProfileUpsertWithoutCvsInput
+    connect?: CandidateProfileWhereUniqueInput
+    update?: XOR<XOR<CandidateProfileUpdateToOneWithWhereWithoutCvsInput, CandidateProfileUpdateWithoutCvsInput>, CandidateProfileUncheckedUpdateWithoutCvsInput>
+  }
+
   export type UserCreateNestedOneWithoutCategoriesInput = {
     create?: XOR<UserCreateWithoutCategoriesInput, UserUncheckedCreateWithoutCategoriesInput>
     connectOrCreate?: UserCreateOrConnectWithoutCategoriesInput
@@ -11793,14 +14870,6 @@ export namespace Prisma {
     connectOrCreate?: CompanyCreateOrConnectWithoutCategoryInput | CompanyCreateOrConnectWithoutCategoryInput[]
     createMany?: CompanyCreateManyCategoryInputEnvelope
     connect?: CompanyWhereUniqueInput | CompanyWhereUniqueInput[]
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutCategoriesNestedInput = {
@@ -11895,10 +14964,6 @@ export namespace Prisma {
 
   export type EnumCompanyStatusFieldUpdateOperationsInput = {
     set?: $Enums.CompanyStatus
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutCompaniesNestedInput = {
@@ -12274,6 +15339,11 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -12301,6 +15371,14 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -12317,11 +15395,6 @@ export namespace Prisma {
     in?: $Enums.CompanyStatus[] | ListEnumCompanyStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.CompanyStatus[] | ListEnumCompanyStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumCompanyStatusFilter<$PrismaModel> | $Enums.CompanyStatus
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12346,14 +15419,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumCompanyStatusFilter<$PrismaModel>
     _max?: NestedEnumCompanyStatusFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type CategoryCreateWithoutUserInput = {
@@ -12470,6 +15535,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CandidateProfileCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cvs?: CandidateCvCreateNestedManyWithoutCandidateProfileInput
+  }
+
+  export type CandidateProfileUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cvs?: CandidateCvUncheckedCreateNestedManyWithoutCandidateProfileInput
+  }
+
+  export type CandidateProfileCreateOrConnectWithoutUserInput = {
+    where: CandidateProfileWhereUniqueInput
+    create: XOR<CandidateProfileCreateWithoutUserInput, CandidateProfileUncheckedCreateWithoutUserInput>
+  }
+
   export type CategoryUpsertWithWhereUniqueWithoutUserInput = {
     where: CategoryWhereUniqueInput
     update: XOR<CategoryUpdateWithoutUserInput, CategoryUncheckedUpdateWithoutUserInput>
@@ -12567,6 +15651,238 @@ export namespace Prisma {
     uploadedAt?: DateTimeFilter<"Resume"> | Date | string
   }
 
+  export type CandidateProfileUpsertWithoutUserInput = {
+    update: XOR<CandidateProfileUpdateWithoutUserInput, CandidateProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<CandidateProfileCreateWithoutUserInput, CandidateProfileUncheckedCreateWithoutUserInput>
+    where?: CandidateProfileWhereInput
+  }
+
+  export type CandidateProfileUpdateToOneWithWhereWithoutUserInput = {
+    where?: CandidateProfileWhereInput
+    data: XOR<CandidateProfileUpdateWithoutUserInput, CandidateProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CandidateProfileUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvs?: CandidateCvUpdateManyWithoutCandidateProfileNestedInput
+  }
+
+  export type CandidateProfileUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvs?: CandidateCvUncheckedUpdateManyWithoutCandidateProfileNestedInput
+  }
+
+  export type UserCreateWithoutCandidateProfileInput = {
+    id?: string
+    firstname: string
+    lastname: string
+    email: string
+    passwordHash: string
+    passwordResetToken?: string | null
+    passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    categories?: CategoryCreateNestedManyWithoutUserInput
+    companies?: CompanyCreateNestedManyWithoutUserInput
+    resumes?: ResumeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCandidateProfileInput = {
+    id?: string
+    firstname: string
+    lastname: string
+    email: string
+    passwordHash: string
+    passwordResetToken?: string | null
+    passwordResetExpiresAt?: Date | string | null
+    emailVerifiedAt?: Date | string | null
+    emailVerificationCode?: string | null
+    emailVerificationExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    companies?: CompanyUncheckedCreateNestedManyWithoutUserInput
+    resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCandidateProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCandidateProfileInput, UserUncheckedCreateWithoutCandidateProfileInput>
+  }
+
+  export type CandidateCvCreateWithoutCandidateProfileInput = {
+    id?: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidateCvUncheckedCreateWithoutCandidateProfileInput = {
+    id?: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidateCvCreateOrConnectWithoutCandidateProfileInput = {
+    where: CandidateCvWhereUniqueInput
+    create: XOR<CandidateCvCreateWithoutCandidateProfileInput, CandidateCvUncheckedCreateWithoutCandidateProfileInput>
+  }
+
+  export type CandidateCvCreateManyCandidateProfileInputEnvelope = {
+    data: CandidateCvCreateManyCandidateProfileInput | CandidateCvCreateManyCandidateProfileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutCandidateProfileInput = {
+    update: XOR<UserUpdateWithoutCandidateProfileInput, UserUncheckedUpdateWithoutCandidateProfileInput>
+    create: XOR<UserCreateWithoutCandidateProfileInput, UserUncheckedCreateWithoutCandidateProfileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCandidateProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCandidateProfileInput, UserUncheckedUpdateWithoutCandidateProfileInput>
+  }
+
+  export type UserUpdateWithoutCandidateProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categories?: CategoryUpdateManyWithoutUserNestedInput
+    companies?: CompanyUpdateManyWithoutUserNestedInput
+    resumes?: ResumeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCandidateProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    companies?: CompanyUncheckedUpdateManyWithoutUserNestedInput
+    resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CandidateCvUpsertWithWhereUniqueWithoutCandidateProfileInput = {
+    where: CandidateCvWhereUniqueInput
+    update: XOR<CandidateCvUpdateWithoutCandidateProfileInput, CandidateCvUncheckedUpdateWithoutCandidateProfileInput>
+    create: XOR<CandidateCvCreateWithoutCandidateProfileInput, CandidateCvUncheckedCreateWithoutCandidateProfileInput>
+  }
+
+  export type CandidateCvUpdateWithWhereUniqueWithoutCandidateProfileInput = {
+    where: CandidateCvWhereUniqueInput
+    data: XOR<CandidateCvUpdateWithoutCandidateProfileInput, CandidateCvUncheckedUpdateWithoutCandidateProfileInput>
+  }
+
+  export type CandidateCvUpdateManyWithWhereWithoutCandidateProfileInput = {
+    where: CandidateCvScalarWhereInput
+    data: XOR<CandidateCvUpdateManyMutationInput, CandidateCvUncheckedUpdateManyWithoutCandidateProfileInput>
+  }
+
+  export type CandidateCvScalarWhereInput = {
+    AND?: CandidateCvScalarWhereInput | CandidateCvScalarWhereInput[]
+    OR?: CandidateCvScalarWhereInput[]
+    NOT?: CandidateCvScalarWhereInput | CandidateCvScalarWhereInput[]
+    id?: UuidFilter<"CandidateCv"> | string
+    candidateProfileId?: UuidFilter<"CandidateCv"> | string
+    label?: StringFilter<"CandidateCv"> | string
+    originalFilename?: StringFilter<"CandidateCv"> | string
+    storageFilename?: StringFilter<"CandidateCv"> | string
+    storageKey?: StringFilter<"CandidateCv"> | string
+    fileHash?: StringNullableFilter<"CandidateCv"> | string | null
+    mimeType?: StringFilter<"CandidateCv"> | string
+    fileSize?: IntFilter<"CandidateCv"> | number
+    isDefault?: BoolFilter<"CandidateCv"> | boolean
+    uploadedAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
+  }
+
+  export type CandidateProfileCreateWithoutCvsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCandidateProfileInput
+  }
+
+  export type CandidateProfileUncheckedCreateWithoutCvsInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidateProfileCreateOrConnectWithoutCvsInput = {
+    where: CandidateProfileWhereUniqueInput
+    create: XOR<CandidateProfileCreateWithoutCvsInput, CandidateProfileUncheckedCreateWithoutCvsInput>
+  }
+
+  export type CandidateProfileUpsertWithoutCvsInput = {
+    update: XOR<CandidateProfileUpdateWithoutCvsInput, CandidateProfileUncheckedUpdateWithoutCvsInput>
+    create: XOR<CandidateProfileCreateWithoutCvsInput, CandidateProfileUncheckedCreateWithoutCvsInput>
+    where?: CandidateProfileWhereInput
+  }
+
+  export type CandidateProfileUpdateToOneWithWhereWithoutCvsInput = {
+    where?: CandidateProfileWhereInput
+    data: XOR<CandidateProfileUpdateWithoutCvsInput, CandidateProfileUncheckedUpdateWithoutCvsInput>
+  }
+
+  export type CandidateProfileUpdateWithoutCvsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCandidateProfileNestedInput
+  }
+
+  export type CandidateProfileUncheckedUpdateWithoutCvsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateWithoutCategoriesInput = {
     id?: string
     firstname: string
@@ -12582,6 +15898,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     companies?: CompanyCreateNestedManyWithoutUserInput
     resumes?: ResumeCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -12599,6 +15916,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     companies?: CompanyUncheckedCreateNestedManyWithoutUserInput
     resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -12684,6 +16002,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     companies?: CompanyUpdateManyWithoutUserNestedInput
     resumes?: ResumeUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -12701,6 +16020,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     companies?: CompanyUncheckedUpdateManyWithoutUserNestedInput
     resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CompanyUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -12734,6 +16054,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     categories?: CategoryCreateNestedManyWithoutUserInput
     resumes?: ResumeCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCompaniesInput = {
@@ -12751,6 +16072,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     resumes?: ResumeUncheckedCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCompaniesInput = {
@@ -12887,6 +16209,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUpdateManyWithoutUserNestedInput
     resumes?: ResumeUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCompaniesInput = {
@@ -12904,6 +16227,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     resumes?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CategoryUpsertWithoutCompaniesInput = {
@@ -13036,6 +16360,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     categories?: CategoryCreateNestedManyWithoutUserInput
     companies?: CompanyCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutResumesInput = {
@@ -13053,6 +16378,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     companies?: CompanyUncheckedCreateNestedManyWithoutUserInput
+    candidateProfile?: CandidateProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutResumesInput = {
@@ -13116,6 +16442,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUpdateManyWithoutUserNestedInput
     companies?: CompanyUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutResumesInput = {
@@ -13133,6 +16460,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     companies?: CompanyUncheckedUpdateManyWithoutUserNestedInput
+    candidateProfile?: CandidateProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ApplicationUpsertWithWhereUniqueWithoutResumeInput = {
@@ -13667,6 +16995,66 @@ export namespace Prisma {
     fileSize?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateCvCreateManyCandidateProfileInput = {
+    id?: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidateCvUpdateWithoutCandidateProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateCvUncheckedUpdateWithoutCandidateProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidateCvUncheckedUpdateManyWithoutCandidateProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CompanyCreateManyCategoryInput = {

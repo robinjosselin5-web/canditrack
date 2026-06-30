@@ -109,7 +109,7 @@ export function VerifyEmailPage() {
         Compte deja valide ?{' '}
         <Link
           to="/login"
-          className="font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="cursor-pointer font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           Se connecter
         </Link>

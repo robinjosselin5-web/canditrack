@@ -38,12 +38,6 @@ export async function createCompany(
   }
 }
 
-export async function findCompanyById(companyId: string): Promise<Company | null> {
-  return prisma.company.findUnique({
-    where: { id: companyId },
-  })
-}
-
 export async function findCompanyByIdForUser(
   companyId: string,
   userId: string,

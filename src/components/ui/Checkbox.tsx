@@ -13,7 +13,7 @@ export function Checkbox({ id, label, ...props }: CheckboxProps) {
       htmlFor={inputId}
     >
       <input
-        className="mt-0.5 size-4 rounded border-border text-primary focus:ring-primary"
+        className="mt-0.5 size-4 cursor-pointer rounded border-border text-primary focus:ring-primary"
         id={inputId}
         type="checkbox"
         {...props}

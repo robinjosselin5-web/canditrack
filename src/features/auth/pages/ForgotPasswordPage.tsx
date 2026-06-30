@@ -76,7 +76,7 @@ export function ForgotPasswordPage() {
       <p className="mt-6 text-center">
         <Link
           to="/login"
-          className="text-sm font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="cursor-pointer text-sm font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           Retour a la connexion
         </Link>

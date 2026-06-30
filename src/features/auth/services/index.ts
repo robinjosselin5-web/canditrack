@@ -1,5 +1,4 @@
 export {
-  getCurrentUser,
   loginUser,
   logoutUser,
   registerUser,
