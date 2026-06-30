@@ -19,6 +19,15 @@ enum CompanyStatus {
   @@map("company_status")
 }
 
+enum CandidateCvAnalysisStatus {
+  NOT_ANALYZED @map("not_analyzed")
+  PROCESSING   @map("processing")
+  COMPLETED    @map("completed")
+  FAILED       @map("failed")
+
+  @@map("candidate_cv_analysis_status")
+}
+
 model User {
   id                         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firstname                  String            @db.VarChar(100)
@@ -55,20 +64,23 @@ model CandidateProfile {
 }
 
 model CandidateCv {
-  id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  candidateProfileId String           @map("candidate_profile_id") @db.Uuid
-  label              String           @db.VarChar(50)
-  originalFilename   String           @map("original_filename") @db.VarChar(255)
-  storageFilename    String           @map("storage_filename") @db.VarChar(255)
-  storageKey         String           @map("storage_key") @db.VarChar(500)
-  fileHash           String?          @map("file_hash") @db.VarChar(64)
-  mimeType           String           @map("mime_type") @db.VarChar(100)
-  fileSize           Int              @map("file_size")
-  isDefault          Boolean          @default(false) @map("is_default")
-  uploadedAt         DateTime         @default(now()) @map("uploaded_at") @db.Timestamp(6)
-  createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt          DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  id                 String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateProfileId String                    @map("candidate_profile_id") @db.Uuid
+  label              String                    @db.VarChar(50)
+  originalFilename   String                    @map("original_filename") @db.VarChar(255)
+  storageFilename    String                    @map("storage_filename") @db.VarChar(255)
+  storageKey         String                    @map("storage_key") @db.VarChar(500)
+  fileHash           String?                   @map("file_hash") @db.VarChar(64)
+  mimeType           String                    @map("mime_type") @db.VarChar(100)
+  fileSize           Int                       @map("file_size")
+  isDefault          Boolean                   @default(false) @map("is_default")
+  analysisStatus     CandidateCvAnalysisStatus @default(NOT_ANALYZED) @map("analysis_status")
+  extractedText      String?                   @map("extracted_text")
+  lastAnalyzedAt     DateTime?                 @map("last_analyzed_at") @db.Timestamp(6)
+  uploadedAt         DateTime                  @default(now()) @map("uploaded_at") @db.Timestamp(6)
+  createdAt          DateTime                  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime                  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateProfile   CandidateProfile          @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
 
   @@index([candidateProfileId], map: "candidate_cvs_candidate_profile_id_idx")
   @@map("candidate_cvs")

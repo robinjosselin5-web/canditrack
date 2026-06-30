@@ -1,6 +1,11 @@
 import { Router } from 'express'
 import multer from 'multer'
-import { importCandidateCvController } from '../controllers/candidateCvController.js'
+import {
+  analyzeCandidateCvController,
+  deleteCandidateCvController,
+  getCandidateCvsController,
+  importCandidateCvController,
+} from '../controllers/candidateCvController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
 import { authenticateRequest } from '../middlewares/authenticateRequest.js'
 
@@ -12,6 +17,24 @@ const upload = multer({
 })
 
 export const candidateCvRoutes = Router()
+
+candidateCvRoutes.get(
+  '/profile/cv',
+  authenticateRequest,
+  asyncHandler(getCandidateCvsController),
+)
+
+candidateCvRoutes.post(
+  '/profile/cv/:cvId/analyze',
+  authenticateRequest,
+  asyncHandler(analyzeCandidateCvController),
+)
+
+candidateCvRoutes.delete(
+  '/profile/cv/:cvId',
+  authenticateRequest,
+  asyncHandler(deleteCandidateCvController),
+)
 
 candidateCvRoutes.post(
   '/profile/cv',

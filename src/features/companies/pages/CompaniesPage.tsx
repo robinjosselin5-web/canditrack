@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
-import { Link, useNavigate, useOutletContext } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   ChevronDown,
   Heart,
-  Menu,
   MoreVertical,
   Plus,
   Search,
@@ -20,7 +19,6 @@ import { useCompanies } from '../hooks/useCompanies'
 import { useDeleteCompany } from '../hooks/useDeleteCompany'
 import { useToggleCompanyFavorite } from '../hooks/useToggleCompanyFavorite'
 import type { ICompanyListItem } from '../types/company.types'
-import type { IAppLayoutOutletContext } from '@/layouts/AppLayout'
 
 type StatusFilter = 'all' | ICompanyListItem['status']
 type SortOrder = 'desc' | 'asc'
@@ -42,7 +40,6 @@ const sortOrderLabels: Record<SortOrder, string> = {
 }
 
 export function CompaniesPage() {
-  const { openMobileMenu } = useOutletContext<IAppLayoutOutletContext>()
   const navigate = useNavigate()
   const { data, isError, isLoading } = useCompanies()
   const deleteCompanyMutation = useDeleteCompany()
@@ -112,16 +109,7 @@ export function CompaniesPage() {
   return (
     <section className="mx-auto w-full max-w-[1200px]">
       <div className="mb-8 flex items-center justify-between gap-4 lg:hidden">
-        <button
-          aria-label="Ouvrir le menu"
-          className="inline-flex size-11 cursor-pointer items-center justify-center rounded-button text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          onClick={openMobileMenu}
-          type="button"
-        >
-          <Menu className="size-7" aria-hidden="true" />
-        </button>
-
-        <h1 className="mr-auto text-3xl font-bold text-slate-950">
+        <h1 className="text-3xl font-bold text-slate-950">
           Entreprises
         </h1>
 
