@@ -34,7 +34,7 @@ export function Login() {
 
         <Link
           to="/dashboard"
-          className="flex w-full items-center justify-center rounded-lg bg-slate-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
+          className="flex w-full cursor-pointer items-center justify-center rounded-lg bg-slate-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
         >
           Se connecter
         </Link>

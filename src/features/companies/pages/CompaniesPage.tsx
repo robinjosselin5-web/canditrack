@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import {
   ChevronDown,
+  Heart,
   Menu,
   MoreVertical,
   Plus,
   Search,
-  SlidersHorizontal,
 } from 'lucide-react'
 import { Alert, Card, Modal } from '@/components/ui'
 import {
@@ -18,9 +18,12 @@ import { CompanyForm } from '../components/CompanyForm'
 import { ConfirmationModal } from '../components/ConfirmationModal'
 import { useCompanies } from '../hooks/useCompanies'
 import { useDeleteCompany } from '../hooks/useDeleteCompany'
+import { useToggleCompanyFavorite } from '../hooks/useToggleCompanyFavorite'
 import type { ICompanyListItem } from '../types/company.types'
+import type { IAppLayoutOutletContext } from '@/layouts/AppLayout'
 
 type StatusFilter = 'all' | ICompanyListItem['status']
+type SortOrder = 'desc' | 'asc'
 
 const statusFilterLabels: Record<StatusFilter, string> = {
   accepted: 'Acceptée',
@@ -33,12 +36,21 @@ const statusFilterLabels: Record<StatusFilter, string> = {
   rejected: 'Refusée',
 }
 
+const sortOrderLabels: Record<SortOrder, string> = {
+  asc: 'Plus anciennes',
+  desc: 'Plus recentes',
+}
+
 export function CompaniesPage() {
+  const { openMobileMenu } = useOutletContext<IAppLayoutOutletContext>()
   const navigate = useNavigate()
   const { data, isError, isLoading } = useCompanies()
   const deleteCompanyMutation = useDeleteCompany()
+  const toggleFavoriteMutation = useToggleCompanyFavorite()
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc')
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
   const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(
     null,
   )
@@ -54,6 +66,13 @@ export function CompaniesPage() {
     const normalizedQuery = searchQuery.trim().toLowerCase()
 
     return [...data]
+      .filter((company) => {
+        if (!showFavoritesOnly) {
+          return true
+        }
+
+        return company.isFavorite
+      })
       .filter((company) => {
         if (statusFilter === 'all') {
           return true
@@ -84,16 +103,19 @@ export function CompaniesPage() {
         const firstDate = new Date(firstCompany.createdAt).getTime()
         const secondDate = new Date(secondCompany.createdAt).getTime()
 
-        return secondDate - firstDate
+        return sortOrder === 'asc'
+          ? firstDate - secondDate
+          : secondDate - firstDate
       })
-  }, [data, searchQuery, statusFilter])
+  }, [data, searchQuery, showFavoritesOnly, sortOrder, statusFilter])
 
   return (
     <section className="mx-auto w-full max-w-[1200px]">
       <div className="mb-8 flex items-center justify-between gap-4 lg:hidden">
         <button
           aria-label="Ouvrir le menu"
-          className="inline-flex size-11 items-center justify-center rounded-button text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="inline-flex size-11 cursor-pointer items-center justify-center rounded-button text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          onClick={openMobileMenu}
           type="button"
         >
           <Menu className="size-7" aria-hidden="true" />
@@ -105,7 +127,7 @@ export function CompaniesPage() {
 
         <Link
           aria-label="Ajouter une entreprise"
-          className="inline-flex size-14 items-center justify-center rounded-button bg-gradient-to-br from-primary to-violet-700 text-white shadow-medium transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="inline-flex size-14 cursor-pointer items-center justify-center rounded-button bg-gradient-to-br from-primary to-violet-700 text-white shadow-medium transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           to="/companies/new"
         >
           <Plus className="size-7" aria-hidden="true" />
@@ -116,14 +138,14 @@ export function CompaniesPage() {
         <h1 className="text-3xl font-bold text-slate-950">Entreprises</h1>
       </div>
 
-      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center">
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:flex-wrap lg:items-center">
         <SearchField
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
         />
 
         <button
-          className="hidden min-h-14 min-w-60 items-center justify-between rounded-input border border-border bg-surface px-5 text-sm font-semibold text-text-primary shadow-small lg:inline-flex"
+          className="hidden min-h-14 min-w-60 cursor-pointer items-center justify-between rounded-input border border-border bg-surface px-5 text-sm font-semibold text-text-primary shadow-small lg:inline-flex"
           type="button"
         >
           Catégorie : Toutes
@@ -135,8 +157,22 @@ export function CompaniesPage() {
           setStatusFilter={setStatusFilter}
         />
 
+        <SortOrderSelect
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+        />
+
+        <div className="hidden lg:block">
+          <FavoriteFilterButton
+            isActive={showFavoritesOnly}
+            onClick={() => {
+              setShowFavoritesOnly((value) => !value)
+            }}
+          />
+        </div>
+
         <Link
-          className="hidden min-h-14 items-center justify-center gap-3 rounded-button bg-gradient-to-r from-primary to-violet-700 px-6 text-sm font-semibold text-white shadow-medium transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:ml-auto lg:inline-flex"
+          className="hidden min-h-14 cursor-pointer items-center justify-center gap-3 rounded-button bg-gradient-to-r from-primary to-violet-700 px-6 text-sm font-semibold text-white shadow-medium transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:ml-auto lg:inline-flex"
           to="/companies/new"
         >
           <Plus className="size-5" aria-hidden="true" />
@@ -146,7 +182,7 @@ export function CompaniesPage() {
 
       <div className="mb-6 flex items-center justify-between gap-4 lg:hidden">
         <button
-          className="inline-flex min-h-12 flex-1 items-center justify-between rounded-input border border-border bg-surface px-4 text-base font-semibold text-text-primary shadow-small"
+          className="inline-flex min-h-12 flex-1 cursor-pointer items-center justify-between rounded-input border border-border bg-surface px-4 text-base font-semibold text-text-primary shadow-small"
           type="button"
         >
           Catégorie
@@ -159,13 +195,19 @@ export function CompaniesPage() {
           setStatusFilter={setStatusFilter}
         />
 
-        <button
-          aria-label="Filtres"
-          className="inline-flex size-12 items-center justify-center rounded-input border border-border bg-surface text-text-primary shadow-small transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          type="button"
-        >
-          <SlidersHorizontal className="size-5" aria-hidden="true" />
-        </button>
+        <SortOrderSelect
+          compact
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+        />
+
+        <FavoriteFilterButton
+          compact
+          isActive={showFavoritesOnly}
+          onClick={() => {
+            setShowFavoritesOnly((value) => !value)
+          }}
+        />
       </div>
 
       {isLoading ? <CompaniesSkeleton /> : null}
@@ -185,6 +227,12 @@ export function CompaniesPage() {
               onOpenCompany={(companyId) => {
                 navigate(`/companies/${companyId}`)
               }}
+              onToggleFavorite={(company) => {
+                toggleFavoriteMutation.mutate({
+                  companyId: company.id,
+                  isFavorite: !company.isFavorite,
+                })
+              }}
             />
             <div className="grid gap-4 lg:hidden">
               {filteredCompanies.map((company) => (
@@ -194,6 +242,18 @@ export function CompaniesPage() {
                   company={company}
                   onClick={() => {
                     navigate(`/companies/${company.id}`)
+                  }}
+                  onDeleteCompany={(selectedCompany) => {
+                    setCompanyToDelete(selectedCompany)
+                  }}
+                  onEditCompany={(selectedCompany) => {
+                    setSelectedCompany(selectedCompany)
+                  }}
+                  onToggleFavorite={(selectedCompany) => {
+                    toggleFavoriteMutation.mutate({
+                      companyId: selectedCompany.id,
+                      isFavorite: !selectedCompany.isFavorite,
+                    })
                   }}
                 />
               ))}
@@ -309,7 +369,7 @@ function StatusSelect({
     <label className={compact ? 'relative flex-1' : 'relative lg:w-52'}>
       <span className="sr-only">Filtrer par statut</span>
       <select
-        className="min-h-12 w-full appearance-none rounded-input border border-border bg-surface px-4 pr-10 text-base font-semibold text-text-primary shadow-small outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 lg:min-h-14 lg:text-sm"
+        className="min-h-12 w-full cursor-pointer appearance-none rounded-input border border-border bg-surface px-4 pr-10 text-base font-semibold text-text-primary shadow-small outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 lg:min-h-14 lg:text-sm"
         value={statusFilter}
         onChange={(event) => {
           setStatusFilter(event.target.value as StatusFilter)
@@ -329,19 +389,91 @@ function StatusSelect({
   )
 }
 
+function FavoriteFilterButton({
+  compact = false,
+  isActive,
+  onClick,
+}: {
+  compact?: boolean
+  isActive: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      aria-label="Filtrer les favoris"
+      aria-pressed={isActive}
+      className={[
+        'inline-flex cursor-pointer items-center justify-center gap-2 rounded-input border shadow-small transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+        compact
+          ? 'size-12 shrink-0'
+          : 'hidden min-h-14 px-5 text-sm font-semibold lg:inline-flex',
+        isActive
+          ? 'border-red-200 bg-red-50 text-red-600'
+          : 'border-border bg-surface text-text-primary hover:bg-divider',
+      ].join(' ')}
+      onClick={onClick}
+      type="button"
+    >
+      <Heart
+        className={[
+          compact ? 'size-5' : 'size-4',
+          isActive ? 'fill-current' : '',
+        ].join(' ')}
+        aria-hidden="true"
+      />
+      {compact ? <span className="sr-only">Favoris</span> : 'Favoris'}
+    </button>
+  )
+}
+
+function SortOrderSelect({
+  compact = false,
+  sortOrder,
+  setSortOrder,
+}: {
+  compact?: boolean
+  sortOrder: SortOrder
+  setSortOrder: (value: SortOrder) => void
+}) {
+  return (
+    <label className={compact ? 'relative flex-1' : 'relative lg:w-52'}>
+      <span className="sr-only">Trier les entreprises</span>
+      <select
+        className="min-h-12 w-full cursor-pointer appearance-none rounded-input border border-border bg-surface px-4 pr-10 text-base font-semibold text-text-primary shadow-small outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 lg:min-h-14 lg:text-sm"
+        value={sortOrder}
+        onChange={(event) => {
+          setSortOrder(event.target.value as SortOrder)
+        }}
+      >
+        {Object.entries(sortOrderLabels).map(([value, label]) => (
+          <option key={value} value={value}>
+            {compact ? label : `Tri : ${label}`}
+          </option>
+        ))}
+      </select>
+      <ChevronDown
+        className="pointer-events-none absolute right-4 top-1/2 size-5 -translate-y-1/2 text-text-secondary"
+        aria-hidden="true"
+      />
+    </label>
+  )
+}
+
 function CompaniesTable({
   companies,
   onDeleteCompany,
   onEditCompany,
   onOpenCompany,
+  onToggleFavorite,
 }: {
   companies: ICompanyListItem[]
   onDeleteCompany: (company: ICompanyListItem) => void
   onEditCompany: (company: ICompanyListItem) => void
   onOpenCompany: (companyId: string) => void
+  onToggleFavorite: (company: ICompanyListItem) => void
 }) {
   return (
-    <div className="hidden overflow-hidden rounded-card border border-border bg-surface shadow-small lg:block">
+    <div className="hidden overflow-visible rounded-card border border-border bg-surface shadow-small lg:block">
       <div className="grid grid-cols-[2fr_1.4fr_1.6fr_1.2fr_48px] border-b border-border px-7 py-5 text-sm font-bold text-text-secondary">
         <span>Entreprise</span>
         <span>Catégorie</span>
@@ -386,6 +518,7 @@ function CompaniesTable({
               company={company}
               onDeleteCompany={onDeleteCompany}
               onEditCompany={onEditCompany}
+              onToggleFavorite={onToggleFavorite}
             />
           </span>
         </div>
@@ -398,15 +531,41 @@ function RowActionsMenu({
   company,
   onDeleteCompany,
   onEditCompany,
+  onToggleFavorite,
 }: {
   company: ICompanyListItem
   onDeleteCompany: (company: ICompanyListItem) => void
   onEditCompany: (company: ICompanyListItem) => void
+  onToggleFavorite: (company: ICompanyListItem) => void
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="relative">
+    <div className="flex items-center gap-1">
+      <button
+        aria-label={
+          company.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'
+        }
+        className={[
+          'inline-flex size-9 cursor-pointer items-center justify-center rounded-full transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+          company.isFavorite ? 'text-red-500' : 'text-text-secondary',
+        ].join(' ')}
+        onClick={(event) => {
+          event.stopPropagation()
+          onToggleFavorite(company)
+        }}
+        type="button"
+      >
+        <Heart
+          className={[
+            'size-5',
+            company.isFavorite ? 'fill-current' : '',
+          ].join(' ')}
+          aria-hidden="true"
+        />
+      </button>
+
+      <div className="relative">
       <button
         aria-expanded={isOpen}
         aria-label="Menu d'actions"
@@ -451,6 +610,7 @@ function RowActionsMenu({
           </button>
         </div>
       ) : null}
+      </div>
     </div>
   )
 }
@@ -508,7 +668,7 @@ function EmptyCompaniesState() {
       <div className="mt-6">
         <Link
           to="/companies/new"
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-button bg-gradient-to-r from-primary to-violet-700 px-4 text-sm font-semibold text-white shadow-small transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-button bg-gradient-to-r from-primary to-violet-700 px-4 text-sm font-semibold text-white shadow-small transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <Plus className="size-5" aria-hidden="true" />
           Ajouter une entreprise

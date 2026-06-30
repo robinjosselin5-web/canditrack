@@ -13,8 +13,11 @@ export function useUpdateCompany() {
   return useMutation({
     mutationFn: ({ companyId, payload }: IUpdateCompanyVariables) =>
       updateCompany(companyId, payload),
-    onSuccess: () => {
+    onSuccess: (_company, variables) => {
       void queryClient.invalidateQueries({ queryKey: ['companies'] })
+      void queryClient.invalidateQueries({
+        queryKey: ['company', variables.companyId],
+      })
     },
   })
 }

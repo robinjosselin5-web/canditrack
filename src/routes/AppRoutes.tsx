@@ -12,12 +12,12 @@ import { Applications } from '../pages/Applications'
 import { Companies } from '../pages/Companies'
 import { CompanyDetails } from '../pages/CompanyDetails'
 import { Dashboard } from '../pages/Dashboard'
-import { Resumes } from '../pages/Resumes'
 import { Settings } from '../pages/Settings'
 import { Statistics } from '../pages/Statistics'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { CreateCompanyPage } from '@/features/companies'
+import { MyCVs } from '../pages/MyCVs'
 
 export function AppRoutes() {
   return (
@@ -39,7 +39,7 @@ export function AppRoutes() {
           <Route path="/companies" element={<Companies />} />
           <Route path="/companies/new" element={<CreateCompanyPage />} />
           <Route path="/companies/:companyId" element={<CompanyDetails />} />
-          <Route path="/resumes" element={<Resumes />} />
+          <Route path="/profile/cv" element={<MyCVs />} />
           <Route path="/applications" element={<Applications />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/settings" element={<Settings />} />

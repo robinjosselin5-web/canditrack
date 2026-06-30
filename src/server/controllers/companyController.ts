@@ -6,7 +6,10 @@ import type {
   ICompanyListItem,
   ICompanyUpdatedResponse,
 } from '../types/company.types.js'
-import type { CreateCompanyBody } from '../validators/companyValidators.js'
+import type {
+  CreateCompanyBody,
+  UpdateCompanyFavoriteBody,
+} from '../validators/companyValidators.js'
 import { createCompany as createCompanyRecord } from '../repositories/companyRepository.js'
 import {
   deleteCompanyForUser,
@@ -16,10 +19,6 @@ import {
   updateCompanyForUser,
 } from '../services/companyService.js'
 import type { UpdateCompanyBody } from '../validators/companyUpdateValidators.js'
-
-interface UpdateFavoriteBody {
-  isFavorite: boolean
-}
 
 export async function createCompanyController(
   request: Request<unknown, unknown, CreateCompanyBody>,
@@ -135,7 +134,7 @@ export async function deleteCompanyController(
 }
 
 export async function updateCompanyFavoriteController(
-  request: Request<{ id: string }, unknown, UpdateFavoriteBody>,
+  request: Request<{ id: string }, unknown, UpdateCompanyFavoriteBody>,
   response: Response<IApiSuccessResponse<{ isFavorite: boolean }>>,
 ): Promise<void> {
   if (!request.user) {

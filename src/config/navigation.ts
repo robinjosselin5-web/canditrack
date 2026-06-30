@@ -18,7 +18,7 @@ export const navigationItems: NavigationItem[] = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/applications', label: 'Candidatures', icon: BriefcaseBusiness },
   { to: '/companies', label: 'Entreprises', icon: Building2 },
-  { to: '/resumes', label: 'CV', icon: FileText },
+  { to: '/profile/cv', label: 'Mes CV', icon: FileText },
   { to: '/statistics', label: 'Statistiques', icon: BarChart3 },
-  { to: '/settings', label: 'Parametres', icon: Settings },
+  { to: '/settings', label: 'Paramètres', icon: Settings },
 ]

@@ -10,7 +10,6 @@ import type {
   IResetPasswordPayload,
   IVerifyEmailPayload,
 } from '@/types/auth'
-import type { IUser } from '@/types/user'
 
 export async function registerUser(
   payload: IRegisterPayload,
@@ -35,12 +34,6 @@ export async function loginUser(
 
 export async function logoutUser(): Promise<void> {
   await httpClient.post<IApiResponse<null>>('/auth/logout')
-}
-
-export async function getCurrentUser(): Promise<IUser> {
-  const response = await httpClient.get<IApiResponse<IUser>>('/auth/me')
-
-  return response.data.data
 }
 
 export async function requestPasswordReset(

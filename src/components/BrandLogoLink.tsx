@@ -11,7 +11,7 @@ export function BrandLogoLink({ variant = "horizontal" }: BrandLogoLinkProps) {
       <Link
         to="/"
         aria-label="Retour a l'accueil CandiTrack"
-        className="mx-auto inline-flex flex-col items-center rounded-card focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="mx-auto inline-flex cursor-pointer flex-col items-center rounded-card focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
         <span className="flex size-24 items-center justify-center rounded-modal bg-accent/20 shadow-small">
           <img
@@ -32,7 +32,7 @@ export function BrandLogoLink({ variant = "horizontal" }: BrandLogoLinkProps) {
     <Link
       to="/"
       aria-label="Retour a l'accueil CandiTrack"
-      className="inline-flex items-center gap-3 rounded-input focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      className="inline-flex cursor-pointer items-center gap-3 rounded-input focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
     >
       <span className="flex size-10 items-center justify-center rounded-input bg-primary shadow-small">
         <img

@@ -1,4 +1,13 @@
-import { Clock3, Mail, MoreVertical, Send, UserRound, XCircle } from 'lucide-react'
+import {
+  Clock3,
+  Heart,
+  Mail,
+  MoreVertical,
+  Send,
+  UserRound,
+  XCircle,
+} from 'lucide-react'
+import { useState } from 'react'
 import { Card } from '@/components/ui'
 import type { ICompanyListItem } from '../types/company.types'
 
@@ -6,6 +15,9 @@ interface CompanyCardProps {
   categoryLabel: string
   company: ICompanyListItem
   onClick?: () => void
+  onDeleteCompany?: (company: ICompanyListItem) => void
+  onEditCompany?: (company: ICompanyListItem) => void
+  onToggleFavorite?: (company: ICompanyListItem) => void
 }
 
 const statusLabels: Record<ICompanyListItem['status'], string> = {
@@ -42,12 +54,17 @@ export function CompanyCard({
   categoryLabel,
   company,
   onClick,
+  onDeleteCompany,
+  onEditCompany,
+  onToggleFavorite,
 }: CompanyCardProps) {
   const StatusIcon = statusIcons[company.status]
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const hasActions = Boolean(onDeleteCompany && onEditCompany)
 
   return (
     <Card
-      className="grid min-h-28 cursor-pointer grid-cols-[88px_1fr_32px] items-center gap-4 p-4 shadow-small transition hover:-translate-y-0.5 hover:shadow-medium"
+      className="relative grid min-h-28 cursor-pointer grid-cols-[88px_1fr_32px] items-center gap-4 p-4 shadow-small transition hover:-translate-y-0.5 hover:shadow-medium"
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       onKeyDown={(event) => {
@@ -82,16 +99,84 @@ export function CompanyCard({
         </span>
       </div>
 
-      <button
-        aria-label="Ouvrir le menu d'actions"
-        className="inline-flex size-8 cursor-pointer items-center justify-center rounded-full text-slate-950 transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-        onClick={(event) => {
-          event.stopPropagation()
-        }}
-        type="button"
-      >
-        <MoreVertical className="size-5" aria-hidden="true" />
-      </button>
+      <div className="flex items-center gap-1 self-start">
+        <button
+          aria-label={
+            company.isFavorite
+              ? 'Retirer des favoris'
+              : 'Ajouter aux favoris'
+          }
+          className={[
+            'inline-flex size-8 cursor-pointer items-center justify-center rounded-full transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+            company.isFavorite ? 'text-red-500' : 'text-text-secondary',
+          ].join(' ')}
+          onClick={(event) => {
+            event.stopPropagation()
+            onToggleFavorite?.(company)
+          }}
+          type="button"
+        >
+          <Heart
+            className={[
+              'size-5',
+              company.isFavorite ? 'fill-current' : '',
+            ].join(' ')}
+            aria-hidden="true"
+          />
+        </button>
+
+        <div className="relative">
+        <button
+          aria-expanded={hasActions ? isMenuOpen : undefined}
+          aria-label="Ouvrir le menu d'actions"
+          className="inline-flex size-8 cursor-pointer items-center justify-center rounded-full text-slate-950 transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          onClick={(event) => {
+            event.stopPropagation()
+
+            if (!hasActions) {
+              return
+            }
+
+            setIsMenuOpen((value) => !value)
+          }}
+          type="button"
+        >
+          <MoreVertical className="size-5" aria-hidden="true" />
+        </button>
+
+        {hasActions && isMenuOpen ? (
+          <div
+            className="absolute right-0 top-10 z-20 w-44 rounded-card border border-border bg-surface p-2 shadow-large"
+            role="menu"
+          >
+            <button
+              className="flex w-full cursor-pointer items-center rounded-button px-3 py-2 text-left text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              onClick={(event) => {
+                event.stopPropagation()
+                setIsMenuOpen(false)
+                onEditCompany?.(company)
+              }}
+              role="menuitem"
+              type="button"
+            >
+              Modifier
+            </button>
+            <button
+              className="flex w-full cursor-pointer items-center rounded-button px-3 py-2 text-left text-sm font-medium text-red-600 transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-error"
+              onClick={(event) => {
+                event.stopPropagation()
+                setIsMenuOpen(false)
+                onDeleteCompany?.(company)
+              }}
+              role="menuitem"
+              type="button"
+            >
+              Supprimer
+            </button>
+          </div>
+        ) : null}
+        </div>
+      </div>
     </Card>
   )
 }

@@ -35,11 +35,43 @@ model User {
   categories             Category[]
   companies              Company[]
   resumes                Resume[]
+  candidateProfile       CandidateProfile?
 
   @@index([email], map: "users_email_idx")
   @@index([emailVerificationCode], map: "users_email_verification_code_idx")
   @@index([passwordResetToken], map: "users_password_reset_token_idx")
   @@map("users")
+}
+
+model CandidateProfile {
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String       @unique @map("user_id") @db.Uuid
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cvs           CandidateCv[]
+
+  @@map("candidate_profiles")
+}
+
+model CandidateCv {
+  id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateProfileId String           @map("candidate_profile_id") @db.Uuid
+  label              String           @db.VarChar(50)
+  originalFilename   String           @map("original_filename") @db.VarChar(255)
+  storageFilename    String           @map("storage_filename") @db.VarChar(255)
+  storageKey         String           @map("storage_key") @db.VarChar(500)
+  fileHash           String?          @map("file_hash") @db.VarChar(64)
+  mimeType           String           @map("mime_type") @db.VarChar(100)
+  fileSize           Int              @map("file_size")
+  isDefault          Boolean          @default(false) @map("is_default")
+  uploadedAt         DateTime         @default(now()) @map("uploaded_at") @db.Timestamp(6)
+  createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+
+  @@index([candidateProfileId], map: "candidate_cvs_candidate_profile_id_idx")
+  @@map("candidate_cvs")
 }
 
 model Category {

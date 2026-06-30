@@ -35,27 +35,27 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
     <div
       aria-labelledby="auth-modal-title"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-text-primary/30 px-4 py-8"
+      className="fixed inset-0 z-[60] overflow-y-auto bg-text-primary/30 px-3 py-3 sm:px-4 sm:py-6"
       role="dialog"
     >
       <button
         aria-label="Fermer la fenetre"
-        className="absolute inset-0 cursor-default"
+        className="absolute inset-0 cursor-pointer"
         onClick={onClose}
         type="button"
       />
 
-      <div className="relative max-h-full w-full max-w-[600px] overflow-y-auto rounded-modal border border-border bg-surface p-8 shadow-large">
-        <div className="flex items-start justify-between gap-6">
+      <div className="relative mx-auto my-0 w-full max-w-[600px] max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-modal border border-border bg-surface p-5 shadow-large sm:my-6 sm:max-h-[calc(100dvh-3rem)] sm:p-8">
+        <div className="flex items-start justify-between gap-4 sm:gap-6">
           <h2
-            className="text-xl font-semibold leading-7 text-text-primary"
+            className="text-lg font-semibold leading-7 text-text-primary sm:text-xl"
             id="auth-modal-title"
           >
             {title}
           </h2>
           <button
             aria-label="Fermer"
-            className="inline-flex size-10 shrink-0 items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:size-10"
             onClick={onClose}
             type="button"
           >
@@ -63,7 +63,7 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
           </button>
         </div>
 
-        <div className="mt-6 text-sm leading-6 text-text-secondary">
+        <div className="mt-5 text-sm leading-6 text-text-secondary sm:mt-6">
           {children}
         </div>
       </div>

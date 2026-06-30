@@ -101,7 +101,7 @@ export function LoginPage() {
           />
           <Link
             to="/forgot-password"
-            className="text-sm font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="cursor-pointer text-sm font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Mot de passe oublie ?
           </Link>
@@ -139,7 +139,7 @@ export function LoginPage() {
       <div className="mt-5">
         <Link
           to="/register"
-          className="inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-button border border-accent/40 bg-surface px-4 text-lg font-semibold text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="inline-flex min-h-16 w-full cursor-pointer items-center justify-center gap-3 rounded-button border border-accent/40 bg-surface px-4 text-lg font-semibold text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <UserPlus className="size-5 text-primary" aria-hidden="true" />
           Creer un compte
@@ -150,7 +150,7 @@ export function LoginPage() {
         Pas encore de compte ?{" "}
         <Link
           to="/register"
-          className="font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="cursor-pointer font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           S'inscrire
         </Link>
