@@ -8,18 +8,15 @@ import {
   ResetPasswordPage,
   VerifyEmailPage,
 } from '@/features/auth'
-import { Applications } from '../pages/Applications'
-import { Companies } from '../pages/Companies'
-import { CompanyDetails } from '../pages/CompanyDetails'
-import { Dashboard } from '../pages/Dashboard'
-import { Settings } from '../pages/Settings'
-import { Statistics } from '../pages/Statistics'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { CreateCompanyPage } from '@/features/companies'
-import { MyCVs } from '../pages/MyCVs'
-import { ExtractedData } from '../pages/ExtractedData'
-import { Training } from '../pages/Training'
+import { CompaniesPage, CompanyDetailsPage } from '@/features/companies'
+import { Applications } from '../pages/Applications'
+import { Dashboard } from '../pages/Dashboard'
+import { Settings } from '../pages/Settings'
+import { Statistics } from '../pages/Statistics'
+import { ExtractedData, MyCVs, Training } from '@/features/resumes'
 
 export function AppRoutes() {
   return (
@@ -38,9 +35,9 @@ export function AppRoutes() {
         <Route element={<AppLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/companies" element={<Companies />} />
+          <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/companies/new" element={<CreateCompanyPage />} />
-          <Route path="/companies/:companyId" element={<CompanyDetails />} />
+          <Route path="/companies/:companyId" element={<CompanyDetailsPage />} />
           <Route path="/profile/cv" element={<MyCVs />} />
           <Route path="/profile/cv/extracted-data" element={<ExtractedData />} />
           <Route

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import { CalendarDays, FileText, MoreVertical, Plus } from 'lucide-react'
-import { Alert, Button, Input, Modal } from '../components/ui'
+import { Alert, Button, Input, Modal } from '@/components/ui'
 import {
   analyzeCandidateCv,
   createCandidateCv,
   deleteCandidateCv,
   getCandidateCvs,
-} from '../features/user/services/candidateCvService'
-import type { ICandidateCvListItem } from '../features/user/types/candidateCv.types'
+} from '../services/candidateCvService'
+import type { ICandidateCvListItem } from '../types/candidateCv.types'
 
 const MAX_CV_FILE_SIZE = 10 * 1024 * 1024
 
