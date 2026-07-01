@@ -1,14 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
 import { LockKeyhole, LogIn, Mail, RotateCw, UserPlus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { BrandLogoLink } from "@/components/BrandLogoLink";
 import { Alert, Button, Card, Checkbox, Input } from "@/components/ui";
-import type { IApiResponse } from "@/types/api";
+import { AuthPageHeader } from "../components/AuthPageHeader";
 import { useLogin } from "../hooks/useLogin";
 import { useResendEmailVerificationCode } from "../hooks/useResendEmailVerificationCode";
 import type { ILoginFormValues } from "../types/login.types";
+import {
+  getLoginErrorMessage,
+  getResendCodeErrorMessage,
+  isEmailNotVerifiedError,
+} from "../utils/authErrorMessages";
 import { loginSchema } from "../utils/loginSchema";
 
 export function LoginPage() {
@@ -55,15 +58,10 @@ export function LoginPage() {
 
   return (
     <Card className="mx-auto w-full max-w-140 border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
-      <div className="mb-6 text-center">
-        <BrandLogoLink variant="stacked" />
-        <h1 className="mt-6 text-4xl font-bold tracking-normal text-text-primary">
-          Connexion
-        </h1>
-        <p className="mt-3 text-base leading-7 text-text-secondary">
-          Bienvenue ! Connectez-vous a votre compte.
-        </p>
-      </div>
+      <AuthPageHeader
+        description="Bienvenue ! Connectez-vous a votre compte."
+        title="Connexion"
+      />
 
       <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {errorMessage ? <Alert variant="error">{errorMessage}</Alert> : null}
@@ -156,68 +154,5 @@ export function LoginPage() {
         </Link>
       </p>
     </Card>
-  );
-}
-
-function getLoginErrorMessage(error: unknown): string | null {
-  if (!error) {
-    return null;
-  }
-
-  if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined;
-
-    if (!error.response) {
-      return "L'API est indisponible. Verifiez que le backend est demarre.";
-    }
-
-    if (error.response.status === 404) {
-      return "La route de connexion est introuvable. Verifiez que l'API /api/v1/auth/login existe.";
-    }
-
-    if (error.response.status === 401) {
-      return "Adresse e-mail ou mot de passe incorrect.";
-    }
-
-    if (error.response.status === 403 && isEmailNotVerifiedError(error)) {
-      return "Votre adresse e-mail doit etre validee avant de vous connecter.";
-    }
-
-    return (
-      response?.message ?? "Connexion impossible. Verifiez vos identifiants."
-    );
-  }
-
-  return "Connexion impossible. Reessayez dans quelques instants.";
-}
-
-function getResendCodeErrorMessage(error: unknown): string | null {
-  if (!error) {
-    return null;
-  }
-
-  if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined;
-
-    return response?.message ?? "Impossible de renvoyer un code.";
-  }
-
-  return "Impossible de renvoyer un code.";
-}
-
-function isEmailNotVerifiedError(error: unknown): boolean {
-  if (!(error instanceof AxiosError)) {
-    return false;
-  }
-
-  const response = error.response?.data as IApiResponse<unknown> | undefined;
-
-  return Boolean(
-    error.response?.status === 403 &&
-      response?.errors?.some(
-        (apiError) =>
-          apiError.field === "emailVerification" &&
-          apiError.message === "EMAIL_NOT_VERIFIED",
-      ),
   );
 }

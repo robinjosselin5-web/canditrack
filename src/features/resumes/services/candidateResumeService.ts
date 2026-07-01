@@ -4,7 +4,7 @@ import type {
   ICandidateCv,
   ICandidateCvListItem,
   ICandidateCvListResponse,
-} from '../types/candidateCv.types'
+} from '../types/candidateResume.types'
 
 export interface ICreateCandidateCvPayload {
   file: File

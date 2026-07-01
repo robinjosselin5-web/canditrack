@@ -24,6 +24,7 @@ import { useDeleteCompany } from '../hooks/useDeleteCompany'
 import { useToggleCompanyFavorite } from '../hooks/useToggleCompanyFavorite'
 import type { ICompanyListItem } from '../types/company.types'
 import { getCompanyCategoryLabel } from '../utils/companyDisplay'
+import { filterCompanies } from '../utils/companyFilters'
 
 export function CompaniesPage() {
   const navigate = useNavigate()
@@ -42,48 +43,13 @@ export function CompaniesPage() {
       return []
     }
 
-    const normalizedQuery = searchQuery.trim().toLowerCase()
-
-    return [...data]
-      .filter((company) => {
-        if (!showFavoritesOnly) {
-          return true
-        }
-
-        return company.isFavorite
-      })
-      .filter((company) => {
-        if (statusFilter === 'all') {
-          return true
-        }
-
-        return company.status === statusFilter
-      })
-      .filter((company) => {
-        if (!normalizedQuery) {
-          return true
-        }
-
-        const searchText = [
-          company.name,
-          company.website,
-          company.email,
-          company.city,
-          company.country,
-          company.recruiterName,
-        ]
-          .filter(Boolean)
-          .join(' ')
-          .toLowerCase()
-
-        return searchText.includes(normalizedQuery)
-      })
-      .sort((firstCompany, secondCompany) => {
-        const firstDate = new Date(firstCompany.createdAt).getTime()
-        const secondDate = new Date(secondCompany.createdAt).getTime()
-
-        return sortOrder === 'asc' ? firstDate - secondDate : secondDate - firstDate
-      })
+    return filterCompanies({
+      companies: data,
+      searchQuery,
+      showFavoritesOnly,
+      sortOrder,
+      statusFilter,
+    })
   }, [data, searchQuery, showFavoritesOnly, sortOrder, statusFilter])
 
   return (

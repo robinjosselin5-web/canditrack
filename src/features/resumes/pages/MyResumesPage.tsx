@@ -1,36 +1,37 @@
 import { useEffect, useState } from 'react'
-import type { Dispatch, SetStateAction } from 'react'
-import { CalendarDays, FileText, MoreVertical, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Alert, Button, Input, Modal } from '@/components/ui'
 import {
   analyzeCandidateCv,
   createCandidateCv,
   deleteCandidateCv,
   getCandidateCvs,
-} from '../services/candidateCvService'
-import type { ICandidateCvListItem } from '../types/candidateCv.types'
+} from '../services/candidateResumeService'
+import type { ICandidateCvListItem } from '../types/candidateResume.types'
+import { CandidateCvCard } from '../components/CandidateCvCard'
+import {
+  MAX_CV_FILE_SIZE,
+  getCandidateCvErrorMessage,
+} from '../utils/candidateCvHelpers'
 
-const MAX_CV_FILE_SIZE = 10 * 1024 * 1024
-
-export function MyCVsPage() {
-  const [cvs, setCvs] = useState<ICandidateCvListItem[]>([])
+export function MyResumesPage() {
+  const [resumes, setResumes] = useState<ICandidateCvListItem[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isActionModalOpen, setIsActionModalOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [selectedCv, setSelectedCv] = useState<ICandidateCvListItem | null>(
-    null,
-  )
+  const [selectedResume, setSelectedResume] =
+    useState<ICandidateCvListItem | null>(null)
   const [label, setLabel] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isLoadingCvs, setIsLoadingCvs] = useState(false)
-  const [analyzingCvId, setAnalyzingCvId] = useState<string | null>(null)
-  const [deletingCvId, setDeletingCvId] = useState<string | null>(null)
+  const [isLoadingResumes, setIsLoadingResumes] = useState(false)
+  const [analyzingResumeId, setAnalyzingResumeId] = useState<string | null>(null)
+  const [deletingResumeId, setDeletingResumeId] = useState<string | null>(null)
   const [fileInputKey, setFileInputKey] = useState(0)
 
   useEffect(() => {
-    void refreshCvs(setCvs, setIsLoadingCvs, setErrorMessage)
+    void refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
   }, [])
 
   const resetForm = () => {
@@ -46,8 +47,8 @@ export function MyCVsPage() {
     setIsModalOpen(true)
   }
 
-  const openActionModal = (cv: ICandidateCvListItem) => {
-    setSelectedCv(cv)
+  const openActionModal = (resume: ICandidateCvListItem) => {
+    setSelectedResume(resume)
     setIsActionModalOpen(true)
   }
 
@@ -61,12 +62,12 @@ export function MyCVsPage() {
   }
 
   const closeActionModal = () => {
-    if (deletingCvId) {
+    if (deletingResumeId) {
       return
     }
 
     setIsActionModalOpen(false)
-    setSelectedCv(null)
+    setSelectedResume(null)
   }
 
   const handleImport = async () => {
@@ -107,52 +108,52 @@ export function MyCVsPage() {
         label: label.trim() || undefined,
       })
 
-      await refreshCvs(setCvs, setIsLoadingCvs, setErrorMessage)
+      await refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
       setSuccessMessage('Le CV a ete importe avec succes.')
       setIsModalOpen(false)
       resetForm()
     } catch (error) {
-      setErrorMessage(getErrorMessage(error))
+      setErrorMessage(getCandidateCvErrorMessage(error))
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const handleAnalyze = async (cvId: string) => {
-    setAnalyzingCvId(cvId)
+  const handleAnalyze = async (resumeId: string) => {
+    setAnalyzingResumeId(resumeId)
     setErrorMessage(null)
     setSuccessMessage(null)
 
     try {
-      await analyzeCandidateCv(cvId)
-      await refreshCvs(setCvs, setIsLoadingCvs, setErrorMessage)
+      await analyzeCandidateCv(resumeId)
+      await refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
       setSuccessMessage('Le CV a ete analyse avec succes.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error))
+      setErrorMessage(getCandidateCvErrorMessage(error))
     } finally {
-      setAnalyzingCvId(null)
+      setAnalyzingResumeId(null)
     }
   }
 
   const handleDelete = async () => {
-    if (!selectedCv) {
+    if (!selectedResume) {
       return
     }
 
-    setDeletingCvId(selectedCv.id)
+    setDeletingResumeId(selectedResume.id)
     setErrorMessage(null)
     setSuccessMessage(null)
 
     try {
-      await deleteCandidateCv(selectedCv.id)
-      await refreshCvs(setCvs, setIsLoadingCvs, setErrorMessage)
+      await deleteCandidateCv(selectedResume.id)
+      await refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
       setSuccessMessage('Le CV a ete supprime avec succes.')
       setIsActionModalOpen(false)
-      setSelectedCv(null)
+      setSelectedResume(null)
     } catch (error) {
-      setErrorMessage(getErrorMessage(error))
+      setErrorMessage(getCandidateCvErrorMessage(error))
     } finally {
-      setDeletingCvId(null)
+      setDeletingResumeId(null)
     }
   }
 
@@ -180,11 +181,11 @@ export function MyCVsPage() {
         <Alert variant="error">{errorMessage}</Alert>
       ) : null}
 
-      {isLoadingCvs ? (
+      {isLoadingResumes ? (
         <div className="rounded-card border border-border bg-surface px-6 py-12 text-center shadow-medium">
           <p className="text-sm text-text-secondary">Chargement des CV...</p>
         </div>
-      ) : cvs.length === 0 ? (
+      ) : resumes.length === 0 ? (
         <div className="rounded-card border border-dashed border-border bg-surface px-6 py-14 text-center shadow-medium">
           <p className="text-base font-semibold text-text-primary">
             Aucun CV importe pour le moment
@@ -195,49 +196,16 @@ export function MyCVsPage() {
         </div>
       ) : (
         <div className="space-y-5">
-          {cvs.map((cv) => (
-            <article
-              key={cv.id}
-              className="flex items-center gap-5 rounded-card border border-border bg-surface p-5 shadow-medium transition hover:-translate-y-0.5 hover:shadow-large sm:gap-8 sm:p-8"
-            >
-              <div className="flex size-20 shrink-0 items-center justify-center rounded-input bg-accent/20 text-primary sm:size-24">
-                <FileText className="size-10" aria-hidden="true" />
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <h2 className="truncate text-base font-bold text-text-primary sm:text-lg">
-                  {cv.originalFilename}
-                </h2>
-                <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <Button
-                    className="w-full sm:w-auto"
-                    disabled={analyzingCvId === cv.id}
-                    loading={analyzingCvId === cv.id}
-                    onClick={() => {
-                      void handleAnalyze(cv.id)
-                    }}
-                    variant="secondary"
-                  >
-                    Analyser
-                  </Button>
-                  <span className="inline-flex items-center gap-2 text-sm text-text-secondary">
-                    <CalendarDays className="size-4" aria-hidden="true" />
-                    Ajoute le {formatDate(cv.uploadedAt)}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                aria-label={`Actions pour ${cv.originalFilename}`}
-                className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-button text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                onClick={() => {
-                  openActionModal(cv)
-                }}
-                type="button"
-              >
-                <MoreVertical className="size-5" aria-hidden="true" />
-              </button>
-            </article>
+          {resumes.map((resume) => (
+            <CandidateCvCard
+              key={resume.id}
+              cv={resume}
+              isAnalyzing={analyzingResumeId === resume.id}
+              onAnalyze={(resumeId) => {
+                void handleAnalyze(resumeId)
+              }}
+              onOpenActions={openActionModal}
+            />
           ))}
         </div>
       )}
@@ -250,7 +218,7 @@ export function MyCVsPage() {
             accept="application/pdf,.pdf"
             key={fileInputKey}
             label="Fichier PDF"
-            name="cvFile"
+            name="resumeFile"
             onChange={(event) => {
               setErrorMessage(null)
               setSelectedFile(event.target.files?.[0] ?? null)
@@ -261,7 +229,7 @@ export function MyCVsPage() {
           <Input
             label="Label du CV"
             maxLength={50}
-            name="cvLabel"
+            name="resumeLabel"
             onChange={(event) => {
               setErrorMessage(null)
               setLabel(event.target.value)
@@ -297,7 +265,7 @@ export function MyCVsPage() {
       >
         <div className="space-y-5">
           <div className="rounded-card border border-border bg-divider/50 px-4 py-3 text-sm text-text-primary">
-            {selectedCv?.originalFilename ?? 'CV sélectionné'}
+            {selectedResume?.originalFilename ?? 'CV selectionne'}
           </div>
 
           <p className="text-sm leading-6 text-text-secondary">
@@ -307,7 +275,7 @@ export function MyCVsPage() {
           <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <Button
               className="sm:w-auto"
-              disabled={Boolean(deletingCvId)}
+              disabled={Boolean(deletingResumeId)}
               onClick={closeActionModal}
               variant="secondary"
             >
@@ -315,7 +283,7 @@ export function MyCVsPage() {
             </Button>
             <Button
               className="sm:w-auto"
-              loading={deletingCvId === selectedCv?.id}
+              loading={deletingResumeId === selectedResume?.id}
               onClick={() => {
                 void handleDelete()
               }}
@@ -331,8 +299,8 @@ export function MyCVsPage() {
 }
 
 async function loadCvs(
-  setCvs: Dispatch<SetStateAction<ICandidateCvListItem[]>>,
-  setIsLoadingCvs: Dispatch<SetStateAction<boolean>>,
+  setCvs: (value: ICandidateCvListItem[]) => void,
+  setIsLoadingCvs: (value: boolean) => void,
 ): Promise<void> {
   setIsLoadingCvs(true)
 
@@ -344,30 +312,14 @@ async function loadCvs(
   }
 }
 
-async function refreshCvs(
-  setCvs: Dispatch<SetStateAction<ICandidateCvListItem[]>>,
-  setIsLoadingCvs: Dispatch<SetStateAction<boolean>>,
-  setErrorMessage: Dispatch<SetStateAction<string | null>>,
+async function refreshResumes(
+  setCvs: (value: ICandidateCvListItem[]) => void,
+  setIsLoadingCvs: (value: boolean) => void,
+  setErrorMessage: (value: string | null) => void,
 ): Promise<void> {
   try {
     await loadCvs(setCvs, setIsLoadingCvs)
   } catch {
     setErrorMessage('Impossible de charger les CV.')
   }
-}
-
-function formatDate(date: string): string {
-  return new Intl.DateTimeFormat('fr-FR').format(new Date(date))
-}
-
-function getErrorMessage(error: unknown): string {
-  if (error && typeof error === 'object' && 'response' in error) {
-    const response = error as { response?: { data?: { message?: string } } }
-
-    if (response.response?.data?.message) {
-      return response.response.data.message
-    }
-  }
-
-  return "Une erreur est survenue pendant l'import du CV."
 }

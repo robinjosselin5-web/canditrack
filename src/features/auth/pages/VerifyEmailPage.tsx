@@ -1,14 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { Mail, RotateCw, ShieldCheck } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
-import { BrandLogoLink } from '@/components/BrandLogoLink'
 import { Alert, Button, Card, Input } from '@/components/ui'
-import type { IApiResponse } from '@/types/api'
+import { AuthPageHeader } from '../components/AuthPageHeader'
 import { useResendEmailVerificationCode } from '../hooks/useResendEmailVerificationCode'
 import { useVerifyEmail } from '../hooks/useVerifyEmail'
 import type { IEmailVerificationFormValues } from '../types/emailVerification.types'
+import { getEmailVerificationErrorMessage } from '../utils/authErrorMessages'
 import { emailVerificationSchema } from '../utils/emailVerificationSchema'
 
 export function VerifyEmailPage() {
@@ -46,15 +45,10 @@ export function VerifyEmailPage() {
 
   return (
     <Card className="mx-auto w-full max-w-140 border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
-      <div className="mb-6 text-center">
-        <BrandLogoLink variant="stacked" />
-        <h1 className="mt-6 text-3xl font-bold tracking-normal text-text-primary">
-          Valider votre compte
-        </h1>
-        <p className="mt-3 text-base leading-7 text-text-secondary">
-          Saisissez le code recu par e-mail pour activer votre acces.
-        </p>
-      </div>
+      <AuthPageHeader
+        description="Saisissez le code recu par e-mail pour activer votre acces."
+        title="Valider votre compte"
+      />
 
       <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {errorMessage ? <Alert variant="error">{errorMessage}</Alert> : null}
@@ -116,25 +110,4 @@ export function VerifyEmailPage() {
       </p>
     </Card>
   )
-}
-
-function getEmailVerificationErrorMessage(error: unknown): string | null {
-  if (!error) {
-    return null
-  }
-
-  if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined
-
-    if (!error.response) {
-      return "L'API est indisponible. Verifiez que le backend est demarre."
-    }
-
-    return (
-      response?.message ??
-      'Impossible de valider le compte. Verifiez le code saisi.'
-    )
-  }
-
-  return 'Impossible de valider le compte. Reessayez dans quelques instants.'
 }

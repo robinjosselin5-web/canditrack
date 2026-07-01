@@ -1,14 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
 import { LockKeyhole, Mail, UserRound } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { BrandLogoLink } from "@/components/BrandLogoLink";
 import { Alert, Button, Card, Checkbox, Input, Modal } from "@/components/ui";
-import type { IApiResponse } from "@/types/api";
+import { AuthPageHeader } from "../components/AuthPageHeader";
 import { useRegister } from "../hooks/useRegister";
 import type { IRegisterFormValues } from "../types/register.types";
+import { getRegisterErrorMessage } from "../utils/authErrorMessages";
 import { registerSchema } from "../utils/registerSchema";
 
 export function RegisterPage() {
@@ -39,15 +38,10 @@ export function RegisterPage() {
   return (
     <>
       <Card className="mx-auto w-full max-w-160 border-border/80 px-6 py-5 shadow-large sm:px-8 sm:py-6">
-        <div className="mb-4 text-center">
-          <BrandLogoLink variant="stacked" />
-          <h1 className="mt-4 text-3xl font-bold tracking-normal text-text-primary">
-            Creer un compte
-          </h1>
-          <p className="mt-2 text-sm leading-6 text-text-secondary">
-            Sauvegardez vos candidatures et accedez a votre espace personnel.
-          </p>
-        </div>
+        <AuthPageHeader
+          description="Sauvegardez vos candidatures et accedez a votre espace personnel."
+          title="Creer un compte"
+        />
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {errorMessage ? <Alert variant="error">{errorMessage}</Alert> : null}
@@ -168,29 +162,4 @@ export function RegisterPage() {
       </Modal>
     </>
   );
-}
-
-function getRegisterErrorMessage(error: unknown): string | null {
-  if (!error) {
-    return null;
-  }
-
-  if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined;
-
-    if (!error.response) {
-      return "L'API est indisponible. Verifiez que le backend est demarre.";
-    }
-
-    if (error.response.status === 404) {
-      return "La route d'inscription est introuvable. Verifiez que l'API /api/v1/auth/register existe.";
-    }
-
-    return (
-      response?.message ??
-      "Impossible de creer le compte. Verifiez les informations saisies."
-    );
-  }
-
-  return "Impossible de creer le compte. Reessayez dans quelques instants.";
 }
