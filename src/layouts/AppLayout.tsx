@@ -70,7 +70,7 @@ export function AppLayout() {
 
   return (
     <div className="min-h-dvh bg-background text-text-primary">
-      <aside className="fixed inset-y-0 left-0 hidden w-[280px] border-r border-border bg-surface px-5 py-8 lg:flex lg:flex-col">
+      <aside className="fixed inset-y-0 left-0 hidden w-70 border-r border-border bg-surface px-5 py-8 lg:flex lg:flex-col">
         <div className="mb-12 flex items-center gap-4">
           <CircleUserRound className="size-12 text-accent" aria-hidden="true" />
           <div className="min-w-0">
@@ -169,7 +169,7 @@ export function AppLayout() {
         </button>
       </aside>
 
-      <div className="min-h-dvh lg:pb-0 lg:pl-[280px]">
+      <div className="min-h-dvh lg:pb-0 lg:pl-70">
         <div className="sticky top-0 z-30 bg-background/95 px-4 py-4 backdrop-blur lg:hidden">
           <div className="grid grid-cols-[40px_1fr_40px] items-center gap-4">
             <button

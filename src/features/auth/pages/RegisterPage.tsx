@@ -38,7 +38,7 @@ export function RegisterPage() {
 
   return (
     <>
-      <Card className="mx-auto w-full max-w-[640px] border-border/80 px-6 py-5 shadow-large sm:px-8 sm:py-6">
+      <Card className="mx-auto w-full max-w-160 border-border/80 px-6 py-5 shadow-large sm:px-8 sm:py-6">
         <div className="mb-4 text-center">
           <BrandLogoLink variant="stacked" />
           <h1 className="mt-4 text-3xl font-bold tracking-normal text-text-primary">
