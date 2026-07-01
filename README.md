@@ -1,31 +1,91 @@
 <div align="center">
 
-# 🚀 CandiTrack
+# CandiTrack
 
-### Smart Job Application Manager
-
-Une application SaaS moderne permettant de gérer ses candidatures grâce à l'intelligence artificielle.
-
----
-
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8?logo=tailwindcss)
-![NodeJS](https://img.shields.io/badge/Node.js-24-339933?logo=node.js)
-![Express](https://img.shields.io/badge/Express-5-000000?logo=express)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql)
-![OpenAI](https://img.shields.io/badge/OpenAI-API-412991)
+Application web de suivi de candidatures, avec un front-end React/TypeScript et un back-end Node/Express typés, reliés a PostgreSQL via Prisma.
 
 </div>
 
 ---
 
-# Backend local
+## Presentation
 
-## Variables d'environnement backend
+CandiTrack permet de gerer:
 
-Creer un fichier `.env` a la racine du projet en partant de `.env.example`.
+- les entreprises suivies
+- les candidatures
+- les CV importes
+- le profil utilisateur
+- les statistiques et pages de suivi associees
+
+Le projet est organise pour separer clairement le front-end, le back-end et la documentation fonctionnelle.
+
+---
+
+## Stack Technique
+
+- Frontend: React, TypeScript, Vite, React Router, TanStack Query, React Hook Form, Zod, Tailwind CSS, Lucide React
+- Backend: Node.js, Express, TypeScript
+- Donnees: PostgreSQL, Prisma, `@prisma/adapter-pg`
+- Outils: Axios, bcrypt, JWT, Multer, Nodemailer, MailDev, ESLint
+
+---
+
+## Fonctionnalites Principales
+
+- Authentification
+- Gestion du profil utilisateur
+- Gestion des entreprises
+- Gestion des CV
+- Pages de dashboard, candidatures et statistiques
+- Envoi d'e-mails locaux pour les parcours d'authentification
+
+La fonctionnalite CV est exposee dans l'interface front-end et cote API via `/api/profile/cv`.
+
+---
+
+## Architecture du Depot
+
+Le depot suit une architecture basee sur les features.
+
+```text
+src/
+├── components/
+├── config/
+├── features/
+├── hooks/
+├── layouts/
+├── lib/
+├── pages/
+├── routes/
+├── services/
+├── store/
+├── types/
+└── utils/
+```
+
+### Principes importants
+
+- `src/features/*` contient le code specifique a un domaine fonctionnel
+- `src/pages/` contient les pages globales ou temporaires pas encore rattachees a une feature
+- `src/server/` contient toute la partie back-end
+- `src/server/types/` contient les types serveur, y compris les augmentations Express
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/USERNAME/canditrack.git
+cd canditrack
+npm install
+```
+
+---
+
+## Variables d'Environnement
+
+Creer un fichier `.env` a la racine du projet.
 
 ```env
 PORT=3000
@@ -43,91 +103,21 @@ MAIL_FROM=CandiTrack <noreply@canditrack.local>
 VITE_API_URL=http://localhost:3000/api/v1
 ```
 
-## Lancer l'API Express
+Notes:
 
-```bash
-npm run server:dev
-```
+- `DATABASE_URL` est utilisee par Prisma
+- `VITE_API_URL` est utilisee cote front-end
+- d'autres variables peuvent exister dans le code serveur, a verifier dans `src/server/config/env.ts`
 
-L'API locale est disponible sur :
+---
 
-```text
-http://localhost:3000/api/v1
-```
+## Base de Donnees / Prisma
 
-Health check :
+Prisma est la source de verite du modele de donnees et des migrations applicatives.
 
-```text
-GET http://localhost:3000/api/v1/health
-```
+Le backend utilise `@prisma/adapter-pg` avec un `Pool` PostgreSQL local.
 
-## E-mails locaux
-
-Lancer MailDev avant de tester la reinitialisation du mot de passe :
-
-```bash
-npm run mail:dev
-```
-
-Les e-mails envoyes par l'API sont consultables sur :
-
-```text
-http://localhost:1080
-```
-
-Reponse attendue :
-
-```json
-{
-  "success": true,
-  "data": {
-    "status": "ok",
-    "service": "candytrack-api",
-    "timestamp": "2026-06-27T00:00:00.000Z"
-  }
-}
-```
-
-## Scripts backend
-
-```bash
-npm run server:dev
-npm run server:build
-npm run server:start
-```
-
-## Base de donnees locale
-
-PostgreSQL doit etre installe et demarre manuellement par le developpeur.
-Codex fournit uniquement les fichiers SQL, les migrations et la configuration.
-
-Creer la base :
-
-```sql
-CREATE DATABASE canditrack;
-```
-
-Appliquer les scripts SQL dans cet ordre :
-
-```text
-src/server/database/migrations/000_create_users_table.sql
-src/server/database/migrations/001_add_password_reset_columns.sql
-src/server/database/migrations/002_create_core_domain_tables.sql
-```
-
-Le schema SQL complet est disponible ici :
-
-```text
-src/server/database/schema.sql
-```
-
-Schema Prisma :
-
-```text
-prisma/schema.prisma
-```
-
-Commandes Prisma :
+Scripts utilitaires:
 
 ```bash
 npm run prisma:validate
@@ -136,400 +126,101 @@ npm run prisma:migrate
 npm run prisma:studio
 ```
 
----
-
-# 📖 Présentation
-
-**CandiTrack** est une application web permettant de gérer efficacement l'ensemble de ses candidatures.
-
-Elle centralise :
-
-- 📄 les CV
-- 🏢 les entreprises
-- ✉️ les candidatures
-- 🤖 l'intelligence artificielle
-- 📊 les statistiques
-- 📅 le suivi des recrutements
-
-L'objectif est de permettre aux utilisateurs de suivre facilement leur recherche d'emploi tout en automatisant les tâches répétitives.
-
----
-
-# ✨ Fonctionnalités
-
-## 👤 Authentification
-
-- Création de compte
-- Connexion
-- Déconnexion
-- Gestion du profil
-
----
-
-## 🏢 Gestion des entreprises
-
-- Ajouter une entreprise
-- Modifier une entreprise
-- Supprimer une entreprise
-- Catégories personnalisées
-- Favoris
-
----
-
-## 🤖 Intelligence Artificielle
-
-- Résumé automatique d'une entreprise
-- Génération d'e-mails personnalisés
-- Génération future de lettres de motivation
-- Adaptation future des CV
-
----
-
-## 📄 Gestion des CV
-
-- Import de plusieurs CV
-- Sélection d'un CV
-- Gestion des versions
-
----
-
-## 📊 Dashboard
-
-- Vue Kanban
-- Drag & Drop
-- Statistiques
-- Recherche
-- Filtres
-
----
-
-## 📝 Notes
-
-- Notes personnelles
-- Historique
-- Informations recruteur
-
----
-
-# 🛠 Stack Technique
-
-## Frontend
-
-- React
-- TypeScript
-- Vite
-- React Router
-- TanStack Query
-- Axios
-- TailwindCSS
-- Lucide React
-
-## Backend
-
-- Node.js
-- Express
-- TypeScript
-
-## Base de données
-
-- PostgreSQL
-
-## Intelligence Artificielle
-
-- OpenAI API
-
-## Authentification
-
-- JWT
-
----
-
-# 🏛 Architecture
-
-Le projet suit une **Feature Based Architecture**.
+Le schema Prisma est defini dans:
 
 ```text
-src/
-
-assets/
-components/
-config/
-features/
-hooks/
-layouts/
-lib/
-pages/
-routes/
-services/
-store/
-types/
-utils/
+prisma/schema.prisma
 ```
 
-Toute l'architecture est documentée dans :
+Les migrations Prisma sont dans:
 
 ```text
-docs/architecture.md
+prisma/migrations/
 ```
+
+La base de reference documentaire SQL existe encore dans `src/server/database/`, mais elle n'est pas la source d'execution du runtime.
 
 ---
 
-# 🎨 Design
+## Commandes Utiles
 
-L'interface suit un Design System unique.
-
-- Palette pastel
-- Responsive
-- Mobile First
-- Accessible
-- Design inspiré de Linear, Notion et Attio
-
-Voir :
-
-```text
-docs/design-system.md
-```
-
----
-
-# 📂 Structure du projet
-
-```text
-.
-├── docs/
-├── src/
-├── public/
-├── AGENTS.md
-├── package.json
-└── README.md
-```
-
----
-
-# 🚀 Installation
-
-## Cloner le dépôt
-
-```bash
-git clone https://github.com/USERNAME/canditrack.git
-
-cd canditrack
-```
-
----
-
-## Installer les dépendances
-
-```bash
-npm install
-```
-
----
-
-## Variables d'environnement
-
-Créer un fichier :
-
-```text
-.env
-```
-
-Exemple :
-
-```env
-VITE_API_URL=http://localhost:3000/api/v1
-
-OPENAI_API_KEY=xxxxxxxxxxxxxxxx
-```
-
----
-
-## Lancer le projet
-
-Frontend
+### Frontend
 
 ```bash
 npm run dev
-```
-
-Backend
-
-```bash
-npm run server
-```
-
----
-
-# 📦 Scripts
-
-```bash
-npm run dev
-
 npm run build
-
 npm run preview
+```
 
+### Qualite
+
+```bash
 npm run lint
+```
 
-npm run test
+### Back-end
 
-npm run coverage
+```bash
+npm run server:dev
+npm run server:build
+npm run server:start
+```
+
+### E-mails locaux
+
+```bash
+npm run mail:dev
+```
+
+MailDev est ensuite disponible sur:
+
+```text
+http://localhost:1080
 ```
 
 ---
 
-# 🧪 Tests
+## Documentation Projet
 
-Le projet utilise :
-
-- Vitest
-- React Testing Library
-- Playwright
-- MSW
-
-Documentation :
-
-```text
-docs/testing.md
-```
-
----
-
-# 📚 Documentation
-
-Toute la documentation est disponible dans :
-
-```text
-docs/
-```
-
-Contenu :
-
-- Architecture
-- API
-- Base de données
-- Backlog
-- Design System
-- Roadmap
-- Tests
-- User Stories
-
----
-
-# 🤖 Utilisation avec Codex
-
-Le projet est conçu pour être développé avec **OpenAI Codex**.
-
-Avant toute implémentation, Codex doit consulter :
-
-```text
-AGENTS.md
-```
-
-Ainsi que :
+La documentation principale se trouve dans:
 
 ```text
 docs/
 ```
 
-Toutes les règles de développement y sont documentées.
+Contenu utile:
+
+- `docs/01-architecture.md`
+- `docs/02-design-system.md`
+- `docs/04-database.md`
+- `docs/05-api.md`
+- `docs/06-testing.md`
+- `docs/07-backlog.md`
+- `docs/08-coding-guidelines.md`
+- `docs/user-stories/`
+
+### Consignes Codex / agents
+
+- `AGENTS.md` a la racine pour les regles globales
+- `src/AGENTS.md` pour le front-end
+- `src/server/AGENTS.md` pour le back-end
 
 ---
 
-# 📋 Workflow
+## Conventions Importantes
 
-Chaque fonctionnalité est développée selon Scrum.
-
-Le processus est le suivant :
-
-```text
-Backlog
-
-↓
-
-User Story
-
-↓
-
-Sprint
-
-↓
-
-Développement
-
-↓
-
-Tests
-
-↓
-
-Review
-
-↓
-
-Merge
-
-↓
-
-Déploiement
-```
-
-Une seule User Story est développée à la fois.
+- `*Page.tsx` pour les pages React
+- `*.types.ts` pour les types et augmentations de types
+- `config/` pour les constantes et configurations non React
+- `components/` pour les composants React reutilisables
+- `hooks/` pour la logique React partagee
+- `services/` pour les appels API ou la logique d'acces aux donnees
 
 ---
 
-# 🌱 Roadmap
+## Notes de Contexte
 
-## MVP
+- Le dossier `src/pages/` contient les pages globales non encore rattachees a une feature dediee.
+- Le dossier `public/` est le seul emplacement attendu pour les ressources statiques.
+- Certains fichiers et pages conservent encore le vocabulaire `CV` dans l'UI ou les routes API pour rester compatibles avec l'existant, a verifier avant tout renommage transversal.
 
-- Authentification
-- Gestion des entreprises
-- Dashboard
-- IA
-- Gestion des CV
-
-## V1
-
-- Drag & Drop
-- Catégories
-- Notes
-- Recherche
-
-## V2
-
-- Adaptation automatique du CV
-- Lettre de motivation IA
-- Statistiques avancées
-
-## V3
-
-- Mobile
-- Extension navigateur
-- Synchronisation LinkedIn
-
----
-
-# 🤝 Contribution
-
-Avant toute Pull Request :
-
-- respecter `coding-guidelines.md`
-- respecter `architecture.md`
-- respecter `design-system.md`
-- respecter `AGENTS.md`
-
-Toute nouvelle fonctionnalité doit être liée à une User Story du Product Backlog.
-
----
-
-# 📜 Licence
-
-Ce projet est distribué sous licence MIT.
-
----
-
-<div align="center">
-
-Développé avec ❤️ en utilisant React, TypeScript et OpenAI.
-
-</div>

@@ -2,6 +2,9 @@
 
 PostgreSQL is installed and managed manually by the developer.
 
+Prisma is the source of truth for the application schema and runtime migrations.
+The SQL files in this folder are kept as bootstrap/reference material only; they are not the execution path used by the backend.
+
 Codex must only provide:
 
 - SQL schema files

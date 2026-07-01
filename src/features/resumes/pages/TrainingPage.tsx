@@ -49,7 +49,7 @@ const trainingItems: ITrainingItem[] = [
   },
 ]
 
-export function Training() {
+export function TrainingPage() {
   const navigate = useNavigate()
 
   const goBackToExtractedData = () => {

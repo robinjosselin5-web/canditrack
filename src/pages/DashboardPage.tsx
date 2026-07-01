@@ -1,6 +1,6 @@
 import { PageHeader } from '../components/PageHeader'
 
-export function Dashboard() {
+export function DashboardPage() {
   return (
     <section>
       <PageHeader

@@ -1,6 +1,6 @@
 import { PageHeader } from '../components/PageHeader'
 
-export function Statistics() {
+export function StatisticsPage() {
   return (
     <section>
       <PageHeader

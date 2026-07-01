@@ -1,22 +1,22 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
-import { LogOut, Mail, Save, Upload, UserRound } from "lucide-react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Alert, Button, Card, Input, Loader } from "@/components/ui";
-import { useLogout } from "@/features/auth";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
+import { LogOut, Mail, Save, Upload, UserRound } from 'lucide-react'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { Alert, Button, Card, Input, Loader } from '@/components/ui'
+import { useLogout } from '@/features/auth'
 import {
   profileSchema,
   useUpdateUserProfile,
   useUserProfile,
   type IProfileFormValues,
-} from "@/features/user";
-import type { IApiResponse } from "@/types/api";
+} from '@/features/user'
+import type { IApiResponse } from '@/types/api'
 
-export function Settings() {
-  const profileQuery = useUserProfile();
-  const updateProfileMutation = useUpdateUserProfile();
-  const logoutMutation = useLogout();
+export function SettingsPage() {
+  const profileQuery = useUserProfile()
+  const updateProfileMutation = useUpdateUserProfile()
+  const logoutMutation = useLogout()
   const {
     formState: { errors, isDirty },
     handleSubmit,
@@ -24,33 +24,33 @@ export function Settings() {
     reset,
   } = useForm<IProfileFormValues>({
     defaultValues: {
-      email: "",
-      firstname: "",
-      lastname: "",
+      email: '',
+      firstname: '',
+      lastname: '',
     },
     resolver: zodResolver(profileSchema),
-  });
+  })
 
   useEffect(() => {
     if (!profileQuery.data) {
-      return;
+      return
     }
 
     reset({
       email: profileQuery.data.email,
       firstname: profileQuery.data.firstname,
       lastname: profileQuery.data.lastname,
-    });
-  }, [profileQuery.data, reset]);
+    })
+  }, [profileQuery.data, reset])
 
   const onSubmit = (values: IProfileFormValues) => {
-    updateProfileMutation.mutate(values);
-  };
+    updateProfileMutation.mutate(values)
+  }
 
   const profileErrorMessage = getProfileErrorMessage(
     profileQuery.error ?? updateProfileMutation.error,
-  );
-  const errorMessage = getLogoutErrorMessage(logoutMutation.error);
+  )
+  const errorMessage = getLogoutErrorMessage(logoutMutation.error)
 
   return (
     <section className="mx-auto max-w-6xl">
@@ -65,15 +65,15 @@ export function Settings() {
         aria-label="Sections des parametres"
         className="mb-8 flex gap-8 overflow-x-auto border-b border-border text-base font-semibold text-text-secondary sm:gap-16"
       >
-        {["Profil", "Securite", "Notifications", "Preferences"].map(
+        {['Profil', 'Securite', 'Notifications', 'Preferences'].map(
           (item, index) => (
             <button
               className={[
-                "min-w-max cursor-pointer border-b-2 px-4 pb-5 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+                'min-w-max cursor-pointer border-b-2 px-4 pb-5 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
                 index === 0
-                  ? "border-primary text-primary"
-                  : "border-transparent hover:text-text-primary",
-              ].join(" ")}
+                  ? 'border-primary text-primary'
+                  : 'border-transparent hover:text-text-primary',
+              ].join(' ')}
               key={item}
               type="button"
             >
@@ -117,7 +117,7 @@ export function Settings() {
                   iconLeft={<UserRound className="size-5" />}
                   label="Prenom"
                   placeholder="Votre prenom"
-                  {...register("firstname")}
+                  {...register('firstname')}
                 />
                 <Input
                   aria-label="Nom"
@@ -126,7 +126,7 @@ export function Settings() {
                   iconLeft={<UserRound className="size-5" />}
                   label="Nom"
                   placeholder="Votre nom"
-                  {...register("lastname")}
+                  {...register('lastname')}
                 />
               </div>
 
@@ -138,7 +138,7 @@ export function Settings() {
                 label="Email"
                 placeholder="john.doe@example.com"
                 type="email"
-                {...register("email")}
+                {...register('email')}
               />
 
               <Button
@@ -209,45 +209,45 @@ export function Settings() {
         ) : null}
       </Card>
     </section>
-  );
+  )
 }
 
 function getProfileErrorMessage(error: unknown): string | null {
   if (!error) {
-    return null;
+    return null
   }
 
   if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined;
+    const response = error.response?.data as IApiResponse<unknown> | undefined
 
     if (!error.response) {
-      return "L'API est indisponible. Le profil n'a pas ete mis a jour.";
+      return "L'API est indisponible. Le profil n'a pas ete mis a jour."
     }
 
     if (error.response.status === 409) {
-      return "Cette adresse e-mail est deja utilisee.";
+      return 'Cette adresse e-mail est deja utilisee.'
     }
 
-    return response?.message ?? "La mise a jour du profil a echoue.";
+    return response?.message ?? 'La mise a jour du profil a echoue.'
   }
 
-  return "La mise a jour du profil a echoue.";
+  return 'La mise a jour du profil a echoue.'
 }
 
 function getLogoutErrorMessage(error: unknown): string | null {
   if (!error) {
-    return null;
+    return null
   }
 
   if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined;
+    const response = error.response?.data as IApiResponse<unknown> | undefined
 
     if (!error.response) {
-      return "L'API est indisponible. La session n'a pas ete fermee.";
+      return "L'API est indisponible. La session n'a pas ete fermee."
     }
 
-    return response?.message ?? "La deconnexion a echoue. Reessayez.";
+    return response?.message ?? 'La deconnexion a echoue. Reessayez.'
   }
 
-  return "La deconnexion a echoue. Reessayez.";
+  return 'La deconnexion a echoue. Reessayez.'
 }

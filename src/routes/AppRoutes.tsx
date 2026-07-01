@@ -12,11 +12,11 @@ import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { CreateCompanyPage } from '@/features/companies'
 import { CompaniesPage, CompanyDetailsPage } from '@/features/companies'
-import { Applications } from '../pages/Applications'
-import { Dashboard } from '../pages/Dashboard'
-import { Settings } from '../pages/Settings'
-import { Statistics } from '../pages/Statistics'
-import { ExtractedData, MyCVs, Training } from '@/features/resumes'
+import { ApplicationsPage } from '../pages/ApplicationsPage'
+import { DashboardPage } from '../pages/DashboardPage'
+import { StatisticsPage } from '../pages/StatisticsPage'
+import { ExtractedDataPage, MyCVsPage, TrainingPage } from '@/features/resumes'
+import { SettingsPage } from '@/features/user'
 
 export function AppRoutes() {
   return (
@@ -34,19 +34,19 @@ export function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/companies/new" element={<CreateCompanyPage />} />
           <Route path="/companies/:companyId" element={<CompanyDetailsPage />} />
-          <Route path="/profile/cv" element={<MyCVs />} />
-          <Route path="/profile/cv/extracted-data" element={<ExtractedData />} />
+          <Route path="/profile/cv" element={<MyCVsPage />} />
+          <Route path="/profile/cv/extracted-data" element={<ExtractedDataPage />} />
           <Route
             path="/profile/cv/extracted-data/training"
-            element={<Training />}
+            element={<TrainingPage />}
           />
-          <Route path="/applications" element={<Applications />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/applications" element={<ApplicationsPage />} />
+          <Route path="/statistics" element={<StatisticsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
 

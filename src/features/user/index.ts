@@ -1,3 +1,4 @@
+export { SettingsPage } from './pages/SettingsPage'
 export { useUpdateUserProfile } from './hooks/useUpdateUserProfile'
 export { useUserProfile } from './hooks/useUserProfile'
 export {

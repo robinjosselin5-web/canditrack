@@ -45,7 +45,7 @@ const extractedDataCards: IExtractedDataCard[] = [
   },
 ]
 
-export function ExtractedData() {
+export function ExtractedDataPage() {
   const navigate = useNavigate()
 
   return (

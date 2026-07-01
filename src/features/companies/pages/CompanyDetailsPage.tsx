@@ -9,7 +9,7 @@ import {
   DetailsTabContent,
   HeroSection,
 } from '../components/CompanyDetailsSections'
-import { detailsTabs, type DetailsTab } from '../components/companyDetailsTabs'
+import { detailsTabs, type DetailsTab } from '../config/companyDetailsTabs'
 import { useDeleteCompany } from '../hooks/useDeleteCompany'
 import { useCompany } from '../hooks/useCompany'
 import { getDisplayValue } from '../utils/companyDisplay'
