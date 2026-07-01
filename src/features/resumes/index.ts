@@ -1,5 +1,5 @@
 export { ExtractedDataPage } from './pages/ExtractedDataPage'
-export { MyCVsPage } from './pages/MyCVsPage'
+export { MyResumesPage as MyCVsPage } from './pages/MyResumesPage'
 export { TrainingPage } from './pages/TrainingPage'
 export {
   analyzeCandidateCv,
@@ -7,9 +7,9 @@ export {
   deleteCandidateCv,
   getCandidateCvs,
   type ICreateCandidateCvPayload,
-} from './services/candidateCvService'
+} from './services/candidateResumeService'
 export type {
   ICandidateCv,
   ICandidateCvListItem,
   ICandidateCvListResponse,
-} from './types/candidateCv.types'
+} from './types/candidateResume.types'
