@@ -12,7 +12,7 @@ import type { ICandidateCvListItem } from '../types/candidateCv.types'
 
 const MAX_CV_FILE_SIZE = 10 * 1024 * 1024
 
-export function MyCVs() {
+export function MyCVsPage() {
   const [cvs, setCvs] = useState<ICandidateCvListItem[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isActionModalOpen, setIsActionModalOpen] = useState(false)

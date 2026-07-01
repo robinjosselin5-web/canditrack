@@ -1,6 +1,6 @@
 import { PageHeader } from '@/components/PageHeader'
 
-export function Resumes() {
+export function ResumesPage() {
   return (
     <section>
       <PageHeader

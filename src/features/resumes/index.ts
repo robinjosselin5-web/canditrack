@@ -1,7 +1,7 @@
-export { ExtractedData } from './pages/ExtractedData'
-export { MyCVs } from './pages/MyCVs'
-export { Resumes } from './pages/Resumes'
-export { Training } from './pages/Training'
+export { ExtractedDataPage } from './pages/ExtractedDataPage'
+export { MyCVsPage } from './pages/MyCVsPage'
+export { ResumesPage } from './pages/ResumesPage'
+export { TrainingPage } from './pages/TrainingPage'
 export {
   analyzeCandidateCv,
   createCandidateCv,

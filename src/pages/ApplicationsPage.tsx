@@ -1,6 +1,6 @@
 import { PageHeader } from '../components/PageHeader'
 
-export function Applications() {
+export function ApplicationsPage() {
   return (
     <section>
       <PageHeader

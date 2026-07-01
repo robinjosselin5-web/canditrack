@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { Button, Card } from '@/components/ui'
 import type { CompanyStatus } from '../types/company.types'
-import type { DetailsTab } from './companyDetailsTabs'
+import type { DetailsTab } from '../config/companyDetailsTabs'
 
 interface HeroSectionProps {
   companyName: string
