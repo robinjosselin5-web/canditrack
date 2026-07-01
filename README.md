@@ -67,6 +67,9 @@ src/
 ### Principes importants
 
 - `src/features/*` contient le code specifique a un domaine fonctionnel
+- `src/features/<feature>/config/` contient uniquement des constantes, mappings ou listes statiques propres a la feature
+- aucun composant React, hook, service ou logique metier ne doit etre place dans `config/`
+- on ne cree un dossier `config/` que lorsqu'une feature contient vraiment ce type de fichiers
 - `src/pages/` contient les pages globales ou temporaires pas encore rattachees a une feature
 - `src/server/` contient toute la partie back-end
 - `src/server/types/` contient les types serveur, y compris les augmentations Express
@@ -115,7 +118,7 @@ Notes:
 
 Prisma est la source de verite du modele de donnees et des migrations applicatives.
 
-Le backend utilise `@prisma/adapter-pg` avec un `Pool` PostgreSQL local.
+Le backend utilise `@prisma/adapter-pg` avec une connexion PostgreSQL locale definie dans `src/server/config/prisma.ts`.
 
 Scripts utilitaires:
 
@@ -137,8 +140,6 @@ Les migrations Prisma sont dans:
 ```text
 prisma/migrations/
 ```
-
-La base de reference documentaire SQL existe encore dans `src/server/database/`, mais elle n'est pas la source d'execution du runtime.
 
 ---
 
@@ -215,6 +216,7 @@ Contenu utile:
 - `components/` pour les composants React reutilisables
 - `hooks/` pour la logique React partagee
 - `services/` pour les appels API ou la logique d'acces aux donnees
+- `config/` reste reserve aux valeurs statiques locales a une feature, jamais aux composants
 
 ---
 
@@ -223,4 +225,3 @@ Contenu utile:
 - Le dossier `src/pages/` contient les pages globales non encore rattachees a une feature dediee.
 - Le dossier `public/` est le seul emplacement attendu pour les ressources statiques.
 - Certains fichiers et pages conservent encore le vocabulaire `CV` dans l'UI ou les routes API pour rester compatibles avec l'existant, a verifier avant tout renommage transversal.
-

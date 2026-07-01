@@ -1,6 +1,5 @@
 export { ExtractedDataPage } from './pages/ExtractedDataPage'
 export { MyCVsPage } from './pages/MyCVsPage'
-export { ResumesPage } from './pages/ResumesPage'
 export { TrainingPage } from './pages/TrainingPage'
 export {
   analyzeCandidateCv,
