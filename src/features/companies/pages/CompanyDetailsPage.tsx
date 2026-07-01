@@ -55,7 +55,7 @@ export function CompanyDetailsPage() {
   }, [toastMessage])
 
   return (
-    <section className="mx-auto w-full max-w-[1320px]">
+    <section className="mx-auto w-full max-w-330">
       <div className="mb-6 flex items-center justify-between gap-4">
         <Link
           to="/companies"

@@ -32,7 +32,7 @@ export function ForgotPasswordPage() {
   );
 
   return (
-    <Card className="mx-auto w-full max-w-[560px] border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
+    <Card className="mx-auto w-full max-w-140 border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
       <div className="mb-6 text-center">
         <BrandLogoLink variant="stacked" />
         <h1 className="mt-6 text-4xl font-bold tracking-normal text-text-primary">
