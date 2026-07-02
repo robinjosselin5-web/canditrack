@@ -1,13 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
 import { LockKeyhole } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { BrandLogoLink } from "@/components/BrandLogoLink";
 import { Alert, Button, Card, Input } from "@/components/ui";
-import type { IApiResponse } from "@/types/api";
+import { AuthPageHeader } from "../components/AuthPageHeader";
 import { useResetPassword } from "../hooks/useResetPassword";
 import type { IResetPasswordFormValues } from "../types/passwordReset.types";
+import { getResetPasswordErrorMessage } from "../utils/authErrorMessages";
 import { resetPasswordSchema } from "../utils/passwordResetSchema";
 
 export function ResetPasswordPage() {
@@ -38,16 +37,11 @@ export function ResetPasswordPage() {
     : getResetPasswordErrorMessage(resetPasswordMutation.error);
 
   return (
-    <Card className="mx-auto w-full max-w-[560px] border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
-      <div className="mb-6 text-center">
-        <BrandLogoLink variant="stacked" />
-        <h1 className="mt-6 text-4xl font-bold tracking-normal text-text-primary">
-          Nouveau mot de passe
-        </h1>
-        <p className="mt-3 text-base leading-7 text-text-secondary">
-          Choisissez un mot de passe fort pour proteger votre compte.
-        </p>
-      </div>
+    <Card className="mx-auto w-full max-w-140 border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
+      <AuthPageHeader
+        description="Choisissez un mot de passe fort pour proteger votre compte."
+        title="Nouveau mot de passe"
+      />
 
       <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {errorMessage ? <Alert variant="error">{errorMessage}</Alert> : null}
@@ -87,36 +81,11 @@ export function ResetPasswordPage() {
       <p className="mt-6 text-center">
         <Link
           to="/login"
-          className="text-sm font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="cursor-pointer text-sm font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           Retour a la connexion
         </Link>
       </p>
     </Card>
   );
-}
-
-function getResetPasswordErrorMessage(error: unknown): string | null {
-  if (!error) {
-    return null;
-  }
-
-  if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined;
-
-    if (!error.response) {
-      return "L'API est indisponible. Verifiez que le backend est demarre.";
-    }
-
-    if (error.response.status === 400 || error.response.status === 422) {
-      return response?.message ?? "Le lien de reinitialisation est invalide.";
-    }
-
-    return (
-      response?.message ??
-      "Impossible de reinitialiser le mot de passe. Reessayez."
-    );
-  }
-
-  return "Impossible de reinitialiser le mot de passe. Reessayez.";
 }

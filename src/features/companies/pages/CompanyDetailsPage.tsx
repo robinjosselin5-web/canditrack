@@ -1,39 +1,45 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Alert, Button, Card, Modal } from '@/components/ui'
-import { PageHeader } from '@/components/PageHeader'
+import { ArrowLeft, BriefcaseBusiness, CalendarDays, Clock3, Globe, MapPin, Phone, UserRound } from 'lucide-react'
+import { Alert, Modal } from '@/components/ui'
 import { CompanyForm } from '../components/CompanyForm'
 import { ConfirmationModal } from '../components/ConfirmationModal'
+import {
+  CompanyDetailsSkeleton,
+  DetailsTabContent,
+  HeroSection,
+} from '../components/CompanyDetailsSections'
+import { type DetailsTab } from '../config/companyDetailsTabs'
+import { CompanyDetailsTabs } from '../components/CompanyDetailsTabs'
 import { useDeleteCompany } from '../hooks/useDeleteCompany'
 import { useCompany } from '../hooks/useCompany'
-
-const statusLabels: Record<
-  'draft' | 'pending' | 'no_response' | 'follow_up' | 'interview' | 'rejected' | 'accepted',
-  string
-> = {
-  accepted: 'Acceptée',
-  draft: 'Brouillon',
-  follow_up: 'À relancer',
-  interview: 'Entretien',
-  no_response: 'Sans réponse',
-  pending: 'En attente',
-  rejected: 'Refusée',
-}
+import { getDisplayValue } from '../utils/companyDisplay'
 
 export function CompanyDetailsPage() {
   const navigate = useNavigate()
   const { companyId } = useParams()
   const { data, isError, isLoading, refetch } = useCompany(companyId)
   const deleteCompanyMutation = useDeleteCompany()
+  const [activeTab, setActiveTab] = useState<DetailsTab>('summary')
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState<string | null>(null)
-  const createdAt = data
-    ? new Date(data.createdAt).toLocaleDateString('fr-FR')
-    : null
-  const updatedAt = data
-    ? new Date(data.updatedAt).toLocaleDateString('fr-FR')
-    : null
+
+  const createdAt = data ? new Date(data.createdAt).toLocaleDateString('fr-FR') : null
+  const updatedAt = data ? new Date(data.updatedAt).toLocaleDateString('fr-FR') : null
+
+  const infoRows = useMemo(
+    () => [
+      { icon: BriefcaseBusiness, label: 'Secteur', value: 'Non renseigne' },
+      { icon: UserRound, label: 'Recruteur', value: getDisplayValue(data?.recruiterName) },
+      { icon: Phone, label: 'Telephone', value: getDisplayValue(data?.phone) },
+      { icon: MapPin, label: 'Ville', value: getDisplayValue(data?.city) },
+      { icon: Globe, label: 'Pays', value: getDisplayValue(data?.country) },
+      { icon: CalendarDays, label: 'Creation', value: createdAt ?? '—' },
+      { icon: Clock3, label: 'Derniere mise a jour', value: updatedAt ?? '—' },
+    ],
+    [createdAt, data?.city, data?.country, data?.phone, data?.recruiterName, updatedAt],
+  )
 
   useEffect(() => {
     if (!toastMessage) {
@@ -50,44 +56,17 @@ export function CompanyDetailsPage() {
   }, [toastMessage])
 
   return (
-    <section>
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-        <PageHeader
-          title="Détail entreprise"
-          description="Consultez les informations principales de l'entreprise."
-        />
-
-        {data ? (
-          <div className="flex flex-wrap gap-3">
-            <Button
-              className="w-auto"
-              onClick={() => {
-                setIsEditOpen(true)
-              }}
-              variant="secondary"
-            >
-              Modifier
-            </Button>
-            <Button
-              className="w-auto"
-              onClick={() => {
-                setIsDeleteOpen(true)
-              }}
-              variant="danger"
-            >
-              Supprimer
-            </Button>
-          </div>
-        ) : null}
-      </div>
-
-      <div className="mb-6">
+    <section className="mx-auto w-full max-w-330">
+      <div className="mb-6 flex items-center justify-between gap-4">
         <Link
           to="/companies"
-          className="inline-flex rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="inline-flex cursor-pointer items-center gap-2 rounded-button px-1 py-2 text-sm font-semibold text-text-secondary transition hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
-          Retour aux entreprises
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          Retour
         </Link>
+
+        <div />
       </div>
 
       {isLoading ? <CompanyDetailsSkeleton /> : null}
@@ -98,58 +77,32 @@ export function CompanyDetailsPage() {
       ) : null}
 
       {!isLoading && !isError && data ? (
-        <div className="grid gap-4 md:grid-cols-2">
-          <Card className="space-y-4">
-            <div>
-              <p className="text-sm text-text-secondary">Nom</p>
-              <p className="mt-1 text-lg font-semibold text-text-primary">
-                {data.name}
-              </p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Statut</p>
-              <p className="mt-1 text-text-primary">{statusLabels[data.status]}</p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Site web</p>
-              <p className="mt-1 break-all text-text-primary">
-                {data.website ?? '—'}
-              </p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Email</p>
-              <p className="mt-1 break-all text-text-primary">
-                {data.email ?? '—'}
-              </p>
-            </div>
-          </Card>
+        <div className="space-y-6">
+          <HeroSection
+            companyName={data.name}
+            onDelete={() => {
+              setIsDeleteOpen(true)
+            }}
+            onEdit={() => {
+              setIsEditOpen(true)
+            }}
+            status={data.status}
+            website={data.website}
+          />
 
-          <Card className="space-y-4">
-            <div>
-              <p className="text-sm text-text-secondary">Téléphone</p>
-              <p className="mt-1 text-text-primary">{data.phone ?? '—'}</p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Ville</p>
-              <p className="mt-1 text-text-primary">{data.city ?? '—'}</p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Pays</p>
-              <p className="mt-1 text-text-primary">{data.country ?? '—'}</p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Recruteur</p>
-              <p className="mt-1 text-text-primary">{data.recruiterName ?? '—'}</p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Créée le</p>
-              <p className="mt-1 text-text-primary">{createdAt}</p>
-            </div>
-            <div>
-              <p className="text-sm text-text-secondary">Mise à jour le</p>
-              <p className="mt-1 text-text-primary">{updatedAt}</p>
-            </div>
-          </Card>
+          <CompanyDetailsTabs
+            activeTab={activeTab}
+            onChangeTab={(tab) => {
+              setActiveTab(tab)
+            }}
+          />
+
+          <DetailsTabContent
+            activeTab={activeTab}
+            infoRows={infoRows}
+            summaryText="Le resume genere par l'IA n'est pas encore disponible dans cette US. Cette section sert de placeholder visuel en attendant l'integration fonctionnelle."
+            website={data.website}
+          />
         </div>
       ) : null}
 
@@ -184,7 +137,7 @@ export function CompanyDetailsPage() {
         confirmLabel="Supprimer"
         isLoading={deleteCompanyMutation.isPending}
         isOpen={isDeleteOpen}
-        message="Cette suppression est définitive. L'entreprise sera retirée de la liste et ne pourra pas être restaurée."
+        message="Cette suppression est definitive. L'entreprise sera retiree de la liste et ne pourra pas etre restauree."
         onClose={() => {
           if (!deleteCompanyMutation.isPending) {
             setIsDeleteOpen(false)
@@ -198,7 +151,7 @@ export function CompanyDetailsPage() {
           deleteCompanyMutation.mutate(companyId, {
             onSuccess: () => {
               setIsDeleteOpen(false)
-              setToastMessage('Entreprise supprimée avec succès.')
+              setToastMessage('Entreprise supprimee avec succes.')
               navigate('/companies')
             },
           })
@@ -216,24 +169,5 @@ export function CompanyDetailsPage() {
         </div>
       ) : null}
     </section>
-  )
-}
-
-function CompanyDetailsSkeleton() {
-  return (
-    <div className="grid gap-4 md:grid-cols-2">
-      <Card className="space-y-4">
-        <div className="h-5 w-40 animate-pulse rounded-full bg-divider" />
-        <div className="h-4 w-24 animate-pulse rounded-full bg-divider" />
-        <div className="h-4 w-full animate-pulse rounded-full bg-divider" />
-        <div className="h-4 w-3/4 animate-pulse rounded-full bg-divider" />
-      </Card>
-      <Card className="space-y-4">
-        <div className="h-5 w-32 animate-pulse rounded-full bg-divider" />
-        <div className="h-4 w-20 animate-pulse rounded-full bg-divider" />
-        <div className="h-4 w-full animate-pulse rounded-full bg-divider" />
-        <div className="h-4 w-2/3 animate-pulse rounded-full bg-divider" />
-      </Card>
-    </div>
   )
 }

@@ -78,6 +78,36 @@ Réponse :
 
 /companies/:id
 
+# Wireframes
+
+Mobile
+
+```
+../docs/wireframes/company-details-mobile.png
+```
+
+Desktop
+
+```
+../docs/wireframes/company-details-desktop.png
+```
+
+---
+
+# Mockups
+
+Mobile
+
+```
+../docs/mockups/company-details-mobile.png
+```
+
+Desktop
+
+```
+../docs/mockups/company-details-desktop.png
+```
+
 ## Données affichées
 
 Afficher :

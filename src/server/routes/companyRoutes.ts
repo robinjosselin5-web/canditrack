@@ -4,12 +4,16 @@ import {
   createCompanyController,
   getCompanyController,
   getCompaniesController,
+  updateCompanyFavoriteController,
   updateCompanyController,
 } from '../controllers/companyController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
 import { authJwt } from '../middlewares/authJwt.js'
 import { validateBody } from '../middlewares/validateBody.js'
-import { createCompanyBodySchema } from '../validators/companyValidators.js'
+import {
+  createCompanyBodySchema,
+  updateCompanyFavoriteBodySchema,
+} from '../validators/companyValidators.js'
 import { updateCompanyBodySchema } from '../validators/companyUpdateValidators.js'
 
 export const companyRoutes = Router()
@@ -34,6 +38,13 @@ companyRoutes.patch(
   authJwt,
   validateBody(updateCompanyBodySchema),
   asyncHandler(updateCompanyController),
+)
+
+companyRoutes.patch(
+  '/companies/:id/favorite',
+  authJwt,
+  validateBody(updateCompanyFavoriteBodySchema),
+  asyncHandler(updateCompanyFavoriteController),
 )
 
 companyRoutes.delete(

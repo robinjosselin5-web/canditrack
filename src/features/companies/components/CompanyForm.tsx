@@ -21,7 +21,7 @@ interface CompanyFormProps {
   initialValues?: CompanyFormValues
   mode?: 'create' | 'update'
   onCancel?: () => void
-  onSuccess?: () => void
+  onSuccess?: (companyId?: string) => void
 }
 
 const defaultValues: CompanyFormValues = {
@@ -85,8 +85,8 @@ export function CompanyForm({
       onError: (error) => {
         applyBackendErrors(error, setError)
       },
-      onSuccess: () => {
-        onSuccess?.()
+      onSuccess: (company) => {
+        onSuccess?.(company.id)
       },
     })
   }

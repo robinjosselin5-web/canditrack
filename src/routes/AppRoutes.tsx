@@ -8,16 +8,21 @@ import {
   ResetPasswordPage,
   VerifyEmailPage,
 } from '@/features/auth'
-import { Applications } from '../pages/Applications'
-import { Companies } from '../pages/Companies'
-import { CompanyDetails } from '../pages/CompanyDetails'
-import { Dashboard } from '../pages/Dashboard'
-import { Resumes } from '../pages/Resumes'
-import { Settings } from '../pages/Settings'
-import { Statistics } from '../pages/Statistics'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { CreateCompanyPage } from '@/features/companies'
+import { CompaniesPage, CompanyDetailsPage } from '@/features/companies'
+import { ApplicationsPage } from '../pages/ApplicationsPage'
+import { DashboardPage } from '../pages/DashboardPage'
+import { StatisticsPage } from '../pages/StatisticsPage'
+import {
+  ExperiencesPage,
+  ExtractedDataPage,
+  MyCVsPage,
+  SkillsPage,
+  TrainingPage,
+} from '@/features/resumes'
+import { SettingsPage } from '@/features/user'
 
 export function AppRoutes() {
   return (
@@ -35,14 +40,27 @@ export function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/companies" element={<Companies />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/companies/new" element={<CreateCompanyPage />} />
-          <Route path="/companies/:companyId" element={<CompanyDetails />} />
-          <Route path="/resumes" element={<Resumes />} />
-          <Route path="/applications" element={<Applications />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/companies/:companyId" element={<CompanyDetailsPage />} />
+          <Route path="/profile/cv" element={<MyCVsPage />} />
+          <Route path="/profile/cv/extracted-data" element={<ExtractedDataPage />} />
+          <Route
+            path="/profile/cv/extracted-data/training"
+            element={<TrainingPage />}
+          />
+          <Route
+            path="/profile/cv/extracted-data/experiences"
+            element={<ExperiencesPage />}
+          />
+          <Route
+            path="/profile/cv/extracted-data/skills"
+            element={<SkillsPage />}
+          />
+          <Route path="/applications" element={<ApplicationsPage />} />
+          <Route path="/statistics" element={<StatisticsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
 

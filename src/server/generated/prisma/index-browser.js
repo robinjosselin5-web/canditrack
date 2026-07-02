@@ -135,6 +135,32 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CandidateProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CandidateCvScalarFieldEnum = {
+  id: 'id',
+  candidateProfileId: 'candidateProfileId',
+  label: 'label',
+  originalFilename: 'originalFilename',
+  storageFilename: 'storageFilename',
+  storageKey: 'storageKey',
+  fileHash: 'fileHash',
+  mimeType: 'mimeType',
+  fileSize: 'fileSize',
+  isDefault: 'isDefault',
+  analysisStatus: 'analysisStatus',
+  extractedText: 'extractedText',
+  lastAnalyzedAt: 'lastAnalyzedAt',
+  uploadedAt: 'uploadedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -216,6 +242,13 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.CandidateCvAnalysisStatus = exports.$Enums.CandidateCvAnalysisStatus = {
+  NOT_ANALYZED: 'NOT_ANALYZED',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+};
+
 exports.CompanyStatus = exports.$Enums.CompanyStatus = {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',
@@ -228,6 +261,8 @@ exports.CompanyStatus = exports.$Enums.CompanyStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  CandidateProfile: 'CandidateProfile',
+  CandidateCv: 'CandidateCv',
   Category: 'Category',
   Company: 'Company',
   Resume: 'Resume',

@@ -1,23 +1,23 @@
-import { useId, useState } from 'react'
 import {
-  CalendarDays,
+  Clock3,
   Heart,
-  HeartOff,
   Mail,
-  MapPin,
-  MoreHorizontal,
-  Globe,
+  MoreVertical,
+  Send,
   UserRound,
+  XCircle,
 } from 'lucide-react'
+import { useState } from 'react'
 import { Card } from '@/components/ui'
 import type { ICompanyListItem } from '../types/company.types'
 
 interface CompanyCardProps {
+  categoryLabel: string
   company: ICompanyListItem
-  isFavorite?: boolean
   onClick?: () => void
-  onEdit?: () => void
-  onDelete?: () => void
+  onDeleteCompany?: (company: ICompanyListItem) => void
+  onEditCompany?: (company: ICompanyListItem) => void
+  onToggleFavorite?: (company: ICompanyListItem) => void
 }
 
 const statusLabels: Record<ICompanyListItem['status'], string> = {
@@ -31,30 +31,40 @@ const statusLabels: Record<ICompanyListItem['status'], string> = {
 }
 
 const statusStyles: Record<ICompanyListItem['status'], string> = {
-  accepted: 'bg-status-accepted text-text-primary',
-  draft: 'bg-status-draft text-text-primary',
-  follow_up: 'bg-status-follow-up text-text-primary',
-  interview: 'bg-status-interview text-text-primary',
-  no_response: 'bg-status-no-response text-text-primary',
-  pending: 'bg-status-pending text-text-primary',
-  rejected: 'bg-status-rejected text-text-primary',
+  accepted: 'bg-status-accepted/45 text-emerald-700',
+  draft: 'bg-status-draft/45 text-slate-700',
+  follow_up: 'bg-status-follow-up/45 text-violet-700',
+  interview: 'bg-status-interview/45 text-emerald-700',
+  no_response: 'bg-status-no-response/45 text-amber-700',
+  pending: 'bg-status-pending/20 text-blue-700',
+  rejected: 'bg-status-rejected/45 text-red-700',
 }
 
+const statusIcons = {
+  accepted: Send,
+  draft: Clock3,
+  follow_up: Clock3,
+  interview: UserRound,
+  no_response: Clock3,
+  pending: Mail,
+  rejected: XCircle,
+} satisfies Record<ICompanyListItem['status'], typeof Clock3>
+
 export function CompanyCard({
+  categoryLabel,
   company,
-  isFavorite = false,
   onClick,
-  onEdit,
-  onDelete,
+  onDeleteCompany,
+  onEditCompany,
+  onToggleFavorite,
 }: CompanyCardProps) {
+  const StatusIcon = statusIcons[company.status]
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const menuId = useId()
-  const location = [company.city, company.country].filter(Boolean).join(', ')
-  const addedAt = new Date(company.createdAt).toLocaleDateString('fr-FR')
+  const hasActions = Boolean(onDeleteCompany && onEditCompany)
 
   return (
     <Card
-      className="relative h-full cursor-pointer p-5 sm:p-6"
+      className="relative grid min-h-28 cursor-pointer grid-cols-[88px_1fr_32px] items-center gap-4 p-4 shadow-small transition hover:-translate-y-0.5 hover:shadow-medium"
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       onKeyDown={(event) => {
@@ -69,118 +79,139 @@ export function CompanyCard({
       }}
       tabIndex={onClick ? 0 : undefined}
     >
-      <div className="mb-4 flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <h2 className="truncate text-lg font-semibold text-text-primary">
-            {company.name}
-          </h2>
-          <span
+      <CompanyLogo name={company.name} />
+
+      <div className="min-w-0">
+        <h2 className="truncate text-lg font-bold text-slate-950">
+          {company.name}
+        </h2>
+        <p className="mt-1 truncate text-sm text-text-secondary">
+          {categoryLabel}
+        </p>
+        <span
+          className={[
+            'mt-2 inline-flex min-h-7 items-center gap-2 rounded-button px-3 text-xs font-bold',
+            statusStyles[company.status],
+          ].join(' ')}
+        >
+          <StatusIcon className="size-4" aria-hidden="true" />
+          {statusLabels[company.status]}
+        </span>
+      </div>
+
+      <div className="flex items-center gap-1 self-start">
+        <button
+          aria-label={
+            company.isFavorite
+              ? 'Retirer des favoris'
+              : 'Ajouter aux favoris'
+          }
+          className={[
+            'inline-flex size-8 cursor-pointer items-center justify-center rounded-full transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+            company.isFavorite ? 'text-red-500' : 'text-text-secondary',
+          ].join(' ')}
+          onClick={(event) => {
+            event.stopPropagation()
+            onToggleFavorite?.(company)
+          }}
+          type="button"
+        >
+          <Heart
             className={[
-              'mt-2 inline-flex min-h-8 items-center rounded-full px-3 text-sm font-semibold',
-              statusStyles[company.status],
+              'size-5',
+              company.isFavorite ? 'fill-current' : '',
             ].join(' ')}
-          >
-            {statusLabels[company.status]}
-          </span>
-        </div>
+            aria-hidden="true"
+          />
+        </button>
 
-        <div className="flex items-center gap-1">
-          <button
-            aria-label={
-              isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'
+        <div className="relative">
+        <button
+          aria-expanded={hasActions ? isMenuOpen : undefined}
+          aria-label="Ouvrir le menu d'actions"
+          className="inline-flex size-8 cursor-pointer items-center justify-center rounded-full text-slate-950 transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          onClick={(event) => {
+            event.stopPropagation()
+
+            if (!hasActions) {
+              return
             }
-            className="inline-flex size-10 items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            title={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-            onClick={(event) => {
-              event.stopPropagation()
-            }}
-            type="button"
-          >
-            {isFavorite ? (
-              <Heart className="size-5 fill-current text-error" aria-hidden="true" />
-            ) : (
-              <HeartOff className="size-5" aria-hidden="true" />
-            )}
-          </button>
 
-          <div className="relative">
+            setIsMenuOpen((value) => !value)
+          }}
+          type="button"
+        >
+          <MoreVertical className="size-5" aria-hidden="true" />
+        </button>
+
+        {hasActions && isMenuOpen ? (
+          <div
+            className="absolute right-0 top-10 z-20 w-44 rounded-card border border-border bg-surface p-2 shadow-large"
+            role="menu"
+          >
             <button
-              aria-controls={menuId}
-              aria-expanded={isMenuOpen}
-              aria-label="Ouvrir le menu d'actions"
-              className="inline-flex size-10 items-center justify-center rounded-full text-text-secondary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              title="Ouvrir le menu d'actions"
+              className="flex w-full cursor-pointer items-center rounded-button px-3 py-2 text-left text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               onClick={(event) => {
                 event.stopPropagation()
-                setIsMenuOpen((value) => !value)
+                setIsMenuOpen(false)
+                onEditCompany?.(company)
               }}
+              role="menuitem"
               type="button"
             >
-              <MoreHorizontal className="size-5" aria-hidden="true" />
+              Modifier
             </button>
-
-            {isMenuOpen ? (
-              <div
-                id={menuId}
-                className="absolute right-0 top-12 z-20 w-52 rounded-card border border-border bg-surface p-2 shadow-large"
-                role="menu"
-              >
-                <button
-                  className="flex w-full items-center rounded-button px-3 py-2 text-left text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  onClick={(event) => {
-                    event.stopPropagation()
-                    setIsMenuOpen(false)
-                    onEdit?.()
-                  }}
-                  role="menuitem"
-                  type="button"
-                >
-                  Modifier l&apos;entreprise
-                </button>
-                <button
-                  className="flex w-full items-center rounded-button px-3 py-2 text-left text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  onClick={(event) => {
-                    event.stopPropagation()
-                    setIsMenuOpen(false)
-                    onDelete?.()
-                  }}
-                  role="menuitem"
-                  type="button"
-                >
-                  Supprimer
-                </button>
-              </div>
-            ) : null}
+            <button
+              className="flex w-full cursor-pointer items-center rounded-button px-3 py-2 text-left text-sm font-medium text-red-600 transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-error"
+              onClick={(event) => {
+                event.stopPropagation()
+                setIsMenuOpen(false)
+                onDeleteCompany?.(company)
+              }}
+              role="menuitem"
+              type="button"
+            >
+              Supprimer
+            </button>
           </div>
+        ) : null}
         </div>
       </div>
-
-      <div className="space-y-3 text-sm text-text-secondary">
-        <p className="flex items-center gap-2 text-text-primary">
-          <Globe className="size-4 shrink-0 text-primary" aria-hidden="true" />
-          <span className="truncate">{company.website ?? '—'}</span>
-        </p>
-        <p className="flex items-center gap-2">
-          <Mail className="size-4 shrink-0 text-primary" aria-hidden="true" />
-          <span className="truncate">{company.email ?? '—'}</span>
-        </p>
-        {location ? (
-          <p className="flex items-center gap-2">
-            <MapPin className="size-4 shrink-0 text-primary" aria-hidden="true" />
-            <span className="truncate">{location}</span>
-          </p>
-        ) : null}
-        {company.recruiterName ? (
-          <p className="flex items-center gap-2">
-            <UserRound className="size-4 shrink-0 text-primary" aria-hidden="true" />
-            <span className="truncate">{company.recruiterName}</span>
-          </p>
-        ) : null}
-        <p className="flex items-center gap-2">
-          <CalendarDays className="size-4 shrink-0 text-primary" aria-hidden="true" />
-          <span>Ajoutée le {addedAt}</span>
-        </p>
-      </div>
     </Card>
+  )
+}
+
+export function CompanyLogo({ name }: { name: string }) {
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('')
+
+  return (
+    <div className="flex size-16 shrink-0 items-center justify-center rounded-input border border-border bg-surface text-base font-bold text-primary shadow-small">
+      {initials || name[0]?.toUpperCase() || '?'}
+    </div>
+  )
+}
+
+export function CompanyStatusBadge({
+  status,
+}: {
+  status: ICompanyListItem['status']
+}) {
+  const StatusIcon = statusIcons[status]
+
+  return (
+    <span
+      className={[
+        'inline-flex min-h-8 items-center gap-2 rounded-button px-3 text-xs font-bold',
+        statusStyles[status],
+      ].join(' ')}
+    >
+      <StatusIcon className="size-4" aria-hidden="true" />
+      {statusLabels[status]}
+    </span>
   )
 }
