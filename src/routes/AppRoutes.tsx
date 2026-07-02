@@ -15,7 +15,13 @@ import { CompaniesPage, CompanyDetailsPage } from '@/features/companies'
 import { ApplicationsPage } from '../pages/ApplicationsPage'
 import { DashboardPage } from '../pages/DashboardPage'
 import { StatisticsPage } from '../pages/StatisticsPage'
-import { ExtractedDataPage, MyCVsPage, TrainingPage } from '@/features/resumes'
+import {
+  ExperiencesPage,
+  ExtractedDataPage,
+  MyCVsPage,
+  SkillsPage,
+  TrainingPage,
+} from '@/features/resumes'
 import { SettingsPage } from '@/features/user'
 
 export function AppRoutes() {
@@ -43,6 +49,14 @@ export function AppRoutes() {
           <Route
             path="/profile/cv/extracted-data/training"
             element={<TrainingPage />}
+          />
+          <Route
+            path="/profile/cv/extracted-data/experiences"
+            element={<ExperiencesPage />}
+          />
+          <Route
+            path="/profile/cv/extracted-data/skills"
+            element={<SkillsPage />}
           />
           <Route path="/applications" element={<ApplicationsPage />} />
           <Route path="/statistics" element={<StatisticsPage />} />

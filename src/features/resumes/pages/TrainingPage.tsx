@@ -14,8 +14,6 @@ interface ITrainingItem {
   period: string
 }
 
-const selectedCvFilename = 'CV_Dev_FullStack.pdf'
-
 const trainingItems: ITrainingItem[] = [
   {
     id: 'master-informatique',
@@ -86,9 +84,6 @@ export function TrainingPage() {
           <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
             Formation
           </h1>
-          <p className="text-sm font-medium text-text-secondary sm:text-base">
-            CV sélectionné : {selectedCvFilename}
-          </p>
         </div>
 
         <button

@@ -36,12 +36,14 @@ const extractedDataCards: IExtractedDataCard[] = [
     title: 'Compétences',
     count: 24,
     icon: Sparkles,
+    route: '/profile/cv/extracted-data/skills',
   },
   {
     id: 'experiences',
     title: 'Expériences',
     count: 7,
     icon: BriefcaseBusiness,
+    route: '/profile/cv/extracted-data/experiences',
   },
 ]
 
@@ -58,32 +60,6 @@ export function ExtractedDataPage() {
           Visualisez les informations extraites de vos CV.
         </p>
       </header>
-
-      <div className="space-y-3">
-        <label
-          className="block text-sm font-semibold text-text-primary"
-          htmlFor="extracted-data-cv"
-        >
-          CV sélectionné
-        </label>
-        <div className="relative">
-          <select
-            className="min-h-12 w-full cursor-pointer appearance-none rounded-input border border-border bg-surface px-4 pr-12 text-sm font-semibold text-text-primary shadow-soft transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-accent/30"
-            defaultValue={cvOptions[0].id}
-            id="extracted-data-cv"
-          >
-            {cvOptions.map((cv) => (
-              <option key={cv.id} value={cv.id}>
-                {cv.filename}
-              </option>
-            ))}
-          </select>
-          <ChevronDown
-            aria-hidden="true"
-            className="pointer-events-none absolute right-4 top-1/2 size-5 -translate-y-1/2 text-text-secondary"
-          />
-        </div>
-      </div>
 
       <div className="grid gap-4">
         {extractedDataCards.map((card) => (
