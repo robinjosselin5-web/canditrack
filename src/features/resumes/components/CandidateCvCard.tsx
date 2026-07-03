@@ -28,6 +28,7 @@ export function CandidateCvCard({
         </h2>
         <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button
+            type="button"
             className="w-full sm:w-auto"
             disabled={isAnalyzing}
             loading={isAnalyzing}
