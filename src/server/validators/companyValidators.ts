@@ -62,5 +62,13 @@ export const createCompanyBodySchema = z.object({
   recruiterName: optionalText(150),
 })
 
-export type CreateCompanyBody = z.infer<typeof createCompanyBodySchema>
+export const updateCompanyFavoriteBodySchema = z.object({
+  isFavorite: z.boolean({
+    error: 'Le statut favori doit etre un booleen.',
+  }),
+})
 
+export type CreateCompanyBody = z.infer<typeof createCompanyBodySchema>
+export type UpdateCompanyFavoriteBody = z.infer<
+  typeof updateCompanyFavoriteBodySchema
+>

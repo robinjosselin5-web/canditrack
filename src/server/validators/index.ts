@@ -15,6 +15,8 @@ export {
 export {
   createCompanyBodySchema,
   type CreateCompanyBody,
+  updateCompanyFavoriteBodySchema,
+  type UpdateCompanyFavoriteBody,
 } from './companyValidators.js'
 export {
   updateUserProfileBodySchema,

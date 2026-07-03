@@ -35,7 +35,7 @@ export function AuthLayout() {
                 <span className="size-2 rounded-full bg-accent/40" />
               </div>
               <div className="grid grid-cols-[80px_1fr] gap-6">
-                <div className="size-20 rounded-full bg-gradient-to-br from-primary to-accent" />
+                <div className="size-20 rounded-full bg-linear-to-br from-primary to-accent" />
                 <div className="space-y-3">
                   <span className="block h-3 w-16 rounded-full bg-divider" />
                   <span className="block h-3 w-32 rounded-full bg-divider" />

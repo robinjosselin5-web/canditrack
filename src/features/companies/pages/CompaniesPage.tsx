@@ -1,62 +1,179 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Alert, Card, Modal } from '@/components/ui'
-import { PageHeader } from '@/components/PageHeader'
+import { ChevronDown, Plus } from 'lucide-react'
+import { Alert, Modal } from '@/components/ui'
 import { CompanyCard } from '../components/CompanyCard'
-import { ConfirmationModal } from '../components/ConfirmationModal'
 import { CompanyForm } from '../components/CompanyForm'
+import { ConfirmationModal } from '../components/ConfirmationModal'
+import {
+  CompaniesErrorState,
+  CompaniesSkeleton,
+  EmptyCompaniesState,
+} from '../components/CompaniesStates'
+import {
+  FavoriteFilterButton,
+  SearchField,
+  SortOrderSelect,
+  StatusSelect,
+  type SortOrder,
+  type StatusFilter,
+} from '../components/CompaniesFilters'
+import { CompaniesTable } from '../components/CompaniesTable'
 import { useCompanies } from '../hooks/useCompanies'
 import { useDeleteCompany } from '../hooks/useDeleteCompany'
+import { useToggleCompanyFavorite } from '../hooks/useToggleCompanyFavorite'
 import type { ICompanyListItem } from '../types/company.types'
+import { getCompanyCategoryLabel } from '../utils/companyDisplay'
+import { filterCompanies } from '../utils/companyFilters'
 
 export function CompaniesPage() {
   const navigate = useNavigate()
   const { data, isError, isLoading } = useCompanies()
   const deleteCompanyMutation = useDeleteCompany()
-  const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(
-    null,
-  )
-  const [companyToDelete, setCompanyToDelete] =
-    useState<ICompanyListItem | null>(null)
+  const toggleFavoriteMutation = useToggleCompanyFavorite()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc')
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
+  const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(null)
+  const [companyToDelete, setCompanyToDelete] = useState<ICompanyListItem | null>(null)
+
+  const filteredCompanies = useMemo(() => {
+    if (!data) {
+      return []
+    }
+
+    return filterCompanies({
+      companies: data,
+      searchQuery,
+      showFavoritesOnly,
+      sortOrder,
+      statusFilter,
+    })
+  }, [data, searchQuery, showFavoritesOnly, sortOrder, statusFilter])
 
   return (
-    <section>
-      <PageHeader
-        title="Entreprises"
-        description="Centralise les entreprises, contacts et opportunites associees."
-      />
+    <section className="mx-auto w-full max-w-300">
+      <div className="mb-8 flex items-center justify-between gap-4 lg:hidden">
+        <h1 className="text-3xl font-bold text-slate-950">Entreprises</h1>
 
-      <div className="mb-6">
         <Link
+          aria-label="Ajouter une entreprise"
+          className="inline-flex size-14 cursor-pointer items-center justify-center rounded-button bg-linear-to-br from-primary to-violet-700 text-white shadow-medium transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           to="/companies/new"
-          className="inline-flex rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
+          <Plus className="size-7" aria-hidden="true" />
+        </Link>
+      </div>
+
+      <div className="mb-6 hidden items-center justify-between lg:flex">
+        <h1 className="text-3xl font-bold text-slate-950">Entreprises</h1>
+      </div>
+
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:flex-wrap lg:items-center">
+        <SearchField searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+        <button
+          className="hidden min-h-14 min-w-60 cursor-pointer items-center justify-between rounded-input border border-border bg-surface px-5 text-sm font-semibold text-text-primary shadow-small lg:inline-flex"
+          type="button"
+        >
+          Catégorie : Toutes
+          <ChevronDown className="size-5 text-text-secondary" aria-hidden="true" />
+        </button>
+
+        <StatusSelect statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
+
+        <SortOrderSelect sortOrder={sortOrder} setSortOrder={setSortOrder} />
+
+        <div className="hidden lg:block">
+          <FavoriteFilterButton
+            isActive={showFavoritesOnly}
+            onClick={() => {
+              setShowFavoritesOnly((value) => !value)
+            }}
+          />
+        </div>
+
+        <Link
+          className="hidden min-h-14 cursor-pointer items-center justify-center gap-3 rounded-button bg-linear-to-r from-primary to-violet-700 px-6 text-sm font-semibold text-white shadow-medium transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:ml-auto lg:inline-flex"
+          to="/companies/new"
+        >
+          <Plus className="size-5" aria-hidden="true" />
           Ajouter une entreprise
         </Link>
+      </div>
+
+      <div className="mb-6 flex items-center justify-between gap-4 lg:hidden">
+        <button
+          className="inline-flex min-h-12 flex-1 cursor-pointer items-center justify-between rounded-input border border-border bg-surface px-4 text-base font-semibold text-text-primary shadow-small"
+          type="button"
+        >
+          Catégorie
+          <ChevronDown className="size-5 text-text-secondary" aria-hidden="true" />
+        </button>
+
+        <StatusSelect compact statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
+
+        <SortOrderSelect compact sortOrder={sortOrder} setSortOrder={setSortOrder} />
+
+        <FavoriteFilterButton
+          compact
+          isActive={showFavoritesOnly}
+          onClick={() => {
+            setShowFavoritesOnly((value) => !value)
+          }}
+        />
       </div>
 
       {isLoading ? <CompaniesSkeleton /> : null}
       {isError ? <CompaniesErrorState /> : null}
 
       {!isLoading && !isError && data ? (
-        data.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-            {data.map((company) => (
-              <CompanyCard
-                key={company.id}
-                company={company}
-                onClick={() => {
-                  navigate(`/companies/${company.id}`)
-                }}
-                onEdit={() => {
-                  setSelectedCompany(company)
-                }}
-                onDelete={() => {
-                  setCompanyToDelete(company)
-                }}
-              />
-            ))}
-          </div>
+        filteredCompanies.length > 0 ? (
+          <>
+            <CompaniesTable
+              companies={filteredCompanies}
+              onDeleteCompany={(company) => {
+                setCompanyToDelete(company)
+              }}
+              onEditCompany={(company) => {
+                setSelectedCompany(company)
+              }}
+              onOpenCompany={(companyId) => {
+                navigate(`/companies/${companyId}`)
+              }}
+              onToggleFavorite={(company) => {
+                toggleFavoriteMutation.mutate({
+                  companyId: company.id,
+                  isFavorite: !company.isFavorite,
+                })
+              }}
+            />
+            <div className="grid gap-4 lg:hidden">
+              {filteredCompanies.map((company) => (
+                <CompanyCard
+                  key={company.id}
+                  categoryLabel={getCompanyCategoryLabel()}
+                  company={company}
+                  onClick={() => {
+                    navigate(`/companies/${company.id}`)
+                  }}
+                  onDeleteCompany={(selectedCompany) => {
+                    setCompanyToDelete(selectedCompany)
+                  }}
+                  onEditCompany={(selectedCompany) => {
+                    setSelectedCompany(selectedCompany)
+                  }}
+                  onToggleFavorite={(selectedCompany) => {
+                    toggleFavoriteMutation.mutate({
+                      companyId: selectedCompany.id,
+                      isFavorite: !selectedCompany.isFavorite,
+                    })
+                  }}
+                />
+              ))}
+            </div>
+          </>
         ) : (
           <EmptyCompaniesState />
         )
@@ -64,7 +181,9 @@ export function CompaniesPage() {
 
       <Modal
         isOpen={selectedCompany !== null}
-        onClose={() => setSelectedCompany(null)}
+        onClose={() => {
+          setSelectedCompany(null)
+        }}
         title="Modifier une entreprise"
       >
         {selectedCompany ? (
@@ -80,10 +199,12 @@ export function CompaniesPage() {
               website: selectedCompany.website ?? '',
             }}
             mode="update"
+            onCancel={() => {
+              setSelectedCompany(null)
+            }}
             onSuccess={() => {
               setSelectedCompany(null)
             }}
-            onCancel={() => setSelectedCompany(null)}
           />
         ) : null}
       </Modal>
@@ -113,57 +234,12 @@ export function CompaniesPage() {
       />
 
       {deleteCompanyMutation.isError ? (
-        <Alert variant="error">
-          Impossible de supprimer l&apos;entreprise. Veuillez réessayer.
-        </Alert>
+        <div className="mt-6">
+          <Alert variant="error">
+            Impossible de supprimer l&apos;entreprise. Veuillez réessayer.
+          </Alert>
+        </div>
       ) : null}
     </section>
-  )
-}
-
-function CompaniesSkeleton() {
-  return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      {Array.from({ length: 6 }).map((_, index) => (
-        <Card className="space-y-4" key={index}>
-          <div className="h-5 w-40 animate-pulse rounded-full bg-divider" />
-          <div className="h-8 w-24 animate-pulse rounded-full bg-divider" />
-          <div className="space-y-3 pt-2">
-            <div className="h-4 w-full animate-pulse rounded-full bg-divider" />
-            <div className="h-4 w-4/5 animate-pulse rounded-full bg-divider" />
-            <div className="h-4 w-3/4 animate-pulse rounded-full bg-divider" />
-          </div>
-        </Card>
-      ))}
-    </div>
-  )
-}
-
-function EmptyCompaniesState() {
-  return (
-    <Card className="text-center">
-      <p className="text-lg font-semibold text-text-primary">
-        Aucune entreprise ajoutée.
-      </p>
-      <p className="mt-2 text-sm text-text-secondary">
-        Commencez par ajouter votre première entreprise.
-      </p>
-      <div className="mt-6">
-        <Link
-          to="/companies/new"
-          className="inline-flex min-h-12 items-center justify-center rounded-button bg-linear-to-r from-primary to-accent px-4 text-sm font-semibold text-white shadow-small transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-        >
-          Ajouter une entreprise
-        </Link>
-      </div>
-    </Card>
-  )
-}
-
-function CompaniesErrorState() {
-  return (
-    <Alert variant="error">
-      Impossible de charger les entreprises. Veuillez réessayer.
-    </Alert>
   )
 }

@@ -1,0 +1,65 @@
+# US-012-FRONT - Afficher la page Mes CV
+
+## Objectif
+
+Créer l'interface front-end de la page **Mes CV** avant l'implémentation backend de l'import CV.
+
+Cette US prépare l'affichage de la future gestion des CV à partir du wireframe et du mockup fournis.
+
+---
+
+## User Story
+
+**En tant qu'utilisateur**, je souhaite accéder à une page Mes CV afin de visualiser l'emplacement prévu pour mes CV importés et accéder au futur bouton d'import.
+
+---
+
+# Wireframes
+
+Mobile
+
+```
+docs/wireframes/cv-list-mobile.png
+```
+
+Desktop
+
+```
+docs/wireframes/cv-list-desktop.png
+```
+
+---
+
+# Mockups
+
+Mobile
+
+```
+docs/mockups/profile-mobile.png
+```
+
+Desktop
+
+```
+docs/mockups/profile-desktop.png
+```
+
+---
+
+## Périmètre front-end
+
+Créer le sous-menu **CV** dans la navigation.
+
+Le menu **CV** doit permettre d'accéder à :
+
+- **Mes CV**
+- **Données extraites** si déjà prévu dans les maquettes, sinon laisser uniquement **Mes CV**
+
+---
+
+## Route attendue
+
+Créer une route front-end :
+
+```txt
+/profile/cv
