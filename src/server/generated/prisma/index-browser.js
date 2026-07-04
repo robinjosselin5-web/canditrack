@@ -161,6 +161,48 @@ exports.Prisma.CandidateCvScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CvExperienceScalarFieldEnum = {
+  id: 'id',
+  candidateCvId: 'candidateCvId',
+  jobTitle: 'jobTitle',
+  companyName: 'companyName',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isCurrent: 'isCurrent',
+  location: 'location',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CvSkillScalarFieldEnum = {
+  id: 'id',
+  candidateCvId: 'candidateCvId',
+  name: 'name',
+  category: 'category',
+  confidence: 'confidence',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CvTrainingScalarFieldEnum = {
+  id: 'id',
+  candidateCvId: 'candidateCvId',
+  title: 'title',
+  organizationName: 'organizationName',
+  degree: 'degree',
+  fieldOfStudy: 'fieldOfStudy',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  description: 'description',
+  location: 'location',
+  isCertification: 'isCertification',
+  certificationType: 'certificationType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -249,6 +291,15 @@ exports.CandidateCvAnalysisStatus = exports.$Enums.CandidateCvAnalysisStatus = {
   FAILED: 'FAILED'
 };
 
+exports.CvSkillCategory = exports.$Enums.CvSkillCategory = {
+  LANGUAGES: 'LANGUAGES',
+  FRAMEWORKS_LIBRARIES: 'FRAMEWORKS_LIBRARIES',
+  TOOLS_TECHNOLOGIES: 'TOOLS_TECHNOLOGIES',
+  METHODOLOGIES: 'METHODOLOGIES',
+  SOFT_SKILLS: 'SOFT_SKILLS',
+  OTHER: 'OTHER'
+};
+
 exports.CompanyStatus = exports.$Enums.CompanyStatus = {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',
@@ -263,6 +314,9 @@ exports.Prisma.ModelName = {
   User: 'User',
   CandidateProfile: 'CandidateProfile',
   CandidateCv: 'CandidateCv',
+  CvExperience: 'CvExperience',
+  CvSkill: 'CvSkill',
+  CvTraining: 'CvTraining',
   Category: 'Category',
   Company: 'Company',
   Resume: 'Resume',

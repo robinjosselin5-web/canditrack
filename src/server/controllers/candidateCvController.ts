@@ -4,10 +4,12 @@ import {
   analyzeCandidateCv,
   deleteCandidateCv,
   getCandidateCvs,
+  getCandidateCvExtractedData,
   importCandidateCv,
 } from '../services/candidateCvService.js'
 import type { IApiSuccessResponse } from '../types/api.types.js'
 import type {
+  ICandidateCvExtractedDataResponse,
   ICandidateCvListResponse,
   ICandidateCvPublic,
 } from '../types/candidateCv.types.js'
@@ -38,6 +40,23 @@ export async function getCandidateCvsController(
   response.status(200).json({
     success: true,
     data: cvs,
+  })
+}
+
+export async function getCandidateCvExtractedDataController(
+  request: Request<{ cvId: string }>,
+  response: Response<IApiSuccessResponse<ICandidateCvExtractedDataResponse>>,
+): Promise<void> {
+  const cvId = getCandidateCvId(request.params.cvId)
+
+  const extractedData = await getCandidateCvExtractedData(
+    getAuthenticatedUserId(request),
+    cvId,
+  )
+
+  response.status(200).json({
+    success: true,
+    data: extractedData,
   })
 }
 

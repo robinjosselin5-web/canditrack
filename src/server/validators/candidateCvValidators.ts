@@ -136,6 +136,13 @@ function extractJsonPayload(rawResponse: string): string {
     return fencedMatch[1].trim()
   }
 
+  const firstObjectIndex = rawResponse.indexOf('{')
+  const lastObjectIndex = rawResponse.lastIndexOf('}')
+
+  if (firstObjectIndex !== -1 && lastObjectIndex !== -1) {
+    return rawResponse.slice(firstObjectIndex, lastObjectIndex + 1).trim()
+  }
+
   return rawResponse
 }
 

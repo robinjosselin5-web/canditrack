@@ -274,6 +274,7 @@ export async function analyzeCandidateCv(
     console.error('[CV_ANALYZE_AI] failed', {
       candidateCvId,
       error: error instanceof AppError ? error.message : 'unknown_error',
+      stack: error instanceof Error ? error.stack : undefined,
     })
 
     await updateCandidateCvAnalysisStatus(candidateCvId, {

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   ArrowLeft,
   ChevronRight,
@@ -5,60 +6,64 @@ import {
   MoreVertical,
   Plus,
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-
-interface ITrainingItem {
-  id: string
-  title: string
-  organization: string
-  period: string
-}
-
-const trainingItems: ITrainingItem[] = [
-  {
-    id: 'master-informatique',
-    title: 'Master Informatique',
-    organization: 'Université de Technologie',
-    period: '2021 - 2023',
-  },
-  {
-    id: 'licence-informatique',
-    title: 'Licence Informatique',
-    organization: 'Université de Technologie',
-    period: '2018 - 2021',
-  },
-  {
-    id: 'dut-informatique',
-    title: 'DUT Informatique',
-    organization: 'IUT Informatique',
-    period: '2016 - 2018',
-  },
-  {
-    id: 'certification-aws',
-    title: 'Certification AWS Solutions Architect',
-    organization: 'AWS Training',
-    period: '2023',
-  },
-  {
-    id: 'certification-scrum',
-    title: 'Certification Scrum Master',
-    organization: 'Scrum.org',
-    period: '2022',
-  },
-]
+import { useNavigate, useParams } from 'react-router-dom'
+import { Alert } from '@/components/ui'
+import { getCandidateCvExtractedData } from '../services/candidateResumeService'
+import type { ICandidateCvExtractedDataResponse } from '../types/candidateResume.types'
+import { formatCvPeriod, getCandidateCvErrorMessage } from '../utils/candidateCvHelpers'
 
 export function TrainingPage() {
   const navigate = useNavigate()
+  const { cvId } = useParams<{ cvId?: string }>()
+  const [extractedData, setExtractedData] = useState<ICandidateCvExtractedDataResponse | null>(null)
+  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>('loading')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const hasMissingCvId = !cvId
+
+  useEffect(() => {
+    if (!cvId) {
+      return
+    }
+
+    let cancelled = false
+
+    const loadTrainings = async () => {
+      setStatus('loading')
+      setErrorMessage(null)
+
+      try {
+        const response = await getCandidateCvExtractedData(cvId)
+
+        if (cancelled) {
+          return
+        }
+
+        setExtractedData(response)
+        setStatus(response.trainings.length > 0 ? 'success' : 'empty')
+      } catch (error) {
+        if (!cancelled) {
+          setStatus('error')
+          setErrorMessage(getCandidateCvErrorMessage(error))
+        }
+      }
+    }
+
+    void loadTrainings()
+
+    return () => {
+      cancelled = true
+    }
+  }, [cvId])
 
   const goBackToExtractedData = () => {
-    navigate('/profile/cv/extracted-data')
+    navigate(cvId ? `/profile/cv/${cvId}/extracted-data` : '/profile/cv/extracted-data')
   }
 
   return (
     <section className="mx-auto flex w-full max-w-3xl flex-col gap-7">
       <nav className="flex items-center gap-3 text-sm font-semibold text-text-secondary">
         <button
-          aria-label="Retour aux données extraites"
+          aria-label="Retour aux donnees extraites"
           className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-primary transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           onClick={goBackToExtractedData}
           type="button"
@@ -72,7 +77,7 @@ export function TrainingPage() {
             onClick={goBackToExtractedData}
             type="button"
           >
-            Données extraites
+            Donnees extraites
           </button>
           <ChevronRight className="size-4" aria-hidden="true" />
           <span className="text-text-primary">Formation</span>
@@ -84,6 +89,11 @@ export function TrainingPage() {
           <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
             Formation
           </h1>
+          {extractedData ? (
+            <p className="text-sm text-text-secondary">
+              {extractedData.cv.label || extractedData.cv.originalFilename}
+            </p>
+          ) : null}
         </div>
 
         <button
@@ -94,49 +104,95 @@ export function TrainingPage() {
         </button>
       </header>
 
-      <div className="grid gap-3">
-        {trainingItems.map((item) => (
-          <article
-            className="flex items-center gap-4 rounded-card border border-border bg-surface p-4 shadow-soft sm:p-5"
-            key={item.id}
-          >
-            <span className="flex size-12 shrink-0 items-center justify-center rounded-input bg-divider text-text-primary sm:size-14">
-              <GraduationCap className="size-6" aria-hidden="true" />
-            </span>
+      {status === 'loading' ? (
+        <div className="rounded-card border border-border bg-surface px-6 py-12 text-center shadow-soft">
+          <p className="text-sm text-text-secondary">Chargement des formations...</p>
+        </div>
+      ) : null}
 
-            <div className="min-w-0 flex-1">
-              <h2 className="text-sm font-bold text-text-primary sm:text-base">
-                {item.title}
-              </h2>
-              <p className="mt-1 text-sm font-medium text-text-secondary">
-                {item.organization}
-              </p>
-              <p className="mt-1 text-sm font-medium text-text-secondary sm:hidden">
-                {item.period}
-              </p>
-            </div>
+      {status === 'error' ? (
+        <Alert variant="error">
+          {hasMissingCvId
+            ? 'Identifiant de CV manquant.'
+            : errorMessage ?? 'Impossible de charger les formations pour le moment.'}
+        </Alert>
+      ) : null}
 
-            <p className="hidden shrink-0 text-sm font-medium text-text-secondary sm:block">
-              {item.period}
-            </p>
+      {status === 'empty' ? (
+        <div className="rounded-card border border-dashed border-border bg-surface px-6 py-14 text-center shadow-soft">
+          <p className="text-base font-semibold text-text-primary">
+            Aucune formation extraite
+          </p>
+          <p className="mt-2 text-sm leading-6 text-text-secondary">
+            Ce CV ne contient pas encore de formation exploitable.
+          </p>
+        </div>
+      ) : null}
 
-            <button
-              aria-label={`Options pour ${item.title}`}
-              className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-secondary transition hover:bg-divider hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              type="button"
+      {status === 'success' && extractedData ? (
+        <div className="grid gap-3">
+          {extractedData.trainings.map((training, index) => (
+            <article
+              className="flex items-center gap-4 rounded-card border border-border bg-surface p-4 shadow-soft sm:p-5"
+              key={`${training.title}-${training.organizationName ?? 'unknown'}-${index}`}
             >
-              <MoreVertical className="size-5" aria-hidden="true" />
-            </button>
-          </article>
-        ))}
-      </div>
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-input bg-divider text-text-primary sm:size-14">
+                <GraduationCap className="size-6" aria-hidden="true" />
+              </span>
+
+              <div className="min-w-0 flex-1">
+                <h2 className="text-sm font-bold text-text-primary sm:text-base">
+                  {training.title}
+                </h2>
+                <p className="mt-1 text-sm font-medium text-text-secondary">
+                  {training.organizationName ?? 'Organisme non precise'}
+                </p>
+                {training.degree ? (
+                  <p className="mt-1 text-sm text-text-secondary">{training.degree}</p>
+                ) : null}
+                {training.fieldOfStudy ? (
+                  <p className="mt-1 text-sm text-text-secondary">{training.fieldOfStudy}</p>
+                ) : null}
+                {training.location ? (
+                  <p className="mt-1 text-sm text-text-secondary">{training.location}</p>
+                ) : null}
+                {training.description ? (
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    {training.description}
+                  </p>
+                ) : null}
+                {training.isCertification ? (
+                  <span className="mt-2 inline-flex min-h-8 items-center rounded-input border border-border bg-divider px-3 text-xs font-semibold uppercase tracking-wide text-text-primary">
+                    Certification
+                  </span>
+                ) : null}
+                <p className="mt-1 text-sm font-medium text-text-secondary sm:hidden">
+                  {formatCvPeriod(training.startDate, training.endDate)}
+                </p>
+              </div>
+
+              <p className="hidden shrink-0 text-sm font-medium text-text-secondary sm:block">
+                {formatCvPeriod(training.startDate, training.endDate)}
+              </p>
+
+              <button
+                aria-label={`Options pour ${training.title}`}
+                className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-secondary transition hover:bg-divider hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                type="button"
+              >
+                <MoreVertical className="size-5" aria-hidden="true" />
+              </button>
+            </article>
+          ))}
+        </div>
+      ) : null}
 
       <button
         className="inline-flex min-h-14 w-full cursor-pointer items-center justify-center gap-3 rounded-input border border-dashed border-border bg-surface/70 px-4 text-sm font-semibold text-text-primary transition hover:border-primary hover:bg-accent/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         type="button"
       >
         <Plus className="size-5" aria-hidden="true" />
-        Ajouter un élément
+        Ajouter un element
       </button>
     </section>
   )

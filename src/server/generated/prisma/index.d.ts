@@ -29,6 +29,21 @@ export type CandidateProfile = $Result.DefaultSelection<Prisma.$CandidateProfile
  */
 export type CandidateCv = $Result.DefaultSelection<Prisma.$CandidateCvPayload>
 /**
+ * Model CvExperience
+ * 
+ */
+export type CvExperience = $Result.DefaultSelection<Prisma.$CvExperiencePayload>
+/**
+ * Model CvSkill
+ * 
+ */
+export type CvSkill = $Result.DefaultSelection<Prisma.$CvSkillPayload>
+/**
+ * Model CvTraining
+ * 
+ */
+export type CvTraining = $Result.DefaultSelection<Prisma.$CvTrainingPayload>
+/**
  * Model Category
  * 
  */
@@ -85,6 +100,18 @@ export const CandidateCvAnalysisStatus: {
 
 export type CandidateCvAnalysisStatus = (typeof CandidateCvAnalysisStatus)[keyof typeof CandidateCvAnalysisStatus]
 
+
+export const CvSkillCategory: {
+  LANGUAGES: 'LANGUAGES',
+  FRAMEWORKS_LIBRARIES: 'FRAMEWORKS_LIBRARIES',
+  TOOLS_TECHNOLOGIES: 'TOOLS_TECHNOLOGIES',
+  METHODOLOGIES: 'METHODOLOGIES',
+  SOFT_SKILLS: 'SOFT_SKILLS',
+  OTHER: 'OTHER'
+};
+
+export type CvSkillCategory = (typeof CvSkillCategory)[keyof typeof CvSkillCategory]
+
 }
 
 export type CompanyStatus = $Enums.CompanyStatus
@@ -94,6 +121,10 @@ export const CompanyStatus: typeof $Enums.CompanyStatus
 export type CandidateCvAnalysisStatus = $Enums.CandidateCvAnalysisStatus
 
 export const CandidateCvAnalysisStatus: typeof $Enums.CandidateCvAnalysisStatus
+
+export type CvSkillCategory = $Enums.CvSkillCategory
+
+export const CvSkillCategory: typeof $Enums.CvSkillCategory
 
 /**
  * ##  Prisma Client ʲˢ
@@ -245,6 +276,36 @@ export class PrismaClient<
     * ```
     */
   get candidateCv(): Prisma.CandidateCvDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cvExperience`: Exposes CRUD operations for the **CvExperience** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CvExperiences
+    * const cvExperiences = await prisma.cvExperience.findMany()
+    * ```
+    */
+  get cvExperience(): Prisma.CvExperienceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cvSkill`: Exposes CRUD operations for the **CvSkill** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CvSkills
+    * const cvSkills = await prisma.cvSkill.findMany()
+    * ```
+    */
+  get cvSkill(): Prisma.CvSkillDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cvTraining`: Exposes CRUD operations for the **CvTraining** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CvTrainings
+    * const cvTrainings = await prisma.cvTraining.findMany()
+    * ```
+    */
+  get cvTraining(): Prisma.CvTrainingDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.category`: Exposes CRUD operations for the **Category** model.
@@ -742,6 +803,9 @@ export namespace Prisma {
     User: 'User',
     CandidateProfile: 'CandidateProfile',
     CandidateCv: 'CandidateCv',
+    CvExperience: 'CvExperience',
+    CvSkill: 'CvSkill',
+    CvTraining: 'CvTraining',
     Category: 'Category',
     Company: 'Company',
     Resume: 'Resume',
@@ -763,7 +827,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "candidateProfile" | "candidateCv" | "category" | "company" | "resume" | "application" | "note" | "actionHistory"
+      modelProps: "user" | "candidateProfile" | "candidateCv" | "cvExperience" | "cvSkill" | "cvTraining" | "category" | "company" | "resume" | "application" | "note" | "actionHistory"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -986,6 +1050,228 @@ export namespace Prisma {
           count: {
             args: Prisma.CandidateCvCountArgs<ExtArgs>
             result: $Utils.Optional<CandidateCvCountAggregateOutputType> | number
+          }
+        }
+      }
+      CvExperience: {
+        payload: Prisma.$CvExperiencePayload<ExtArgs>
+        fields: Prisma.CvExperienceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CvExperienceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CvExperienceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>
+          }
+          findFirst: {
+            args: Prisma.CvExperienceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CvExperienceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>
+          }
+          findMany: {
+            args: Prisma.CvExperienceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>[]
+          }
+          create: {
+            args: Prisma.CvExperienceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>
+          }
+          createMany: {
+            args: Prisma.CvExperienceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CvExperienceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>[]
+          }
+          delete: {
+            args: Prisma.CvExperienceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>
+          }
+          update: {
+            args: Prisma.CvExperienceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>
+          }
+          deleteMany: {
+            args: Prisma.CvExperienceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CvExperienceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CvExperienceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>[]
+          }
+          upsert: {
+            args: Prisma.CvExperienceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvExperiencePayload>
+          }
+          aggregate: {
+            args: Prisma.CvExperienceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCvExperience>
+          }
+          groupBy: {
+            args: Prisma.CvExperienceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CvExperienceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CvExperienceCountArgs<ExtArgs>
+            result: $Utils.Optional<CvExperienceCountAggregateOutputType> | number
+          }
+        }
+      }
+      CvSkill: {
+        payload: Prisma.$CvSkillPayload<ExtArgs>
+        fields: Prisma.CvSkillFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CvSkillFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CvSkillFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>
+          }
+          findFirst: {
+            args: Prisma.CvSkillFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CvSkillFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>
+          }
+          findMany: {
+            args: Prisma.CvSkillFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>[]
+          }
+          create: {
+            args: Prisma.CvSkillCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>
+          }
+          createMany: {
+            args: Prisma.CvSkillCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CvSkillCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>[]
+          }
+          delete: {
+            args: Prisma.CvSkillDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>
+          }
+          update: {
+            args: Prisma.CvSkillUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>
+          }
+          deleteMany: {
+            args: Prisma.CvSkillDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CvSkillUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CvSkillUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>[]
+          }
+          upsert: {
+            args: Prisma.CvSkillUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvSkillPayload>
+          }
+          aggregate: {
+            args: Prisma.CvSkillAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCvSkill>
+          }
+          groupBy: {
+            args: Prisma.CvSkillGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CvSkillGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CvSkillCountArgs<ExtArgs>
+            result: $Utils.Optional<CvSkillCountAggregateOutputType> | number
+          }
+        }
+      }
+      CvTraining: {
+        payload: Prisma.$CvTrainingPayload<ExtArgs>
+        fields: Prisma.CvTrainingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CvTrainingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CvTrainingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>
+          }
+          findFirst: {
+            args: Prisma.CvTrainingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CvTrainingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>
+          }
+          findMany: {
+            args: Prisma.CvTrainingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>[]
+          }
+          create: {
+            args: Prisma.CvTrainingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>
+          }
+          createMany: {
+            args: Prisma.CvTrainingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CvTrainingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>[]
+          }
+          delete: {
+            args: Prisma.CvTrainingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>
+          }
+          update: {
+            args: Prisma.CvTrainingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>
+          }
+          deleteMany: {
+            args: Prisma.CvTrainingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CvTrainingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CvTrainingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>[]
+          }
+          upsert: {
+            args: Prisma.CvTrainingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvTrainingPayload>
+          }
+          aggregate: {
+            args: Prisma.CvTrainingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCvTraining>
+          }
+          groupBy: {
+            args: Prisma.CvTrainingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CvTrainingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CvTrainingCountArgs<ExtArgs>
+            result: $Utils.Optional<CvTrainingCountAggregateOutputType> | number
           }
         }
       }
@@ -1544,6 +1830,9 @@ export namespace Prisma {
     user?: UserOmit
     candidateProfile?: CandidateProfileOmit
     candidateCv?: CandidateCvOmit
+    cvExperience?: CvExperienceOmit
+    cvSkill?: CvSkillOmit
+    cvTraining?: CvTrainingOmit
     category?: CategoryOmit
     company?: CompanyOmit
     resume?: ResumeOmit
@@ -1702,6 +1991,55 @@ export namespace Prisma {
    */
   export type CandidateProfileCountOutputTypeCountCvsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CandidateCvWhereInput
+  }
+
+
+  /**
+   * Count Type CandidateCvCountOutputType
+   */
+
+  export type CandidateCvCountOutputType = {
+    cvExperiences: number
+    cvSkills: number
+    cvTrainings: number
+  }
+
+  export type CandidateCvCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cvExperiences?: boolean | CandidateCvCountOutputTypeCountCvExperiencesArgs
+    cvSkills?: boolean | CandidateCvCountOutputTypeCountCvSkillsArgs
+    cvTrainings?: boolean | CandidateCvCountOutputTypeCountCvTrainingsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CandidateCvCountOutputType without action
+   */
+  export type CandidateCvCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidateCvCountOutputType
+     */
+    select?: CandidateCvCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CandidateCvCountOutputType without action
+   */
+  export type CandidateCvCountOutputTypeCountCvExperiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvExperienceWhereInput
+  }
+
+  /**
+   * CandidateCvCountOutputType without action
+   */
+  export type CandidateCvCountOutputTypeCountCvSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvSkillWhereInput
+  }
+
+  /**
+   * CandidateCvCountOutputType without action
+   */
+  export type CandidateCvCountOutputTypeCountCvTrainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvTrainingWhereInput
   }
 
 
@@ -4432,6 +4770,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+    cvExperiences?: boolean | CandidateCv$cvExperiencesArgs<ExtArgs>
+    cvSkills?: boolean | CandidateCv$cvSkillsArgs<ExtArgs>
+    cvTrainings?: boolean | CandidateCv$cvTrainingsArgs<ExtArgs>
+    _count?: boolean | CandidateCvCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["candidateCv"]>
 
   export type CandidateCvSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4496,6 +4838,10 @@ export namespace Prisma {
   export type CandidateCvOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateProfileId" | "label" | "originalFilename" | "storageFilename" | "storageKey" | "fileHash" | "mimeType" | "fileSize" | "isDefault" | "analysisStatus" | "extractedText" | "lastAnalyzedAt" | "uploadedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["candidateCv"]>
   export type CandidateCvInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
+    cvExperiences?: boolean | CandidateCv$cvExperiencesArgs<ExtArgs>
+    cvSkills?: boolean | CandidateCv$cvSkillsArgs<ExtArgs>
+    cvTrainings?: boolean | CandidateCv$cvTrainingsArgs<ExtArgs>
+    _count?: boolean | CandidateCvCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CandidateCvIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidateProfile?: boolean | CandidateProfileDefaultArgs<ExtArgs>
@@ -4508,6 +4854,9 @@ export namespace Prisma {
     name: "CandidateCv"
     objects: {
       candidateProfile: Prisma.$CandidateProfilePayload<ExtArgs>
+      cvExperiences: Prisma.$CvExperiencePayload<ExtArgs>[]
+      cvSkills: Prisma.$CvSkillPayload<ExtArgs>[]
+      cvTrainings: Prisma.$CvTrainingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4921,6 +5270,9 @@ export namespace Prisma {
   export interface Prisma__CandidateCvClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     candidateProfile<T extends CandidateProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidateProfileDefaultArgs<ExtArgs>>): Prisma__CandidateProfileClient<$Result.GetResult<Prisma.$CandidateProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    cvExperiences<T extends CandidateCv$cvExperiencesArgs<ExtArgs> = {}>(args?: Subset<T, CandidateCv$cvExperiencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cvSkills<T extends CandidateCv$cvSkillsArgs<ExtArgs> = {}>(args?: Subset<T, CandidateCv$cvSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cvTrainings<T extends CandidateCv$cvTrainingsArgs<ExtArgs> = {}>(args?: Subset<T, CandidateCv$cvTrainingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5367,6 +5719,78 @@ export namespace Prisma {
   }
 
   /**
+   * CandidateCv.cvExperiences
+   */
+  export type CandidateCv$cvExperiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    where?: CvExperienceWhereInput
+    orderBy?: CvExperienceOrderByWithRelationInput | CvExperienceOrderByWithRelationInput[]
+    cursor?: CvExperienceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CvExperienceScalarFieldEnum | CvExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateCv.cvSkills
+   */
+  export type CandidateCv$cvSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    where?: CvSkillWhereInput
+    orderBy?: CvSkillOrderByWithRelationInput | CvSkillOrderByWithRelationInput[]
+    cursor?: CvSkillWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CvSkillScalarFieldEnum | CvSkillScalarFieldEnum[]
+  }
+
+  /**
+   * CandidateCv.cvTrainings
+   */
+  export type CandidateCv$cvTrainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    where?: CvTrainingWhereInput
+    orderBy?: CvTrainingOrderByWithRelationInput | CvTrainingOrderByWithRelationInput[]
+    cursor?: CvTrainingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CvTrainingScalarFieldEnum | CvTrainingScalarFieldEnum[]
+  }
+
+  /**
    * CandidateCv without action
    */
   export type CandidateCvDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5382,6 +5806,3463 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CandidateCvInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CvExperience
+   */
+
+  export type AggregateCvExperience = {
+    _count: CvExperienceCountAggregateOutputType | null
+    _min: CvExperienceMinAggregateOutputType | null
+    _max: CvExperienceMaxAggregateOutputType | null
+  }
+
+  export type CvExperienceMinAggregateOutputType = {
+    id: string | null
+    candidateCvId: string | null
+    jobTitle: string | null
+    companyName: string | null
+    startDate: string | null
+    endDate: string | null
+    isCurrent: boolean | null
+    location: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CvExperienceMaxAggregateOutputType = {
+    id: string | null
+    candidateCvId: string | null
+    jobTitle: string | null
+    companyName: string | null
+    startDate: string | null
+    endDate: string | null
+    isCurrent: boolean | null
+    location: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CvExperienceCountAggregateOutputType = {
+    id: number
+    candidateCvId: number
+    jobTitle: number
+    companyName: number
+    startDate: number
+    endDate: number
+    isCurrent: number
+    location: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CvExperienceMinAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    jobTitle?: true
+    companyName?: true
+    startDate?: true
+    endDate?: true
+    isCurrent?: true
+    location?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CvExperienceMaxAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    jobTitle?: true
+    companyName?: true
+    startDate?: true
+    endDate?: true
+    isCurrent?: true
+    location?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CvExperienceCountAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    jobTitle?: true
+    companyName?: true
+    startDate?: true
+    endDate?: true
+    isCurrent?: true
+    location?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CvExperienceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CvExperience to aggregate.
+     */
+    where?: CvExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvExperiences to fetch.
+     */
+    orderBy?: CvExperienceOrderByWithRelationInput | CvExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CvExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvExperiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CvExperiences
+    **/
+    _count?: true | CvExperienceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CvExperienceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CvExperienceMaxAggregateInputType
+  }
+
+  export type GetCvExperienceAggregateType<T extends CvExperienceAggregateArgs> = {
+        [P in keyof T & keyof AggregateCvExperience]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCvExperience[P]>
+      : GetScalarType<T[P], AggregateCvExperience[P]>
+  }
+
+
+
+
+  export type CvExperienceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvExperienceWhereInput
+    orderBy?: CvExperienceOrderByWithAggregationInput | CvExperienceOrderByWithAggregationInput[]
+    by: CvExperienceScalarFieldEnum[] | CvExperienceScalarFieldEnum
+    having?: CvExperienceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CvExperienceCountAggregateInputType | true
+    _min?: CvExperienceMinAggregateInputType
+    _max?: CvExperienceMaxAggregateInputType
+  }
+
+  export type CvExperienceGroupByOutputType = {
+    id: string
+    candidateCvId: string
+    jobTitle: string
+    companyName: string | null
+    startDate: string | null
+    endDate: string | null
+    isCurrent: boolean
+    location: string | null
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CvExperienceCountAggregateOutputType | null
+    _min: CvExperienceMinAggregateOutputType | null
+    _max: CvExperienceMaxAggregateOutputType | null
+  }
+
+  type GetCvExperienceGroupByPayload<T extends CvExperienceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CvExperienceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CvExperienceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CvExperienceGroupByOutputType[P]>
+            : GetScalarType<T[P], CvExperienceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CvExperienceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    jobTitle?: boolean
+    companyName?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isCurrent?: boolean
+    location?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvExperience"]>
+
+  export type CvExperienceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    jobTitle?: boolean
+    companyName?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isCurrent?: boolean
+    location?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvExperience"]>
+
+  export type CvExperienceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    jobTitle?: boolean
+    companyName?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isCurrent?: boolean
+    location?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvExperience"]>
+
+  export type CvExperienceSelectScalar = {
+    id?: boolean
+    candidateCvId?: boolean
+    jobTitle?: boolean
+    companyName?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isCurrent?: boolean
+    location?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CvExperienceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateCvId" | "jobTitle" | "companyName" | "startDate" | "endDate" | "isCurrent" | "location" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["cvExperience"]>
+  export type CvExperienceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+  export type CvExperienceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+  export type CvExperienceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+
+  export type $CvExperiencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CvExperience"
+    objects: {
+      candidateCv: Prisma.$CandidateCvPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      candidateCvId: string
+      jobTitle: string
+      companyName: string | null
+      startDate: string | null
+      endDate: string | null
+      isCurrent: boolean
+      location: string | null
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cvExperience"]>
+    composites: {}
+  }
+
+  type CvExperienceGetPayload<S extends boolean | null | undefined | CvExperienceDefaultArgs> = $Result.GetResult<Prisma.$CvExperiencePayload, S>
+
+  type CvExperienceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CvExperienceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CvExperienceCountAggregateInputType | true
+    }
+
+  export interface CvExperienceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CvExperience'], meta: { name: 'CvExperience' } }
+    /**
+     * Find zero or one CvExperience that matches the filter.
+     * @param {CvExperienceFindUniqueArgs} args - Arguments to find a CvExperience
+     * @example
+     * // Get one CvExperience
+     * const cvExperience = await prisma.cvExperience.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CvExperienceFindUniqueArgs>(args: SelectSubset<T, CvExperienceFindUniqueArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CvExperience that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CvExperienceFindUniqueOrThrowArgs} args - Arguments to find a CvExperience
+     * @example
+     * // Get one CvExperience
+     * const cvExperience = await prisma.cvExperience.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CvExperienceFindUniqueOrThrowArgs>(args: SelectSubset<T, CvExperienceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CvExperience that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvExperienceFindFirstArgs} args - Arguments to find a CvExperience
+     * @example
+     * // Get one CvExperience
+     * const cvExperience = await prisma.cvExperience.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CvExperienceFindFirstArgs>(args?: SelectSubset<T, CvExperienceFindFirstArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CvExperience that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvExperienceFindFirstOrThrowArgs} args - Arguments to find a CvExperience
+     * @example
+     * // Get one CvExperience
+     * const cvExperience = await prisma.cvExperience.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CvExperienceFindFirstOrThrowArgs>(args?: SelectSubset<T, CvExperienceFindFirstOrThrowArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CvExperiences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvExperienceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CvExperiences
+     * const cvExperiences = await prisma.cvExperience.findMany()
+     * 
+     * // Get first 10 CvExperiences
+     * const cvExperiences = await prisma.cvExperience.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cvExperienceWithIdOnly = await prisma.cvExperience.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CvExperienceFindManyArgs>(args?: SelectSubset<T, CvExperienceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CvExperience.
+     * @param {CvExperienceCreateArgs} args - Arguments to create a CvExperience.
+     * @example
+     * // Create one CvExperience
+     * const CvExperience = await prisma.cvExperience.create({
+     *   data: {
+     *     // ... data to create a CvExperience
+     *   }
+     * })
+     * 
+     */
+    create<T extends CvExperienceCreateArgs>(args: SelectSubset<T, CvExperienceCreateArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CvExperiences.
+     * @param {CvExperienceCreateManyArgs} args - Arguments to create many CvExperiences.
+     * @example
+     * // Create many CvExperiences
+     * const cvExperience = await prisma.cvExperience.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CvExperienceCreateManyArgs>(args?: SelectSubset<T, CvExperienceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CvExperiences and returns the data saved in the database.
+     * @param {CvExperienceCreateManyAndReturnArgs} args - Arguments to create many CvExperiences.
+     * @example
+     * // Create many CvExperiences
+     * const cvExperience = await prisma.cvExperience.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CvExperiences and only return the `id`
+     * const cvExperienceWithIdOnly = await prisma.cvExperience.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CvExperienceCreateManyAndReturnArgs>(args?: SelectSubset<T, CvExperienceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CvExperience.
+     * @param {CvExperienceDeleteArgs} args - Arguments to delete one CvExperience.
+     * @example
+     * // Delete one CvExperience
+     * const CvExperience = await prisma.cvExperience.delete({
+     *   where: {
+     *     // ... filter to delete one CvExperience
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CvExperienceDeleteArgs>(args: SelectSubset<T, CvExperienceDeleteArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CvExperience.
+     * @param {CvExperienceUpdateArgs} args - Arguments to update one CvExperience.
+     * @example
+     * // Update one CvExperience
+     * const cvExperience = await prisma.cvExperience.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CvExperienceUpdateArgs>(args: SelectSubset<T, CvExperienceUpdateArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CvExperiences.
+     * @param {CvExperienceDeleteManyArgs} args - Arguments to filter CvExperiences to delete.
+     * @example
+     * // Delete a few CvExperiences
+     * const { count } = await prisma.cvExperience.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CvExperienceDeleteManyArgs>(args?: SelectSubset<T, CvExperienceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CvExperiences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvExperienceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CvExperiences
+     * const cvExperience = await prisma.cvExperience.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CvExperienceUpdateManyArgs>(args: SelectSubset<T, CvExperienceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CvExperiences and returns the data updated in the database.
+     * @param {CvExperienceUpdateManyAndReturnArgs} args - Arguments to update many CvExperiences.
+     * @example
+     * // Update many CvExperiences
+     * const cvExperience = await prisma.cvExperience.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CvExperiences and only return the `id`
+     * const cvExperienceWithIdOnly = await prisma.cvExperience.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CvExperienceUpdateManyAndReturnArgs>(args: SelectSubset<T, CvExperienceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CvExperience.
+     * @param {CvExperienceUpsertArgs} args - Arguments to update or create a CvExperience.
+     * @example
+     * // Update or create a CvExperience
+     * const cvExperience = await prisma.cvExperience.upsert({
+     *   create: {
+     *     // ... data to create a CvExperience
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CvExperience we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CvExperienceUpsertArgs>(args: SelectSubset<T, CvExperienceUpsertArgs<ExtArgs>>): Prisma__CvExperienceClient<$Result.GetResult<Prisma.$CvExperiencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CvExperiences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvExperienceCountArgs} args - Arguments to filter CvExperiences to count.
+     * @example
+     * // Count the number of CvExperiences
+     * const count = await prisma.cvExperience.count({
+     *   where: {
+     *     // ... the filter for the CvExperiences we want to count
+     *   }
+     * })
+    **/
+    count<T extends CvExperienceCountArgs>(
+      args?: Subset<T, CvExperienceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CvExperienceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CvExperience.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvExperienceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CvExperienceAggregateArgs>(args: Subset<T, CvExperienceAggregateArgs>): Prisma.PrismaPromise<GetCvExperienceAggregateType<T>>
+
+    /**
+     * Group by CvExperience.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvExperienceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CvExperienceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CvExperienceGroupByArgs['orderBy'] }
+        : { orderBy?: CvExperienceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CvExperienceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCvExperienceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CvExperience model
+   */
+  readonly fields: CvExperienceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CvExperience.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CvExperienceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    candidateCv<T extends CandidateCvDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidateCvDefaultArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CvExperience model
+   */
+  interface CvExperienceFieldRefs {
+    readonly id: FieldRef<"CvExperience", 'String'>
+    readonly candidateCvId: FieldRef<"CvExperience", 'String'>
+    readonly jobTitle: FieldRef<"CvExperience", 'String'>
+    readonly companyName: FieldRef<"CvExperience", 'String'>
+    readonly startDate: FieldRef<"CvExperience", 'String'>
+    readonly endDate: FieldRef<"CvExperience", 'String'>
+    readonly isCurrent: FieldRef<"CvExperience", 'Boolean'>
+    readonly location: FieldRef<"CvExperience", 'String'>
+    readonly description: FieldRef<"CvExperience", 'String'>
+    readonly createdAt: FieldRef<"CvExperience", 'DateTime'>
+    readonly updatedAt: FieldRef<"CvExperience", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CvExperience findUnique
+   */
+  export type CvExperienceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which CvExperience to fetch.
+     */
+    where: CvExperienceWhereUniqueInput
+  }
+
+  /**
+   * CvExperience findUniqueOrThrow
+   */
+  export type CvExperienceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which CvExperience to fetch.
+     */
+    where: CvExperienceWhereUniqueInput
+  }
+
+  /**
+   * CvExperience findFirst
+   */
+  export type CvExperienceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which CvExperience to fetch.
+     */
+    where?: CvExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvExperiences to fetch.
+     */
+    orderBy?: CvExperienceOrderByWithRelationInput | CvExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CvExperiences.
+     */
+    cursor?: CvExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvExperiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvExperiences.
+     */
+    distinct?: CvExperienceScalarFieldEnum | CvExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * CvExperience findFirstOrThrow
+   */
+  export type CvExperienceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which CvExperience to fetch.
+     */
+    where?: CvExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvExperiences to fetch.
+     */
+    orderBy?: CvExperienceOrderByWithRelationInput | CvExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CvExperiences.
+     */
+    cursor?: CvExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvExperiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvExperiences.
+     */
+    distinct?: CvExperienceScalarFieldEnum | CvExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * CvExperience findMany
+   */
+  export type CvExperienceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which CvExperiences to fetch.
+     */
+    where?: CvExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvExperiences to fetch.
+     */
+    orderBy?: CvExperienceOrderByWithRelationInput | CvExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CvExperiences.
+     */
+    cursor?: CvExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvExperiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvExperiences.
+     */
+    distinct?: CvExperienceScalarFieldEnum | CvExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * CvExperience create
+   */
+  export type CvExperienceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CvExperience.
+     */
+    data: XOR<CvExperienceCreateInput, CvExperienceUncheckedCreateInput>
+  }
+
+  /**
+   * CvExperience createMany
+   */
+  export type CvExperienceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CvExperiences.
+     */
+    data: CvExperienceCreateManyInput | CvExperienceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CvExperience createManyAndReturn
+   */
+  export type CvExperienceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * The data used to create many CvExperiences.
+     */
+    data: CvExperienceCreateManyInput | CvExperienceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CvExperience update
+   */
+  export type CvExperienceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CvExperience.
+     */
+    data: XOR<CvExperienceUpdateInput, CvExperienceUncheckedUpdateInput>
+    /**
+     * Choose, which CvExperience to update.
+     */
+    where: CvExperienceWhereUniqueInput
+  }
+
+  /**
+   * CvExperience updateMany
+   */
+  export type CvExperienceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CvExperiences.
+     */
+    data: XOR<CvExperienceUpdateManyMutationInput, CvExperienceUncheckedUpdateManyInput>
+    /**
+     * Filter which CvExperiences to update
+     */
+    where?: CvExperienceWhereInput
+    /**
+     * Limit how many CvExperiences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CvExperience updateManyAndReturn
+   */
+  export type CvExperienceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * The data used to update CvExperiences.
+     */
+    data: XOR<CvExperienceUpdateManyMutationInput, CvExperienceUncheckedUpdateManyInput>
+    /**
+     * Filter which CvExperiences to update
+     */
+    where?: CvExperienceWhereInput
+    /**
+     * Limit how many CvExperiences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CvExperience upsert
+   */
+  export type CvExperienceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CvExperience to update in case it exists.
+     */
+    where: CvExperienceWhereUniqueInput
+    /**
+     * In case the CvExperience found by the `where` argument doesn't exist, create a new CvExperience with this data.
+     */
+    create: XOR<CvExperienceCreateInput, CvExperienceUncheckedCreateInput>
+    /**
+     * In case the CvExperience was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CvExperienceUpdateInput, CvExperienceUncheckedUpdateInput>
+  }
+
+  /**
+   * CvExperience delete
+   */
+  export type CvExperienceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+    /**
+     * Filter which CvExperience to delete.
+     */
+    where: CvExperienceWhereUniqueInput
+  }
+
+  /**
+   * CvExperience deleteMany
+   */
+  export type CvExperienceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CvExperiences to delete
+     */
+    where?: CvExperienceWhereInput
+    /**
+     * Limit how many CvExperiences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CvExperience without action
+   */
+  export type CvExperienceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvExperience
+     */
+    select?: CvExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvExperience
+     */
+    omit?: CvExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvExperienceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CvSkill
+   */
+
+  export type AggregateCvSkill = {
+    _count: CvSkillCountAggregateOutputType | null
+    _avg: CvSkillAvgAggregateOutputType | null
+    _sum: CvSkillSumAggregateOutputType | null
+    _min: CvSkillMinAggregateOutputType | null
+    _max: CvSkillMaxAggregateOutputType | null
+  }
+
+  export type CvSkillAvgAggregateOutputType = {
+    confidence: number | null
+  }
+
+  export type CvSkillSumAggregateOutputType = {
+    confidence: number | null
+  }
+
+  export type CvSkillMinAggregateOutputType = {
+    id: string | null
+    candidateCvId: string | null
+    name: string | null
+    category: $Enums.CvSkillCategory | null
+    confidence: number | null
+    source: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CvSkillMaxAggregateOutputType = {
+    id: string | null
+    candidateCvId: string | null
+    name: string | null
+    category: $Enums.CvSkillCategory | null
+    confidence: number | null
+    source: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CvSkillCountAggregateOutputType = {
+    id: number
+    candidateCvId: number
+    name: number
+    category: number
+    confidence: number
+    source: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CvSkillAvgAggregateInputType = {
+    confidence?: true
+  }
+
+  export type CvSkillSumAggregateInputType = {
+    confidence?: true
+  }
+
+  export type CvSkillMinAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    name?: true
+    category?: true
+    confidence?: true
+    source?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CvSkillMaxAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    name?: true
+    category?: true
+    confidence?: true
+    source?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CvSkillCountAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    name?: true
+    category?: true
+    confidence?: true
+    source?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CvSkillAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CvSkill to aggregate.
+     */
+    where?: CvSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvSkills to fetch.
+     */
+    orderBy?: CvSkillOrderByWithRelationInput | CvSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CvSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CvSkills
+    **/
+    _count?: true | CvSkillCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CvSkillAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CvSkillSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CvSkillMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CvSkillMaxAggregateInputType
+  }
+
+  export type GetCvSkillAggregateType<T extends CvSkillAggregateArgs> = {
+        [P in keyof T & keyof AggregateCvSkill]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCvSkill[P]>
+      : GetScalarType<T[P], AggregateCvSkill[P]>
+  }
+
+
+
+
+  export type CvSkillGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvSkillWhereInput
+    orderBy?: CvSkillOrderByWithAggregationInput | CvSkillOrderByWithAggregationInput[]
+    by: CvSkillScalarFieldEnum[] | CvSkillScalarFieldEnum
+    having?: CvSkillScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CvSkillCountAggregateInputType | true
+    _avg?: CvSkillAvgAggregateInputType
+    _sum?: CvSkillSumAggregateInputType
+    _min?: CvSkillMinAggregateInputType
+    _max?: CvSkillMaxAggregateInputType
+  }
+
+  export type CvSkillGroupByOutputType = {
+    id: string
+    candidateCvId: string
+    name: string
+    category: $Enums.CvSkillCategory
+    confidence: number | null
+    source: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CvSkillCountAggregateOutputType | null
+    _avg: CvSkillAvgAggregateOutputType | null
+    _sum: CvSkillSumAggregateOutputType | null
+    _min: CvSkillMinAggregateOutputType | null
+    _max: CvSkillMaxAggregateOutputType | null
+  }
+
+  type GetCvSkillGroupByPayload<T extends CvSkillGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CvSkillGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CvSkillGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CvSkillGroupByOutputType[P]>
+            : GetScalarType<T[P], CvSkillGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CvSkillSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    name?: boolean
+    category?: boolean
+    confidence?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvSkill"]>
+
+  export type CvSkillSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    name?: boolean
+    category?: boolean
+    confidence?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvSkill"]>
+
+  export type CvSkillSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    name?: boolean
+    category?: boolean
+    confidence?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvSkill"]>
+
+  export type CvSkillSelectScalar = {
+    id?: boolean
+    candidateCvId?: boolean
+    name?: boolean
+    category?: boolean
+    confidence?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CvSkillOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateCvId" | "name" | "category" | "confidence" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["cvSkill"]>
+  export type CvSkillInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+  export type CvSkillIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+  export type CvSkillIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+
+  export type $CvSkillPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CvSkill"
+    objects: {
+      candidateCv: Prisma.$CandidateCvPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      candidateCvId: string
+      name: string
+      category: $Enums.CvSkillCategory
+      confidence: number | null
+      source: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cvSkill"]>
+    composites: {}
+  }
+
+  type CvSkillGetPayload<S extends boolean | null | undefined | CvSkillDefaultArgs> = $Result.GetResult<Prisma.$CvSkillPayload, S>
+
+  type CvSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CvSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CvSkillCountAggregateInputType | true
+    }
+
+  export interface CvSkillDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CvSkill'], meta: { name: 'CvSkill' } }
+    /**
+     * Find zero or one CvSkill that matches the filter.
+     * @param {CvSkillFindUniqueArgs} args - Arguments to find a CvSkill
+     * @example
+     * // Get one CvSkill
+     * const cvSkill = await prisma.cvSkill.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CvSkillFindUniqueArgs>(args: SelectSubset<T, CvSkillFindUniqueArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CvSkill that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CvSkillFindUniqueOrThrowArgs} args - Arguments to find a CvSkill
+     * @example
+     * // Get one CvSkill
+     * const cvSkill = await prisma.cvSkill.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CvSkillFindUniqueOrThrowArgs>(args: SelectSubset<T, CvSkillFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CvSkill that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvSkillFindFirstArgs} args - Arguments to find a CvSkill
+     * @example
+     * // Get one CvSkill
+     * const cvSkill = await prisma.cvSkill.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CvSkillFindFirstArgs>(args?: SelectSubset<T, CvSkillFindFirstArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CvSkill that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvSkillFindFirstOrThrowArgs} args - Arguments to find a CvSkill
+     * @example
+     * // Get one CvSkill
+     * const cvSkill = await prisma.cvSkill.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CvSkillFindFirstOrThrowArgs>(args?: SelectSubset<T, CvSkillFindFirstOrThrowArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CvSkills that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvSkillFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CvSkills
+     * const cvSkills = await prisma.cvSkill.findMany()
+     * 
+     * // Get first 10 CvSkills
+     * const cvSkills = await prisma.cvSkill.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cvSkillWithIdOnly = await prisma.cvSkill.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CvSkillFindManyArgs>(args?: SelectSubset<T, CvSkillFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CvSkill.
+     * @param {CvSkillCreateArgs} args - Arguments to create a CvSkill.
+     * @example
+     * // Create one CvSkill
+     * const CvSkill = await prisma.cvSkill.create({
+     *   data: {
+     *     // ... data to create a CvSkill
+     *   }
+     * })
+     * 
+     */
+    create<T extends CvSkillCreateArgs>(args: SelectSubset<T, CvSkillCreateArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CvSkills.
+     * @param {CvSkillCreateManyArgs} args - Arguments to create many CvSkills.
+     * @example
+     * // Create many CvSkills
+     * const cvSkill = await prisma.cvSkill.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CvSkillCreateManyArgs>(args?: SelectSubset<T, CvSkillCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CvSkills and returns the data saved in the database.
+     * @param {CvSkillCreateManyAndReturnArgs} args - Arguments to create many CvSkills.
+     * @example
+     * // Create many CvSkills
+     * const cvSkill = await prisma.cvSkill.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CvSkills and only return the `id`
+     * const cvSkillWithIdOnly = await prisma.cvSkill.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CvSkillCreateManyAndReturnArgs>(args?: SelectSubset<T, CvSkillCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CvSkill.
+     * @param {CvSkillDeleteArgs} args - Arguments to delete one CvSkill.
+     * @example
+     * // Delete one CvSkill
+     * const CvSkill = await prisma.cvSkill.delete({
+     *   where: {
+     *     // ... filter to delete one CvSkill
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CvSkillDeleteArgs>(args: SelectSubset<T, CvSkillDeleteArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CvSkill.
+     * @param {CvSkillUpdateArgs} args - Arguments to update one CvSkill.
+     * @example
+     * // Update one CvSkill
+     * const cvSkill = await prisma.cvSkill.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CvSkillUpdateArgs>(args: SelectSubset<T, CvSkillUpdateArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CvSkills.
+     * @param {CvSkillDeleteManyArgs} args - Arguments to filter CvSkills to delete.
+     * @example
+     * // Delete a few CvSkills
+     * const { count } = await prisma.cvSkill.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CvSkillDeleteManyArgs>(args?: SelectSubset<T, CvSkillDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CvSkills.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvSkillUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CvSkills
+     * const cvSkill = await prisma.cvSkill.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CvSkillUpdateManyArgs>(args: SelectSubset<T, CvSkillUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CvSkills and returns the data updated in the database.
+     * @param {CvSkillUpdateManyAndReturnArgs} args - Arguments to update many CvSkills.
+     * @example
+     * // Update many CvSkills
+     * const cvSkill = await prisma.cvSkill.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CvSkills and only return the `id`
+     * const cvSkillWithIdOnly = await prisma.cvSkill.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CvSkillUpdateManyAndReturnArgs>(args: SelectSubset<T, CvSkillUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CvSkill.
+     * @param {CvSkillUpsertArgs} args - Arguments to update or create a CvSkill.
+     * @example
+     * // Update or create a CvSkill
+     * const cvSkill = await prisma.cvSkill.upsert({
+     *   create: {
+     *     // ... data to create a CvSkill
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CvSkill we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CvSkillUpsertArgs>(args: SelectSubset<T, CvSkillUpsertArgs<ExtArgs>>): Prisma__CvSkillClient<$Result.GetResult<Prisma.$CvSkillPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CvSkills.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvSkillCountArgs} args - Arguments to filter CvSkills to count.
+     * @example
+     * // Count the number of CvSkills
+     * const count = await prisma.cvSkill.count({
+     *   where: {
+     *     // ... the filter for the CvSkills we want to count
+     *   }
+     * })
+    **/
+    count<T extends CvSkillCountArgs>(
+      args?: Subset<T, CvSkillCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CvSkillCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CvSkill.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvSkillAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CvSkillAggregateArgs>(args: Subset<T, CvSkillAggregateArgs>): Prisma.PrismaPromise<GetCvSkillAggregateType<T>>
+
+    /**
+     * Group by CvSkill.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvSkillGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CvSkillGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CvSkillGroupByArgs['orderBy'] }
+        : { orderBy?: CvSkillGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CvSkillGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCvSkillGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CvSkill model
+   */
+  readonly fields: CvSkillFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CvSkill.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CvSkillClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    candidateCv<T extends CandidateCvDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidateCvDefaultArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CvSkill model
+   */
+  interface CvSkillFieldRefs {
+    readonly id: FieldRef<"CvSkill", 'String'>
+    readonly candidateCvId: FieldRef<"CvSkill", 'String'>
+    readonly name: FieldRef<"CvSkill", 'String'>
+    readonly category: FieldRef<"CvSkill", 'CvSkillCategory'>
+    readonly confidence: FieldRef<"CvSkill", 'Float'>
+    readonly source: FieldRef<"CvSkill", 'String'>
+    readonly createdAt: FieldRef<"CvSkill", 'DateTime'>
+    readonly updatedAt: FieldRef<"CvSkill", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CvSkill findUnique
+   */
+  export type CvSkillFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which CvSkill to fetch.
+     */
+    where: CvSkillWhereUniqueInput
+  }
+
+  /**
+   * CvSkill findUniqueOrThrow
+   */
+  export type CvSkillFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which CvSkill to fetch.
+     */
+    where: CvSkillWhereUniqueInput
+  }
+
+  /**
+   * CvSkill findFirst
+   */
+  export type CvSkillFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which CvSkill to fetch.
+     */
+    where?: CvSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvSkills to fetch.
+     */
+    orderBy?: CvSkillOrderByWithRelationInput | CvSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CvSkills.
+     */
+    cursor?: CvSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvSkills.
+     */
+    distinct?: CvSkillScalarFieldEnum | CvSkillScalarFieldEnum[]
+  }
+
+  /**
+   * CvSkill findFirstOrThrow
+   */
+  export type CvSkillFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which CvSkill to fetch.
+     */
+    where?: CvSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvSkills to fetch.
+     */
+    orderBy?: CvSkillOrderByWithRelationInput | CvSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CvSkills.
+     */
+    cursor?: CvSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvSkills.
+     */
+    distinct?: CvSkillScalarFieldEnum | CvSkillScalarFieldEnum[]
+  }
+
+  /**
+   * CvSkill findMany
+   */
+  export type CvSkillFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which CvSkills to fetch.
+     */
+    where?: CvSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvSkills to fetch.
+     */
+    orderBy?: CvSkillOrderByWithRelationInput | CvSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CvSkills.
+     */
+    cursor?: CvSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvSkills.
+     */
+    distinct?: CvSkillScalarFieldEnum | CvSkillScalarFieldEnum[]
+  }
+
+  /**
+   * CvSkill create
+   */
+  export type CvSkillCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CvSkill.
+     */
+    data: XOR<CvSkillCreateInput, CvSkillUncheckedCreateInput>
+  }
+
+  /**
+   * CvSkill createMany
+   */
+  export type CvSkillCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CvSkills.
+     */
+    data: CvSkillCreateManyInput | CvSkillCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CvSkill createManyAndReturn
+   */
+  export type CvSkillCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * The data used to create many CvSkills.
+     */
+    data: CvSkillCreateManyInput | CvSkillCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CvSkill update
+   */
+  export type CvSkillUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CvSkill.
+     */
+    data: XOR<CvSkillUpdateInput, CvSkillUncheckedUpdateInput>
+    /**
+     * Choose, which CvSkill to update.
+     */
+    where: CvSkillWhereUniqueInput
+  }
+
+  /**
+   * CvSkill updateMany
+   */
+  export type CvSkillUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CvSkills.
+     */
+    data: XOR<CvSkillUpdateManyMutationInput, CvSkillUncheckedUpdateManyInput>
+    /**
+     * Filter which CvSkills to update
+     */
+    where?: CvSkillWhereInput
+    /**
+     * Limit how many CvSkills to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CvSkill updateManyAndReturn
+   */
+  export type CvSkillUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * The data used to update CvSkills.
+     */
+    data: XOR<CvSkillUpdateManyMutationInput, CvSkillUncheckedUpdateManyInput>
+    /**
+     * Filter which CvSkills to update
+     */
+    where?: CvSkillWhereInput
+    /**
+     * Limit how many CvSkills to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CvSkill upsert
+   */
+  export type CvSkillUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CvSkill to update in case it exists.
+     */
+    where: CvSkillWhereUniqueInput
+    /**
+     * In case the CvSkill found by the `where` argument doesn't exist, create a new CvSkill with this data.
+     */
+    create: XOR<CvSkillCreateInput, CvSkillUncheckedCreateInput>
+    /**
+     * In case the CvSkill was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CvSkillUpdateInput, CvSkillUncheckedUpdateInput>
+  }
+
+  /**
+   * CvSkill delete
+   */
+  export type CvSkillDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+    /**
+     * Filter which CvSkill to delete.
+     */
+    where: CvSkillWhereUniqueInput
+  }
+
+  /**
+   * CvSkill deleteMany
+   */
+  export type CvSkillDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CvSkills to delete
+     */
+    where?: CvSkillWhereInput
+    /**
+     * Limit how many CvSkills to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CvSkill without action
+   */
+  export type CvSkillDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvSkill
+     */
+    select?: CvSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvSkill
+     */
+    omit?: CvSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvSkillInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CvTraining
+   */
+
+  export type AggregateCvTraining = {
+    _count: CvTrainingCountAggregateOutputType | null
+    _min: CvTrainingMinAggregateOutputType | null
+    _max: CvTrainingMaxAggregateOutputType | null
+  }
+
+  export type CvTrainingMinAggregateOutputType = {
+    id: string | null
+    candidateCvId: string | null
+    title: string | null
+    organizationName: string | null
+    degree: string | null
+    fieldOfStudy: string | null
+    startDate: string | null
+    endDate: string | null
+    description: string | null
+    location: string | null
+    isCertification: boolean | null
+    certificationType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CvTrainingMaxAggregateOutputType = {
+    id: string | null
+    candidateCvId: string | null
+    title: string | null
+    organizationName: string | null
+    degree: string | null
+    fieldOfStudy: string | null
+    startDate: string | null
+    endDate: string | null
+    description: string | null
+    location: string | null
+    isCertification: boolean | null
+    certificationType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CvTrainingCountAggregateOutputType = {
+    id: number
+    candidateCvId: number
+    title: number
+    organizationName: number
+    degree: number
+    fieldOfStudy: number
+    startDate: number
+    endDate: number
+    description: number
+    location: number
+    isCertification: number
+    certificationType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CvTrainingMinAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    title?: true
+    organizationName?: true
+    degree?: true
+    fieldOfStudy?: true
+    startDate?: true
+    endDate?: true
+    description?: true
+    location?: true
+    isCertification?: true
+    certificationType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CvTrainingMaxAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    title?: true
+    organizationName?: true
+    degree?: true
+    fieldOfStudy?: true
+    startDate?: true
+    endDate?: true
+    description?: true
+    location?: true
+    isCertification?: true
+    certificationType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CvTrainingCountAggregateInputType = {
+    id?: true
+    candidateCvId?: true
+    title?: true
+    organizationName?: true
+    degree?: true
+    fieldOfStudy?: true
+    startDate?: true
+    endDate?: true
+    description?: true
+    location?: true
+    isCertification?: true
+    certificationType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CvTrainingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CvTraining to aggregate.
+     */
+    where?: CvTrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvTrainings to fetch.
+     */
+    orderBy?: CvTrainingOrderByWithRelationInput | CvTrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CvTrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvTrainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvTrainings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CvTrainings
+    **/
+    _count?: true | CvTrainingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CvTrainingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CvTrainingMaxAggregateInputType
+  }
+
+  export type GetCvTrainingAggregateType<T extends CvTrainingAggregateArgs> = {
+        [P in keyof T & keyof AggregateCvTraining]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCvTraining[P]>
+      : GetScalarType<T[P], AggregateCvTraining[P]>
+  }
+
+
+
+
+  export type CvTrainingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvTrainingWhereInput
+    orderBy?: CvTrainingOrderByWithAggregationInput | CvTrainingOrderByWithAggregationInput[]
+    by: CvTrainingScalarFieldEnum[] | CvTrainingScalarFieldEnum
+    having?: CvTrainingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CvTrainingCountAggregateInputType | true
+    _min?: CvTrainingMinAggregateInputType
+    _max?: CvTrainingMaxAggregateInputType
+  }
+
+  export type CvTrainingGroupByOutputType = {
+    id: string
+    candidateCvId: string
+    title: string
+    organizationName: string | null
+    degree: string | null
+    fieldOfStudy: string | null
+    startDate: string | null
+    endDate: string | null
+    description: string | null
+    location: string | null
+    isCertification: boolean
+    certificationType: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CvTrainingCountAggregateOutputType | null
+    _min: CvTrainingMinAggregateOutputType | null
+    _max: CvTrainingMaxAggregateOutputType | null
+  }
+
+  type GetCvTrainingGroupByPayload<T extends CvTrainingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CvTrainingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CvTrainingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CvTrainingGroupByOutputType[P]>
+            : GetScalarType<T[P], CvTrainingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CvTrainingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    title?: boolean
+    organizationName?: boolean
+    degree?: boolean
+    fieldOfStudy?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    description?: boolean
+    location?: boolean
+    isCertification?: boolean
+    certificationType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvTraining"]>
+
+  export type CvTrainingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    title?: boolean
+    organizationName?: boolean
+    degree?: boolean
+    fieldOfStudy?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    description?: boolean
+    location?: boolean
+    isCertification?: boolean
+    certificationType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvTraining"]>
+
+  export type CvTrainingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    candidateCvId?: boolean
+    title?: boolean
+    organizationName?: boolean
+    degree?: boolean
+    fieldOfStudy?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    description?: boolean
+    location?: boolean
+    isCertification?: boolean
+    certificationType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cvTraining"]>
+
+  export type CvTrainingSelectScalar = {
+    id?: boolean
+    candidateCvId?: boolean
+    title?: boolean
+    organizationName?: boolean
+    degree?: boolean
+    fieldOfStudy?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    description?: boolean
+    location?: boolean
+    isCertification?: boolean
+    certificationType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CvTrainingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateCvId" | "title" | "organizationName" | "degree" | "fieldOfStudy" | "startDate" | "endDate" | "description" | "location" | "isCertification" | "certificationType" | "createdAt" | "updatedAt", ExtArgs["result"]["cvTraining"]>
+  export type CvTrainingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+  export type CvTrainingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+  export type CvTrainingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidateCv?: boolean | CandidateCvDefaultArgs<ExtArgs>
+  }
+
+  export type $CvTrainingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CvTraining"
+    objects: {
+      candidateCv: Prisma.$CandidateCvPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      candidateCvId: string
+      title: string
+      organizationName: string | null
+      degree: string | null
+      fieldOfStudy: string | null
+      startDate: string | null
+      endDate: string | null
+      description: string | null
+      location: string | null
+      isCertification: boolean
+      certificationType: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cvTraining"]>
+    composites: {}
+  }
+
+  type CvTrainingGetPayload<S extends boolean | null | undefined | CvTrainingDefaultArgs> = $Result.GetResult<Prisma.$CvTrainingPayload, S>
+
+  type CvTrainingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CvTrainingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CvTrainingCountAggregateInputType | true
+    }
+
+  export interface CvTrainingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CvTraining'], meta: { name: 'CvTraining' } }
+    /**
+     * Find zero or one CvTraining that matches the filter.
+     * @param {CvTrainingFindUniqueArgs} args - Arguments to find a CvTraining
+     * @example
+     * // Get one CvTraining
+     * const cvTraining = await prisma.cvTraining.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CvTrainingFindUniqueArgs>(args: SelectSubset<T, CvTrainingFindUniqueArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CvTraining that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CvTrainingFindUniqueOrThrowArgs} args - Arguments to find a CvTraining
+     * @example
+     * // Get one CvTraining
+     * const cvTraining = await prisma.cvTraining.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CvTrainingFindUniqueOrThrowArgs>(args: SelectSubset<T, CvTrainingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CvTraining that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvTrainingFindFirstArgs} args - Arguments to find a CvTraining
+     * @example
+     * // Get one CvTraining
+     * const cvTraining = await prisma.cvTraining.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CvTrainingFindFirstArgs>(args?: SelectSubset<T, CvTrainingFindFirstArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CvTraining that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvTrainingFindFirstOrThrowArgs} args - Arguments to find a CvTraining
+     * @example
+     * // Get one CvTraining
+     * const cvTraining = await prisma.cvTraining.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CvTrainingFindFirstOrThrowArgs>(args?: SelectSubset<T, CvTrainingFindFirstOrThrowArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CvTrainings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvTrainingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CvTrainings
+     * const cvTrainings = await prisma.cvTraining.findMany()
+     * 
+     * // Get first 10 CvTrainings
+     * const cvTrainings = await prisma.cvTraining.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cvTrainingWithIdOnly = await prisma.cvTraining.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CvTrainingFindManyArgs>(args?: SelectSubset<T, CvTrainingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CvTraining.
+     * @param {CvTrainingCreateArgs} args - Arguments to create a CvTraining.
+     * @example
+     * // Create one CvTraining
+     * const CvTraining = await prisma.cvTraining.create({
+     *   data: {
+     *     // ... data to create a CvTraining
+     *   }
+     * })
+     * 
+     */
+    create<T extends CvTrainingCreateArgs>(args: SelectSubset<T, CvTrainingCreateArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CvTrainings.
+     * @param {CvTrainingCreateManyArgs} args - Arguments to create many CvTrainings.
+     * @example
+     * // Create many CvTrainings
+     * const cvTraining = await prisma.cvTraining.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CvTrainingCreateManyArgs>(args?: SelectSubset<T, CvTrainingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CvTrainings and returns the data saved in the database.
+     * @param {CvTrainingCreateManyAndReturnArgs} args - Arguments to create many CvTrainings.
+     * @example
+     * // Create many CvTrainings
+     * const cvTraining = await prisma.cvTraining.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CvTrainings and only return the `id`
+     * const cvTrainingWithIdOnly = await prisma.cvTraining.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CvTrainingCreateManyAndReturnArgs>(args?: SelectSubset<T, CvTrainingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CvTraining.
+     * @param {CvTrainingDeleteArgs} args - Arguments to delete one CvTraining.
+     * @example
+     * // Delete one CvTraining
+     * const CvTraining = await prisma.cvTraining.delete({
+     *   where: {
+     *     // ... filter to delete one CvTraining
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CvTrainingDeleteArgs>(args: SelectSubset<T, CvTrainingDeleteArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CvTraining.
+     * @param {CvTrainingUpdateArgs} args - Arguments to update one CvTraining.
+     * @example
+     * // Update one CvTraining
+     * const cvTraining = await prisma.cvTraining.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CvTrainingUpdateArgs>(args: SelectSubset<T, CvTrainingUpdateArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CvTrainings.
+     * @param {CvTrainingDeleteManyArgs} args - Arguments to filter CvTrainings to delete.
+     * @example
+     * // Delete a few CvTrainings
+     * const { count } = await prisma.cvTraining.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CvTrainingDeleteManyArgs>(args?: SelectSubset<T, CvTrainingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CvTrainings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvTrainingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CvTrainings
+     * const cvTraining = await prisma.cvTraining.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CvTrainingUpdateManyArgs>(args: SelectSubset<T, CvTrainingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CvTrainings and returns the data updated in the database.
+     * @param {CvTrainingUpdateManyAndReturnArgs} args - Arguments to update many CvTrainings.
+     * @example
+     * // Update many CvTrainings
+     * const cvTraining = await prisma.cvTraining.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CvTrainings and only return the `id`
+     * const cvTrainingWithIdOnly = await prisma.cvTraining.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CvTrainingUpdateManyAndReturnArgs>(args: SelectSubset<T, CvTrainingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CvTraining.
+     * @param {CvTrainingUpsertArgs} args - Arguments to update or create a CvTraining.
+     * @example
+     * // Update or create a CvTraining
+     * const cvTraining = await prisma.cvTraining.upsert({
+     *   create: {
+     *     // ... data to create a CvTraining
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CvTraining we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CvTrainingUpsertArgs>(args: SelectSubset<T, CvTrainingUpsertArgs<ExtArgs>>): Prisma__CvTrainingClient<$Result.GetResult<Prisma.$CvTrainingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CvTrainings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvTrainingCountArgs} args - Arguments to filter CvTrainings to count.
+     * @example
+     * // Count the number of CvTrainings
+     * const count = await prisma.cvTraining.count({
+     *   where: {
+     *     // ... the filter for the CvTrainings we want to count
+     *   }
+     * })
+    **/
+    count<T extends CvTrainingCountArgs>(
+      args?: Subset<T, CvTrainingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CvTrainingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CvTraining.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvTrainingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CvTrainingAggregateArgs>(args: Subset<T, CvTrainingAggregateArgs>): Prisma.PrismaPromise<GetCvTrainingAggregateType<T>>
+
+    /**
+     * Group by CvTraining.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvTrainingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CvTrainingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CvTrainingGroupByArgs['orderBy'] }
+        : { orderBy?: CvTrainingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CvTrainingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCvTrainingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CvTraining model
+   */
+  readonly fields: CvTrainingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CvTraining.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CvTrainingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    candidateCv<T extends CandidateCvDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidateCvDefaultArgs<ExtArgs>>): Prisma__CandidateCvClient<$Result.GetResult<Prisma.$CandidateCvPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CvTraining model
+   */
+  interface CvTrainingFieldRefs {
+    readonly id: FieldRef<"CvTraining", 'String'>
+    readonly candidateCvId: FieldRef<"CvTraining", 'String'>
+    readonly title: FieldRef<"CvTraining", 'String'>
+    readonly organizationName: FieldRef<"CvTraining", 'String'>
+    readonly degree: FieldRef<"CvTraining", 'String'>
+    readonly fieldOfStudy: FieldRef<"CvTraining", 'String'>
+    readonly startDate: FieldRef<"CvTraining", 'String'>
+    readonly endDate: FieldRef<"CvTraining", 'String'>
+    readonly description: FieldRef<"CvTraining", 'String'>
+    readonly location: FieldRef<"CvTraining", 'String'>
+    readonly isCertification: FieldRef<"CvTraining", 'Boolean'>
+    readonly certificationType: FieldRef<"CvTraining", 'String'>
+    readonly createdAt: FieldRef<"CvTraining", 'DateTime'>
+    readonly updatedAt: FieldRef<"CvTraining", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CvTraining findUnique
+   */
+  export type CvTrainingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which CvTraining to fetch.
+     */
+    where: CvTrainingWhereUniqueInput
+  }
+
+  /**
+   * CvTraining findUniqueOrThrow
+   */
+  export type CvTrainingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which CvTraining to fetch.
+     */
+    where: CvTrainingWhereUniqueInput
+  }
+
+  /**
+   * CvTraining findFirst
+   */
+  export type CvTrainingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which CvTraining to fetch.
+     */
+    where?: CvTrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvTrainings to fetch.
+     */
+    orderBy?: CvTrainingOrderByWithRelationInput | CvTrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CvTrainings.
+     */
+    cursor?: CvTrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvTrainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvTrainings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvTrainings.
+     */
+    distinct?: CvTrainingScalarFieldEnum | CvTrainingScalarFieldEnum[]
+  }
+
+  /**
+   * CvTraining findFirstOrThrow
+   */
+  export type CvTrainingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which CvTraining to fetch.
+     */
+    where?: CvTrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvTrainings to fetch.
+     */
+    orderBy?: CvTrainingOrderByWithRelationInput | CvTrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CvTrainings.
+     */
+    cursor?: CvTrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvTrainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvTrainings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvTrainings.
+     */
+    distinct?: CvTrainingScalarFieldEnum | CvTrainingScalarFieldEnum[]
+  }
+
+  /**
+   * CvTraining findMany
+   */
+  export type CvTrainingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which CvTrainings to fetch.
+     */
+    where?: CvTrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CvTrainings to fetch.
+     */
+    orderBy?: CvTrainingOrderByWithRelationInput | CvTrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CvTrainings.
+     */
+    cursor?: CvTrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CvTrainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CvTrainings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CvTrainings.
+     */
+    distinct?: CvTrainingScalarFieldEnum | CvTrainingScalarFieldEnum[]
+  }
+
+  /**
+   * CvTraining create
+   */
+  export type CvTrainingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CvTraining.
+     */
+    data: XOR<CvTrainingCreateInput, CvTrainingUncheckedCreateInput>
+  }
+
+  /**
+   * CvTraining createMany
+   */
+  export type CvTrainingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CvTrainings.
+     */
+    data: CvTrainingCreateManyInput | CvTrainingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CvTraining createManyAndReturn
+   */
+  export type CvTrainingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * The data used to create many CvTrainings.
+     */
+    data: CvTrainingCreateManyInput | CvTrainingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CvTraining update
+   */
+  export type CvTrainingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CvTraining.
+     */
+    data: XOR<CvTrainingUpdateInput, CvTrainingUncheckedUpdateInput>
+    /**
+     * Choose, which CvTraining to update.
+     */
+    where: CvTrainingWhereUniqueInput
+  }
+
+  /**
+   * CvTraining updateMany
+   */
+  export type CvTrainingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CvTrainings.
+     */
+    data: XOR<CvTrainingUpdateManyMutationInput, CvTrainingUncheckedUpdateManyInput>
+    /**
+     * Filter which CvTrainings to update
+     */
+    where?: CvTrainingWhereInput
+    /**
+     * Limit how many CvTrainings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CvTraining updateManyAndReturn
+   */
+  export type CvTrainingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * The data used to update CvTrainings.
+     */
+    data: XOR<CvTrainingUpdateManyMutationInput, CvTrainingUncheckedUpdateManyInput>
+    /**
+     * Filter which CvTrainings to update
+     */
+    where?: CvTrainingWhereInput
+    /**
+     * Limit how many CvTrainings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CvTraining upsert
+   */
+  export type CvTrainingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CvTraining to update in case it exists.
+     */
+    where: CvTrainingWhereUniqueInput
+    /**
+     * In case the CvTraining found by the `where` argument doesn't exist, create a new CvTraining with this data.
+     */
+    create: XOR<CvTrainingCreateInput, CvTrainingUncheckedCreateInput>
+    /**
+     * In case the CvTraining was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CvTrainingUpdateInput, CvTrainingUncheckedUpdateInput>
+  }
+
+  /**
+   * CvTraining delete
+   */
+  export type CvTrainingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
+    /**
+     * Filter which CvTraining to delete.
+     */
+    where: CvTrainingWhereUniqueInput
+  }
+
+  /**
+   * CvTraining deleteMany
+   */
+  export type CvTrainingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CvTrainings to delete
+     */
+    where?: CvTrainingWhereInput
+    /**
+     * Limit how many CvTrainings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CvTraining without action
+   */
+  export type CvTrainingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CvTraining
+     */
+    select?: CvTrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CvTraining
+     */
+    omit?: CvTrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvTrainingInclude<ExtArgs> | null
   }
 
 
@@ -12323,6 +16204,57 @@ export namespace Prisma {
   export type CandidateCvScalarFieldEnum = (typeof CandidateCvScalarFieldEnum)[keyof typeof CandidateCvScalarFieldEnum]
 
 
+  export const CvExperienceScalarFieldEnum: {
+    id: 'id',
+    candidateCvId: 'candidateCvId',
+    jobTitle: 'jobTitle',
+    companyName: 'companyName',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    isCurrent: 'isCurrent',
+    location: 'location',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CvExperienceScalarFieldEnum = (typeof CvExperienceScalarFieldEnum)[keyof typeof CvExperienceScalarFieldEnum]
+
+
+  export const CvSkillScalarFieldEnum: {
+    id: 'id',
+    candidateCvId: 'candidateCvId',
+    name: 'name',
+    category: 'category',
+    confidence: 'confidence',
+    source: 'source',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CvSkillScalarFieldEnum = (typeof CvSkillScalarFieldEnum)[keyof typeof CvSkillScalarFieldEnum]
+
+
+  export const CvTrainingScalarFieldEnum: {
+    id: 'id',
+    candidateCvId: 'candidateCvId',
+    title: 'title',
+    organizationName: 'organizationName',
+    degree: 'degree',
+    fieldOfStudy: 'fieldOfStudy',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    description: 'description',
+    location: 'location',
+    isCertification: 'isCertification',
+    certificationType: 'certificationType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CvTrainingScalarFieldEnum = (typeof CvTrainingScalarFieldEnum)[keyof typeof CvTrainingScalarFieldEnum]
+
+
   export const CategoryScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -12501,16 +16433,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'CompanyStatus'
+   * Reference to a field of type 'CvSkillCategory'
    */
-  export type EnumCompanyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyStatus'>
+  export type EnumCvSkillCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CvSkillCategory'>
     
 
 
   /**
-   * Reference to a field of type 'CompanyStatus[]'
+   * Reference to a field of type 'CvSkillCategory[]'
    */
-  export type ListEnumCompanyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyStatus[]'>
+  export type ListEnumCvSkillCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CvSkillCategory[]'>
     
 
 
@@ -12525,6 +16457,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'CompanyStatus'
+   */
+  export type EnumCompanyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'CompanyStatus[]'
+   */
+  export type ListEnumCompanyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyStatus[]'>
     
   /**
    * Deep Input Types
@@ -12704,6 +16650,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
     updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
     candidateProfile?: XOR<CandidateProfileScalarRelationFilter, CandidateProfileWhereInput>
+    cvExperiences?: CvExperienceListRelationFilter
+    cvSkills?: CvSkillListRelationFilter
+    cvTrainings?: CvTrainingListRelationFilter
   }
 
   export type CandidateCvOrderByWithRelationInput = {
@@ -12724,6 +16673,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     candidateProfile?: CandidateProfileOrderByWithRelationInput
+    cvExperiences?: CvExperienceOrderByRelationAggregateInput
+    cvSkills?: CvSkillOrderByRelationAggregateInput
+    cvTrainings?: CvTrainingOrderByRelationAggregateInput
   }
 
   export type CandidateCvWhereUniqueInput = Prisma.AtLeast<{
@@ -12747,6 +16699,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CandidateCv"> | Date | string
     updatedAt?: DateTimeFilter<"CandidateCv"> | Date | string
     candidateProfile?: XOR<CandidateProfileScalarRelationFilter, CandidateProfileWhereInput>
+    cvExperiences?: CvExperienceListRelationFilter
+    cvSkills?: CvSkillListRelationFilter
+    cvTrainings?: CvTrainingListRelationFilter
   }, "id">
 
   export type CandidateCvOrderByWithAggregationInput = {
@@ -12793,6 +16748,263 @@ export namespace Prisma {
     uploadedAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"CandidateCv"> | Date | string
+  }
+
+  export type CvExperienceWhereInput = {
+    AND?: CvExperienceWhereInput | CvExperienceWhereInput[]
+    OR?: CvExperienceWhereInput[]
+    NOT?: CvExperienceWhereInput | CvExperienceWhereInput[]
+    id?: UuidFilter<"CvExperience"> | string
+    candidateCvId?: UuidFilter<"CvExperience"> | string
+    jobTitle?: StringFilter<"CvExperience"> | string
+    companyName?: StringNullableFilter<"CvExperience"> | string | null
+    startDate?: StringNullableFilter<"CvExperience"> | string | null
+    endDate?: StringNullableFilter<"CvExperience"> | string | null
+    isCurrent?: BoolFilter<"CvExperience"> | boolean
+    location?: StringNullableFilter<"CvExperience"> | string | null
+    description?: StringNullableFilter<"CvExperience"> | string | null
+    createdAt?: DateTimeFilter<"CvExperience"> | Date | string
+    updatedAt?: DateTimeFilter<"CvExperience"> | Date | string
+    candidateCv?: XOR<CandidateCvScalarRelationFilter, CandidateCvWhereInput>
+  }
+
+  export type CvExperienceOrderByWithRelationInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    jobTitle?: SortOrder
+    companyName?: SortOrderInput | SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    isCurrent?: SortOrder
+    location?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    candidateCv?: CandidateCvOrderByWithRelationInput
+  }
+
+  export type CvExperienceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CvExperienceWhereInput | CvExperienceWhereInput[]
+    OR?: CvExperienceWhereInput[]
+    NOT?: CvExperienceWhereInput | CvExperienceWhereInput[]
+    candidateCvId?: UuidFilter<"CvExperience"> | string
+    jobTitle?: StringFilter<"CvExperience"> | string
+    companyName?: StringNullableFilter<"CvExperience"> | string | null
+    startDate?: StringNullableFilter<"CvExperience"> | string | null
+    endDate?: StringNullableFilter<"CvExperience"> | string | null
+    isCurrent?: BoolFilter<"CvExperience"> | boolean
+    location?: StringNullableFilter<"CvExperience"> | string | null
+    description?: StringNullableFilter<"CvExperience"> | string | null
+    createdAt?: DateTimeFilter<"CvExperience"> | Date | string
+    updatedAt?: DateTimeFilter<"CvExperience"> | Date | string
+    candidateCv?: XOR<CandidateCvScalarRelationFilter, CandidateCvWhereInput>
+  }, "id">
+
+  export type CvExperienceOrderByWithAggregationInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    jobTitle?: SortOrder
+    companyName?: SortOrderInput | SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    isCurrent?: SortOrder
+    location?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CvExperienceCountOrderByAggregateInput
+    _max?: CvExperienceMaxOrderByAggregateInput
+    _min?: CvExperienceMinOrderByAggregateInput
+  }
+
+  export type CvExperienceScalarWhereWithAggregatesInput = {
+    AND?: CvExperienceScalarWhereWithAggregatesInput | CvExperienceScalarWhereWithAggregatesInput[]
+    OR?: CvExperienceScalarWhereWithAggregatesInput[]
+    NOT?: CvExperienceScalarWhereWithAggregatesInput | CvExperienceScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"CvExperience"> | string
+    candidateCvId?: UuidWithAggregatesFilter<"CvExperience"> | string
+    jobTitle?: StringWithAggregatesFilter<"CvExperience"> | string
+    companyName?: StringNullableWithAggregatesFilter<"CvExperience"> | string | null
+    startDate?: StringNullableWithAggregatesFilter<"CvExperience"> | string | null
+    endDate?: StringNullableWithAggregatesFilter<"CvExperience"> | string | null
+    isCurrent?: BoolWithAggregatesFilter<"CvExperience"> | boolean
+    location?: StringNullableWithAggregatesFilter<"CvExperience"> | string | null
+    description?: StringNullableWithAggregatesFilter<"CvExperience"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"CvExperience"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CvExperience"> | Date | string
+  }
+
+  export type CvSkillWhereInput = {
+    AND?: CvSkillWhereInput | CvSkillWhereInput[]
+    OR?: CvSkillWhereInput[]
+    NOT?: CvSkillWhereInput | CvSkillWhereInput[]
+    id?: UuidFilter<"CvSkill"> | string
+    candidateCvId?: UuidFilter<"CvSkill"> | string
+    name?: StringFilter<"CvSkill"> | string
+    category?: EnumCvSkillCategoryFilter<"CvSkill"> | $Enums.CvSkillCategory
+    confidence?: FloatNullableFilter<"CvSkill"> | number | null
+    source?: StringNullableFilter<"CvSkill"> | string | null
+    createdAt?: DateTimeFilter<"CvSkill"> | Date | string
+    updatedAt?: DateTimeFilter<"CvSkill"> | Date | string
+    candidateCv?: XOR<CandidateCvScalarRelationFilter, CandidateCvWhereInput>
+  }
+
+  export type CvSkillOrderByWithRelationInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    confidence?: SortOrderInput | SortOrder
+    source?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    candidateCv?: CandidateCvOrderByWithRelationInput
+  }
+
+  export type CvSkillWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CvSkillWhereInput | CvSkillWhereInput[]
+    OR?: CvSkillWhereInput[]
+    NOT?: CvSkillWhereInput | CvSkillWhereInput[]
+    candidateCvId?: UuidFilter<"CvSkill"> | string
+    name?: StringFilter<"CvSkill"> | string
+    category?: EnumCvSkillCategoryFilter<"CvSkill"> | $Enums.CvSkillCategory
+    confidence?: FloatNullableFilter<"CvSkill"> | number | null
+    source?: StringNullableFilter<"CvSkill"> | string | null
+    createdAt?: DateTimeFilter<"CvSkill"> | Date | string
+    updatedAt?: DateTimeFilter<"CvSkill"> | Date | string
+    candidateCv?: XOR<CandidateCvScalarRelationFilter, CandidateCvWhereInput>
+  }, "id">
+
+  export type CvSkillOrderByWithAggregationInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    confidence?: SortOrderInput | SortOrder
+    source?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CvSkillCountOrderByAggregateInput
+    _avg?: CvSkillAvgOrderByAggregateInput
+    _max?: CvSkillMaxOrderByAggregateInput
+    _min?: CvSkillMinOrderByAggregateInput
+    _sum?: CvSkillSumOrderByAggregateInput
+  }
+
+  export type CvSkillScalarWhereWithAggregatesInput = {
+    AND?: CvSkillScalarWhereWithAggregatesInput | CvSkillScalarWhereWithAggregatesInput[]
+    OR?: CvSkillScalarWhereWithAggregatesInput[]
+    NOT?: CvSkillScalarWhereWithAggregatesInput | CvSkillScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"CvSkill"> | string
+    candidateCvId?: UuidWithAggregatesFilter<"CvSkill"> | string
+    name?: StringWithAggregatesFilter<"CvSkill"> | string
+    category?: EnumCvSkillCategoryWithAggregatesFilter<"CvSkill"> | $Enums.CvSkillCategory
+    confidence?: FloatNullableWithAggregatesFilter<"CvSkill"> | number | null
+    source?: StringNullableWithAggregatesFilter<"CvSkill"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"CvSkill"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CvSkill"> | Date | string
+  }
+
+  export type CvTrainingWhereInput = {
+    AND?: CvTrainingWhereInput | CvTrainingWhereInput[]
+    OR?: CvTrainingWhereInput[]
+    NOT?: CvTrainingWhereInput | CvTrainingWhereInput[]
+    id?: UuidFilter<"CvTraining"> | string
+    candidateCvId?: UuidFilter<"CvTraining"> | string
+    title?: StringFilter<"CvTraining"> | string
+    organizationName?: StringNullableFilter<"CvTraining"> | string | null
+    degree?: StringNullableFilter<"CvTraining"> | string | null
+    fieldOfStudy?: StringNullableFilter<"CvTraining"> | string | null
+    startDate?: StringNullableFilter<"CvTraining"> | string | null
+    endDate?: StringNullableFilter<"CvTraining"> | string | null
+    description?: StringNullableFilter<"CvTraining"> | string | null
+    location?: StringNullableFilter<"CvTraining"> | string | null
+    isCertification?: BoolFilter<"CvTraining"> | boolean
+    certificationType?: StringNullableFilter<"CvTraining"> | string | null
+    createdAt?: DateTimeFilter<"CvTraining"> | Date | string
+    updatedAt?: DateTimeFilter<"CvTraining"> | Date | string
+    candidateCv?: XOR<CandidateCvScalarRelationFilter, CandidateCvWhereInput>
+  }
+
+  export type CvTrainingOrderByWithRelationInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    title?: SortOrder
+    organizationName?: SortOrderInput | SortOrder
+    degree?: SortOrderInput | SortOrder
+    fieldOfStudy?: SortOrderInput | SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    isCertification?: SortOrder
+    certificationType?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    candidateCv?: CandidateCvOrderByWithRelationInput
+  }
+
+  export type CvTrainingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CvTrainingWhereInput | CvTrainingWhereInput[]
+    OR?: CvTrainingWhereInput[]
+    NOT?: CvTrainingWhereInput | CvTrainingWhereInput[]
+    candidateCvId?: UuidFilter<"CvTraining"> | string
+    title?: StringFilter<"CvTraining"> | string
+    organizationName?: StringNullableFilter<"CvTraining"> | string | null
+    degree?: StringNullableFilter<"CvTraining"> | string | null
+    fieldOfStudy?: StringNullableFilter<"CvTraining"> | string | null
+    startDate?: StringNullableFilter<"CvTraining"> | string | null
+    endDate?: StringNullableFilter<"CvTraining"> | string | null
+    description?: StringNullableFilter<"CvTraining"> | string | null
+    location?: StringNullableFilter<"CvTraining"> | string | null
+    isCertification?: BoolFilter<"CvTraining"> | boolean
+    certificationType?: StringNullableFilter<"CvTraining"> | string | null
+    createdAt?: DateTimeFilter<"CvTraining"> | Date | string
+    updatedAt?: DateTimeFilter<"CvTraining"> | Date | string
+    candidateCv?: XOR<CandidateCvScalarRelationFilter, CandidateCvWhereInput>
+  }, "id">
+
+  export type CvTrainingOrderByWithAggregationInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    title?: SortOrder
+    organizationName?: SortOrderInput | SortOrder
+    degree?: SortOrderInput | SortOrder
+    fieldOfStudy?: SortOrderInput | SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    isCertification?: SortOrder
+    certificationType?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CvTrainingCountOrderByAggregateInput
+    _max?: CvTrainingMaxOrderByAggregateInput
+    _min?: CvTrainingMinOrderByAggregateInput
+  }
+
+  export type CvTrainingScalarWhereWithAggregatesInput = {
+    AND?: CvTrainingScalarWhereWithAggregatesInput | CvTrainingScalarWhereWithAggregatesInput[]
+    OR?: CvTrainingScalarWhereWithAggregatesInput[]
+    NOT?: CvTrainingScalarWhereWithAggregatesInput | CvTrainingScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"CvTraining"> | string
+    candidateCvId?: UuidWithAggregatesFilter<"CvTraining"> | string
+    title?: StringWithAggregatesFilter<"CvTraining"> | string
+    organizationName?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    degree?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    fieldOfStudy?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    startDate?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    endDate?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    description?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    location?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    isCertification?: BoolWithAggregatesFilter<"CvTraining"> | boolean
+    certificationType?: StringNullableWithAggregatesFilter<"CvTraining"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"CvTraining"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CvTraining"> | Date | string
   }
 
   export type CategoryWhereInput = {
@@ -13435,6 +17647,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     candidateProfile: CandidateProfileCreateNestedOneWithoutCvsInput
+    cvExperiences?: CvExperienceCreateNestedManyWithoutCandidateCvInput
+    cvSkills?: CvSkillCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingCreateNestedManyWithoutCandidateCvInput
   }
 
   export type CandidateCvUncheckedCreateInput = {
@@ -13454,6 +17669,9 @@ export namespace Prisma {
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    cvExperiences?: CvExperienceUncheckedCreateNestedManyWithoutCandidateCvInput
+    cvSkills?: CvSkillUncheckedCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingUncheckedCreateNestedManyWithoutCandidateCvInput
   }
 
   export type CandidateCvUpdateInput = {
@@ -13473,6 +17691,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidateProfile?: CandidateProfileUpdateOneRequiredWithoutCvsNestedInput
+    cvExperiences?: CvExperienceUpdateManyWithoutCandidateCvNestedInput
+    cvSkills?: CvSkillUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUpdateManyWithoutCandidateCvNestedInput
   }
 
   export type CandidateCvUncheckedUpdateInput = {
@@ -13492,6 +17713,9 @@ export namespace Prisma {
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvExperiences?: CvExperienceUncheckedUpdateManyWithoutCandidateCvNestedInput
+    cvSkills?: CvSkillUncheckedUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUncheckedUpdateManyWithoutCandidateCvNestedInput
   }
 
   export type CandidateCvCreateManyInput = {
@@ -13546,6 +17770,297 @@ export namespace Prisma {
     extractedText?: NullableStringFieldUpdateOperationsInput | string | null
     lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvExperienceCreateInput = {
+    id?: string
+    jobTitle: string
+    companyName?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    isCurrent?: boolean
+    location?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidateCv: CandidateCvCreateNestedOneWithoutCvExperiencesInput
+  }
+
+  export type CvExperienceUncheckedCreateInput = {
+    id?: string
+    candidateCvId: string
+    jobTitle: string
+    companyName?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    isCurrent?: boolean
+    location?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvExperienceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobTitle?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidateCv?: CandidateCvUpdateOneRequiredWithoutCvExperiencesNestedInput
+  }
+
+  export type CvExperienceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateCvId?: StringFieldUpdateOperationsInput | string
+    jobTitle?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvExperienceCreateManyInput = {
+    id?: string
+    candidateCvId: string
+    jobTitle: string
+    companyName?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    isCurrent?: boolean
+    location?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvExperienceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobTitle?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvExperienceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateCvId?: StringFieldUpdateOperationsInput | string
+    jobTitle?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvSkillCreateInput = {
+    id?: string
+    name: string
+    category: $Enums.CvSkillCategory
+    confidence?: number | null
+    source?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidateCv: CandidateCvCreateNestedOneWithoutCvSkillsInput
+  }
+
+  export type CvSkillUncheckedCreateInput = {
+    id?: string
+    candidateCvId: string
+    name: string
+    category: $Enums.CvSkillCategory
+    confidence?: number | null
+    source?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvSkillUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumCvSkillCategoryFieldUpdateOperationsInput | $Enums.CvSkillCategory
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidateCv?: CandidateCvUpdateOneRequiredWithoutCvSkillsNestedInput
+  }
+
+  export type CvSkillUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateCvId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumCvSkillCategoryFieldUpdateOperationsInput | $Enums.CvSkillCategory
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvSkillCreateManyInput = {
+    id?: string
+    candidateCvId: string
+    name: string
+    category: $Enums.CvSkillCategory
+    confidence?: number | null
+    source?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvSkillUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumCvSkillCategoryFieldUpdateOperationsInput | $Enums.CvSkillCategory
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvSkillUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateCvId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumCvSkillCategoryFieldUpdateOperationsInput | $Enums.CvSkillCategory
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvTrainingCreateInput = {
+    id?: string
+    title: string
+    organizationName?: string | null
+    degree?: string | null
+    fieldOfStudy?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    description?: string | null
+    location?: string | null
+    isCertification?: boolean
+    certificationType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidateCv: CandidateCvCreateNestedOneWithoutCvTrainingsInput
+  }
+
+  export type CvTrainingUncheckedCreateInput = {
+    id?: string
+    candidateCvId: string
+    title: string
+    organizationName?: string | null
+    degree?: string | null
+    fieldOfStudy?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    description?: string | null
+    location?: string | null
+    isCertification?: boolean
+    certificationType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvTrainingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    degree?: NullableStringFieldUpdateOperationsInput | string | null
+    fieldOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isCertification?: BoolFieldUpdateOperationsInput | boolean
+    certificationType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidateCv?: CandidateCvUpdateOneRequiredWithoutCvTrainingsNestedInput
+  }
+
+  export type CvTrainingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateCvId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    degree?: NullableStringFieldUpdateOperationsInput | string | null
+    fieldOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isCertification?: BoolFieldUpdateOperationsInput | boolean
+    certificationType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvTrainingCreateManyInput = {
+    id?: string
+    candidateCvId: string
+    title: string
+    organizationName?: string | null
+    degree?: string | null
+    fieldOfStudy?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    description?: string | null
+    location?: string | null
+    isCertification?: boolean
+    certificationType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvTrainingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    degree?: NullableStringFieldUpdateOperationsInput | string | null
+    fieldOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isCertification?: BoolFieldUpdateOperationsInput | boolean
+    certificationType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvTrainingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateCvId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    degree?: NullableStringFieldUpdateOperationsInput | string | null
+    fieldOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isCertification?: BoolFieldUpdateOperationsInput | boolean
+    certificationType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14323,6 +18838,36 @@ export namespace Prisma {
     isNot?: CandidateProfileWhereInput
   }
 
+  export type CvExperienceListRelationFilter = {
+    every?: CvExperienceWhereInput
+    some?: CvExperienceWhereInput
+    none?: CvExperienceWhereInput
+  }
+
+  export type CvSkillListRelationFilter = {
+    every?: CvSkillWhereInput
+    some?: CvSkillWhereInput
+    none?: CvSkillWhereInput
+  }
+
+  export type CvTrainingListRelationFilter = {
+    every?: CvTrainingWhereInput
+    some?: CvTrainingWhereInput
+    none?: CvTrainingWhereInput
+  }
+
+  export type CvExperienceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CvSkillOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CvTrainingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CandidateCvCountOrderByAggregateInput = {
     id?: SortOrder
     candidateProfileId?: SortOrder
@@ -14420,6 +18965,189 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel>
     _max?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel>
+  }
+
+  export type CandidateCvScalarRelationFilter = {
+    is?: CandidateCvWhereInput
+    isNot?: CandidateCvWhereInput
+  }
+
+  export type CvExperienceCountOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    jobTitle?: SortOrder
+    companyName?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isCurrent?: SortOrder
+    location?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CvExperienceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    jobTitle?: SortOrder
+    companyName?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isCurrent?: SortOrder
+    location?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CvExperienceMinOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    jobTitle?: SortOrder
+    companyName?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isCurrent?: SortOrder
+    location?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumCvSkillCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.CvSkillCategory | EnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumCvSkillCategoryFilter<$PrismaModel> | $Enums.CvSkillCategory
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type CvSkillCountOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    confidence?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CvSkillAvgOrderByAggregateInput = {
+    confidence?: SortOrder
+  }
+
+  export type CvSkillMaxOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    confidence?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CvSkillMinOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    confidence?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CvSkillSumOrderByAggregateInput = {
+    confidence?: SortOrder
+  }
+
+  export type EnumCvSkillCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CvSkillCategory | EnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumCvSkillCategoryWithAggregatesFilter<$PrismaModel> | $Enums.CvSkillCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCvSkillCategoryFilter<$PrismaModel>
+    _max?: NestedEnumCvSkillCategoryFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type CvTrainingCountOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    title?: SortOrder
+    organizationName?: SortOrder
+    degree?: SortOrder
+    fieldOfStudy?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    isCertification?: SortOrder
+    certificationType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CvTrainingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    title?: SortOrder
+    organizationName?: SortOrder
+    degree?: SortOrder
+    fieldOfStudy?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    isCertification?: SortOrder
+    certificationType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CvTrainingMinOrderByAggregateInput = {
+    id?: SortOrder
+    candidateCvId?: SortOrder
+    title?: SortOrder
+    organizationName?: SortOrder
+    degree?: SortOrder
+    fieldOfStudy?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    isCertification?: SortOrder
+    certificationType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -14964,6 +19692,48 @@ export namespace Prisma {
     connect?: CandidateProfileWhereUniqueInput
   }
 
+  export type CvExperienceCreateNestedManyWithoutCandidateCvInput = {
+    create?: XOR<CvExperienceCreateWithoutCandidateCvInput, CvExperienceUncheckedCreateWithoutCandidateCvInput> | CvExperienceCreateWithoutCandidateCvInput[] | CvExperienceUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvExperienceCreateOrConnectWithoutCandidateCvInput | CvExperienceCreateOrConnectWithoutCandidateCvInput[]
+    createMany?: CvExperienceCreateManyCandidateCvInputEnvelope
+    connect?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+  }
+
+  export type CvSkillCreateNestedManyWithoutCandidateCvInput = {
+    create?: XOR<CvSkillCreateWithoutCandidateCvInput, CvSkillUncheckedCreateWithoutCandidateCvInput> | CvSkillCreateWithoutCandidateCvInput[] | CvSkillUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvSkillCreateOrConnectWithoutCandidateCvInput | CvSkillCreateOrConnectWithoutCandidateCvInput[]
+    createMany?: CvSkillCreateManyCandidateCvInputEnvelope
+    connect?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+  }
+
+  export type CvTrainingCreateNestedManyWithoutCandidateCvInput = {
+    create?: XOR<CvTrainingCreateWithoutCandidateCvInput, CvTrainingUncheckedCreateWithoutCandidateCvInput> | CvTrainingCreateWithoutCandidateCvInput[] | CvTrainingUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvTrainingCreateOrConnectWithoutCandidateCvInput | CvTrainingCreateOrConnectWithoutCandidateCvInput[]
+    createMany?: CvTrainingCreateManyCandidateCvInputEnvelope
+    connect?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+  }
+
+  export type CvExperienceUncheckedCreateNestedManyWithoutCandidateCvInput = {
+    create?: XOR<CvExperienceCreateWithoutCandidateCvInput, CvExperienceUncheckedCreateWithoutCandidateCvInput> | CvExperienceCreateWithoutCandidateCvInput[] | CvExperienceUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvExperienceCreateOrConnectWithoutCandidateCvInput | CvExperienceCreateOrConnectWithoutCandidateCvInput[]
+    createMany?: CvExperienceCreateManyCandidateCvInputEnvelope
+    connect?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+  }
+
+  export type CvSkillUncheckedCreateNestedManyWithoutCandidateCvInput = {
+    create?: XOR<CvSkillCreateWithoutCandidateCvInput, CvSkillUncheckedCreateWithoutCandidateCvInput> | CvSkillCreateWithoutCandidateCvInput[] | CvSkillUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvSkillCreateOrConnectWithoutCandidateCvInput | CvSkillCreateOrConnectWithoutCandidateCvInput[]
+    createMany?: CvSkillCreateManyCandidateCvInputEnvelope
+    connect?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+  }
+
+  export type CvTrainingUncheckedCreateNestedManyWithoutCandidateCvInput = {
+    create?: XOR<CvTrainingCreateWithoutCandidateCvInput, CvTrainingUncheckedCreateWithoutCandidateCvInput> | CvTrainingCreateWithoutCandidateCvInput[] | CvTrainingUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvTrainingCreateOrConnectWithoutCandidateCvInput | CvTrainingCreateOrConnectWithoutCandidateCvInput[]
+    createMany?: CvTrainingCreateManyCandidateCvInputEnvelope
+    connect?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -14986,6 +19756,144 @@ export namespace Prisma {
     upsert?: CandidateProfileUpsertWithoutCvsInput
     connect?: CandidateProfileWhereUniqueInput
     update?: XOR<XOR<CandidateProfileUpdateToOneWithWhereWithoutCvsInput, CandidateProfileUpdateWithoutCvsInput>, CandidateProfileUncheckedUpdateWithoutCvsInput>
+  }
+
+  export type CvExperienceUpdateManyWithoutCandidateCvNestedInput = {
+    create?: XOR<CvExperienceCreateWithoutCandidateCvInput, CvExperienceUncheckedCreateWithoutCandidateCvInput> | CvExperienceCreateWithoutCandidateCvInput[] | CvExperienceUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvExperienceCreateOrConnectWithoutCandidateCvInput | CvExperienceCreateOrConnectWithoutCandidateCvInput[]
+    upsert?: CvExperienceUpsertWithWhereUniqueWithoutCandidateCvInput | CvExperienceUpsertWithWhereUniqueWithoutCandidateCvInput[]
+    createMany?: CvExperienceCreateManyCandidateCvInputEnvelope
+    set?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    disconnect?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    delete?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    connect?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    update?: CvExperienceUpdateWithWhereUniqueWithoutCandidateCvInput | CvExperienceUpdateWithWhereUniqueWithoutCandidateCvInput[]
+    updateMany?: CvExperienceUpdateManyWithWhereWithoutCandidateCvInput | CvExperienceUpdateManyWithWhereWithoutCandidateCvInput[]
+    deleteMany?: CvExperienceScalarWhereInput | CvExperienceScalarWhereInput[]
+  }
+
+  export type CvSkillUpdateManyWithoutCandidateCvNestedInput = {
+    create?: XOR<CvSkillCreateWithoutCandidateCvInput, CvSkillUncheckedCreateWithoutCandidateCvInput> | CvSkillCreateWithoutCandidateCvInput[] | CvSkillUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvSkillCreateOrConnectWithoutCandidateCvInput | CvSkillCreateOrConnectWithoutCandidateCvInput[]
+    upsert?: CvSkillUpsertWithWhereUniqueWithoutCandidateCvInput | CvSkillUpsertWithWhereUniqueWithoutCandidateCvInput[]
+    createMany?: CvSkillCreateManyCandidateCvInputEnvelope
+    set?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    disconnect?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    delete?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    connect?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    update?: CvSkillUpdateWithWhereUniqueWithoutCandidateCvInput | CvSkillUpdateWithWhereUniqueWithoutCandidateCvInput[]
+    updateMany?: CvSkillUpdateManyWithWhereWithoutCandidateCvInput | CvSkillUpdateManyWithWhereWithoutCandidateCvInput[]
+    deleteMany?: CvSkillScalarWhereInput | CvSkillScalarWhereInput[]
+  }
+
+  export type CvTrainingUpdateManyWithoutCandidateCvNestedInput = {
+    create?: XOR<CvTrainingCreateWithoutCandidateCvInput, CvTrainingUncheckedCreateWithoutCandidateCvInput> | CvTrainingCreateWithoutCandidateCvInput[] | CvTrainingUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvTrainingCreateOrConnectWithoutCandidateCvInput | CvTrainingCreateOrConnectWithoutCandidateCvInput[]
+    upsert?: CvTrainingUpsertWithWhereUniqueWithoutCandidateCvInput | CvTrainingUpsertWithWhereUniqueWithoutCandidateCvInput[]
+    createMany?: CvTrainingCreateManyCandidateCvInputEnvelope
+    set?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    disconnect?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    delete?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    connect?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    update?: CvTrainingUpdateWithWhereUniqueWithoutCandidateCvInput | CvTrainingUpdateWithWhereUniqueWithoutCandidateCvInput[]
+    updateMany?: CvTrainingUpdateManyWithWhereWithoutCandidateCvInput | CvTrainingUpdateManyWithWhereWithoutCandidateCvInput[]
+    deleteMany?: CvTrainingScalarWhereInput | CvTrainingScalarWhereInput[]
+  }
+
+  export type CvExperienceUncheckedUpdateManyWithoutCandidateCvNestedInput = {
+    create?: XOR<CvExperienceCreateWithoutCandidateCvInput, CvExperienceUncheckedCreateWithoutCandidateCvInput> | CvExperienceCreateWithoutCandidateCvInput[] | CvExperienceUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvExperienceCreateOrConnectWithoutCandidateCvInput | CvExperienceCreateOrConnectWithoutCandidateCvInput[]
+    upsert?: CvExperienceUpsertWithWhereUniqueWithoutCandidateCvInput | CvExperienceUpsertWithWhereUniqueWithoutCandidateCvInput[]
+    createMany?: CvExperienceCreateManyCandidateCvInputEnvelope
+    set?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    disconnect?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    delete?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    connect?: CvExperienceWhereUniqueInput | CvExperienceWhereUniqueInput[]
+    update?: CvExperienceUpdateWithWhereUniqueWithoutCandidateCvInput | CvExperienceUpdateWithWhereUniqueWithoutCandidateCvInput[]
+    updateMany?: CvExperienceUpdateManyWithWhereWithoutCandidateCvInput | CvExperienceUpdateManyWithWhereWithoutCandidateCvInput[]
+    deleteMany?: CvExperienceScalarWhereInput | CvExperienceScalarWhereInput[]
+  }
+
+  export type CvSkillUncheckedUpdateManyWithoutCandidateCvNestedInput = {
+    create?: XOR<CvSkillCreateWithoutCandidateCvInput, CvSkillUncheckedCreateWithoutCandidateCvInput> | CvSkillCreateWithoutCandidateCvInput[] | CvSkillUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvSkillCreateOrConnectWithoutCandidateCvInput | CvSkillCreateOrConnectWithoutCandidateCvInput[]
+    upsert?: CvSkillUpsertWithWhereUniqueWithoutCandidateCvInput | CvSkillUpsertWithWhereUniqueWithoutCandidateCvInput[]
+    createMany?: CvSkillCreateManyCandidateCvInputEnvelope
+    set?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    disconnect?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    delete?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    connect?: CvSkillWhereUniqueInput | CvSkillWhereUniqueInput[]
+    update?: CvSkillUpdateWithWhereUniqueWithoutCandidateCvInput | CvSkillUpdateWithWhereUniqueWithoutCandidateCvInput[]
+    updateMany?: CvSkillUpdateManyWithWhereWithoutCandidateCvInput | CvSkillUpdateManyWithWhereWithoutCandidateCvInput[]
+    deleteMany?: CvSkillScalarWhereInput | CvSkillScalarWhereInput[]
+  }
+
+  export type CvTrainingUncheckedUpdateManyWithoutCandidateCvNestedInput = {
+    create?: XOR<CvTrainingCreateWithoutCandidateCvInput, CvTrainingUncheckedCreateWithoutCandidateCvInput> | CvTrainingCreateWithoutCandidateCvInput[] | CvTrainingUncheckedCreateWithoutCandidateCvInput[]
+    connectOrCreate?: CvTrainingCreateOrConnectWithoutCandidateCvInput | CvTrainingCreateOrConnectWithoutCandidateCvInput[]
+    upsert?: CvTrainingUpsertWithWhereUniqueWithoutCandidateCvInput | CvTrainingUpsertWithWhereUniqueWithoutCandidateCvInput[]
+    createMany?: CvTrainingCreateManyCandidateCvInputEnvelope
+    set?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    disconnect?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    delete?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    connect?: CvTrainingWhereUniqueInput | CvTrainingWhereUniqueInput[]
+    update?: CvTrainingUpdateWithWhereUniqueWithoutCandidateCvInput | CvTrainingUpdateWithWhereUniqueWithoutCandidateCvInput[]
+    updateMany?: CvTrainingUpdateManyWithWhereWithoutCandidateCvInput | CvTrainingUpdateManyWithWhereWithoutCandidateCvInput[]
+    deleteMany?: CvTrainingScalarWhereInput | CvTrainingScalarWhereInput[]
+  }
+
+  export type CandidateCvCreateNestedOneWithoutCvExperiencesInput = {
+    create?: XOR<CandidateCvCreateWithoutCvExperiencesInput, CandidateCvUncheckedCreateWithoutCvExperiencesInput>
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCvExperiencesInput
+    connect?: CandidateCvWhereUniqueInput
+  }
+
+  export type CandidateCvUpdateOneRequiredWithoutCvExperiencesNestedInput = {
+    create?: XOR<CandidateCvCreateWithoutCvExperiencesInput, CandidateCvUncheckedCreateWithoutCvExperiencesInput>
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCvExperiencesInput
+    upsert?: CandidateCvUpsertWithoutCvExperiencesInput
+    connect?: CandidateCvWhereUniqueInput
+    update?: XOR<XOR<CandidateCvUpdateToOneWithWhereWithoutCvExperiencesInput, CandidateCvUpdateWithoutCvExperiencesInput>, CandidateCvUncheckedUpdateWithoutCvExperiencesInput>
+  }
+
+  export type CandidateCvCreateNestedOneWithoutCvSkillsInput = {
+    create?: XOR<CandidateCvCreateWithoutCvSkillsInput, CandidateCvUncheckedCreateWithoutCvSkillsInput>
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCvSkillsInput
+    connect?: CandidateCvWhereUniqueInput
+  }
+
+  export type EnumCvSkillCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.CvSkillCategory
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type CandidateCvUpdateOneRequiredWithoutCvSkillsNestedInput = {
+    create?: XOR<CandidateCvCreateWithoutCvSkillsInput, CandidateCvUncheckedCreateWithoutCvSkillsInput>
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCvSkillsInput
+    upsert?: CandidateCvUpsertWithoutCvSkillsInput
+    connect?: CandidateCvWhereUniqueInput
+    update?: XOR<XOR<CandidateCvUpdateToOneWithWhereWithoutCvSkillsInput, CandidateCvUpdateWithoutCvSkillsInput>, CandidateCvUncheckedUpdateWithoutCvSkillsInput>
+  }
+
+  export type CandidateCvCreateNestedOneWithoutCvTrainingsInput = {
+    create?: XOR<CandidateCvCreateWithoutCvTrainingsInput, CandidateCvUncheckedCreateWithoutCvTrainingsInput>
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCvTrainingsInput
+    connect?: CandidateCvWhereUniqueInput
+  }
+
+  export type CandidateCvUpdateOneRequiredWithoutCvTrainingsNestedInput = {
+    create?: XOR<CandidateCvCreateWithoutCvTrainingsInput, CandidateCvUncheckedCreateWithoutCvTrainingsInput>
+    connectOrCreate?: CandidateCvCreateOrConnectWithoutCvTrainingsInput
+    upsert?: CandidateCvUpsertWithoutCvTrainingsInput
+    connect?: CandidateCvWhereUniqueInput
+    update?: XOR<XOR<CandidateCvUpdateToOneWithWhereWithoutCvTrainingsInput, CandidateCvUpdateWithoutCvTrainingsInput>, CandidateCvUncheckedUpdateWithoutCvTrainingsInput>
   }
 
   export type UserCreateNestedOneWithoutCategoriesInput = {
@@ -15532,6 +20440,50 @@ export namespace Prisma {
     _max?: NestedEnumCandidateCvAnalysisStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumCvSkillCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.CvSkillCategory | EnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumCvSkillCategoryFilter<$PrismaModel> | $Enums.CvSkillCategory
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumCvSkillCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CvSkillCategory | EnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CvSkillCategory[] | ListEnumCvSkillCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumCvSkillCategoryWithAggregatesFilter<$PrismaModel> | $Enums.CvSkillCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCvSkillCategoryFilter<$PrismaModel>
+    _max?: NestedEnumCvSkillCategoryFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -15886,6 +20838,9 @@ export namespace Prisma {
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    cvExperiences?: CvExperienceCreateNestedManyWithoutCandidateCvInput
+    cvSkills?: CvSkillCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingCreateNestedManyWithoutCandidateCvInput
   }
 
   export type CandidateCvUncheckedCreateWithoutCandidateProfileInput = {
@@ -15904,6 +20859,9 @@ export namespace Prisma {
     uploadedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    cvExperiences?: CvExperienceUncheckedCreateNestedManyWithoutCandidateCvInput
+    cvSkills?: CvSkillUncheckedCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingUncheckedCreateNestedManyWithoutCandidateCvInput
   }
 
   export type CandidateCvCreateOrConnectWithoutCandidateProfileInput = {
@@ -16020,6 +20978,114 @@ export namespace Prisma {
     create: XOR<CandidateProfileCreateWithoutCvsInput, CandidateProfileUncheckedCreateWithoutCvsInput>
   }
 
+  export type CvExperienceCreateWithoutCandidateCvInput = {
+    id?: string
+    jobTitle: string
+    companyName?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    isCurrent?: boolean
+    location?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvExperienceUncheckedCreateWithoutCandidateCvInput = {
+    id?: string
+    jobTitle: string
+    companyName?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    isCurrent?: boolean
+    location?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvExperienceCreateOrConnectWithoutCandidateCvInput = {
+    where: CvExperienceWhereUniqueInput
+    create: XOR<CvExperienceCreateWithoutCandidateCvInput, CvExperienceUncheckedCreateWithoutCandidateCvInput>
+  }
+
+  export type CvExperienceCreateManyCandidateCvInputEnvelope = {
+    data: CvExperienceCreateManyCandidateCvInput | CvExperienceCreateManyCandidateCvInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CvSkillCreateWithoutCandidateCvInput = {
+    id?: string
+    name: string
+    category: $Enums.CvSkillCategory
+    confidence?: number | null
+    source?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvSkillUncheckedCreateWithoutCandidateCvInput = {
+    id?: string
+    name: string
+    category: $Enums.CvSkillCategory
+    confidence?: number | null
+    source?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvSkillCreateOrConnectWithoutCandidateCvInput = {
+    where: CvSkillWhereUniqueInput
+    create: XOR<CvSkillCreateWithoutCandidateCvInput, CvSkillUncheckedCreateWithoutCandidateCvInput>
+  }
+
+  export type CvSkillCreateManyCandidateCvInputEnvelope = {
+    data: CvSkillCreateManyCandidateCvInput | CvSkillCreateManyCandidateCvInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CvTrainingCreateWithoutCandidateCvInput = {
+    id?: string
+    title: string
+    organizationName?: string | null
+    degree?: string | null
+    fieldOfStudy?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    description?: string | null
+    location?: string | null
+    isCertification?: boolean
+    certificationType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvTrainingUncheckedCreateWithoutCandidateCvInput = {
+    id?: string
+    title: string
+    organizationName?: string | null
+    degree?: string | null
+    fieldOfStudy?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    description?: string | null
+    location?: string | null
+    isCertification?: boolean
+    certificationType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvTrainingCreateOrConnectWithoutCandidateCvInput = {
+    where: CvTrainingWhereUniqueInput
+    create: XOR<CvTrainingCreateWithoutCandidateCvInput, CvTrainingUncheckedCreateWithoutCandidateCvInput>
+  }
+
+  export type CvTrainingCreateManyCandidateCvInputEnvelope = {
+    data: CvTrainingCreateManyCandidateCvInput | CvTrainingCreateManyCandidateCvInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CandidateProfileUpsertWithoutCvsInput = {
     update: XOR<CandidateProfileUpdateWithoutCvsInput, CandidateProfileUncheckedUpdateWithoutCvsInput>
     create: XOR<CandidateProfileCreateWithoutCvsInput, CandidateProfileUncheckedCreateWithoutCvsInput>
@@ -16043,6 +21109,405 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvExperienceUpsertWithWhereUniqueWithoutCandidateCvInput = {
+    where: CvExperienceWhereUniqueInput
+    update: XOR<CvExperienceUpdateWithoutCandidateCvInput, CvExperienceUncheckedUpdateWithoutCandidateCvInput>
+    create: XOR<CvExperienceCreateWithoutCandidateCvInput, CvExperienceUncheckedCreateWithoutCandidateCvInput>
+  }
+
+  export type CvExperienceUpdateWithWhereUniqueWithoutCandidateCvInput = {
+    where: CvExperienceWhereUniqueInput
+    data: XOR<CvExperienceUpdateWithoutCandidateCvInput, CvExperienceUncheckedUpdateWithoutCandidateCvInput>
+  }
+
+  export type CvExperienceUpdateManyWithWhereWithoutCandidateCvInput = {
+    where: CvExperienceScalarWhereInput
+    data: XOR<CvExperienceUpdateManyMutationInput, CvExperienceUncheckedUpdateManyWithoutCandidateCvInput>
+  }
+
+  export type CvExperienceScalarWhereInput = {
+    AND?: CvExperienceScalarWhereInput | CvExperienceScalarWhereInput[]
+    OR?: CvExperienceScalarWhereInput[]
+    NOT?: CvExperienceScalarWhereInput | CvExperienceScalarWhereInput[]
+    id?: UuidFilter<"CvExperience"> | string
+    candidateCvId?: UuidFilter<"CvExperience"> | string
+    jobTitle?: StringFilter<"CvExperience"> | string
+    companyName?: StringNullableFilter<"CvExperience"> | string | null
+    startDate?: StringNullableFilter<"CvExperience"> | string | null
+    endDate?: StringNullableFilter<"CvExperience"> | string | null
+    isCurrent?: BoolFilter<"CvExperience"> | boolean
+    location?: StringNullableFilter<"CvExperience"> | string | null
+    description?: StringNullableFilter<"CvExperience"> | string | null
+    createdAt?: DateTimeFilter<"CvExperience"> | Date | string
+    updatedAt?: DateTimeFilter<"CvExperience"> | Date | string
+  }
+
+  export type CvSkillUpsertWithWhereUniqueWithoutCandidateCvInput = {
+    where: CvSkillWhereUniqueInput
+    update: XOR<CvSkillUpdateWithoutCandidateCvInput, CvSkillUncheckedUpdateWithoutCandidateCvInput>
+    create: XOR<CvSkillCreateWithoutCandidateCvInput, CvSkillUncheckedCreateWithoutCandidateCvInput>
+  }
+
+  export type CvSkillUpdateWithWhereUniqueWithoutCandidateCvInput = {
+    where: CvSkillWhereUniqueInput
+    data: XOR<CvSkillUpdateWithoutCandidateCvInput, CvSkillUncheckedUpdateWithoutCandidateCvInput>
+  }
+
+  export type CvSkillUpdateManyWithWhereWithoutCandidateCvInput = {
+    where: CvSkillScalarWhereInput
+    data: XOR<CvSkillUpdateManyMutationInput, CvSkillUncheckedUpdateManyWithoutCandidateCvInput>
+  }
+
+  export type CvSkillScalarWhereInput = {
+    AND?: CvSkillScalarWhereInput | CvSkillScalarWhereInput[]
+    OR?: CvSkillScalarWhereInput[]
+    NOT?: CvSkillScalarWhereInput | CvSkillScalarWhereInput[]
+    id?: UuidFilter<"CvSkill"> | string
+    candidateCvId?: UuidFilter<"CvSkill"> | string
+    name?: StringFilter<"CvSkill"> | string
+    category?: EnumCvSkillCategoryFilter<"CvSkill"> | $Enums.CvSkillCategory
+    confidence?: FloatNullableFilter<"CvSkill"> | number | null
+    source?: StringNullableFilter<"CvSkill"> | string | null
+    createdAt?: DateTimeFilter<"CvSkill"> | Date | string
+    updatedAt?: DateTimeFilter<"CvSkill"> | Date | string
+  }
+
+  export type CvTrainingUpsertWithWhereUniqueWithoutCandidateCvInput = {
+    where: CvTrainingWhereUniqueInput
+    update: XOR<CvTrainingUpdateWithoutCandidateCvInput, CvTrainingUncheckedUpdateWithoutCandidateCvInput>
+    create: XOR<CvTrainingCreateWithoutCandidateCvInput, CvTrainingUncheckedCreateWithoutCandidateCvInput>
+  }
+
+  export type CvTrainingUpdateWithWhereUniqueWithoutCandidateCvInput = {
+    where: CvTrainingWhereUniqueInput
+    data: XOR<CvTrainingUpdateWithoutCandidateCvInput, CvTrainingUncheckedUpdateWithoutCandidateCvInput>
+  }
+
+  export type CvTrainingUpdateManyWithWhereWithoutCandidateCvInput = {
+    where: CvTrainingScalarWhereInput
+    data: XOR<CvTrainingUpdateManyMutationInput, CvTrainingUncheckedUpdateManyWithoutCandidateCvInput>
+  }
+
+  export type CvTrainingScalarWhereInput = {
+    AND?: CvTrainingScalarWhereInput | CvTrainingScalarWhereInput[]
+    OR?: CvTrainingScalarWhereInput[]
+    NOT?: CvTrainingScalarWhereInput | CvTrainingScalarWhereInput[]
+    id?: UuidFilter<"CvTraining"> | string
+    candidateCvId?: UuidFilter<"CvTraining"> | string
+    title?: StringFilter<"CvTraining"> | string
+    organizationName?: StringNullableFilter<"CvTraining"> | string | null
+    degree?: StringNullableFilter<"CvTraining"> | string | null
+    fieldOfStudy?: StringNullableFilter<"CvTraining"> | string | null
+    startDate?: StringNullableFilter<"CvTraining"> | string | null
+    endDate?: StringNullableFilter<"CvTraining"> | string | null
+    description?: StringNullableFilter<"CvTraining"> | string | null
+    location?: StringNullableFilter<"CvTraining"> | string | null
+    isCertification?: BoolFilter<"CvTraining"> | boolean
+    certificationType?: StringNullableFilter<"CvTraining"> | string | null
+    createdAt?: DateTimeFilter<"CvTraining"> | Date | string
+    updatedAt?: DateTimeFilter<"CvTraining"> | Date | string
+  }
+
+  export type CandidateCvCreateWithoutCvExperiencesInput = {
+    id?: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidateProfile: CandidateProfileCreateNestedOneWithoutCvsInput
+    cvSkills?: CvSkillCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingCreateNestedManyWithoutCandidateCvInput
+  }
+
+  export type CandidateCvUncheckedCreateWithoutCvExperiencesInput = {
+    id?: string
+    candidateProfileId: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cvSkills?: CvSkillUncheckedCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingUncheckedCreateNestedManyWithoutCandidateCvInput
+  }
+
+  export type CandidateCvCreateOrConnectWithoutCvExperiencesInput = {
+    where: CandidateCvWhereUniqueInput
+    create: XOR<CandidateCvCreateWithoutCvExperiencesInput, CandidateCvUncheckedCreateWithoutCvExperiencesInput>
+  }
+
+  export type CandidateCvUpsertWithoutCvExperiencesInput = {
+    update: XOR<CandidateCvUpdateWithoutCvExperiencesInput, CandidateCvUncheckedUpdateWithoutCvExperiencesInput>
+    create: XOR<CandidateCvCreateWithoutCvExperiencesInput, CandidateCvUncheckedCreateWithoutCvExperiencesInput>
+    where?: CandidateCvWhereInput
+  }
+
+  export type CandidateCvUpdateToOneWithWhereWithoutCvExperiencesInput = {
+    where?: CandidateCvWhereInput
+    data: XOR<CandidateCvUpdateWithoutCvExperiencesInput, CandidateCvUncheckedUpdateWithoutCvExperiencesInput>
+  }
+
+  export type CandidateCvUpdateWithoutCvExperiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidateProfile?: CandidateProfileUpdateOneRequiredWithoutCvsNestedInput
+    cvSkills?: CvSkillUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUpdateManyWithoutCandidateCvNestedInput
+  }
+
+  export type CandidateCvUncheckedUpdateWithoutCvExperiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateProfileId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvSkills?: CvSkillUncheckedUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUncheckedUpdateManyWithoutCandidateCvNestedInput
+  }
+
+  export type CandidateCvCreateWithoutCvSkillsInput = {
+    id?: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidateProfile: CandidateProfileCreateNestedOneWithoutCvsInput
+    cvExperiences?: CvExperienceCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingCreateNestedManyWithoutCandidateCvInput
+  }
+
+  export type CandidateCvUncheckedCreateWithoutCvSkillsInput = {
+    id?: string
+    candidateProfileId: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cvExperiences?: CvExperienceUncheckedCreateNestedManyWithoutCandidateCvInput
+    cvTrainings?: CvTrainingUncheckedCreateNestedManyWithoutCandidateCvInput
+  }
+
+  export type CandidateCvCreateOrConnectWithoutCvSkillsInput = {
+    where: CandidateCvWhereUniqueInput
+    create: XOR<CandidateCvCreateWithoutCvSkillsInput, CandidateCvUncheckedCreateWithoutCvSkillsInput>
+  }
+
+  export type CandidateCvUpsertWithoutCvSkillsInput = {
+    update: XOR<CandidateCvUpdateWithoutCvSkillsInput, CandidateCvUncheckedUpdateWithoutCvSkillsInput>
+    create: XOR<CandidateCvCreateWithoutCvSkillsInput, CandidateCvUncheckedCreateWithoutCvSkillsInput>
+    where?: CandidateCvWhereInput
+  }
+
+  export type CandidateCvUpdateToOneWithWhereWithoutCvSkillsInput = {
+    where?: CandidateCvWhereInput
+    data: XOR<CandidateCvUpdateWithoutCvSkillsInput, CandidateCvUncheckedUpdateWithoutCvSkillsInput>
+  }
+
+  export type CandidateCvUpdateWithoutCvSkillsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidateProfile?: CandidateProfileUpdateOneRequiredWithoutCvsNestedInput
+    cvExperiences?: CvExperienceUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUpdateManyWithoutCandidateCvNestedInput
+  }
+
+  export type CandidateCvUncheckedUpdateWithoutCvSkillsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateProfileId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvExperiences?: CvExperienceUncheckedUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUncheckedUpdateManyWithoutCandidateCvNestedInput
+  }
+
+  export type CandidateCvCreateWithoutCvTrainingsInput = {
+    id?: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidateProfile: CandidateProfileCreateNestedOneWithoutCvsInput
+    cvExperiences?: CvExperienceCreateNestedManyWithoutCandidateCvInput
+    cvSkills?: CvSkillCreateNestedManyWithoutCandidateCvInput
+  }
+
+  export type CandidateCvUncheckedCreateWithoutCvTrainingsInput = {
+    id?: string
+    candidateProfileId: string
+    label: string
+    originalFilename: string
+    storageFilename: string
+    storageKey: string
+    fileHash?: string | null
+    mimeType: string
+    fileSize: number
+    isDefault?: boolean
+    analysisStatus?: $Enums.CandidateCvAnalysisStatus
+    extractedText?: string | null
+    lastAnalyzedAt?: Date | string | null
+    uploadedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cvExperiences?: CvExperienceUncheckedCreateNestedManyWithoutCandidateCvInput
+    cvSkills?: CvSkillUncheckedCreateNestedManyWithoutCandidateCvInput
+  }
+
+  export type CandidateCvCreateOrConnectWithoutCvTrainingsInput = {
+    where: CandidateCvWhereUniqueInput
+    create: XOR<CandidateCvCreateWithoutCvTrainingsInput, CandidateCvUncheckedCreateWithoutCvTrainingsInput>
+  }
+
+  export type CandidateCvUpsertWithoutCvTrainingsInput = {
+    update: XOR<CandidateCvUpdateWithoutCvTrainingsInput, CandidateCvUncheckedUpdateWithoutCvTrainingsInput>
+    create: XOR<CandidateCvCreateWithoutCvTrainingsInput, CandidateCvUncheckedCreateWithoutCvTrainingsInput>
+    where?: CandidateCvWhereInput
+  }
+
+  export type CandidateCvUpdateToOneWithWhereWithoutCvTrainingsInput = {
+    where?: CandidateCvWhereInput
+    data: XOR<CandidateCvUpdateWithoutCvTrainingsInput, CandidateCvUncheckedUpdateWithoutCvTrainingsInput>
+  }
+
+  export type CandidateCvUpdateWithoutCvTrainingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidateProfile?: CandidateProfileUpdateOneRequiredWithoutCvsNestedInput
+    cvExperiences?: CvExperienceUpdateManyWithoutCandidateCvNestedInput
+    cvSkills?: CvSkillUpdateManyWithoutCandidateCvNestedInput
+  }
+
+  export type CandidateCvUncheckedUpdateWithoutCvTrainingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidateProfileId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    storageFilename?: StringFieldUpdateOperationsInput | string
+    storageKey?: StringFieldUpdateOperationsInput | string
+    fileHash?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    analysisStatus?: EnumCandidateCvAnalysisStatusFieldUpdateOperationsInput | $Enums.CandidateCvAnalysisStatus
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvExperiences?: CvExperienceUncheckedUpdateManyWithoutCandidateCvNestedInput
+    cvSkills?: CvSkillUncheckedUpdateManyWithoutCandidateCvNestedInput
   }
 
   export type UserCreateWithoutCategoriesInput = {
@@ -17193,6 +22658,9 @@ export namespace Prisma {
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvExperiences?: CvExperienceUpdateManyWithoutCandidateCvNestedInput
+    cvSkills?: CvSkillUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUpdateManyWithoutCandidateCvNestedInput
   }
 
   export type CandidateCvUncheckedUpdateWithoutCandidateProfileInput = {
@@ -17211,6 +22679,9 @@ export namespace Prisma {
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvExperiences?: CvExperienceUncheckedUpdateManyWithoutCandidateCvNestedInput
+    cvSkills?: CvSkillUncheckedUpdateManyWithoutCandidateCvNestedInput
+    cvTrainings?: CvTrainingUncheckedUpdateManyWithoutCandidateCvNestedInput
   }
 
   export type CandidateCvUncheckedUpdateManyWithoutCandidateProfileInput = {
@@ -17227,6 +22698,162 @@ export namespace Prisma {
     extractedText?: NullableStringFieldUpdateOperationsInput | string | null
     lastAnalyzedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvExperienceCreateManyCandidateCvInput = {
+    id?: string
+    jobTitle: string
+    companyName?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    isCurrent?: boolean
+    location?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvSkillCreateManyCandidateCvInput = {
+    id?: string
+    name: string
+    category: $Enums.CvSkillCategory
+    confidence?: number | null
+    source?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvTrainingCreateManyCandidateCvInput = {
+    id?: string
+    title: string
+    organizationName?: string | null
+    degree?: string | null
+    fieldOfStudy?: string | null
+    startDate?: string | null
+    endDate?: string | null
+    description?: string | null
+    location?: string | null
+    isCertification?: boolean
+    certificationType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CvExperienceUpdateWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobTitle?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvExperienceUncheckedUpdateWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobTitle?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvExperienceUncheckedUpdateManyWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobTitle?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvSkillUpdateWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumCvSkillCategoryFieldUpdateOperationsInput | $Enums.CvSkillCategory
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvSkillUncheckedUpdateWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumCvSkillCategoryFieldUpdateOperationsInput | $Enums.CvSkillCategory
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvSkillUncheckedUpdateManyWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumCvSkillCategoryFieldUpdateOperationsInput | $Enums.CvSkillCategory
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvTrainingUpdateWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    degree?: NullableStringFieldUpdateOperationsInput | string | null
+    fieldOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isCertification?: BoolFieldUpdateOperationsInput | boolean
+    certificationType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvTrainingUncheckedUpdateWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    degree?: NullableStringFieldUpdateOperationsInput | string | null
+    fieldOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isCertification?: BoolFieldUpdateOperationsInput | boolean
+    certificationType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CvTrainingUncheckedUpdateManyWithoutCandidateCvInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    degree?: NullableStringFieldUpdateOperationsInput | string | null
+    fieldOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    startDate?: NullableStringFieldUpdateOperationsInput | string | null
+    endDate?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isCertification?: BoolFieldUpdateOperationsInput | boolean
+    certificationType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

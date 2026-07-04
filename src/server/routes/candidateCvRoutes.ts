@@ -4,6 +4,7 @@ import {
   analyzeCandidateCvController,
   deleteCandidateCvController,
   getCandidateCvsController,
+  getCandidateCvExtractedDataController,
   importCandidateCvController,
 } from '../controllers/candidateCvController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
@@ -22,6 +23,12 @@ candidateCvRoutes.get(
   '/profile/cv',
   authenticateRequest,
   asyncHandler(getCandidateCvsController),
+)
+
+candidateCvRoutes.get(
+  '/profile/cv/:cvId/extracted-data',
+  authenticateRequest,
+  asyncHandler(getCandidateCvExtractedDataController),
 )
 
 candidateCvRoutes.post(

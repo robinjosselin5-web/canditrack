@@ -46,18 +46,13 @@ export function AppRoutes() {
           <Route path="/companies/:companyId" element={<CompanyDetailsPage />} />
           <Route path="/profile/cv" element={<MyCVsPage />} />
           <Route path="/profile/cv/extracted-data" element={<ExtractedDataPage />} />
-          <Route
-            path="/profile/cv/extracted-data/training"
-            element={<TrainingPage />}
-          />
-          <Route
-            path="/profile/cv/extracted-data/experiences"
-            element={<ExperiencesPage />}
-          />
-          <Route
-            path="/profile/cv/extracted-data/skills"
-            element={<SkillsPage />}
-          />
+          <Route path="/profile/cv/:cvId/extracted-data" element={<ExtractedDataPage />} />
+          <Route path="/profile/cv/extracted-data/training" element={<TrainingPage />} />
+          <Route path="/profile/cv/:cvId/extracted-data/training" element={<TrainingPage />} />
+          <Route path="/profile/cv/extracted-data/experiences" element={<ExperiencesPage />} />
+          <Route path="/profile/cv/:cvId/extracted-data/experiences" element={<ExperiencesPage />} />
+          <Route path="/profile/cv/extracted-data/skills" element={<SkillsPage />} />
+          <Route path="/profile/cv/:cvId/extracted-data/skills" element={<SkillsPage />} />
           <Route path="/applications" element={<ApplicationsPage />} />
           <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/settings" element={<SettingsPage />} />

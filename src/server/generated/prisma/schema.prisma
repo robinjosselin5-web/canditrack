@@ -28,6 +28,17 @@ enum CandidateCvAnalysisStatus {
   @@map("candidate_cv_analysis_status")
 }
 
+enum CvSkillCategory {
+  LANGUAGES
+  FRAMEWORKS_LIBRARIES
+  TOOLS_TECHNOLOGIES
+  METHODOLOGIES
+  SOFT_SKILLS
+  OTHER
+
+  @@map("cv_skill_category")
+}
+
 model User {
   id                         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firstname                  String            @db.VarChar(100)
@@ -81,9 +92,67 @@ model CandidateCv {
   createdAt          DateTime                  @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt          DateTime                  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   candidateProfile   CandidateProfile          @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  cvExperiences      CvExperience[]
+  cvSkills           CvSkill[]
+  cvTrainings        CvTraining[]
 
   @@index([candidateProfileId], map: "candidate_cvs_candidate_profile_id_idx")
   @@map("candidate_cvs")
+}
+
+model CvExperience {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateCvId String      @map("candidate_cv_id") @db.Uuid
+  jobTitle      String      @map("job_title")
+  companyName   String?     @map("company_name")
+  startDate     String?     @map("start_date")
+  endDate       String?     @map("end_date")
+  isCurrent     Boolean     @default(false) @map("is_current")
+  location      String?
+  description   String?
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateCv   CandidateCv @relation(fields: [candidateCvId], references: [id], onDelete: Cascade)
+
+  @@index([candidateCvId], map: "cv_experiences_candidate_cv_id_idx")
+  @@map("cv_experiences")
+}
+
+model CvSkill {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateCvId String          @map("candidate_cv_id") @db.Uuid
+  name          String
+  category      CvSkillCategory
+  confidence    Float?
+  source        String?
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateCv   CandidateCv     @relation(fields: [candidateCvId], references: [id], onDelete: Cascade)
+
+  @@index([candidateCvId], map: "cv_skills_candidate_cv_id_idx")
+  @@index([candidateCvId, category], map: "cv_skills_candidate_cv_id_category_idx")
+  @@map("cv_skills")
+}
+
+model CvTraining {
+  id                String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateCvId     String      @map("candidate_cv_id") @db.Uuid
+  title             String
+  organizationName  String?     @map("organization_name")
+  degree            String?
+  fieldOfStudy      String?     @map("field_of_study")
+  startDate         String?     @map("start_date")
+  endDate           String?     @map("end_date")
+  description       String?
+  location          String?
+  isCertification   Boolean     @default(false) @map("is_certification")
+  certificationType String?     @map("certification_type")
+  createdAt         DateTime    @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt         DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateCv       CandidateCv @relation(fields: [candidateCvId], references: [id], onDelete: Cascade)
+
+  @@index([candidateCvId], map: "cv_trainings_candidate_cv_id_idx")
+  @@map("cv_trainings")
 }
 
 model Category {

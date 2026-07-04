@@ -27,6 +27,15 @@ const envSchema = z.object({
     .int()
     .positive()
     .default(30),
+  AI_CV_ANALYSIS_ENABLED: z.coerce
+    .boolean()
+    .default(true),
+  OPENROUTER_API_KEY: z.string().default(""),
+  OPENROUTER_MODEL: z.string().min(1).default("google/gemini-2.5-flash"),
+  OPENROUTER_BASE_URL: z
+    .string()
+    .url()
+    .default("https://openrouter.ai/api/v1"),
   SMTP_HOST: z.string().min(1).default("localhost"),
   SMTP_PORT: z.coerce.number().int().positive().default(1025),
   SMTP_SECURE: z

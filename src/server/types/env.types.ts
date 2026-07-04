@@ -7,6 +7,10 @@ export interface IServerEnv {
   JWT_SECRET: string;
   EMAIL_VERIFICATION_EXPIRES_MINUTES: number;
   PASSWORD_RESET_EXPIRES_MINUTES: number;
+  AI_CV_ANALYSIS_ENABLED: boolean;
+  OPENROUTER_API_KEY: string;
+  OPENROUTER_MODEL: string;
+  OPENROUTER_BASE_URL: string;
   SMTP_HOST: string;
   SMTP_PORT: number;
   SMTP_SECURE: boolean;
