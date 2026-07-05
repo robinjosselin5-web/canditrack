@@ -3,6 +3,7 @@ import { LockKeyhole, LogIn, Mail, RotateCw, UserPlus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Alert, Button, Card, Checkbox, Input } from "@/components/ui";
+import { buildVerifyEmailPath } from "@/routes/paths";
 import { AuthPageHeader } from "../components/AuthPageHeader";
 import { useLogin } from "../hooks/useLogin";
 import { useResendEmailVerificationCode } from "../hooks/useResendEmailVerificationCode";
@@ -42,9 +43,7 @@ export function LoginPage() {
     if (email) {
       resendCodeMutation.mutate(email, {
         onSuccess: (pendingVerification) => {
-          navigate(
-            `/verify-email?email=${encodeURIComponent(pendingVerification.email)}`,
-          );
+          navigate(buildVerifyEmailPath(pendingVerification.email));
         },
       });
     }

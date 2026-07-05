@@ -1,5 +1,4 @@
-import { Button } from '@/components/ui'
-import { Modal } from '@/components/ui/Modal'
+import { Button, Modal } from '@/components/ui'
 
 interface ConfirmationModalProps {
   isOpen: boolean

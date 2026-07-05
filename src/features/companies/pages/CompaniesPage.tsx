@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { ChevronDown, Plus } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Plus } from 'lucide-react'
 import { Alert, Modal } from '@/components/ui'
 import { CompanyCard } from '../components/CompanyCard'
 import { CompanyForm } from '../components/CompanyForm'
@@ -23,11 +23,11 @@ import { useCompanies } from '../hooks/useCompanies'
 import { useDeleteCompany } from '../hooks/useDeleteCompany'
 import { useToggleCompanyFavorite } from '../hooks/useToggleCompanyFavorite'
 import type { ICompanyListItem } from '../types/company.types'
-import { getCompanyCategoryLabel } from '../utils/companyDisplay'
 import { filterCompanies } from '../utils/companyFilters'
 
 export function CompaniesPage() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { data, isError, isLoading } = useCompanies()
   const deleteCompanyMutation = useDeleteCompany()
   const toggleFavoriteMutation = useToggleCompanyFavorite()
@@ -37,6 +37,7 @@ export function CompaniesPage() {
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
   const [selectedCompany, setSelectedCompany] = useState<ICompanyListItem | null>(null)
   const [companyToDelete, setCompanyToDelete] = useState<ICompanyListItem | null>(null)
+  const toastMessage = (location.state as { toastMessage?: string } | null)?.toastMessage ?? null
 
   const filteredCompanies = useMemo(() => {
     if (!data) {
@@ -51,6 +52,23 @@ export function CompaniesPage() {
       statusFilter,
     })
   }, [data, searchQuery, showFavoritesOnly, sortOrder, statusFilter])
+
+  useEffect(() => {
+    if (!toastMessage) {
+      return
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      void navigate(location.pathname, {
+        replace: true,
+        state: null,
+      })
+    }, 2500)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [location.pathname, location.state, navigate, toastMessage])
 
   return (
     <section className="mx-auto w-full max-w-300">
@@ -72,14 +90,6 @@ export function CompaniesPage() {
 
       <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:flex-wrap lg:items-center">
         <SearchField searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
-        <button
-          className="hidden min-h-14 min-w-60 cursor-pointer items-center justify-between rounded-input border border-border bg-surface px-5 text-sm font-semibold text-text-primary shadow-small lg:inline-flex"
-          type="button"
-        >
-          Catégorie : Toutes
-          <ChevronDown className="size-5 text-text-secondary" aria-hidden="true" />
-        </button>
 
         <StatusSelect statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
 
@@ -104,16 +114,6 @@ export function CompaniesPage() {
       </div>
 
       <div className="mb-6 flex items-center justify-between gap-4 lg:hidden">
-        <button
-          className="inline-flex min-h-12 flex-1 cursor-pointer items-center justify-between rounded-input border border-border bg-surface px-4 text-base font-semibold text-text-primary shadow-small"
-          type="button"
-        >
-          Catégorie
-          <ChevronDown className="size-5 text-text-secondary" aria-hidden="true" />
-        </button>
-
-        <StatusSelect compact statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
-
         <SortOrderSelect compact sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
         <FavoriteFilterButton
@@ -153,7 +153,6 @@ export function CompaniesPage() {
               {filteredCompanies.map((company) => (
                 <CompanyCard
                   key={company.id}
-                  categoryLabel={getCompanyCategoryLabel()}
                   company={company}
                   onClick={() => {
                     navigate(`/companies/${company.id}`)
@@ -238,6 +237,16 @@ export function CompaniesPage() {
           <Alert variant="error">
             Impossible de supprimer l&apos;entreprise. Veuillez réessayer.
           </Alert>
+        </div>
+      ) : null}
+
+      {toastMessage ? (
+        <div
+          aria-live="polite"
+          className="fixed right-4 top-4 z-50 rounded-card border border-border bg-surface px-4 py-3 text-sm font-medium text-text-primary shadow-large"
+          role="status"
+        >
+          {toastMessage}
         </div>
       ) : null}
     </section>

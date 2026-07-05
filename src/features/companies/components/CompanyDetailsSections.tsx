@@ -15,6 +15,7 @@ import {
 import { Button, Card } from '@/components/ui'
 import type { CompanyStatus } from '../types/company.types'
 import type { DetailsTab } from '../config/companyDetailsTabs'
+import { statusLabels, statusStyles } from '../utils/companyStatus'
 
 interface HeroSectionProps {
   companyName: string
@@ -51,26 +52,6 @@ interface InfoRowProps {
 interface PlaceholderBlockProps {
   description: string
   title: string
-}
-
-const statusLabels: Record<CompanyStatus, string> = {
-  accepted: 'Acceptee',
-  draft: 'Brouillon',
-  follow_up: 'A relancer',
-  interview: 'Entretien',
-  no_response: 'Sans reponse',
-  pending: 'En attente',
-  rejected: 'Refusee',
-}
-
-const statusStyles: Record<CompanyStatus, string> = {
-  accepted: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  draft: 'border-slate-200 bg-slate-100 text-slate-700',
-  follow_up: 'border-violet-200 bg-violet-50 text-violet-700',
-  interview: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  no_response: 'border-amber-200 bg-amber-50 text-amber-700',
-  pending: 'border-amber-200 bg-amber-50 text-amber-700',
-  rejected: 'border-red-200 bg-red-50 text-red-700',
 }
 
 const notesPlaceholder =
@@ -113,7 +94,7 @@ export function HeroSection({
                 Technologie
               </span>
 
-              <span className="hidden text-border sm:inline">â€¢</span>
+              <span className="hidden text-border sm:inline">•</span>
 
               {website ? (
                 <a
@@ -193,7 +174,7 @@ export function DetailsTabContent({
             <InfoRow
               icon={Globe}
               label="Site web"
-              value={website ?? 'â€”'}
+              value={website ?? '—'}
               isLink={Boolean(website)}
             />
           </div>
@@ -253,7 +234,7 @@ export function DetailsTabContent({
           <p className="text-base leading-8 text-text-secondary">
             {notesPlaceholder}
           </p>
-          <p className="mt-5 text-sm text-text-secondary">Modifie le : â€”</p>
+          <p className="mt-5 text-sm text-text-secondary">Modifie le : —</p>
         </InfoCard>
       </div>
 
@@ -346,7 +327,7 @@ function InfoCard({ children, icon: Icon, title }: InfoCardProps) {
 
 function InfoRow({ icon: Icon, isLink = false, label, value }: InfoRowProps) {
   const content =
-    isLink && value !== 'â€”' ? (
+    isLink && value !== '—' ? (
       <a
         className="cursor-pointer break-all font-medium text-primary transition hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         href={value}

@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { buildVerifyEmailPath } from "@/routes/paths";
 import type { IRegisterFormValues } from "../types/register.types";
 import { registerUser } from "../services";
 
@@ -15,12 +16,9 @@ export function useRegister() {
         password: values.password,
       }),
     onSuccess: (pendingVerification) => {
-      navigate(
-        `/verify-email?email=${encodeURIComponent(pendingVerification.email)}`,
-        {
-          replace: true,
-        },
-      );
+      navigate(buildVerifyEmailPath(pendingVerification.email), {
+        replace: true,
+      });
     },
   });
 }

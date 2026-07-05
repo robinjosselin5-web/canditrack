@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getCompany } from '../services/companyService'
+import { getCompany } from '../services'
 
 export function useCompany(companyId: string | undefined) {
   return useQuery({

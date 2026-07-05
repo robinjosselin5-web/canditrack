@@ -1,18 +1,7 @@
-export interface ICreateCompanyFormValues {
+export interface ICreateCompanyPayload {
   name: string
   website: string
   email: string
-  phone: string
-  city: string
-  country: string
-  categoryId: string
-  recruiterName: string
-}
-
-export interface ICreateCompanyPayload {
-  name: string
-  website?: string
-  email?: string
   phone?: string
   city?: string
   country?: string
@@ -52,8 +41,8 @@ export interface ICompanyListItem {
 
 export interface IUpdateCompanyPayload {
   name: string
-  website?: string
-  email?: string
+  website: string
+  email: string
   phone?: string
   city?: string
   country?: string
