@@ -20,9 +20,10 @@ function getApiErrorData(error: AxiosError): IApiResponse<unknown> | undefined {
 function getUnavailableOrFallbackMessage(
   error: AxiosError,
   fallbackMessage: string,
+  unavailableMessage = "L'API est indisponible. Verifiez que le backend est demarre.",
 ): string {
   if (!error.response) {
-    return "L'API est indisponible. Verifiez que le backend est demarre."
+    return unavailableMessage
   }
 
   const response = getApiErrorData(error)
@@ -57,5 +58,19 @@ export function getLogoutErrorMessage(error: unknown): string | null {
   return getUnavailableOrFallbackMessage(
     axiosError,
     'La deconnexion a echoue. Reessayez.',
+  )
+}
+
+export function getUploadAvatarErrorMessage(error: unknown): string | null {
+  const axiosError = getAxiosError(error)
+
+  if (!axiosError) {
+    return null
+  }
+
+  return getUnavailableOrFallbackMessage(
+    axiosError,
+    "L'upload de l'avatar a echoue. Reessayez.",
+    "L'API est indisponible. L'avatar n'a pas ete mis a jour.",
   )
 }

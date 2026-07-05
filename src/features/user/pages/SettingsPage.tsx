@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { LogOut, Mail, Save, Upload, UserRound } from 'lucide-react'
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,13 +7,13 @@ import { useLogout } from '@/features/auth'
 import {
   getLogoutErrorMessage,
   getProfileErrorMessage,
+  getUploadAvatarErrorMessage,
 } from '../utils/userErrorMessages'
 import { useUpdateUserProfile } from '../hooks/useUpdateUserProfile'
 import { useUploadUserAvatar } from '../hooks/useUploadUserAvatar'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { type IProfileFormValues } from '../types/profile.types'
 import { profileSchema } from '../validation/profileSchema'
-import type { IApiResponse } from '@/types/api'
 
 const settingsTabs = [
   { key: 'profile', label: 'Profil' },
@@ -81,7 +80,9 @@ export function SettingsPage() {
     uploadAvatarMutation.mutate(file)
   }
 
-  const profileErrorMessage = getProfileErrorMessage(profileQuery.error ?? updateProfileMutation.error)
+  const profileErrorMessage = getProfileErrorMessage(
+    profileQuery.error ?? updateProfileMutation.error,
+  )
   const uploadErrorMessage = getUploadAvatarErrorMessage(
     uploadAvatarMutation.error,
   )
@@ -293,22 +294,4 @@ function PlaceholderSection({ title }: { title: string }) {
       </p>
     </div>
   )
-}
-
-function getUploadAvatarErrorMessage(error: unknown): string | null {
-  if (!error) {
-    return null
-  }
-
-  if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined
-
-    if (!error.response) {
-      return "L'API est indisponible. L'avatar n'a pas ete mis a jour."
-    }
-
-    return response?.message ?? "L'upload de l'avatar a echoue. Reessayez."
-  }
-
-  return "L'upload de l'avatar a echoue. Reessayez."
 }
