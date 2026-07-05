@@ -1,19 +1,22 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Mail, RotateCw, ShieldCheck } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { Link, useSearchParams } from 'react-router-dom'
-import { Alert, Button, Card, Input } from '@/components/ui'
-import { AuthPageHeader } from '../components/AuthPageHeader'
-import { useResendEmailVerificationCode } from '../hooks/useResendEmailVerificationCode'
-import { useVerifyEmail } from '../hooks/useVerifyEmail'
-import type { IEmailVerificationFormValues } from '../types/emailVerification.types'
-import { getEmailVerificationErrorMessage } from '../utils/authErrorMessages'
-import { emailVerificationSchema } from '../validation/emailVerificationSchema'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Mail, RotateCw, ShieldCheck } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { Link, useSearchParams } from "react-router-dom";
+import { Alert, Button, Card, Input } from "@/components/ui";
+import { AuthPageHeader } from "../components/AuthPageHeader";
+import { useResendEmailVerificationCode } from "../hooks/useResendEmailVerificationCode";
+import { useVerifyEmail } from "../hooks/useVerifyEmail";
+import type { IEmailVerificationFormValues } from "../types/emailVerification.types";
+import {
+  getEmailVerificationErrorMessage,
+  getResendCodeErrorMessage,
+} from "../utils/authErrorMessages";
+import { emailVerificationSchema } from "../validation/emailVerificationSchema";
 
 export function VerifyEmailPage() {
-  const [searchParams] = useSearchParams()
-  const verifyEmailMutation = useVerifyEmail()
-  const resendCodeMutation = useResendEmailVerificationCode()
+  const [searchParams] = useSearchParams();
+  const verifyEmailMutation = useVerifyEmail();
+  const resendCodeMutation = useResendEmailVerificationCode();
   const {
     formState: { errors },
     getValues,
@@ -21,27 +24,30 @@ export function VerifyEmailPage() {
     register,
   } = useForm<IEmailVerificationFormValues>({
     defaultValues: {
-      code: '',
-      email: searchParams.get('email') ?? '',
+      code: "",
+      email: searchParams.get("email") ?? "",
     },
     resolver: zodResolver(emailVerificationSchema),
-  })
+  });
 
   const onSubmit = (values: IEmailVerificationFormValues) => {
-    verifyEmailMutation.mutate(values)
-  }
+    verifyEmailMutation.mutate(values);
+  };
 
   const onResendCode = () => {
-    const email = getValues('email')
+    const email = getValues("email");
 
     if (email) {
-      resendCodeMutation.mutate(email)
+      resendCodeMutation.mutate(email);
     }
-  }
+  };
 
   const errorMessage = getEmailVerificationErrorMessage(
-    verifyEmailMutation.error ?? resendCodeMutation.error,
-  )
+    verifyEmailMutation.error,
+  );
+  const resendErrorMessage = getResendCodeErrorMessage(
+    resendCodeMutation.error,
+  );
 
   return (
     <Card className="mx-auto w-full max-w-140 border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
@@ -52,6 +58,9 @@ export function VerifyEmailPage() {
 
       <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {errorMessage ? <Alert variant="error">{errorMessage}</Alert> : null}
+        {resendErrorMessage ? (
+          <Alert variant="error">{resendErrorMessage}</Alert>
+        ) : null}
         {resendCodeMutation.isSuccess ? (
           <Alert variant="success">Un nouveau code vient d'etre envoye.</Alert>
         ) : null}
@@ -64,7 +73,7 @@ export function VerifyEmailPage() {
           label="Email"
           placeholder="votre@email.com"
           type="email"
-          {...register('email')}
+          {...register("email")}
         />
 
         <Input
@@ -75,7 +84,7 @@ export function VerifyEmailPage() {
           label="Code"
           maxLength={5}
           placeholder="A1B2C"
-          {...register('code')}
+          {...register("code")}
         />
 
         <Button
@@ -100,7 +109,7 @@ export function VerifyEmailPage() {
       </form>
 
       <p className="mt-5 text-center text-sm text-text-secondary">
-        Compte deja valide ?{' '}
+        Compte deja valide ?{" "}
         <Link
           to="/login"
           className="cursor-pointer font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
@@ -109,5 +118,5 @@ export function VerifyEmailPage() {
         </Link>
       </p>
     </Card>
-  )
+  );
 }

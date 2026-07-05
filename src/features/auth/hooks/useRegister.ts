@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
-import type { IRegisterFormValues } from '../types/register.types'
-import { registerUser } from '../services'
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import type { IRegisterFormValues } from "../types/register.types";
+import { registerUser } from "../services";
 
 export function useRegister() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (values: IRegisterFormValues) =>
@@ -14,10 +14,13 @@ export function useRegister() {
         email: values.email,
         password: values.password,
       }),
-    onSuccess: (session) => {
-      navigate(`/verify-email?email=${encodeURIComponent(session.email)}`, {
-        replace: true,
-      })
+    onSuccess: (pendingVerification) => {
+      navigate(
+        `/verify-email?email=${encodeURIComponent(pendingVerification.email)}`,
+        {
+          replace: true,
+        },
+      );
     },
-  })
+  });
 }
