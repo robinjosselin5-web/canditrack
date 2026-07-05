@@ -3,13 +3,13 @@ import type { LucideIcon } from 'lucide-react'
 import type { CompanyStatus } from '../types/company.types'
 
 export const statusLabels: Record<CompanyStatus, string> = {
-  accepted: 'Acceptée',
+  accepted: 'AcceptÃ©e',
   draft: 'Brouillon',
-  follow_up: 'À relancer',
+  follow_up: 'Ã€ relancer',
   interview: 'Entretien',
-  no_response: 'Sans réponse',
+  no_response: 'Sans rÃ©ponse',
   pending: 'En attente',
-  rejected: 'Refusée',
+  rejected: 'RefusÃ©e',
 }
 
 export const statusStyles: Record<CompanyStatus, string> = {

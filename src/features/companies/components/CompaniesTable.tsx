@@ -24,7 +24,7 @@ export function CompaniesTable({
       <div className="grid grid-cols-[2fr_1.6fr_1.2fr_48px] border-b border-border px-7 py-5 text-sm font-bold text-text-secondary">
         <span>Entreprise</span>
         <span>Statut</span>
-        <span>Date ajoutée</span>
+        <span>Date ajoutÃ©e</span>
         <span aria-hidden="true" />
       </div>
 

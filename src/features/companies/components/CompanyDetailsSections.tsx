@@ -94,7 +94,7 @@ export function HeroSection({
                 Technologie
               </span>
 
-              <span className="hidden text-border sm:inline">•</span>
+              <span className="hidden text-border sm:inline">â€¢</span>
 
               {website ? (
                 <a
@@ -174,7 +174,7 @@ export function DetailsTabContent({
             <InfoRow
               icon={Globe}
               label="Site web"
-              value={website ?? '—'}
+              value={website ?? 'â€”'}
               isLink={Boolean(website)}
             />
           </div>
@@ -234,7 +234,7 @@ export function DetailsTabContent({
           <p className="text-base leading-8 text-text-secondary">
             {notesPlaceholder}
           </p>
-          <p className="mt-5 text-sm text-text-secondary">Modifie le : —</p>
+          <p className="mt-5 text-sm text-text-secondary">Modifie le : â€”</p>
         </InfoCard>
       </div>
 
@@ -327,7 +327,7 @@ function InfoCard({ children, icon: Icon, title }: InfoCardProps) {
 
 function InfoRow({ icon: Icon, isLink = false, label, value }: InfoRowProps) {
   const content =
-    isLink && value !== '—' ? (
+    isLink && value !== 'â€”' ? (
       <a
         className="cursor-pointer break-all font-medium text-primary transition hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         href={value}

@@ -4,7 +4,7 @@ export function formatDate(value: string): string {
 
 export function getDisplayValue(value: string | null | undefined): string {
   if (!value) {
-    return '—'
+    return 'â€”'
   }
 
   return value

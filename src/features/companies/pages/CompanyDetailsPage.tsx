@@ -43,8 +43,8 @@ export function CompanyDetailsPage() {
       { icon: Phone, label: 'Telephone', value: getDisplayValue(data?.phone) },
       { icon: MapPin, label: 'Ville', value: getDisplayValue(data?.city) },
       { icon: Globe, label: 'Pays', value: getDisplayValue(data?.country) },
-      { icon: CalendarDays, label: 'Creation', value: createdAt ?? '—' },
-      { icon: Clock3, label: 'Derniere mise a jour', value: updatedAt ?? '—' },
+      { icon: CalendarDays, label: 'Creation', value: createdAt ?? 'â€”' },
+      { icon: Clock3, label: 'Derniere mise a jour', value: updatedAt ?? 'â€”' },
     ],
     [createdAt, data?.city, data?.country, data?.phone, data?.recruiterName, updatedAt],
   )
