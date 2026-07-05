@@ -234,7 +234,6 @@ export async function saveCandidateCvAnalysis(
 
 export async function createCandidateCv(data: {
   candidateProfileId: string
-  fileHash: string
   fileSize: number
   label: string
   mimeType: string

@@ -7,7 +7,7 @@ import {
   Plus,
 } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Alert } from '@/components/ui'
+import { Alert, Button } from '@/components/ui'
 import { getCandidateCvExtractedData } from '../services/candidateResumeService'
 import type { ICandidateCvExtractedDataResponse } from '../types/candidateResume.types'
 import { formatCvPeriod, getCandidateCvErrorMessage } from '../utils/candidateCvHelpers'
@@ -16,8 +16,12 @@ export function TrainingPage() {
   const navigate = useNavigate()
   const { cvId } = useParams<{ cvId?: string }>()
   const [extractedData, setExtractedData] = useState<ICandidateCvExtractedDataResponse | null>(null)
-  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>('loading')
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>(() =>
+    cvId ? 'loading' : 'error',
+  )
+  const [errorMessage, setErrorMessage] = useState<string | null>(() =>
+    cvId ? null : 'Identifiant de CV manquant.',
+  )
   const hasMissingCvId = !cvId
 
   useEffect(() => {
@@ -96,12 +100,14 @@ export function TrainingPage() {
           ) : null}
         </div>
 
-        <button
-          className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-button border border-border bg-surface px-6 text-sm font-semibold text-text-primary shadow-soft transition hover:bg-divider focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+        <Button
+          className="px-6 sm:w-auto"
+          disabled
+          variant="secondary"
           type="button"
         >
           Modifier
-        </button>
+        </Button>
       </header>
 
       {status === 'loading' ? (
@@ -177,6 +183,7 @@ export function TrainingPage() {
 
               <button
                 aria-label={`Options pour ${training.title}`}
+                disabled
                 className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-secondary transition hover:bg-divider hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 type="button"
               >
@@ -187,13 +194,15 @@ export function TrainingPage() {
         </div>
       ) : null}
 
-      <button
-        className="inline-flex min-h-14 w-full cursor-pointer items-center justify-center gap-3 rounded-input border border-dashed border-border bg-surface/70 px-4 text-sm font-semibold text-text-primary transition hover:border-primary hover:bg-accent/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      <Button
+        className="min-h-14 gap-3 border-dashed"
+        disabled
+        variant="secondary"
         type="button"
       >
         <Plus className="size-5" aria-hidden="true" />
         Ajouter un element
-      </button>
+      </Button>
     </section>
   )
 }

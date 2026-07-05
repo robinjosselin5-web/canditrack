@@ -76,11 +76,11 @@ model CandidateProfile {
 model CandidateCv {
   id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   candidateProfileId String           @map("candidate_profile_id") @db.Uuid
+  // Keep in sync with MAX_CV_LABEL_LENGTH in src/config/candidateCvConstants.ts
   label              String           @db.VarChar(50)
   originalFilename   String           @map("original_filename") @db.VarChar(255)
   storageFilename    String           @map("storage_filename") @db.VarChar(255)
   storageKey         String           @map("storage_key") @db.VarChar(500)
-  fileHash           String?          @map("file_hash") @db.VarChar(64)
   mimeType           String           @map("mime_type") @db.VarChar(100)
   fileSize           Int              @map("file_size")
   isDefault          Boolean          @default(false) @map("is_default")

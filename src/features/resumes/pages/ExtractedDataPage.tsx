@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AxiosError } from 'axios'
 import {
   BriefcaseBusiness,
   ChevronRight,
@@ -9,15 +8,11 @@ import {
 } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Alert } from '@/components/ui'
-import type { IApiResponse } from '@/types/api'
 import {
   getCandidateCvExtractedData,
   getCandidateCvs,
 } from '../services/candidateResumeService'
-import type {
-  ICandidateCvExtractedDataResponse,
-  ICandidateCvListItem,
-} from '../types/candidateResume.types'
+import type { ICandidateCvExtractedDataResponse, ICandidateCvListItem } from '../types/candidateResume.types'
 import { getCandidateCvErrorMessage } from '../utils/candidateCvHelpers'
 
 interface IExtractedDataCard {
@@ -114,7 +109,9 @@ export function ExtractedDataPage() {
       } catch (error) {
         if (!cancelled) {
           setExtractedData(null)
-          setErrorMessage(getExtractedDataErrorMessage(error))
+          setErrorMessage(
+            getCandidateCvErrorMessage(error, 'Impossible de charger les donnees extraites pour le moment.'),
+          )
           setPageStatus('error')
         }
       }
@@ -264,21 +261,4 @@ export function ExtractedDataPage() {
       ) : null}
     </section>
   )
-}
-
-function getExtractedDataErrorMessage(error: unknown): string {
-  if (error instanceof AxiosError) {
-    const response = error.response?.data as IApiResponse<unknown> | undefined
-
-    if (!error.response) {
-      return "L'API est indisponible. Verifiez que le backend est demarre."
-    }
-
-    return (
-      response?.message ??
-      'Impossible de charger les donnees extraites pour le moment.'
-    )
-  }
-
-  return 'Impossible de charger les donnees extraites pour le moment.'
 }

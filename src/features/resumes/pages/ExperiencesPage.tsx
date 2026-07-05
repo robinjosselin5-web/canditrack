@@ -10,8 +10,12 @@ export function ExperiencesPage() {
   const navigate = useNavigate()
   const { cvId } = useParams<{ cvId?: string }>()
   const [extractedData, setExtractedData] = useState<ICandidateCvExtractedDataResponse | null>(null)
-  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>('loading')
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>(() =>
+    cvId ? 'loading' : 'error',
+  )
+  const [errorMessage, setErrorMessage] = useState<string | null>(() =>
+    cvId ? null : 'Identifiant de CV manquant.',
+  )
   const hasMissingCvId = !cvId
 
   useEffect(() => {
@@ -90,7 +94,7 @@ export function ExperiencesPage() {
           ) : null}
         </div>
 
-        <Button className="px-6 sm:w-auto" variant="secondary">
+        <Button className="px-6 sm:w-auto" disabled variant="secondary">
           Modifier
         </Button>
       </header>
@@ -164,6 +168,7 @@ export function ExperiencesPage() {
 
                     <button
                       aria-label={`Options pour ${experience.jobTitle}`}
+                      disabled
                       className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-secondary transition hover:bg-divider hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                       type="button"
                     >
@@ -177,7 +182,7 @@ export function ExperiencesPage() {
         </div>
       ) : null}
 
-      <Button className="min-h-14 gap-3 border-dashed" variant="secondary">
+      <Button className="min-h-14 gap-3 border-dashed" disabled variant="secondary">
         <Plus aria-hidden="true" className="size-5" />
         Ajouter une experience
       </Button>

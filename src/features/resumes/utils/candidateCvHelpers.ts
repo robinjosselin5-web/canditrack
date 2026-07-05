@@ -1,4 +1,4 @@
-export const MAX_CV_FILE_SIZE = 10 * 1024 * 1024
+export { MAX_CV_FILE_SIZE, MAX_CV_LABEL_LENGTH } from '@/config/candidateCvConstants'
 
 export function formatCvDate(date: string): string {
   return new Intl.DateTimeFormat('fr-FR').format(new Date(date))
@@ -39,16 +39,23 @@ export function formatCvSkillCategory(category: string): string {
   }
 }
 
-export function getCandidateCvErrorMessage(error: unknown): string {
+export function getCandidateCvErrorMessage(
+  error: unknown,
+  fallbackMessage = "Une erreur est survenue pendant l'import du CV.",
+): string {
   if (error && typeof error === 'object' && 'response' in error) {
     const response = error as { response?: { data?: { message?: string } } }
 
     if (response.response?.data?.message) {
       return response.response.data.message
     }
+
+    if (!response.response) {
+      return "L'API est indisponible. Verifiez que le backend est demarre."
+    }
   }
 
-  return "Une erreur est survenue pendant l'import du CV."
+  return fallbackMessage
 }
 
 function formatCvPartialDate(date: string): string {

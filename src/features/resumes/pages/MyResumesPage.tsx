@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Plus } from 'lucide-react'
 import { Alert, Button, Input, Modal } from '@/components/ui'
+import { MAX_CV_FILE_SIZE, MAX_CV_LABEL_LENGTH } from '@/config/candidateCvConstants'
 import {
   analyzeCandidateCv,
   createCandidateCv,
@@ -9,10 +10,7 @@ import {
 } from '../services/candidateResumeService'
 import type { ICandidateCvListItem } from '../types/candidateResume.types'
 import { CandidateCvCard } from '../components/CandidateCvCard'
-import {
-  MAX_CV_FILE_SIZE,
-  getCandidateCvErrorMessage,
-} from '../utils/candidateCvHelpers'
+import { getCandidateCvErrorMessage } from '../utils/candidateCvHelpers'
 
 export function MyResumesPage() {
   const [resumes, setResumes] = useState<ICandidateCvListItem[]>([])
@@ -94,7 +92,7 @@ export function MyResumesPage() {
       return
     }
 
-    if (label.trim().length > 50) {
+    if (label.trim().length > MAX_CV_LABEL_LENGTH) {
       setErrorMessage('Le label ne doit pas depasser 50 caracteres.')
       return
     }
@@ -185,7 +183,7 @@ export function MyResumesPage() {
         <div className="rounded-card border border-border bg-surface px-6 py-12 text-center shadow-medium">
           <p className="text-sm text-text-secondary">Chargement des CV...</p>
         </div>
-      ) : resumes.length === 0 ? (
+      ) : resumes.length === 0 && !errorMessage ? (
         <div className="rounded-card border border-dashed border-border bg-surface px-6 py-14 text-center shadow-medium">
           <p className="text-base font-semibold text-text-primary">
             Aucun CV importe pour le moment
@@ -228,7 +226,7 @@ export function MyResumesPage() {
 
           <Input
             label="Label du CV"
-            maxLength={50}
+            maxLength={MAX_CV_LABEL_LENGTH}
             name="resumeLabel"
             onChange={(event) => {
               setErrorMessage(null)

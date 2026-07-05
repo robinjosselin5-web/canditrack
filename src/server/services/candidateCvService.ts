@@ -1,4 +1,4 @@
-import { createHash, randomUUID } from 'node:crypto'
+import { randomUUID } from 'node:crypto'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { unlink, readFile } from 'node:fs/promises'
@@ -17,15 +17,16 @@ import {
 } from '../repositories/candidateCvRepository.js'
 import { generateCandidateCvAnalysis } from './aiService.js'
 import { parseCandidateCvAnalysisResponse } from '../validators/index.js'
+import {
+  MAX_CV_FILE_SIZE,
+  MAX_CV_LABEL_LENGTH,
+} from '../../config/candidateCvConstants.js'
 import type {
   ICandidateCvListItem,
   ICandidateCvListResponse,
   ICandidateCvExtractedDataResponse,
   ICandidateCvPublic,
 } from '../types/candidateCv.types.js'
-
-const MAX_CV_FILE_SIZE = 10 * 1024 * 1024
-const MAX_CV_LABEL_LENGTH = 50
 const CV_ANALYSIS_OUTPUT_FORMAT = `{
   "experiences": [
     {
@@ -88,14 +89,11 @@ export async function importCandidateCv(
   await mkdir(path.dirname(storagePath), { recursive: true })
   await writeFile(storagePath, file.buffer)
 
-  const fileHash = createHash('sha256').update(file.buffer).digest('hex')
-
   let candidateCv: Awaited<ReturnType<typeof createCandidateCv>>
 
   try {
     candidateCv = await createCandidateCv({
       candidateProfileId: candidateProfile.id,
-      fileHash,
       fileSize: file.size,
       label: normalizedLabel,
       mimeType: file.mimetype,

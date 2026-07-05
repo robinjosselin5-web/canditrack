@@ -13,8 +13,12 @@ export function SkillsPage() {
   const navigate = useNavigate()
   const { cvId } = useParams<{ cvId?: string }>()
   const [extractedData, setExtractedData] = useState<ICandidateCvExtractedDataResponse | null>(null)
-  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>('loading')
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>(() =>
+    cvId ? 'loading' : 'error',
+  )
+  const [errorMessage, setErrorMessage] = useState<string | null>(() =>
+    cvId ? null : 'Identifiant de CV manquant.',
+  )
   const hasMissingCvId = !cvId
 
   useEffect(() => {
@@ -116,7 +120,7 @@ export function SkillsPage() {
           ) : null}
         </div>
 
-        <Button className="px-6 sm:w-auto" variant="secondary">
+        <Button className="px-6 sm:w-auto" disabled variant="secondary">
           Modifier
         </Button>
       </header>
@@ -169,7 +173,7 @@ export function SkillsPage() {
         </div>
       ) : null}
 
-      <Button className="min-h-14 gap-3 border-dashed" variant="secondary">
+      <Button className="min-h-14 gap-3 border-dashed" disabled variant="secondary">
         <Plus aria-hidden="true" className="size-5" />
         Ajouter une competence
       </Button>

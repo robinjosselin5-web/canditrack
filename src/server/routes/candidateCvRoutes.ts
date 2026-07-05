@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import multer from 'multer'
+import { MAX_CV_FILE_SIZE } from '../../config/candidateCvConstants.js'
 import {
   analyzeCandidateCvController,
   deleteCandidateCvController,
@@ -12,7 +13,7 @@ import { authenticateRequest } from '../middlewares/authenticateRequest.js'
 
 const upload = multer({
   limits: {
-    fileSize: 10 * 1024 * 1024,
+    fileSize: MAX_CV_FILE_SIZE,
   },
   storage: multer.memoryStorage(),
 })
