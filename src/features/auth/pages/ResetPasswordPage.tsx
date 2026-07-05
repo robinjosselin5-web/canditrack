@@ -7,7 +7,7 @@ import { AuthPageHeader } from "../components/AuthPageHeader";
 import { useResetPassword } from "../hooks/useResetPassword";
 import type { IResetPasswordFormValues } from "../types/passwordReset.types";
 import { getResetPasswordErrorMessage } from "../utils/authErrorMessages";
-import { resetPasswordSchema } from "../utils/passwordResetSchema";
+import { resetPasswordSchema } from '../validation/passwordResetSchema'
 
 export function ResetPasswordPage() {
   const { token } = useParams();

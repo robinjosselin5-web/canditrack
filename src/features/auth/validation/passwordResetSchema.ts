@@ -12,7 +12,7 @@ export const forgotPasswordSchema = z.object({
   email: z
     .string()
     .trim()
-    .min(1, "L'adresse e-mail est obligatoire.")
+    .min(1, "L'adresse email est obligatoire.")
     .email("L'adresse e-mail doit etre valide."),
 })
 

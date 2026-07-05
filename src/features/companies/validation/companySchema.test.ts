@@ -36,4 +36,3 @@ test('companySchema rejects missing website with a user-friendly message', () =>
     assert.equal(result.error.flatten().fieldErrors.website?.[0], 'Le site web est obligatoire.')
   }
 })
-

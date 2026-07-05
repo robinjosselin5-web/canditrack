@@ -12,7 +12,7 @@ import {
   getResendCodeErrorMessage,
   isEmailNotVerifiedError,
 } from "../utils/authErrorMessages";
-import { loginSchema } from "../utils/loginSchema";
+import { loginSchema } from '../validation/loginSchema'
 
 export function LoginPage() {
   const loginMutation = useLogin();

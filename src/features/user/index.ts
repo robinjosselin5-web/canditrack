@@ -8,4 +8,4 @@ export {
   type IUpdateProfilePayload,
 } from './services'
 export type { IProfileFormValues } from './types/profile.types'
-export { profileSchema } from './utils/profileSchema'
+export { profileSchema } from './validation/profileSchema'

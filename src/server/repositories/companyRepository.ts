@@ -1,4 +1,4 @@
-import type { Company } from '../generated/prisma/client.js'
+import type { Company } from '@prisma/client'
 import { prisma } from '../config/prisma.js'
 import type {
   ICreateCompanyInput,

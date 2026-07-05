@@ -9,6 +9,8 @@
     "server:dev": "tsx watch src/server/index.ts",
     "server:build": "tsc -p tsconfig.server.json",
     "server:start": "node dist/server/index.js",
+    "test": "tsx --test \"src/**/*.test.ts\"",
+    "test:watch": "tsx --test --watch \"src/**/*.test.ts\"",
     "prisma:generate": "prisma generate",
     "prisma:validate": "prisma validate",
     "prisma:migrate": "prisma migrate dev",

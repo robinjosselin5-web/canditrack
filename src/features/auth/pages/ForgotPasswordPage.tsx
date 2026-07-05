@@ -7,7 +7,7 @@ import { AuthPageHeader } from "../components/AuthPageHeader";
 import { useForgotPassword } from "../hooks/useForgotPassword";
 import type { IForgotPasswordFormValues } from "../types/passwordReset.types";
 import { getForgotPasswordErrorMessage } from "../utils/authErrorMessages";
-import { forgotPasswordSchema } from "../utils/passwordResetSchema";
+import { forgotPasswordSchema } from '../validation/passwordResetSchema'
 
 export function ForgotPasswordPage() {
   const forgotPasswordMutation = useForgotPassword();

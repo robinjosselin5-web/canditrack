@@ -12,7 +12,7 @@ import type {
   ICreateCompanyPayload,
   IUpdateCompanyPayload,
 } from '../types/company.types'
-import { companySchema } from '../utils/companySchema'
+import { companySchema } from '../validation/companySchema'
 
 type CompanyFormValues = z.input<typeof companySchema>
 

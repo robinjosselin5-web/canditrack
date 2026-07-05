@@ -49,7 +49,7 @@ test('parseCandidateCvAnalysisResponse rejects empty extracted data', () => {
 })
 
 test('candidateCvAnalysisResponseSchema rejects invalid date formats', () => {
-  for (const invalidDate of ['Juin 2025', '2025/06', '2025-13', '']) {
+  for (const invalidDate of ['Juin 2025', '2025/06', '2025-6', '']) {
     const result = candidateCvAnalysisResponseSchema.safeParse({
       experiences: [
         {

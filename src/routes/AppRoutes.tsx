@@ -10,11 +10,10 @@ import {
 } from '@/features/auth'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
+import { ApplicationsPage } from '@/features/applications'
 import { CreateCompanyPage } from '@/features/companies'
 import { CompaniesPage, CompanyDetailsPage } from '@/features/companies'
-import { ApplicationsPage } from '../pages/ApplicationsPage'
-import { DashboardPage } from '../pages/DashboardPage'
-import { StatisticsPage } from '../pages/StatisticsPage'
+import { DashboardPage } from '@/features/dashboard'
 import {
   ExperiencesPage,
   ExtractedDataPage,
@@ -22,6 +21,7 @@ import {
   SkillsPage,
   TrainingPage,
 } from '@/features/resumes'
+import { StatisticsPage } from '@/features/statistics'
 import { SettingsPage } from '@/features/user'
 
 export function AppRoutes() {

@@ -8,7 +8,7 @@ import { useResendEmailVerificationCode } from '../hooks/useResendEmailVerificat
 import { useVerifyEmail } from '../hooks/useVerifyEmail'
 import type { IEmailVerificationFormValues } from '../types/emailVerification.types'
 import { getEmailVerificationErrorMessage } from '../utils/authErrorMessages'
-import { emailVerificationSchema } from '../utils/emailVerificationSchema'
+import { emailVerificationSchema } from '../validation/emailVerificationSchema'
 
 export function VerifyEmailPage() {
   const [searchParams] = useSearchParams()

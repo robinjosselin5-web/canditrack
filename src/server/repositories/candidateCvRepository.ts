@@ -3,7 +3,7 @@ import {
   Prisma,
   type CandidateCv,
   type CandidateProfile,
-} from '../generated/prisma/client.js'
+} from '@prisma/client'
 import type { ICandidateCvAnalysisResponse } from '../types/candidateCv.types.js'
 
 export async function findCandidateProfileByUserId(
