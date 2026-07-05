@@ -138,6 +138,10 @@ export function TrainingPage() {
       {status === 'success' && extractedData ? (
         <div className="grid gap-3">
           {extractedData.trainings.map((training, index) => (
+            (() => {
+              const period = formatCvPeriod(training.startDate, training.endDate)
+
+              return (
             <article
               className="flex items-center gap-4 rounded-card border border-border bg-surface p-4 shadow-soft sm:p-5"
               key={`${training.title}-${training.organizationName ?? 'unknown'}-${index}`}
@@ -173,12 +177,12 @@ export function TrainingPage() {
                   </span>
                 ) : null}
                 <p className="mt-1 text-sm font-medium text-text-secondary sm:hidden">
-                  {formatCvPeriod(training.startDate, training.endDate)}
+                  {period}
                 </p>
               </div>
 
               <p className="hidden shrink-0 text-sm font-medium text-text-secondary sm:block">
-                {formatCvPeriod(training.startDate, training.endDate)}
+                {period}
               </p>
 
               <button
@@ -190,6 +194,8 @@ export function TrainingPage() {
                 <MoreVertical className="size-5" aria-hidden="true" />
               </button>
             </article>
+              )
+            })()
           ))}
         </div>
       ) : null}

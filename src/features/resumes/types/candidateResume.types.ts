@@ -27,7 +27,7 @@ export interface ICandidateCvListResponse {
   cvs: ICandidateCvListItem[]
 }
 
-export interface ICvExperience {
+export interface ICandidateCvExperience {
   jobTitle: string
   companyName: string | null
   startDate: string | null
@@ -37,7 +37,7 @@ export interface ICvExperience {
   description: string | null
 }
 
-export interface ICvSkill {
+export interface ICandidateCvSkill {
   name: string
   category:
     | 'LANGUAGES'
@@ -50,7 +50,7 @@ export interface ICvSkill {
   source: string | null
 }
 
-export interface ICvTraining {
+export interface ICandidateCvTraining {
   title: string
   organizationName: string | null
   degree: string | null
@@ -74,7 +74,7 @@ export interface ICandidateCvExtractedDataCvSummary {
 export interface ICandidateCvExtractedDataResponse {
   cvId: string
   cv: ICandidateCvExtractedDataCvSummary
-  experiences: ICvExperience[]
-  skills: ICvSkill[]
-  trainings: ICvTraining[]
+  experiences: ICandidateCvExperience[]
+  skills: ICandidateCvSkill[]
+  trainings: ICandidateCvTraining[]
 }

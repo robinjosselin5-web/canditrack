@@ -13,11 +13,11 @@ export {
 } from './services/candidateResumeService'
 export type {
   ICandidateCv,
+  ICandidateCvExperience,
+  ICandidateCvSkill,
+  ICandidateCvTraining,
   ICandidateCvExtractedDataResponse,
   ICandidateCvExtractedDataCvSummary,
   ICandidateCvListItem,
   ICandidateCvListResponse,
-  ICvExperience,
-  ICvSkill,
-  ICvTraining,
 } from './types/candidateResume.types'

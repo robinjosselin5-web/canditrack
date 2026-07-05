@@ -167,7 +167,7 @@ export async function getCandidateCvExtractedData(
 export async function analyzeCandidateCv(
   userId: string,
   candidateCvId: string,
-): Promise<{ extractedTextPreview: string; extractedTextLength: number }> {
+): Promise<void> {
   const candidateCv = await findCandidateCvById(candidateCvId)
 
   if (!candidateCv) {
@@ -254,11 +254,6 @@ export async function analyzeCandidateCv(
       candidateCvId,
       extractedTextLength: extractedText.length,
     })
-
-    return {
-      extractedTextPreview: extractedText.slice(0, 3000),
-      extractedTextLength: extractedText.length,
-    }
   } catch (error) {
     console.error('[CV_ANALYZE_AI] failed', {
       candidateCvId,

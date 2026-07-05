@@ -28,7 +28,7 @@ export function ExtractedDataPage() {
   const { cvId } = useParams<{ cvId?: string }>()
   const [candidateCvs, setCandidateCvs] = useState<ICandidateCvListItem[]>([])
   const [isLoadingCvs, setIsLoadingCvs] = useState(true)
-  const [pageStatus, setPageStatus] = useState<'loading' | 'success' | 'empty' | 'error'>('loading')
+  const [pageStatus, setPageStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [extractedData, setExtractedData] = useState<ICandidateCvExtractedDataResponse | null>(null)
 
