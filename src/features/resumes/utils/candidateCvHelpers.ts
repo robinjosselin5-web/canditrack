@@ -43,14 +43,17 @@ export function getCandidateCvErrorMessage(
   error: unknown,
   fallbackMessage = "Une erreur est survenue pendant l'import du CV.",
 ): string {
-  if (error && typeof error === 'object' && 'response' in error) {
-    const response = error as { response?: { data?: { message?: string } } }
+  if (error && typeof error === 'object') {
+    const response = error as {
+      isAxiosError?: boolean
+      response?: { data?: { message?: string } }
+    }
 
     if (response.response?.data?.message) {
       return response.response.data.message
     }
 
-    if (!response.response) {
+    if (response.isAxiosError) {
       return "L'API est indisponible. Verifiez que le backend est demarre."
     }
   }

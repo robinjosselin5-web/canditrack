@@ -148,15 +148,6 @@ export async function getCandidateCvExtractedData(
     throw new AppError("Le CV n'a pas encore ete analyse.", 409)
   }
 
-  const hasExtractedData =
-    candidateCvExtractedData.cvExperiences.length > 0 ||
-    candidateCvExtractedData.cvSkills.length > 0 ||
-    candidateCvExtractedData.cvTrainings.length > 0
-
-  if (!hasExtractedData) {
-    throw new AppError('Les donnees extraites du CV sont indisponibles.', 404)
-  }
-
   return {
     cvId: candidateCvExtractedData.id,
     cv: {

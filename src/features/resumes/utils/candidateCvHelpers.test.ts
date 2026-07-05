@@ -37,7 +37,7 @@ test('getCandidateCvErrorMessage prefers API messages with a fallback', () => {
     'Format de fichier non supporte.',
   )
   assert.equal(
-    getCandidateCvErrorMessage({ response: undefined }),
+    getCandidateCvErrorMessage({ isAxiosError: true }),
     "L'API est indisponible. Verifiez que le backend est demarre.",
   )
   assert.equal(
