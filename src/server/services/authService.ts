@@ -29,6 +29,7 @@ const EMAIL_VERIFICATION_CODE_LENGTH = 5
 const EMAIL_VERIFICATION_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
 
 export function logoutUser(): null {
+  // JWT stateless: we cannot invalidate already issued tokens server-side without a blacklist.
   return null
 }
 
@@ -41,10 +42,10 @@ export async function registerUser(
   const existingUser = await findUserByEmail(email)
 
   if (existingUser) {
-    throw new AppError("L'adresse e-mail est deja utilisee.", 409, [
+    throw new AppError("L'adresse e-mail est déjà utilisée.", 409, [
       {
         field: 'email',
-        message: "L'adresse e-mail est deja utilisee.",
+        message: "L'adresse e-mail est déjà utilisée.",
       },
     ])
   }
@@ -89,7 +90,7 @@ export async function loginUser(
 
   if (!user.emailVerifiedAt) {
     throw new AppError(
-      "Votre adresse e-mail doit etre validee avant de vous connecter.",
+      "Votre adresse e-mail doit être validée avant de vous connecter.",
       403,
       [
         {
@@ -120,11 +121,11 @@ export async function requestEmailVerificationCode(
   const user = await findUserForEmailVerificationByEmail(email)
 
   if (!user) {
-    throw new AppError("Aucun compte n'est associe a cette adresse e-mail.", 404)
+    throw new AppError("Aucun compte n'est associé à cette adresse e-mail.", 404)
   }
 
   if (!user.emailVerificationCode && !user.emailVerificationExpiresAt) {
-    throw new AppError("Cette adresse e-mail est deja validee.", 409)
+    throw new AppError("Cette adresse e-mail est déjà validée.", 409)
   }
 
   const verificationCode = generateEmailVerificationCode()
@@ -159,7 +160,7 @@ export async function verifyEmail(
     user.emailVerificationCode !== codeHash ||
     user.emailVerificationExpiresAt <= new Date()
   ) {
-    throw new AppError('Le code de validation est invalide ou expire.', 400)
+    throw new AppError('Le code de validation est invalide ou expiré.', 400)
   }
 
   const publicUser = await markUserEmailAsVerified(user.id)
@@ -200,7 +201,7 @@ export async function resetPassword(
   const user = await findUserByValidPasswordResetToken(tokenHash)
 
   if (!user) {
-    throw new AppError('Le lien de reinitialisation est invalide ou expire.', 400)
+    throw new AppError('Le lien de réinitialisation est invalide ou expiré.', 400)
   }
 
   const passwordHash = await bcrypt.hash(password, PASSWORD_SALT_ROUNDS)
@@ -232,12 +233,17 @@ function getEmailVerificationExpirationDate(): Date {
 }
 
 function generateAuthToken(user: IUserPublic): string {
+  const authTokenOptions: jwt.SignOptions = {
+    expiresIn: env.JWT_EXPIRES_IN as jwt.SignOptions['expiresIn'],
+  }
+
   return jwt.sign(
     {
       email: user.email,
       sub: user.id,
     },
     env.JWT_SECRET,
+    authTokenOptions,
   )
 }
 

@@ -51,6 +51,7 @@ export async function findCandidateCvById(candidateCvId: string) {
       originalFilename: true,
       analysisStatus: true,
       lastAnalyzedAt: true,
+      updatedAt: true,
       isDefault: true,
       uploadedAt: true,
     },

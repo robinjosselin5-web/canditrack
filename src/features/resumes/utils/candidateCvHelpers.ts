@@ -1,4 +1,4 @@
-export { MAX_CV_FILE_SIZE, MAX_CV_LABEL_LENGTH } from '@/config/candidateCvConstants'
+export { MAX_CV_FILE_SIZE, MAX_CV_LABEL_LENGTH } from '../../../config/candidateCvConstants'
 
 export function formatCvDate(date: string): string {
   return new Intl.DateTimeFormat('fr-FR').format(new Date(date))
@@ -54,7 +54,7 @@ export function getCandidateCvErrorMessage(
     }
 
     if (response.isAxiosError) {
-      return "L'API est indisponible. Verifiez que le backend est demarre."
+      return "L'API est indisponible. Vérifiez que le backend est démarré."
     }
   }
 

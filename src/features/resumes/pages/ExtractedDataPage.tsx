@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import {
   BriefcaseBusiness,
   ChevronRight,
@@ -8,12 +8,9 @@ import {
 } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Alert } from '@/components/ui'
-import {
-  getCandidateCvExtractedData,
-  getCandidateCvs,
-} from '../services/candidateResumeService'
-import type { ICandidateCvExtractedDataResponse, ICandidateCvListItem } from '../types/candidateResume.types'
 import { getCandidateCvErrorMessage } from '../utils/candidateCvHelpers'
+import { useCandidateCvs } from '../hooks/useCandidateCvs'
+import { useCandidateCvExtractedData } from '../hooks/useCandidateCvExtractedData'
 
 interface IExtractedDataCard {
   id: string
@@ -26,11 +23,7 @@ interface IExtractedDataCard {
 export function ExtractedDataPage() {
   const navigate = useNavigate()
   const { cvId } = useParams<{ cvId?: string }>()
-  const [candidateCvs, setCandidateCvs] = useState<ICandidateCvListItem[]>([])
-  const [isLoadingCvs, setIsLoadingCvs] = useState(true)
-  const [pageStatus, setPageStatus] = useState<'loading' | 'success' | 'error'>('loading')
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [extractedData, setExtractedData] = useState<ICandidateCvExtractedDataResponse | null>(null)
+  const { data: candidateCvs = [], isLoading: isLoadingCvs, error: cvsError } = useCandidateCvs()
 
   const analyzedCvs = useMemo(
     () => candidateCvs.filter((candidateCv) => candidateCv.analysisStatus === 'COMPLETED'),
@@ -42,85 +35,12 @@ export function ExtractedDataPage() {
     [analyzedCvs, cvId],
   )
   const hasNoAnalyzedCvs = !isLoadingCvs && analyzedCvs.length === 0
+  const extractedDataQuery = useCandidateCvExtractedData(selectedCv?.id)
+  const extractedData = extractedDataQuery.data ?? null
 
   useEffect(() => {
-    let cancelled = false
-
-    const loadCandidateCvs = async () => {
-      setIsLoadingCvs(true)
-      setErrorMessage(null)
-
-      try {
-        const cvs = await getCandidateCvs()
-
-        if (cancelled) {
-          return
-        }
-
-        setCandidateCvs(cvs)
-      } catch (error) {
-        if (!cancelled) {
-          setErrorMessage(getCandidateCvErrorMessage(error))
-          setPageStatus('error')
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoadingCvs(false)
-        }
-      }
-    }
-
-    void loadCandidateCvs()
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  useEffect(() => {
-    if (isLoadingCvs) {
-      return
-    }
-
-    if (analyzedCvs.length === 0) {
-      return
-    }
-
-    if (!cvId || !selectedCv) {
+    if (!isLoadingCvs && analyzedCvs.length > 0 && (!cvId || !selectedCv)) {
       navigate(`/profile/cv/${analyzedCvs[0].id}/extracted-data`, { replace: true })
-      return
-    }
-
-    let cancelled = false
-
-    const loadExtractedData = async () => {
-      setPageStatus('loading')
-      setErrorMessage(null)
-
-      try {
-        const response = await getCandidateCvExtractedData(selectedCv.id)
-
-        if (cancelled) {
-          return
-        }
-
-        setExtractedData(response)
-        setPageStatus('success')
-      } catch (error) {
-        if (!cancelled) {
-          setExtractedData(null)
-          setErrorMessage(
-            getCandidateCvErrorMessage(error, 'Impossible de charger les donnees extraites pour le moment.'),
-          )
-          setPageStatus('error')
-        }
-      }
-    }
-
-    void loadExtractedData()
-
-    return () => {
-      cancelled = true
     }
   }, [analyzedCvs, cvId, isLoadingCvs, navigate, selectedCv])
 
@@ -161,8 +81,6 @@ export function ExtractedDataPage() {
         </p>
       </header>
 
-      {errorMessage ? <Alert variant="error">{errorMessage}</Alert> : null}
-
       {isLoadingCvs ? (
         <div className="rounded-card border border-border bg-surface px-6 py-12 text-center shadow-soft">
           <p className="text-sm text-text-secondary">Chargement des CV...</p>
@@ -172,10 +90,10 @@ export function ExtractedDataPage() {
       {hasNoAnalyzedCvs ? (
         <div className="rounded-card border border-dashed border-border bg-surface px-6 py-14 text-center shadow-soft">
           <p className="text-base font-semibold text-text-primary">
-            Aucun CV analyse disponible
+            Aucun CV analysé disponible
           </p>
           <p className="mt-2 text-sm leading-6 text-text-secondary">
-            Analysez un CV depuis la page Mes CV pour afficher ses donnees extraites ici.
+            Analysez un CV depuis la page Mes CV pour afficher ses données extraites ici.
           </p>
         </div>
       ) : null}
@@ -184,7 +102,7 @@ export function ExtractedDataPage() {
         <div className="space-y-4">
           <label className="block" htmlFor="candidate-cv-select">
             <span className="mb-2 block text-sm font-semibold text-text-primary">
-              CV analyse
+              CV analysé
             </span>
             <select
               className="min-h-12 w-full cursor-pointer appearance-none rounded-input border border-border bg-surface px-4 pr-10 text-base font-semibold text-text-primary shadow-small outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -213,21 +131,24 @@ export function ExtractedDataPage() {
             </div>
           ) : null}
 
-          {pageStatus === 'loading' ? (
+          {extractedDataQuery.isLoading ? (
             <div className="rounded-card border border-border bg-surface px-6 py-12 text-center shadow-soft">
               <p className="text-sm text-text-secondary">
-                Chargement des donnees extraites...
+                Chargement des données extraites...
               </p>
             </div>
           ) : null}
 
-          {pageStatus === 'error' ? (
+          {cvsError || extractedDataQuery.error ? (
             <Alert variant="error">
-              {errorMessage ?? 'Impossible de charger les donnees extraites pour le moment.'}
+              {getCandidateCvErrorMessage(
+                cvsError ?? extractedDataQuery.error,
+                'Impossible de charger les données extraites pour le moment.',
+              )}
             </Alert>
           ) : null}
 
-          {pageStatus === 'success' ? (
+          {extractedData ? (
             <div className="grid gap-4">
               {extractedDataCards.map((card) => (
                 <button
@@ -246,7 +167,7 @@ export function ExtractedDataPage() {
                       {card.title}
                     </span>
                     <span className="mt-1 block text-sm font-medium text-text-secondary">
-                      {card.count} elements extraits
+                      {card.count} éléments extraits
                     </span>
                   </span>
                   <ChevronRight

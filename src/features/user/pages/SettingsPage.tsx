@@ -1,25 +1,23 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LogOut, Mail, Save, Upload, UserRound } from 'lucide-react'
-import { useEffect, useRef, useState, type ChangeEvent } from 'react'
+import { LogOut, Mail, Save, UserRound } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Alert, Button, Card, Input, Loader } from '@/components/ui'
 import { useLogout } from '@/features/auth'
 import {
   getLogoutErrorMessage,
   getProfileErrorMessage,
-  getUploadAvatarErrorMessage,
 } from '../utils/userErrorMessages'
 import { useUpdateUserProfile } from '../hooks/useUpdateUserProfile'
-import { useUploadUserAvatar } from '../hooks/useUploadUserAvatar'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { type IProfileFormValues } from '../types/profile.types'
 import { profileSchema } from '../validation/profileSchema'
 
 const settingsTabs = [
   { key: 'profile', label: 'Profil' },
-  { key: 'security', label: 'Securite' },
+  { key: 'security', label: 'Sécurité' },
   { key: 'notifications', label: 'Notifications' },
-  { key: 'preferences', label: 'Preferences' },
+  { key: 'preferences', label: 'Préférences' },
 ] as const
 
 type SettingsSection = (typeof settingsTabs)[number]['key']
@@ -27,11 +25,8 @@ type SettingsSection = (typeof settingsTabs)[number]['key']
 export function SettingsPage() {
   const profileQuery = useUserProfile()
   const updateProfileMutation = useUpdateUserProfile()
-  const uploadAvatarMutation = useUploadUserAvatar()
   const logoutMutation = useLogout()
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [activeSection, setActiveSection] = useState<SettingsSection>('profile')
-  const [avatarErrorMessage, setAvatarErrorMessage] = useState<string | null>(null)
   const {
     formState: { errors, isDirty },
     handleSubmit,
@@ -62,38 +57,17 @@ export function SettingsPage() {
     updateProfileMutation.mutate(values)
   }
 
-  const onChangeAvatar = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-
-    event.target.value = ''
-
-    if (!file) {
-      return
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      setAvatarErrorMessage('Le fichier est trop volumineux. La taille maximale est de 5 MB.')
-      return
-    }
-
-    setAvatarErrorMessage(null)
-    uploadAvatarMutation.mutate(file)
-  }
-
   const profileErrorMessage = getProfileErrorMessage(
     profileQuery.error ?? updateProfileMutation.error,
-  )
-  const uploadErrorMessage = getUploadAvatarErrorMessage(
-    uploadAvatarMutation.error,
   )
   const errorMessage = getLogoutErrorMessage(logoutMutation.error)
 
   return (
     <section className="mx-auto max-w-6xl">
       <div className="mb-12">
-        <h1 className="text-4xl font-bold text-text-primary">Parametres</h1>
+        <h1 className="text-4xl font-bold text-text-primary">Paramètres</h1>
         <p className="mt-3 text-lg leading-7 text-text-secondary">
-          Gerez vos preferences et parametres de compte
+          Gérez vos préférences et paramètres de compte
         </p>
       </div>
 
@@ -121,7 +95,7 @@ export function SettingsPage() {
       </nav>
 
       {activeSection === 'profile' ? (
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="grid gap-6">
           <Card className="p-6 shadow-medium sm:p-8">
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-text-primary">
@@ -140,7 +114,7 @@ export function SettingsPage() {
             ) : (
               <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 {updateProfileMutation.isSuccess ? (
-                  <Alert variant="success">Profil mis a jour avec succes.</Alert>
+                  <Alert variant="success">Profil mis à jour avec succès.</Alert>
                 ) : null}
 
                 {profileErrorMessage ? (
@@ -149,16 +123,16 @@ export function SettingsPage() {
 
                 <div className="grid gap-5 md:grid-cols-2">
                   <Input
-                    aria-label="Prenom"
+                  aria-label="Prénom"
                     autoComplete="given-name"
                     error={errors.firstname?.message}
                     iconLeft={<UserRound className="size-5" />}
-                    label="Prenom"
-                    placeholder="Votre prenom"
+                    label="Prénom"
+                    placeholder="Votre prénom"
                     {...register('firstname')}
                   />
                   <Input
-                    aria-label="Nom"
+                  aria-label="Nom"
                     autoComplete="family-name"
                     error={errors.lastname?.message}
                     iconLeft={<UserRound className="size-5" />}
@@ -173,7 +147,7 @@ export function SettingsPage() {
                   autoComplete="email"
                   error={errors.email?.message}
                   iconLeft={<Mail className="size-5" />}
-                  label="Email"
+                  label="E-mail"
                   placeholder="john.doe@example.com"
                   type="email"
                   {...register('email')}
@@ -190,62 +164,6 @@ export function SettingsPage() {
                 </Button>
               </form>
             )}
-          </Card>
-
-          <Card className="p-6 text-center shadow-medium sm:p-8">
-            <h2 className="text-left text-2xl font-semibold text-text-primary">
-              Photo de profil
-            </h2>
-
-            <div className="mx-auto mt-8 flex aspect-square max-w-52 items-center justify-center overflow-hidden rounded-card bg-accent/15">
-              {profileQuery.data?.avatarUrl ? (
-                <img
-                  alt="Avatar du profil"
-                  className="h-full w-full object-cover"
-                  src={profileQuery.data.avatarUrl}
-                />
-              ) : (
-                <UserRound
-                  className="size-28 text-status-draft"
-                  aria-hidden="true"
-                />
-              )}
-            </div>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              className="hidden"
-              onChange={onChangeAvatar}
-            />
-
-            <Button
-              className="mx-auto mt-6 max-w-44"
-              loading={uploadAvatarMutation.isPending}
-              onClick={() => fileInputRef.current?.click()}
-              type="button"
-              variant="secondary"
-            >
-              <Upload className="size-5 text-primary" aria-hidden="true" />
-              Changer
-            </Button>
-
-            {avatarErrorMessage ? (
-              <div className="mt-5">
-                <Alert variant="error">{avatarErrorMessage}</Alert>
-              </div>
-            ) : null}
-
-            {uploadErrorMessage ? (
-              <div className="mt-5">
-                <Alert variant="error">{uploadErrorMessage}</Alert>
-              </div>
-            ) : null}
-
-            <p className="mt-5 text-sm leading-6 text-text-secondary">
-              JPG, PNG ou WEBP. Max 5MB.
-            </p>
           </Card>
         </div>
       ) : (
@@ -264,14 +182,14 @@ export function SettingsPage() {
           </div>
 
           <Button
-            aria-label="Se deconnecter"
+            aria-label="Se déconnecter"
             className="sm:w-auto"
             loading={logoutMutation.isPending}
             onClick={() => logoutMutation.mutate()}
             variant="danger"
           >
             <LogOut className="size-4" aria-hidden="true" />
-            Se deconnecter
+            Se déconnecter
           </Button>
         </div>
 

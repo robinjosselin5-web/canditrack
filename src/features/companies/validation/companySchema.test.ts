@@ -1,38 +1,41 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { describe, expect, it } from 'vitest'
 import { companySchema } from './companySchema.js'
 
-test('companySchema accepts required fields and optional blanks', () => {
-  const result = companySchema.safeParse({
-    city: '',
-    country: '',
-    email: 'test@gmail.com',
-    name: 'Google',
-    phone: '',
-    recruiterName: '',
-    website: 'google.com',
+describe('companySchema', () => {
+  it('accepts required fields and optional blanks', () => {
+    const result = companySchema.safeParse({
+      city: '',
+      country: '',
+      email: 'test@gmail.com',
+      name: 'Google',
+      phone: '',
+      recruiterName: '',
+      website: 'google.com',
+    })
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.website).toBe('google.com')
+      expect(result.data.email).toBe('test@gmail.com')
+    }
   })
 
-  assert.equal(result.success, true)
-  if (result.success) {
-    assert.equal(result.data.website, 'google.com')
-    assert.equal(result.data.email, 'test@gmail.com')
-  }
-})
+  it('rejects missing website with a user-friendly message', () => {
+    const result = companySchema.safeParse({
+      city: '',
+      country: '',
+      email: 'test@gmail.com',
+      name: 'Google',
+      phone: '',
+      recruiterName: '',
+      website: '',
+    })
 
-test('companySchema rejects missing website with a user-friendly message', () => {
-  const result = companySchema.safeParse({
-    city: '',
-    country: '',
-    email: 'test@gmail.com',
-    name: 'Google',
-    phone: '',
-    recruiterName: '',
-    website: '',
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      expect(result.error.flatten().fieldErrors.website?.[0]).toBe(
+        'Le site web est obligatoire.',
+      )
+    }
   })
-
-  assert.equal(result.success, false)
-  if (!result.success) {
-    assert.equal(result.error.flatten().fieldErrors.website?.[0], 'Le site web est obligatoire.')
-  }
 })

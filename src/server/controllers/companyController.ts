@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { AppError } from '../errors/appError.js'
+import { getAuthenticatedUserId } from '../utils/auth.js'
 import type { IApiSuccessResponse } from '../types/api.types.js'
 import type {
   ICompanyCreatedResponse,
@@ -10,8 +11,8 @@ import type {
   CreateCompanyBody,
   UpdateCompanyFavoriteBody,
 } from '../validators/companyValidators.js'
-import { createCompany as createCompanyRecord } from '../repositories/companyRepository.js'
 import {
+  createCompanyForUser,
   deleteCompanyForUser,
   getCompanyForUser,
   getCompaniesForUser,
@@ -24,11 +25,7 @@ export async function createCompanyController(
   request: Request<unknown, unknown, CreateCompanyBody>,
   response: Response<IApiSuccessResponse<ICompanyCreatedResponse>>,
 ): Promise<void> {
-  if (!request.user) {
-    throw new AppError('Non autorise.', 401)
-  }
-
-  const company = await createCompanyRecord({
+  const company = await createCompanyForUser({
     categoryId: request.body.categoryId,
     city: request.body.city,
     country: request.body.country,
@@ -36,7 +33,7 @@ export async function createCompanyController(
     name: request.body.name,
     phone: request.body.phone,
     recruiterName: request.body.recruiterName,
-    userId: request.user.id,
+    userId: getAuthenticatedUserId(request),
     website: request.body.website,
   })
 
@@ -50,11 +47,7 @@ export async function getCompaniesController(
   request: Request,
   response: Response<IApiSuccessResponse<ICompanyListItem[]>>,
 ): Promise<void> {
-  if (!request.user) {
-    throw new AppError('Non autorise.', 401)
-  }
-
-  const companies = await getCompaniesForUser(request.user.id)
+  const companies = await getCompaniesForUser(getAuthenticatedUserId(request))
 
   response.status(200).json({
     success: true,
@@ -66,11 +59,8 @@ export async function getCompanyController(
   request: Request<{ id: string }>,
   response: Response<IApiSuccessResponse<ICompanyListItem>>,
 ): Promise<void> {
-  if (!request.user) {
-    throw new AppError('Non autorise.', 401)
-  }
-
-  const company = await getCompanyForUser(request.params.id, request.user.id)
+  const companyId = getCompanyId(request.params.id)
+  const company = await getCompanyForUser(companyId, getAuthenticatedUserId(request))
 
   if (!company) {
     throw new AppError('Entreprise introuvable.', 404)
@@ -86,11 +76,8 @@ export async function updateCompanyController(
   request: Request<{ id: string }, unknown, UpdateCompanyBody>,
   response: Response<IApiSuccessResponse<ICompanyUpdatedResponse>>,
 ): Promise<void> {
-  if (!request.user) {
-    throw new AppError('Non autorise.', 401)
-  }
-
-  const company = await updateCompanyForUser(request.params.id, request.user.id, {
+  const companyId = getCompanyId(request.params.id)
+  const company = await updateCompanyForUser(companyId, getAuthenticatedUserId(request), {
     categoryId: request.body.categoryId,
     city: request.body.city,
     country: request.body.country,
@@ -115,11 +102,8 @@ export async function deleteCompanyController(
   request: Request<{ id: string }>,
   response: Response<IApiSuccessResponse<{ message: string }>>,
 ): Promise<void> {
-  if (!request.user) {
-    throw new AppError('Non autorise.', 401)
-  }
-
-  const deleted = await deleteCompanyForUser(request.params.id, request.user.id)
+  const companyId = getCompanyId(request.params.id)
+  const deleted = await deleteCompanyForUser(companyId, getAuthenticatedUserId(request))
 
   if (!deleted) {
     throw new AppError('Entreprise introuvable.', 404)
@@ -137,13 +121,10 @@ export async function updateCompanyFavoriteController(
   request: Request<{ id: string }, unknown, UpdateCompanyFavoriteBody>,
   response: Response<IApiSuccessResponse<{ isFavorite: boolean }>>,
 ): Promise<void> {
-  if (!request.user) {
-    throw new AppError('Non autorise.', 401)
-  }
-
+  const companyId = getCompanyId(request.params.id)
   const updated = await updateCompanyFavoriteForUser(
-    request.params.id,
-    request.user.id,
+    companyId,
+    getAuthenticatedUserId(request),
     request.body.isFavorite,
   )
 
@@ -157,4 +138,15 @@ export async function updateCompanyFavoriteController(
       isFavorite: request.body.isFavorite,
     },
   })
+}
+
+function getCompanyId(companyId: string): string {
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
+  if (!uuidRegex.test(companyId)) {
+    throw new AppError('Identifiant invalide.', 400)
+  }
+
+  return companyId
 }

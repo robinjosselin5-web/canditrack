@@ -17,6 +17,7 @@ const envSchema = z.object({
     .string()
     .min(32)
     .default("development-secret-change-me-32-chars"),
+  JWT_EXPIRES_IN: z.string().min(1).default("24h"),
   EMAIL_VERIFICATION_EXPIRES_MINUTES: z.coerce
     .number()
     .int()
@@ -27,9 +28,10 @@ const envSchema = z.object({
     .int()
     .positive()
     .default(30),
-  AI_CV_ANALYSIS_ENABLED: z.coerce
-    .boolean()
-    .default(true),
+  AI_CV_ANALYSIS_ENABLED: z
+    .enum(['true', 'false'])
+    .default('true')
+    .transform((value) => value === 'true'),
   OPENROUTER_API_KEY: z.string().default(""),
   OPENROUTER_MODEL: z.string().min(1).default("google/gemini-2.5-flash"),
   OPENROUTER_BASE_URL: z

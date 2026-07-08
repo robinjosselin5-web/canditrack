@@ -55,7 +55,7 @@ export const companySchema = z.object({
     .string()
     .trim()
     .min(1, "Le nom de l'entreprise est obligatoire.")
-    .max(255, 'Le nom de lentreprise ne peut pas depasser 255 caracteres.'),
+    .max(255, "Le nom de l'entreprise ne peut pas dépasser 255 caractères."),
 
   website: websiteSchema,
 

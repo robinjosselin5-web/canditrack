@@ -10,6 +10,7 @@ import {
 } from '../controllers/candidateCvController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
 import { authenticateRequest } from '../middlewares/authenticateRequest.js'
+import { candidateCvUploadRateLimit } from '../middlewares/rateLimiters.js'
 
 const upload = multer({
   limits: {
@@ -47,6 +48,7 @@ candidateCvRoutes.delete(
 candidateCvRoutes.post(
   '/profile/cv',
   authenticateRequest,
+  candidateCvUploadRateLimit,
   upload.single('file'),
   asyncHandler(importCandidateCvController),
 )

@@ -8,7 +8,7 @@ import {
   updateCompanyController,
 } from '../controllers/companyController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
-import { authJwt } from '../middlewares/authJwt.js'
+import { authenticateRequest } from '../middlewares/authenticateRequest.js'
 import { validateBody } from '../middlewares/validateBody.js'
 import {
   createCompanyBodySchema,
@@ -18,38 +18,38 @@ import { updateCompanyBodySchema } from '../validators/companyUpdateValidators.j
 
 export const companyRoutes = Router()
 
-companyRoutes.get('/companies', authJwt, asyncHandler(getCompaniesController))
+companyRoutes.get('/companies', authenticateRequest, asyncHandler(getCompaniesController))
 
 companyRoutes.get(
   '/companies/:id',
-  authJwt,
+  authenticateRequest,
   asyncHandler(getCompanyController),
 )
 
 companyRoutes.post(
   '/companies',
-  authJwt,
+  authenticateRequest,
   validateBody(createCompanyBodySchema),
   asyncHandler(createCompanyController),
 )
 
 companyRoutes.patch(
   '/companies/:id',
-  authJwt,
+  authenticateRequest,
   validateBody(updateCompanyBodySchema),
   asyncHandler(updateCompanyController),
 )
 
 companyRoutes.patch(
   '/companies/:id/favorite',
-  authJwt,
+  authenticateRequest,
   validateBody(updateCompanyFavoriteBodySchema),
   asyncHandler(updateCompanyFavoriteController),
 )
 
 companyRoutes.delete(
   '/companies/:id',
-  authJwt,
+  authenticateRequest,
   asyncHandler(deleteCompanyController),
 )
 

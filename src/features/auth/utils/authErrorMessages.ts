@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import type { IApiResponse } from "@/types/api";
 
 const API_UNAVAILABLE_MESSAGE =
-  "L'API est indisponible. Verifiez que le backend est demarre.";
+  "L'API est indisponible. Vérifiez que le backend est démarré.";
 
 function getAxiosError(error: unknown): AxiosError | null {
   if (!error) {
@@ -41,7 +41,7 @@ export function getLoginErrorMessage(error: unknown): string | null {
   }
 
   if (axiosError.response?.status === 404) {
-    return "La route de connexion est introuvable. Verifiez que l'API /api/v1/auth/login existe.";
+    return "La route de connexion est introuvable. Vérifiez que l'API /api/v1/auth/login existe.";
   }
 
   if (axiosError.response?.status === 401) {
@@ -52,12 +52,12 @@ export function getLoginErrorMessage(error: unknown): string | null {
     axiosError.response?.status === 403 &&
     isEmailNotVerifiedError(axiosError)
   ) {
-    return "Votre adresse e-mail doit etre validee avant de vous connecter.";
+    return "Votre adresse e-mail doit être validée avant de vous connecter.";
   }
 
   return getUnavailableOrFallbackMessage(
     axiosError,
-    "Connexion impossible. Verifiez vos identifiants.",
+    "Connexion impossible. Vérifiez vos identifiants.",
   );
 }
 
@@ -82,12 +82,12 @@ export function getRegisterErrorMessage(error: unknown): string | null {
   }
 
   if (axiosError.response?.status === 404) {
-    return "La route d'inscription est introuvable. Verifiez que l'API /api/v1/auth/register existe.";
+    return "La route d'inscription est introuvable. Vérifiez que l'API /api/v1/auth/register existe.";
   }
 
   return getUnavailableOrFallbackMessage(
     axiosError,
-    "Impossible de creer le compte. Verifiez les informations saisies.",
+    "Impossible de créer le compte. Vérifiez les informations saisies.",
   );
 }
 
@@ -100,7 +100,7 @@ export function getForgotPasswordErrorMessage(error: unknown): string | null {
 
   return getUnavailableOrFallbackMessage(
     axiosError,
-    "Impossible d'envoyer le lien de reinitialisation. Reessayez.",
+    "Impossible d'envoyer le lien de réinitialisation. Réessayez.",
   );
 }
 
@@ -117,13 +117,13 @@ export function getResetPasswordErrorMessage(error: unknown): string | null {
   ) {
     return getUnavailableOrFallbackMessage(
       axiosError,
-      "Le lien de reinitialisation est invalide.",
+      "Le lien de réinitialisation est invalide.",
     );
   }
 
   return getUnavailableOrFallbackMessage(
     axiosError,
-    "Impossible de reinitialiser le mot de passe. Reessayez.",
+    "Impossible de réinitialiser le mot de passe. Réessayez.",
   );
 }
 
@@ -138,7 +138,7 @@ export function getEmailVerificationErrorMessage(
 
   return getUnavailableOrFallbackMessage(
     axiosError,
-    "Impossible de valider le compte. Verifiez le code saisi.",
+    "Impossible de valider le compte. Vérifiez le code saisi.",
   );
 }
 

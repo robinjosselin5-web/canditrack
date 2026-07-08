@@ -1,15 +1,18 @@
-import assert from 'node:assert/strict'
-import test from 'node:test'
+import { describe, expect, it } from 'vitest'
 import { normalizeWebsiteUrl } from './normalizeWebsiteUrl.js'
 
-test('normalizeWebsiteUrl prefixes domains without protocol', () => {
-  assert.equal(normalizeWebsiteUrl('example.com'), 'https://example.com')
-})
+describe('normalizeWebsiteUrl', () => {
+  it('prefixes domains without protocol', () => {
+    expect(normalizeWebsiteUrl('example.com')).toBe('https://example.com')
+  })
 
-test('normalizeWebsiteUrl preserves existing protocols and blank values', () => {
-  assert.equal(normalizeWebsiteUrl('http://example.com'), 'http://example.com')
-  assert.equal(normalizeWebsiteUrl('https://example.com'), 'https://example.com')
-  assert.equal(normalizeWebsiteUrl(''), '')
-  assert.equal(normalizeWebsiteUrl(null), null)
-  assert.equal(normalizeWebsiteUrl(undefined), undefined)
+  it('preserves existing protocols and blank values', () => {
+    expect(normalizeWebsiteUrl('http://example.com')).toBe('http://example.com')
+    expect(normalizeWebsiteUrl('https://example.com')).toBe(
+      'https://example.com',
+    )
+    expect(normalizeWebsiteUrl('')).toBe('')
+    expect(normalizeWebsiteUrl(null)).toBe(null)
+    expect(normalizeWebsiteUrl(undefined)).toBe(undefined)
+  })
 })

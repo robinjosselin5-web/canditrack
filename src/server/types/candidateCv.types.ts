@@ -2,7 +2,6 @@ export interface ICandidateCvPublic {
   id: string
   label: string
   originalFilename: string
-  storageKey: string
   mimeType: string
   fileSize: number
   isDefault: boolean

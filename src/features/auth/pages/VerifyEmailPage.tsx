@@ -52,7 +52,7 @@ export function VerifyEmailPage() {
   return (
     <Card className="mx-auto w-full max-w-140 border-border/80 px-6 py-6 shadow-large sm:px-10 sm:py-8">
       <AuthPageHeader
-        description="Saisissez le code recu par e-mail pour activer votre acces."
+        description="Saisissez le code reçu par e-mail pour activer votre accès."
         title="Valider votre compte"
       />
 
@@ -62,7 +62,7 @@ export function VerifyEmailPage() {
           <Alert variant="error">{resendErrorMessage}</Alert>
         ) : null}
         {resendCodeMutation.isSuccess ? (
-          <Alert variant="success">Un nouveau code vient d'etre envoye.</Alert>
+          <Alert variant="success">Un nouveau code vient d'être envoyé.</Alert>
         ) : null}
 
         <Input
@@ -109,7 +109,7 @@ export function VerifyEmailPage() {
       </form>
 
       <p className="mt-5 text-center text-sm text-text-secondary">
-        Compte deja valide ?{" "}
+        Compte déjà validé ?{" "}
         <Link
           to="/login"
           className="cursor-pointer font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"

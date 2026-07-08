@@ -40,7 +40,7 @@ export function CompanyDetailsPage() {
     () => [
       { icon: BriefcaseBusiness, label: 'Secteur', value: 'Non renseigne' },
       { icon: UserRound, label: 'Recruteur', value: getDisplayValue(data?.recruiterName) },
-      { icon: Phone, label: 'Telephone', value: getDisplayValue(data?.phone) },
+      { icon: Phone, label: 'Téléphone', value: getDisplayValue(data?.phone) },
       { icon: MapPin, label: 'Ville', value: getDisplayValue(data?.city) },
       { icon: Globe, label: 'Pays', value: getDisplayValue(data?.country) },
       { icon: CalendarDays, label: 'Creation', value: createdAt ?? '—' },
@@ -94,7 +94,7 @@ export function CompanyDetailsPage() {
           <DetailsTabContent
             activeTab={activeTab}
             infoRows={infoRows}
-            summaryText="Le resume genere par l'IA n'est pas encore disponible dans cette US. Cette section sert de placeholder visuel en attendant l'integration fonctionnelle."
+            summaryText="Le résumé généré par l'IA n'est pas encore disponible dans cette US. Cette section sert de placeholder visuel en attendant l'intégration fonctionnelle."
             website={data.website}
           />
         </div>
@@ -146,7 +146,7 @@ export function CompanyDetailsPage() {
             onSuccess: () => {
               setIsDeleteOpen(false)
               navigate('/companies', {
-                state: { toastMessage: 'Entreprise supprimee avec succes.' },
+                state: { toastMessage: 'Entreprise supprimée avec succès.' },
               })
             },
           })

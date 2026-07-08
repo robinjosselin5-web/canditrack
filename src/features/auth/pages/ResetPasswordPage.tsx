@@ -33,7 +33,7 @@ export function ResetPasswordPage() {
   };
 
   const errorMessage = !token
-    ? "Le lien de reinitialisation est invalide."
+    ? "Le lien de réinitialisation est invalide."
     : getResetPasswordErrorMessage(resetPasswordMutation.error);
 
   return (
@@ -83,7 +83,7 @@ export function ResetPasswordPage() {
           to="/login"
           className="cursor-pointer text-sm font-semibold text-primary transition hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
-          Retour a la connexion
+          Retour à la connexion
         </Link>
       </p>
     </Card>

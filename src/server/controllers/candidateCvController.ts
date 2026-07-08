@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { AppError } from '../errors/appError.js'
+import { getAuthenticatedUserId } from '../utils/auth.js'
 import {
   analyzeCandidateCv,
   deleteCandidateCv,
@@ -86,14 +87,6 @@ export async function deleteCandidateCvController(
     success: true,
     data: null,
   })
-}
-
-function getAuthenticatedUserId(request: { userId?: string }): string {
-  if (!request.userId) {
-    throw new AppError('Authentification requise.', 401)
-  }
-
-  return request.userId
 }
 
 function getCandidateCvId(cvId: string): string {
