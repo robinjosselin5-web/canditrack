@@ -14,30 +14,34 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/canditrack_test
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
+
       - run: npm ci
       - run: npm run prisma:generate
       - run: npm run lint
 
   test:
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/canditrack_test
-  
     steps:
       - uses: actions/checkout@v6
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
+
       - run: npm ci
       - run: npm run prisma:generate
       - run: npm test
@@ -46,10 +50,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
+
       - run: npm ci
       - run: npm run prisma:generate
       - run: npm run build
@@ -58,10 +64,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
+
       - run: npm ci
       - run: npm run prisma:generate
       - run: npm run server:build
