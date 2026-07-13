@@ -2,6 +2,7 @@ import { httpClient } from '@/services/httpClient'
 import type { IApiResponse } from '@/types/api'
 import type {
   ICandidateCv,
+  ICandidateCvExtractedDataResponse,
   ICandidateCvListItem,
   ICandidateCvListResponse,
 } from '../types/candidateResume.types'
@@ -40,6 +41,16 @@ export async function getCandidateCvs(): Promise<ICandidateCvListItem[]> {
   )
 
   return response.data.data.cvs
+}
+
+export async function getCandidateCvExtractedData(
+  cvId: string,
+): Promise<ICandidateCvExtractedDataResponse> {
+  const response = await httpClient.get<
+    IApiResponse<ICandidateCvExtractedDataResponse>
+  >(`/profile/cv/${cvId}/extracted-data`)
+
+  return response.data.data
 }
 
 export async function analyzeCandidateCv(cvId: string): Promise<void> {

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { updateCompany } from '../services/companyService'
+import { updateCompany } from '../services'
 import type { IUpdateCompanyPayload } from '../types/company.types'
 
 interface IUpdateCompanyVariables {

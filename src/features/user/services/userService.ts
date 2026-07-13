@@ -24,20 +24,3 @@ export async function updateUserProfile(
 
   return response.data.data
 }
-
-export async function uploadUserAvatar(file: File): Promise<IUser> {
-  const formData = new FormData()
-  formData.append('file', file)
-
-  const response = await httpClient.post<IApiResponse<IUser>>(
-    '/users/me/avatar',
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    },
-  )
-
-  return response.data.data
-}

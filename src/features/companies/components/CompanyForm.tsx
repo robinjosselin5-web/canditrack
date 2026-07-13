@@ -12,7 +12,7 @@ import type {
   ICreateCompanyPayload,
   IUpdateCompanyPayload,
 } from '../types/company.types'
-import { companySchema } from '../utils/companySchema'
+import { companySchema } from '../validation/companySchema'
 
 type CompanyFormValues = z.input<typeof companySchema>
 
@@ -95,12 +95,12 @@ export function CompanyForm({
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
       {activeMutation.isError ? (
         <Alert variant="error">
-          Impossible de sauvegarder lentreprise. Verifiez les informations saisies.
+          Impossible de sauvegarder l'entreprise. Vérifiez les informations saisies.
         </Alert>
       ) : null}
 
       <Input
-        aria-label="Nom de lentreprise"
+        aria-label="Nom de l'entreprise"
         error={errors.name?.message}
         iconLeft={<Building2 className="size-5" />}
         label={
@@ -108,7 +108,7 @@ export function CompanyForm({
             Nom de l&apos;entreprise <span className="text-red-600">*</span>
           </>
         }
-        placeholder="Nom de lentreprise"
+        placeholder="Nom de l'entreprise"
         {...register('name')}
       />
 
@@ -140,10 +140,10 @@ export function CompanyForm({
       />
 
       <Input
-        aria-label="Telephone"
+        aria-label="Téléphone"
         error={errors.phone?.message}
         iconLeft={<Phone className="size-5" />}
-        label="Telephone"
+        label="Téléphone"
         placeholder="01 23 45 67 89"
         {...register('phone')}
       />

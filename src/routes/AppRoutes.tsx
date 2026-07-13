@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AuthLayout } from '../layouts/AuthLayout'
 import { AppLayout } from '../layouts/AppLayout'
+import { ROUTES } from './paths'
 import {
   ForgotPasswordPage,
   LoginPage,
@@ -10,11 +11,10 @@ import {
 } from '@/features/auth'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
+import { ApplicationsPage } from '@/features/applications'
 import { CreateCompanyPage } from '@/features/companies'
 import { CompaniesPage, CompanyDetailsPage } from '@/features/companies'
-import { ApplicationsPage } from '../pages/ApplicationsPage'
-import { DashboardPage } from '../pages/DashboardPage'
-import { StatisticsPage } from '../pages/StatisticsPage'
+import { DashboardPage } from '@/features/dashboard'
 import {
   ExperiencesPage,
   ExtractedDataPage,
@@ -22,6 +22,7 @@ import {
   SkillsPage,
   TrainingPage,
 } from '@/features/resumes'
+import { StatisticsPage } from '@/features/statistics'
 import { SettingsPage } from '@/features/user'
 
 export function AppRoutes() {
@@ -29,42 +30,37 @@ export function AppRoutes() {
     <Routes>
       <Route element={<PublicRoute />}>
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/verify-email" element={<VerifyEmailPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+          <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmailPage />} />
+          <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
+          <Route path={`${ROUTES.RESET_PASSWORD}/:token`} element={<ResetPasswordPage />} />
         </Route>
       </Route>
 
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/companies" element={<CompaniesPage />} />
-          <Route path="/companies/new" element={<CreateCompanyPage />} />
-          <Route path="/companies/:companyId" element={<CompanyDetailsPage />} />
-          <Route path="/profile/cv" element={<MyCVsPage />} />
-          <Route path="/profile/cv/extracted-data" element={<ExtractedDataPage />} />
-          <Route
-            path="/profile/cv/extracted-data/training"
-            element={<TrainingPage />}
-          />
-          <Route
-            path="/profile/cv/extracted-data/experiences"
-            element={<ExperiencesPage />}
-          />
-          <Route
-            path="/profile/cv/extracted-data/skills"
-            element={<SkillsPage />}
-          />
-          <Route path="/applications" element={<ApplicationsPage />} />
-          <Route path="/statistics" element={<StatisticsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
+          <Route index element={<Navigate to={ROUTES.DASHBOARD} replace />} />
+          <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
+          <Route path={ROUTES.COMPANIES} element={<CompaniesPage />} />
+          <Route path={`${ROUTES.COMPANIES}/new`} element={<CreateCompanyPage />} />
+          <Route path={`${ROUTES.COMPANIES}/:companyId`} element={<CompanyDetailsPage />} />
+          <Route path={ROUTES.PROFILE_CV} element={<MyCVsPage />} />
+          <Route path={ROUTES.EXTRACTED_DATA} element={<ExtractedDataPage />} />
+          <Route path={`${ROUTES.PROFILE_CV}/:cvId/extracted-data`} element={<ExtractedDataPage />} />
+          <Route path={`${ROUTES.EXTRACTED_DATA}/training`} element={<TrainingPage />} />
+          <Route path={`${ROUTES.PROFILE_CV}/:cvId/extracted-data/training`} element={<TrainingPage />} />
+          <Route path={`${ROUTES.EXTRACTED_DATA}/experiences`} element={<ExperiencesPage />} />
+          <Route path={`${ROUTES.PROFILE_CV}/:cvId/extracted-data/experiences`} element={<ExperiencesPage />} />
+          <Route path={`${ROUTES.EXTRACTED_DATA}/skills`} element={<SkillsPage />} />
+          <Route path={`${ROUTES.PROFILE_CV}/:cvId/extracted-data/skills`} element={<SkillsPage />} />
+          <Route path={ROUTES.APPLICATIONS} element={<ApplicationsPage />} />
+          <Route path={ROUTES.STATISTICS} element={<StatisticsPage />} />
+          <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
         </Route>
       </Route>
 
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to={ROUTES.DASHBOARD} replace />} />
     </Routes>
   )
 }

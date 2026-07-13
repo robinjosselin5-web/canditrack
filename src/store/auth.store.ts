@@ -2,7 +2,7 @@ import { useSyncExternalStore } from "react";
 import type { IAuthSession, IAuthState } from "@/types/auth";
 import type { IUser } from "@/types/user";
 
-const AUTH_STORAGE_KEY = "candytrack.auth";
+const AUTH_STORAGE_KEY = "canditrack.auth";
 
 type AuthListener = () => void;
 type AuthStorageType = "local" | "session";

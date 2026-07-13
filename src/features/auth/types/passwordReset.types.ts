@@ -1,8 +1,8 @@
 export interface IForgotPasswordFormValues {
-  email: string
+  email: string;
 }
 
 export interface IResetPasswordFormValues {
-  password: string
-  confirmPassword: string
+  password: string;
+  confirmPassword: string;
 }

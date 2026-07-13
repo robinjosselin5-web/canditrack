@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { AppError } from '../errors/appError.js'
+import { getAuthenticatedUserId } from '../utils/auth.js'
 import {
   getUserProfile,
   updateUserProfile,
@@ -33,12 +33,4 @@ export async function updateUserProfileController(
     success: true,
     data: user,
   })
-}
-
-function getAuthenticatedUserId(request: { userId?: string }): string {
-  if (!request.userId) {
-    throw new AppError('Authentification requise.', 401)
-  }
-
-  return request.userId
 }

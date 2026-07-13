@@ -9,11 +9,3 @@ export interface IApiResponse<TData> {
   message?: string
   errors?: IApiError[]
 }
-
-export interface IPaginatedResponse<TItem> {
-  items: TItem[]
-  page: number
-  limit: number
-  total: number
-  pages: number
-}

@@ -3,7 +3,6 @@ export interface IUser {
   firstname: string
   lastname: string
   email: string
-  avatarUrl?: string | null
   createdAt?: string
   updatedAt?: string
 }

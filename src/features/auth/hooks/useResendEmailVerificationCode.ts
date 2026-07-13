@@ -1,5 +1,5 @@
-import { useMutation } from '@tanstack/react-query'
-import { resendEmailVerificationCode } from '../services'
+import { useMutation } from "@tanstack/react-query";
+import { resendEmailVerificationCode } from "../services";
 
 export function useResendEmailVerificationCode() {
   return useMutation({
@@ -7,5 +7,5 @@ export function useResendEmailVerificationCode() {
       resendEmailVerificationCode({
         email,
       }),
-  })
+  });
 }

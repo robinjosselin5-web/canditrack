@@ -1,13 +1,16 @@
 import type { Request, Response } from 'express'
 import { AppError } from '../errors/appError.js'
+import { getAuthenticatedUserId } from '../utils/auth.js'
 import {
   analyzeCandidateCv,
   deleteCandidateCv,
   getCandidateCvs,
+  getCandidateCvExtractedData,
   importCandidateCv,
 } from '../services/candidateCvService.js'
 import type { IApiSuccessResponse } from '../types/api.types.js'
 import type {
+  ICandidateCvExtractedDataResponse,
   ICandidateCvListResponse,
   ICandidateCvPublic,
 } from '../types/candidateCv.types.js'
@@ -41,6 +44,23 @@ export async function getCandidateCvsController(
   })
 }
 
+export async function getCandidateCvExtractedDataController(
+  request: Request<{ cvId: string }>,
+  response: Response<IApiSuccessResponse<ICandidateCvExtractedDataResponse>>,
+): Promise<void> {
+  const cvId = getCandidateCvId(request.params.cvId)
+
+  const extractedData = await getCandidateCvExtractedData(
+    getAuthenticatedUserId(request),
+    cvId,
+  )
+
+  response.status(200).json({
+    success: true,
+    data: extractedData,
+  })
+}
+
 export async function analyzeCandidateCvController(
   request: Request<{ cvId: string }>,
   response: Response<IApiSuccessResponse<null>>,
@@ -67,14 +87,6 @@ export async function deleteCandidateCvController(
     success: true,
     data: null,
   })
-}
-
-function getAuthenticatedUserId(request: { userId?: string }): string {
-  if (!request.userId) {
-    throw new AppError('Authentification requise.', 401)
-  }
-
-  return request.userId
 }
 
 function getCandidateCvId(cvId: string): string {

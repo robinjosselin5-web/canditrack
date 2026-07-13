@@ -6,4 +6,4 @@ export {
   requestPasswordReset,
   resetPassword,
   verifyEmail,
-} from './authService'
+} from "./authService";

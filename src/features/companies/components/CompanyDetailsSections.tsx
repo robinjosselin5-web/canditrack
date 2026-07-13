@@ -15,6 +15,7 @@ import {
 import { Button, Card } from '@/components/ui'
 import type { CompanyStatus } from '../types/company.types'
 import type { DetailsTab } from '../config/companyDetailsTabs'
+import { statusLabels, statusStyles } from '../utils/companyStatus'
 
 interface HeroSectionProps {
   companyName: string
@@ -51,26 +52,6 @@ interface InfoRowProps {
 interface PlaceholderBlockProps {
   description: string
   title: string
-}
-
-const statusLabels: Record<CompanyStatus, string> = {
-  accepted: 'Acceptee',
-  draft: 'Brouillon',
-  follow_up: 'A relancer',
-  interview: 'Entretien',
-  no_response: 'Sans reponse',
-  pending: 'En attente',
-  rejected: 'Refusee',
-}
-
-const statusStyles: Record<CompanyStatus, string> = {
-  accepted: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  draft: 'border-slate-200 bg-slate-100 text-slate-700',
-  follow_up: 'border-violet-200 bg-violet-50 text-violet-700',
-  interview: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  no_response: 'border-amber-200 bg-amber-50 text-amber-700',
-  pending: 'border-amber-200 bg-amber-50 text-amber-700',
-  rejected: 'border-red-200 bg-red-50 text-red-700',
 }
 
 const notesPlaceholder =

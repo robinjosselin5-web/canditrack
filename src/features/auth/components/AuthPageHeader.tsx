@@ -1,8 +1,8 @@
-import { BrandLogoLink } from '@/components/BrandLogoLink'
+import { BrandLogoLink } from "@/components/BrandLogoLink";
 
 interface AuthPageHeaderProps {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }
 
 export function AuthPageHeader({ title, description }: AuthPageHeaderProps) {
@@ -16,5 +16,5 @@ export function AuthPageHeader({ title, description }: AuthPageHeaderProps) {
         {description}
       </p>
     </div>
-  )
+  );
 }

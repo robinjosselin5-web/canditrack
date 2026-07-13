@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query'
-import type { IForgotPasswordFormValues } from '../types/passwordReset.types'
-import { requestPasswordReset } from '../services'
+import { useMutation } from "@tanstack/react-query";
+import type { IForgotPasswordFormValues } from "../types/passwordReset.types";
+import { requestPasswordReset } from "../services";
 
 export function useForgotPassword() {
   return useMutation({
@@ -8,5 +8,5 @@ export function useForgotPassword() {
       requestPasswordReset({
         email: values.email,
       }),
-  })
+  });
 }

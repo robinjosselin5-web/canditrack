@@ -1,17 +1,20 @@
 import { Router } from 'express'
 import multer from 'multer'
+import { MAX_CV_FILE_SIZE } from '../../config/candidateCvConstants.js'
 import {
   analyzeCandidateCvController,
   deleteCandidateCvController,
   getCandidateCvsController,
+  getCandidateCvExtractedDataController,
   importCandidateCvController,
 } from '../controllers/candidateCvController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
 import { authenticateRequest } from '../middlewares/authenticateRequest.js'
+import { candidateCvUploadRateLimit } from '../middlewares/rateLimiters.js'
 
 const upload = multer({
   limits: {
-    fileSize: 10 * 1024 * 1024,
+    fileSize: MAX_CV_FILE_SIZE,
   },
   storage: multer.memoryStorage(),
 })
@@ -22,6 +25,12 @@ candidateCvRoutes.get(
   '/profile/cv',
   authenticateRequest,
   asyncHandler(getCandidateCvsController),
+)
+
+candidateCvRoutes.get(
+  '/profile/cv/:cvId/extracted-data',
+  authenticateRequest,
+  asyncHandler(getCandidateCvExtractedDataController),
 )
 
 candidateCvRoutes.post(
@@ -39,6 +48,7 @@ candidateCvRoutes.delete(
 candidateCvRoutes.post(
   '/profile/cv',
   authenticateRequest,
+  candidateCvUploadRateLimit,
   upload.single('file'),
   asyncHandler(importCandidateCvController),
 )

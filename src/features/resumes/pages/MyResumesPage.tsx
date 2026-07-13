@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { Alert, Button, Input, Modal } from '@/components/ui'
-import {
-  analyzeCandidateCv,
-  createCandidateCv,
-  deleteCandidateCv,
-  getCandidateCvs,
-} from '../services/candidateResumeService'
+import { MAX_CV_FILE_SIZE, MAX_CV_LABEL_LENGTH } from '@/config/candidateCvConstants'
 import type { ICandidateCvListItem } from '../types/candidateResume.types'
 import { CandidateCvCard } from '../components/CandidateCvCard'
-import {
-  MAX_CV_FILE_SIZE,
-  getCandidateCvErrorMessage,
-} from '../utils/candidateCvHelpers'
+import { getCandidateCvErrorMessage } from '../utils/candidateCvHelpers'
+import { useCreateCandidateCv } from '../hooks/useCreateCandidateCv'
+import { useAnalyzeCandidateCv } from '../hooks/useAnalyzeCandidateCv'
+import { useCandidateCvs } from '../hooks/useCandidateCvs'
+import { useDeleteCandidateCv } from '../hooks/useDeleteCandidateCv'
 
 export function MyResumesPage() {
-  const [resumes, setResumes] = useState<ICandidateCvListItem[]>([])
+  const {
+    data: resumes = [],
+    isLoading: isLoadingResumes,
+    error: resumesError,
+  } = useCandidateCvs()
+  const createMutation = useCreateCandidateCv()
+  const analyzeMutation = useAnalyzeCandidateCv()
+  const deleteMutation = useDeleteCandidateCv()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isActionModalOpen, setIsActionModalOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -25,14 +28,7 @@ export function MyResumesPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isLoadingResumes, setIsLoadingResumes] = useState(false)
-  const [analyzingResumeId, setAnalyzingResumeId] = useState<string | null>(null)
-  const [deletingResumeId, setDeletingResumeId] = useState<string | null>(null)
   const [fileInputKey, setFileInputKey] = useState(0)
-
-  useEffect(() => {
-    void refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
-  }, [])
 
   const resetForm = () => {
     setSelectedFile(null)
@@ -62,7 +58,7 @@ export function MyResumesPage() {
   }
 
   const closeActionModal = () => {
-    if (deletingResumeId) {
+    if (deleteMutation.isPending) {
       return
     }
 
@@ -94,7 +90,7 @@ export function MyResumesPage() {
       return
     }
 
-    if (label.trim().length > 50) {
+    if (label.trim().length > MAX_CV_LABEL_LENGTH) {
       setErrorMessage('Le label ne doit pas depasser 50 caracteres.')
       return
     }
@@ -103,12 +99,10 @@ export function MyResumesPage() {
     setErrorMessage(null)
 
     try {
-      await createCandidateCv({
+      await createMutation.mutateAsync({
         file: selectedFile,
         label: label.trim() || undefined,
       })
-
-      await refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
       setSuccessMessage('Le CV a ete importe avec succes.')
       setIsModalOpen(false)
       resetForm()
@@ -120,18 +114,14 @@ export function MyResumesPage() {
   }
 
   const handleAnalyze = async (resumeId: string) => {
-    setAnalyzingResumeId(resumeId)
     setErrorMessage(null)
     setSuccessMessage(null)
 
     try {
-      await analyzeCandidateCv(resumeId)
-      await refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
-      setSuccessMessage('Le CV a ete analyse avec succes.')
+      await analyzeMutation.mutateAsync(resumeId)
+      setSuccessMessage('Le CV a été analysé avec succès.')
     } catch (error) {
       setErrorMessage(getCandidateCvErrorMessage(error))
-    } finally {
-      setAnalyzingResumeId(null)
     }
   }
 
@@ -140,20 +130,16 @@ export function MyResumesPage() {
       return
     }
 
-    setDeletingResumeId(selectedResume.id)
     setErrorMessage(null)
     setSuccessMessage(null)
 
     try {
-      await deleteCandidateCv(selectedResume.id)
-      await refreshResumes(setResumes, setIsLoadingResumes, setErrorMessage)
+      await deleteMutation.mutateAsync(selectedResume.id)
       setSuccessMessage('Le CV a ete supprime avec succes.')
       setIsActionModalOpen(false)
       setSelectedResume(null)
     } catch (error) {
       setErrorMessage(getCandidateCvErrorMessage(error))
-    } finally {
-      setDeletingResumeId(null)
     }
   }
 
@@ -177,15 +163,15 @@ export function MyResumesPage() {
       </header>
 
       {successMessage ? <Alert variant="success">{successMessage}</Alert> : null}
-      {!isModalOpen && errorMessage ? (
-        <Alert variant="error">{errorMessage}</Alert>
+      {!isModalOpen && (errorMessage || resumesError) ? (
+        <Alert variant="error">{errorMessage ?? getCandidateCvErrorMessage(resumesError)}</Alert>
       ) : null}
 
       {isLoadingResumes ? (
         <div className="rounded-card border border-border bg-surface px-6 py-12 text-center shadow-medium">
           <p className="text-sm text-text-secondary">Chargement des CV...</p>
         </div>
-      ) : resumes.length === 0 ? (
+      ) : resumes.length === 0 && !errorMessage ? (
         <div className="rounded-card border border-dashed border-border bg-surface px-6 py-14 text-center shadow-medium">
           <p className="text-base font-semibold text-text-primary">
             Aucun CV importe pour le moment
@@ -200,7 +186,7 @@ export function MyResumesPage() {
             <CandidateCvCard
               key={resume.id}
               cv={resume}
-              isAnalyzing={analyzingResumeId === resume.id}
+              isAnalyzing={analyzeMutation.isPending}
               onAnalyze={(resumeId) => {
                 void handleAnalyze(resumeId)
               }}
@@ -228,7 +214,7 @@ export function MyResumesPage() {
 
           <Input
             label="Label du CV"
-            maxLength={50}
+            maxLength={MAX_CV_LABEL_LENGTH}
             name="resumeLabel"
             onChange={(event) => {
               setErrorMessage(null)
@@ -249,7 +235,7 @@ export function MyResumesPage() {
             </Button>
             <Button
               className="sm:w-auto"
-              loading={isSubmitting}
+              loading={isSubmitting || createMutation.isPending}
               onClick={handleImport}
             >
               Importer
@@ -275,7 +261,7 @@ export function MyResumesPage() {
           <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <Button
               className="sm:w-auto"
-              disabled={Boolean(deletingResumeId)}
+              disabled={deleteMutation.isPending}
               onClick={closeActionModal}
               variant="secondary"
             >
@@ -283,7 +269,7 @@ export function MyResumesPage() {
             </Button>
             <Button
               className="sm:w-auto"
-              loading={deletingResumeId === selectedResume?.id}
+              loading={deleteMutation.isPending}
               onClick={() => {
                 void handleDelete()
               }}
@@ -296,30 +282,4 @@ export function MyResumesPage() {
       </Modal>
     </section>
   )
-}
-
-async function loadCvs(
-  setCvs: (value: ICandidateCvListItem[]) => void,
-  setIsLoadingCvs: (value: boolean) => void,
-): Promise<void> {
-  setIsLoadingCvs(true)
-
-  try {
-    const cvs = await getCandidateCvs()
-    setCvs(cvs)
-  } finally {
-    setIsLoadingCvs(false)
-  }
-}
-
-async function refreshResumes(
-  setCvs: (value: ICandidateCvListItem[]) => void,
-  setIsLoadingCvs: (value: boolean) => void,
-  setErrorMessage: (value: string | null) => void,
-): Promise<void> {
-  try {
-    await loadCvs(setCvs, setIsLoadingCvs)
-  } catch {
-    setErrorMessage('Impossible de charger les CV.')
-  }
 }

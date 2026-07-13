@@ -8,7 +8,7 @@ import { AuthPageHeader } from "../components/AuthPageHeader";
 import { useRegister } from "../hooks/useRegister";
 import type { IRegisterFormValues } from "../types/register.types";
 import { getRegisterErrorMessage } from "../utils/authErrorMessages";
-import { registerSchema } from "../utils/registerSchema";
+import { registerSchema } from "../validation/registerSchema";
 
 export function RegisterPage() {
   const registerMutation = useRegister();
