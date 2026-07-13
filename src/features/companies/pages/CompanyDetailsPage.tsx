@@ -1,6 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, BriefcaseBusiness, CalendarDays, Clock3, Globe, MapPin, Phone, UserRound } from 'lucide-react'
+import {
+  ArrowLeft,
+  BriefcaseBusiness,
+  CalendarDays,
+  Clock3,
+  Globe,
+  MapPin,
+  Phone,
+  UserRound,
+} from 'lucide-react'
 import { Alert, Modal } from '@/components/ui'
 import { CompanyForm } from '../components/CompanyForm'
 import { ConfirmationModal } from '../components/ConfirmationModal'
@@ -23,7 +32,6 @@ export function CompanyDetailsPage() {
   const [activeTab, setActiveTab] = useState<DetailsTab>('summary')
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-  const [toastMessage, setToastMessage] = useState<string | null>(null)
 
   const createdAt = data ? new Date(data.createdAt).toLocaleDateString('fr-FR') : null
   const updatedAt = data ? new Date(data.updatedAt).toLocaleDateString('fr-FR') : null
@@ -32,7 +40,7 @@ export function CompanyDetailsPage() {
     () => [
       { icon: BriefcaseBusiness, label: 'Secteur', value: 'Non renseigne' },
       { icon: UserRound, label: 'Recruteur', value: getDisplayValue(data?.recruiterName) },
-      { icon: Phone, label: 'Telephone', value: getDisplayValue(data?.phone) },
+      { icon: Phone, label: 'Téléphone', value: getDisplayValue(data?.phone) },
       { icon: MapPin, label: 'Ville', value: getDisplayValue(data?.city) },
       { icon: Globe, label: 'Pays', value: getDisplayValue(data?.country) },
       { icon: CalendarDays, label: 'Creation', value: createdAt ?? '—' },
@@ -40,20 +48,6 @@ export function CompanyDetailsPage() {
     ],
     [createdAt, data?.city, data?.country, data?.phone, data?.recruiterName, updatedAt],
   )
-
-  useEffect(() => {
-    if (!toastMessage) {
-      return
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setToastMessage(null)
-    }, 2500)
-
-    return () => {
-      window.clearTimeout(timeoutId)
-    }
-  }, [toastMessage])
 
   return (
     <section className="mx-auto w-full max-w-330">
@@ -100,7 +94,7 @@ export function CompanyDetailsPage() {
           <DetailsTabContent
             activeTab={activeTab}
             infoRows={infoRows}
-            summaryText="Le resume genere par l'IA n'est pas encore disponible dans cette US. Cette section sert de placeholder visuel en attendant l'integration fonctionnelle."
+            summaryText="Le résumé généré par l'IA n'est pas encore disponible dans cette US. Cette section sert de placeholder visuel en attendant l'intégration fonctionnelle."
             website={data.website}
           />
         </div>
@@ -151,23 +145,14 @@ export function CompanyDetailsPage() {
           deleteCompanyMutation.mutate(companyId, {
             onSuccess: () => {
               setIsDeleteOpen(false)
-              setToastMessage('Entreprise supprimee avec succes.')
-              navigate('/companies')
+              navigate('/companies', {
+                state: { toastMessage: 'Entreprise supprimée avec succès.' },
+              })
             },
           })
         }}
         title="Supprimer une entreprise"
       />
-
-      {toastMessage ? (
-        <div
-          aria-live="polite"
-          className="fixed right-4 top-4 z-50 rounded-card border border-border bg-surface px-4 py-3 text-sm font-medium text-text-primary shadow-large"
-          role="status"
-        >
-          {toastMessage}
-        </div>
-      ) : null}
     </section>
   )
 }

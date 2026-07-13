@@ -1,13 +1,13 @@
 export interface IHealthStatus {
   status: 'ok'
-  service: 'candytrack-api'
+  service: 'canditrack-api'
   timestamp: string
 }
 
 export function getHealthStatus(): IHealthStatus {
   return {
     status: 'ok',
-    service: 'candytrack-api',
+    service: 'canditrack-api',
     timestamp: new Date().toISOString(),
   }
 }

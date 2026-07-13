@@ -2,7 +2,6 @@ export interface ICandidateCvPublic {
   id: string
   label: string
   originalFilename: string
-  storageKey: string
   mimeType: string
   fileSize: number
   isDefault: boolean
@@ -25,4 +24,60 @@ export interface ICandidateCvListItem {
 
 export interface ICandidateCvListResponse {
   cvs: ICandidateCvListItem[]
+}
+
+export interface ICandidateCvExperience {
+  jobTitle: string
+  companyName: string | null
+  startDate: string | null
+  endDate: string | null
+  isCurrent: boolean
+  location: string | null
+  description: string | null
+}
+
+export interface ICandidateCvSkill {
+  name: string
+  category:
+    | 'LANGUAGES'
+    | 'FRAMEWORKS_LIBRARIES'
+    | 'TOOLS_TECHNOLOGIES'
+    | 'METHODOLOGIES'
+    | 'SOFT_SKILLS'
+    | 'OTHER'
+  confidence: number | null
+  source: string | null
+}
+
+export interface ICandidateCvTraining {
+  title: string
+  organizationName: string | null
+  degree: string | null
+  fieldOfStudy: string | null
+  startDate: string | null
+  endDate: string | null
+  description: string | null
+  location: string | null
+  isCertification: boolean
+  certificationType: string | null
+}
+
+export interface ICandidateCvAnalysisResponse {
+  experiences: ICandidateCvExperience[]
+  skills: ICandidateCvSkill[]
+  trainings: ICandidateCvTraining[]
+}
+
+export interface ICandidateCvExtractedDataResponse {
+  cvId: string
+  cv: {
+    id: string
+    label: string
+    originalFilename: string
+    analysisStatus: 'NOT_ANALYZED' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
+    lastAnalyzedAt: string | null
+  }
+  experiences: ICandidateCvExperience[]
+  skills: ICandidateCvSkill[]
+  trainings: ICandidateCvTraining[]
 }

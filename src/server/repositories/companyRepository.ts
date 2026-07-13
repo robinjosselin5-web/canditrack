@@ -1,16 +1,15 @@
-import type { Company } from '../generated/prisma/client.js'
+import type { Company } from '@prisma/client'
 import { prisma } from '../config/prisma.js'
-import type {
-  ICreateCompanyInput,
-  ICompanyCreatedResponse,
-  ICompanyListItem,
-  ICompanyUpdatedResponse,
-} from '../types/company.types.js'
+import type { ICreateCompanyInput } from '../types/company.types.js'
 import { normalizeWebsiteUrl } from '../utils/normalizeWebsiteUrl.js'
 
 export async function createCompany(
   data: ICreateCompanyInput,
-): Promise<ICompanyCreatedResponse> {
+): Promise<{
+  id: string
+  name: string
+  status: Company['status']
+}> {
   const company = await prisma.company.create({
     data: {
       categoryId: data.categoryId,
@@ -24,18 +23,10 @@ export async function createCompany(
       userId: data.userId,
       website: normalizeWebsiteUrl(data.website),
     },
-    select: {
-      id: true,
-      name: true,
-      status: true,
-    },
+    select: { id: true, name: true, status: true },
   })
 
-  return {
-    id: company.id,
-    name: company.name,
-    status: 'draft',
-  }
+  return company
 }
 
 export async function findCompanyByIdForUser(
@@ -52,7 +43,22 @@ export async function findCompanyByIdForUser(
 
 export async function findCompaniesByUserId(
   userId: string,
-): Promise<ICompanyListItem[]> {
+): Promise<
+  Array<{
+    city: string | null
+    country: string | null
+    createdAt: Date
+    email: string | null
+    id: string
+    isFavorite: boolean
+    name: string
+    phone: string | null
+    recruiterName: string | null
+    status: Company['status']
+    updatedAt: Date
+    website: string | null
+  }>
+> {
   const companies = await prisma.company.findMany({
     where: { userId },
     orderBy: { createdAt: 'desc' },
@@ -72,20 +78,7 @@ export async function findCompaniesByUserId(
     },
   })
 
-  return companies.map((company) => ({
-    id: company.id,
-    name: company.name,
-    website: company.website,
-    email: company.email,
-    phone: company.phone,
-    city: company.city,
-    country: company.country,
-    recruiterName: company.recruiterName,
-    isFavorite: company.isFavorite,
-    status: company.status.toLowerCase() as ICompanyListItem['status'],
-    createdAt: company.createdAt.toISOString(),
-    updatedAt: company.updatedAt.toISOString(),
-  }))
+  return companies
 }
 
 export async function updateCompanyFavoriteById(
@@ -119,7 +112,19 @@ export async function updateCompanyById(
     recruiterName?: string
     website: string
   },
-): Promise<ICompanyUpdatedResponse | null> {
+): Promise<{
+  city: string | null
+  country: string | null
+  createdAt: Date
+  email: string | null
+  id: string
+  name: string
+  phone: string | null
+  recruiterName: string | null
+  status: Company['status']
+  updatedAt: Date
+  website: string | null
+} | null> {
   const company = await prisma.company.updateMany({
     where: {
       id: companyId,
@@ -156,26 +161,12 @@ export async function updateCompanyById(
       country: true,
       recruiterName: true,
       status: true,
+      createdAt: true,
       updatedAt: true,
     },
   })
 
-  if (!updatedCompany) {
-    return null
-  }
-
-  return {
-    id: updatedCompany.id,
-    name: updatedCompany.name,
-    website: updatedCompany.website,
-    email: updatedCompany.email,
-    phone: updatedCompany.phone,
-    city: updatedCompany.city,
-    country: updatedCompany.country,
-    recruiterName: updatedCompany.recruiterName,
-    status: updatedCompany.status.toLowerCase() as ICompanyUpdatedResponse['status'],
-    updatedAt: updatedCompany.updatedAt.toISOString(),
-  }
+  return updatedCompany
 }
 
 export async function deleteCompanyById(

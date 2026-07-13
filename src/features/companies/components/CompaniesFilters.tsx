@@ -1,17 +1,12 @@
 import { ChevronDown, Heart, Search } from 'lucide-react'
+import { statusLabels } from '../utils/companyStatus'
 
 export type StatusFilter = 'all' | 'accepted' | 'draft' | 'follow_up' | 'interview' | 'no_response' | 'pending' | 'rejected'
 export type SortOrder = 'desc' | 'asc'
 
 const statusFilterLabels: Record<StatusFilter, string> = {
-  accepted: 'Acceptée',
   all: 'Tous',
-  draft: 'Brouillon',
-  follow_up: 'À relancer',
-  interview: 'Entretien',
-  no_response: 'Sans réponse',
-  pending: 'En attente',
-  rejected: 'Refusée',
+  ...statusLabels,
 }
 
 const sortOrderLabels: Record<SortOrder, string> = {

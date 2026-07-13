@@ -30,10 +30,10 @@ export async function updateUserProfile(
   const userWithSameEmail = await findUserByEmail(payload.email)
 
   if (userWithSameEmail && userWithSameEmail.id !== currentUser.id) {
-    throw new AppError("L'adresse e-mail est deja utilisee.", 409, [
+    throw new AppError("L'adresse e-mail est déjà utilisée.", 409, [
       {
         field: 'email',
-        message: "L'adresse e-mail est deja utilisee.",
+        message: "L'adresse e-mail est déjà utilisée.",
       },
     ])
   }

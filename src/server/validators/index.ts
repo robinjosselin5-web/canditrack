@@ -22,3 +22,7 @@ export {
   updateUserProfileBodySchema,
   type UpdateUserProfileBody,
 } from './userValidators.js'
+export {
+  candidateCvAnalysisResponseSchema,
+  parseCandidateCvAnalysisResponse,
+} from './candidateCvValidators.js'

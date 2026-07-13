@@ -9,6 +9,11 @@ import {
   verifyEmailController,
 } from '../controllers/authController.js'
 import { asyncHandler } from '../middlewares/asyncHandler.js'
+import {
+  emailVerificationRateLimit,
+  forgotPasswordRateLimit,
+  loginRateLimit,
+} from '../middlewares/rateLimiters.js'
 import { validateBody } from '../middlewares/validateBody.js'
 import {
   emailVerificationBodySchema,
@@ -28,21 +33,25 @@ authRoutes.post(
 )
 authRoutes.post(
   '/auth/login',
+  loginRateLimit,
   validateBody(loginBodySchema),
   asyncHandler(loginController),
 )
 authRoutes.post(
   '/auth/email-verification/verify',
+  emailVerificationRateLimit,
   validateBody(emailVerificationBodySchema),
   asyncHandler(verifyEmailController),
 )
 authRoutes.post(
   '/auth/email-verification/resend',
+  emailVerificationRateLimit,
   validateBody(resendEmailVerificationBodySchema),
   asyncHandler(resendEmailVerificationController),
 )
 authRoutes.post(
   '/auth/forgot-password',
+  forgotPasswordRateLimit,
   validateBody(forgotPasswordBodySchema),
   asyncHandler(forgotPasswordController),
 )

@@ -1,10 +1,11 @@
-import { useMutation } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
-import type { IResetPasswordFormValues } from '../types/passwordReset.types'
-import { resetPassword } from '../services'
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/routes/paths";
+import type { IResetPasswordFormValues } from "../types/passwordReset.types";
+import { resetPassword } from "../services";
 
 export function useResetPassword(token: string) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (values: IResetPasswordFormValues) =>
@@ -13,7 +14,7 @@ export function useResetPassword(token: string) {
         password: values.password,
       }),
     onSuccess: () => {
-      navigate('/login', { replace: true })
+      navigate(ROUTES.LOGIN, { replace: true });
     },
-  })
+  });
 }

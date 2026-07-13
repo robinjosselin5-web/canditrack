@@ -2,7 +2,7 @@ import { Heart, MoreVertical } from 'lucide-react'
 import { useState } from 'react'
 import { CompanyLogo, CompanyStatusBadge } from './CompanyCard'
 import type { ICompanyListItem } from '../types/company.types'
-import { formatDate, getCompanyCategoryLabel } from '../utils/companyDisplay'
+import { formatDate } from '../utils/companyDisplay'
 
 interface CompaniesTableProps {
   companies: ICompanyListItem[]
@@ -21,9 +21,8 @@ export function CompaniesTable({
 }: CompaniesTableProps) {
   return (
     <div className="hidden overflow-visible rounded-card border border-border bg-surface shadow-small lg:block">
-      <div className="grid grid-cols-[2fr_1.4fr_1.6fr_1.2fr_48px] border-b border-border px-7 py-5 text-sm font-bold text-text-secondary">
+      <div className="grid grid-cols-[2fr_1.6fr_1.2fr_48px] border-b border-border px-7 py-5 text-sm font-bold text-text-secondary">
         <span>Entreprise</span>
-        <span>Catégorie</span>
         <span>Statut</span>
         <span>Date ajoutée</span>
         <span aria-hidden="true" />
@@ -32,7 +31,7 @@ export function CompaniesTable({
       {companies.map((company) => (
         <div
           key={company.id}
-          className="grid min-h-28 w-full cursor-pointer grid-cols-[2fr_1.4fr_1.6fr_1.2fr_48px] items-center border-b border-border px-7 text-left transition last:border-b-0 hover:bg-divider/60 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-primary"
+          className="grid min-h-28 w-full cursor-pointer grid-cols-[2fr_1.6fr_1.2fr_48px] items-center border-b border-border px-7 text-left transition last:border-b-0 hover:bg-divider/60 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-primary"
           onClick={() => {
             onOpenCompany(company.id)
           }}
@@ -50,9 +49,6 @@ export function CompaniesTable({
             <span className="truncate text-base font-bold text-slate-950">
               {company.name}
             </span>
-          </span>
-          <span className="truncate text-sm font-medium text-text-secondary">
-            {getCompanyCategoryLabel()}
           </span>
           <span>
             <CompanyStatusBadge status={company.status} />

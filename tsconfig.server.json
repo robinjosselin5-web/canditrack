@@ -10,10 +10,11 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noFallthroughCasesInSwitch": true,
-    "rootDir": "src/server",
+    "rootDir": "src",
     "outDir": "dist/server",
     "declaration": true,
     "sourceMap": true
   },
-  "include": ["src/server/**/*.ts"]
+  "include": ["src/server/**/*.ts"],
+  "exclude": ["src/server/**/*.test.ts", "src/server/integration/**"]
 }

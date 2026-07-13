@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { updateCompanyFavorite } from '../services/companyService'
+import { updateCompanyFavorite } from '../services'
 import type { ICompanyListItem } from '../types/company.types'
 
 interface IToggleFavoriteVariables {
@@ -39,20 +39,6 @@ export function useToggleCompanyFavorite() {
       if (context?.previousCompanies) {
         queryClient.setQueryData(['companies'], context.previousCompanies)
       }
-    },
-    onSuccess: (_data, variables) => {
-      queryClient.setQueryData<ICompanyListItem[]>(
-        ['companies'],
-        (currentCompanies) =>
-          currentCompanies?.map((company) =>
-            company.id === variables.companyId
-              ? {
-                  ...company,
-                  isFavorite: variables.isFavorite,
-                }
-              : company,
-          ) ?? currentCompanies,
-      )
     },
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: ['companies'] })
