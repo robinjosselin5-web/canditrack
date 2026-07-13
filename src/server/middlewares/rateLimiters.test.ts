@@ -60,7 +60,7 @@ function expectRateLimit(
 describe('rateLimiters', () => {
   it('loginRateLimit blocks after 5 requests in 15 minutes', () => {
     expectRateLimit(
-      loginRateLimit as RateLimitConfig,
+      loginRateLimit as unknown as RateLimitConfig,
       5,
       15 * 60 * 1000,
       'Trop de tentatives de connexion. Reessayez dans 15 minutes.',
@@ -69,7 +69,7 @@ describe('rateLimiters', () => {
 
   it('emailVerificationRateLimit blocks after 5 requests in 15 minutes', () => {
     expectRateLimit(
-      emailVerificationRateLimit as RateLimitConfig,
+      emailVerificationRateLimit as unknown as RateLimitConfig,
       5,
       15 * 60 * 1000,
       'Trop de tentatives de verification e-mail. Reessayez dans 15 minutes.',
@@ -78,7 +78,7 @@ describe('rateLimiters', () => {
 
   it('forgotPasswordRateLimit blocks after 3 requests in 15 minutes', () => {
     expectRateLimit(
-      forgotPasswordRateLimit as RateLimitConfig,
+      forgotPasswordRateLimit as unknown as RateLimitConfig,
       3,
       15 * 60 * 1000,
       'Trop de demandes de reinitialisation. Reessayez dans 15 minutes.',

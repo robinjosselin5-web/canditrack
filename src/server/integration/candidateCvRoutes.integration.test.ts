@@ -1,5 +1,6 @@
 import http from 'node:http'
 import jwt from 'jsonwebtoken'
+import type { SignOptions } from 'jsonwebtoken'
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 import { env } from '../config/env.js'
 
@@ -19,11 +20,13 @@ let baseUrl = ''
 async function startApp() {
   const { app } = await import('../app.js')
 
+  const instance = app.listen(0)
   await new Promise<void>((resolve) => {
-    server = app.listen(0, () => resolve())
+    instance.once('listening', resolve)
   })
+  server = instance
 
-  const address = server.address()
+  const address = instance.address()
   if (!address || typeof address === 'string') {
     throw new Error('Impossible to start test server')
   }
@@ -47,7 +50,7 @@ async function stopApp() {
   server = undefined
 }
 
-function createToken(expiresIn: string = '1h') {
+function createToken(expiresIn: SignOptions['expiresIn'] = '1h') {
   return jwt.sign({ sub: 'user-1', email: 'user@example.com' }, env.JWT_SECRET, {
     expiresIn,
   })

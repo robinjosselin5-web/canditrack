@@ -39,7 +39,7 @@ function createRequest(authorization?: string): Request {
 
 describe('authenticateRequest', () => {
   const response = {} as Response
-  const next = vi.fn<Parameters<NextFunction>, ReturnType<NextFunction>>()
+  const next = vi.fn() as unknown as NextFunction
 
   beforeEach(() => {
     vi.clearAllMocks()

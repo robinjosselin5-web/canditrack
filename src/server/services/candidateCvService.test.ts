@@ -1,5 +1,4 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { AppError } from '../errors/appError.js'
 
 const candidateCvRepositoryMock = vi.hoisted(() => ({
   createCandidateCv: vi.fn(),
@@ -41,7 +40,7 @@ vi.mock('./aiService.js', () => aiServiceMock)
 vi.mock('../validators/index.js', () => parserMock)
 vi.mock('pdf-parse', () => ({
   PDFParse: class {
-    constructor(private readonly options: { data: Buffer }) {
+    constructor(options: { data: Buffer }) {
       void options
     }
 

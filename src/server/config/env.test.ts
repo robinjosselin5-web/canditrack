@@ -58,7 +58,7 @@ async function importEnvWithOverride(
   try {
     Object.assign(process.env, overrides)
     vi.resetModules()
-    const importedEnv = await import('./env.ts')
+    const importedEnv = await import('./env.js')
 
     return importedEnv.env.AI_CV_ANALYSIS_ENABLED
   } finally {
