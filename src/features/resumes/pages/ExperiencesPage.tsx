@@ -1,60 +1,17 @@
-import { useEffect, useState } from 'react'
 import { ArrowLeft, BriefcaseBusiness, ChevronRight, MoreVertical, Plus } from 'lucide-react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Alert, Button } from '@/components/ui'
-import { getCandidateCvExtractedData } from '../services/candidateResumeService'
-import type { ICandidateCvExtractedDataResponse } from '../types/candidateResume.types'
+import { ROUTES } from '@/routes/paths'
+import { useProfileExtractedData } from '../hooks/useProfileExtractedData'
 import { formatCvPeriod, getCandidateCvErrorMessage } from '../utils/candidateCvHelpers'
 
 export function ExperiencesPage() {
   const navigate = useNavigate()
-  const { cvId } = useParams<{ cvId?: string }>()
-  const [extractedData, setExtractedData] = useState<ICandidateCvExtractedDataResponse | null>(null)
-  const [status, setStatus] = useState<'loading' | 'success' | 'empty' | 'error'>(() =>
-    cvId ? 'loading' : 'error',
-  )
-  const [errorMessage, setErrorMessage] = useState<string | null>(() =>
-    cvId ? null : 'Identifiant de CV manquant.',
-  )
-  const hasMissingCvId = !cvId
-
-  useEffect(() => {
-    if (!cvId) {
-      return
-    }
-
-    let cancelled = false
-
-    const loadExperiences = async () => {
-      setStatus('loading')
-      setErrorMessage(null)
-
-      try {
-        const response = await getCandidateCvExtractedData(cvId)
-
-        if (cancelled) {
-          return
-        }
-
-        setExtractedData(response)
-        setStatus(response.experiences.length > 0 ? 'success' : 'empty')
-      } catch (error) {
-        if (!cancelled) {
-          setStatus('error')
-          setErrorMessage(getCandidateCvErrorMessage(error))
-        }
-      }
-    }
-
-    void loadExperiences()
-
-    return () => {
-      cancelled = true
-    }
-  }, [cvId])
+  const { data, isLoading, error } = useProfileExtractedData()
+  const experiences = data?.experiences ?? []
 
   const goBackToExtractedData = () => {
-    navigate(cvId ? `/profile/cv/${cvId}/extracted-data` : '/profile/cv/extracted-data')
+    navigate(ROUTES.EXTRACTED_DATA)
   }
 
   return (
@@ -83,50 +40,43 @@ export function ExperiencesPage() {
       </nav>
 
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="space-y-3">
-          <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
-            Experiences
-          </h1>
-          {extractedData ? (
-            <p className="text-sm text-text-secondary">
-              {extractedData.cv.label || extractedData.cv.originalFilename}
-            </p>
-          ) : null}
-        </div>
-
+        <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
+          Experiences
+        </h1>
         <Button className="px-6 sm:w-auto" disabled variant="secondary">
           Modifier
         </Button>
       </header>
 
-      {status === 'loading' ? (
+      {isLoading ? (
         <div className="rounded-card border border-border bg-surface px-6 py-12 text-center shadow-soft">
           <p className="text-sm text-text-secondary">Chargement des experiences...</p>
         </div>
       ) : null}
 
-      {status === 'error' ? (
+      {error ? (
         <Alert variant="error">
-          {hasMissingCvId
-            ? 'Identifiant de CV manquant.'
-            : errorMessage ?? 'Impossible de charger les experiences pour le moment.'}
+          {getCandidateCvErrorMessage(
+            error,
+            'Impossible de charger les experiences pour le moment.',
+          )}
         </Alert>
       ) : null}
 
-      {status === 'empty' ? (
+      {!isLoading && !error && experiences.length === 0 ? (
         <div className="rounded-card border border-dashed border-border bg-surface px-6 py-14 text-center shadow-soft">
           <p className="text-base font-semibold text-text-primary">
             Aucune experience extraite
           </p>
           <p className="mt-2 text-sm leading-6 text-text-secondary">
-            Ce CV ne contient pas encore d'experience exploitable.
+            Aucun CV analyse ne contient encore d'experience exploitable.
           </p>
         </div>
       ) : null}
 
-      {status === 'success' && extractedData ? (
+      {!isLoading && !error && experiences.length > 0 ? (
         <div className="space-y-4">
-          {extractedData.experiences.map((experience, index) => (
+          {experiences.map((experience, index) => (
             <article
               className="flex items-start gap-4 rounded-card border border-border bg-surface p-4 shadow-soft sm:p-5"
               key={`${experience.jobTitle}-${experience.companyName ?? 'unknown'}-${index}`}
@@ -152,11 +102,7 @@ export function ExperiencesPage() {
                   </div>
 
                   <p className="pr-2 text-sm font-medium text-text-secondary sm:text-right">
-                    {formatCvPeriod(
-                      experience.startDate,
-                      experience.endDate,
-                      experience.isCurrent,
-                    )}
+                    {formatCvPeriod(experience.startDate, experience.endDate, experience.isCurrent)}
                   </p>
                 </div>
 
@@ -165,7 +111,6 @@ export function ExperiencesPage() {
                     <p className="text-sm leading-6 text-text-secondary">
                       {experience.description}
                     </p>
-
                     <button
                       aria-label={`Options pour ${experience.jobTitle}`}
                       disabled

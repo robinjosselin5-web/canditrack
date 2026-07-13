@@ -62,17 +62,7 @@ export interface ICandidateCvTraining {
   certificationType: string | null
 }
 
-export interface ICandidateCvExtractedDataCvSummary {
-  id: string
-  label: string
-  originalFilename: string
-  analysisStatus: 'NOT_ANALYZED' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
-  lastAnalyzedAt: string | null
-}
-
-export interface ICandidateCvExtractedDataResponse {
-  cvId: string
-  cv: ICandidateCvExtractedDataCvSummary
+export interface IProfileExtractedDataResponse {
   experiences: ICandidateCvExperience[]
   skills: ICandidateCvSkill[]
   trainings: ICandidateCvTraining[]

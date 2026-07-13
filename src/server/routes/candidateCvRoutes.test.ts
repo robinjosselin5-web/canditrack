@@ -12,7 +12,7 @@ const controllerMock = vi.hoisted(() => ({
   analyzeCandidateCvController: vi.fn(),
   deleteCandidateCvController: vi.fn(),
   getCandidateCvsController: vi.fn(),
-  getCandidateCvExtractedDataController: vi.fn(),
+  getProfileExtractedDataController: vi.fn(),
   importCandidateCvController: vi.fn(),
 }))
 
@@ -76,18 +76,24 @@ describe('candidateCvRoutes', () => {
     registeredRoutes.length = 0
   })
 
-  it('wires GET /profile/cv/:cvId/extracted-data with authenticateRequest then asyncHandler', async () => {
+  it('wires the aggregate extracted-data route without a dynamic CV route', async () => {
     await importCandidateCvRoutes()
 
-    const route = registeredRoutes.find(
-      (layer) =>
-        layer.method === 'get' && layer.path === '/profile/cv/:cvId/extracted-data',
+    const profileRouteIndex = registeredRoutes.findIndex(
+      (layer) => layer.method === 'get' && layer.path === '/profile/cv/extracted-data',
     )
+    const route = registeredRoutes[profileRouteIndex]
 
+    expect(profileRouteIndex).toBeGreaterThanOrEqual(0)
     expect(route?.handlers).toEqual([
       authMock.authenticateRequest,
-      controllerMock.getCandidateCvExtractedDataController,
+      controllerMock.getProfileExtractedDataController,
     ])
+    expect(
+      registeredRoutes.some(
+        (layer) => layer.method === 'get' && layer.path.includes(':cvId') && layer.path.endsWith('/extracted-data'),
+      ),
+    ).toBe(false)
   })
 
   it('wires POST /profile/cv/:cvId/analyze with authenticateRequest then asyncHandler', async () => {

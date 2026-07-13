@@ -8,7 +8,7 @@ const candidateCvServiceMock = vi.hoisted(() => ({
   analyzeCandidateCv: vi.fn(),
   deleteCandidateCv: vi.fn(),
   getCandidateCvs: vi.fn(),
-  getCandidateCvExtractedData: vi.fn(),
+  getProfileExtractedData: vi.fn(),
   importCandidateCv: vi.fn(),
 }))
 
@@ -77,108 +77,41 @@ describe('candidateCvRoutes integration', () => {
     await stopApp()
   })
 
-  it('GET /profile/cv/:cvId/extracted-data returns 401 without auth', async () => {
-    const result = await requestJson('/api/v1/profile/cv/123e4567-e89b-12d3-a456-426614174000/extracted-data')
+  it('GET /profile/cv/extracted-data returns the aggregated service payload', async () => {
+    candidateCvServiceMock.getProfileExtractedData.mockResolvedValueOnce({
+      experiences: [{ jobTitle: 'Developpeur' }],
+      skills: [{ name: 'TypeScript' }],
+      trainings: [{ title: 'Formation web' }],
+    })
+
+    const result = await requestJson('/api/v1/profile/cv/extracted-data', {
+      headers: {
+        Authorization: `Bearer ${createToken()}`,
+      },
+    })
+
+    expect(result.status).toBe(200)
+    expect(result.body).toEqual({
+      success: true,
+      data: {
+        experiences: [{ jobTitle: 'Developpeur' }],
+        skills: [{ name: 'TypeScript' }],
+        trainings: [{ title: 'Formation web' }],
+      },
+    })
+    expect(candidateCvServiceMock.getProfileExtractedData).toHaveBeenCalledWith(
+      'user-1',
+    )
+  })
+
+  it('GET /profile/cv/extracted-data remains protected', async () => {
+    const result = await requestJson('/api/v1/profile/cv/extracted-data')
 
     expect(result.status).toBe(401)
     expect(result.body).toEqual({
       success: false,
       message: 'Authentification requise.',
       errors: [],
-    })
-  })
-
-  it('GET /profile/cv/:cvId/extracted-data returns 401 on expired token', async () => {
-    const result = await requestJson(
-      '/api/v1/profile/cv/123e4567-e89b-12d3-a456-426614174000/extracted-data',
-      {
-        headers: {
-          Authorization: `Bearer ${createToken('-1s')}`,
-        },
-      },
-    )
-
-    expect(result.status).toBe(401)
-    expect(result.body).toEqual({
-      success: false,
-      message: 'Session expiree, veuillez vous reconnecter.',
-      errors: [],
-    })
-  })
-
-  it('GET /profile/cv/:cvId/extracted-data returns 401 on invalid token', async () => {
-    const result = await requestJson(
-      '/api/v1/profile/cv/123e4567-e89b-12d3-a456-426614174000/extracted-data',
-      {
-        headers: {
-          Authorization: 'Bearer invalid-token',
-        },
-      },
-    )
-
-    expect(result.status).toBe(401)
-    expect(result.body).toEqual({
-      success: false,
-      message: 'Token invalide.',
-      errors: [],
-    })
-  })
-
-  it('GET /profile/cv/:cvId/extracted-data returns 400 for a bad cvId', async () => {
-    const result = await requestJson('/api/v1/profile/cv/not-a-uuid/extracted-data', {
-      headers: {
-        Authorization: `Bearer ${createToken()}`,
-      },
-    })
-
-    expect(result.status).toBe(400)
-    expect(result.body).toEqual({
-      success: false,
-      message: 'Identifiant de CV invalide.',
-      errors: [],
-    })
-  })
-
-  it('GET /profile/cv/:cvId/extracted-data returns the service payload', async () => {
-    candidateCvServiceMock.getCandidateCvExtractedData.mockResolvedValueOnce({
-      cvId: '123e4567-e89b-12d3-a456-426614174000',
-      cv: {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        label: 'CV',
-        originalFilename: 'cv.pdf',
-        analysisStatus: 'COMPLETED',
-        lastAnalyzedAt: null,
-      },
-      experiences: [],
-      skills: [],
-      trainings: [],
-    })
-
-    const result = await requestJson(
-      '/api/v1/profile/cv/123e4567-e89b-12d3-a456-426614174000/extracted-data',
-      {
-        headers: {
-          Authorization: `Bearer ${createToken()}`,
-        },
-      },
-    )
-
-    expect(result.status).toBe(200)
-    expect(result.body).toEqual({
-      success: true,
-      data: {
-        cvId: '123e4567-e89b-12d3-a456-426614174000',
-        cv: {
-          id: '123e4567-e89b-12d3-a456-426614174000',
-          label: 'CV',
-          originalFilename: 'cv.pdf',
-          analysisStatus: 'COMPLETED',
-          lastAnalyzedAt: null,
-        },
-        experiences: [],
-        skills: [],
-        trainings: [],
-      },
     })
   })
 

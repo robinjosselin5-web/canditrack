@@ -9,6 +9,9 @@ export function useAnalyzeCandidateCv() {
     mutationFn: (cvId: string) => analyzeCandidateCv(cvId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: resumesQueryKeys.all })
+      await queryClient.invalidateQueries({
+        queryKey: resumesQueryKeys.profileExtractedData(),
+      })
     },
   })
 }

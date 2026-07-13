@@ -1,5 +1,4 @@
 export const resumesQueryKeys = {
   all: ['resumes'] as const,
-  extractedData: (cvId: string | undefined) =>
-    ['resumes', 'extracted-data', cvId] as const,
+  profileExtractedData: () => ['resumes', 'profile-extracted-data'] as const,
 }

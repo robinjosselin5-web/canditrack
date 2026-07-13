@@ -7,7 +7,7 @@ const candidateCvRepositoryMock = vi.hoisted(() => ({
   findCandidateCvById: vi.fn(),
   findCandidateCvsByProfileId: vi.fn(),
   findCandidateProfileByUserId: vi.fn(),
-  getCandidateCvExtractedData: vi.fn(),
+  getProfileExtractedData: vi.fn(),
   saveCandidateCvAnalysis: vi.fn(),
   updateCandidateCvAnalysisStatus: vi.fn(),
 }))
@@ -502,6 +502,17 @@ describe('candidateCvService', () => {
 
     await analyzeCandidateCv('user-1', 'cv-1')
 
+    expect(candidateCvRepositoryMock.saveCandidateCvAnalysis).toHaveBeenCalledWith(
+      'cv-1',
+      'profile-1',
+      expect.objectContaining({
+        experiences: [],
+        skills: [],
+        trainings: [],
+      }),
+      'CV text',
+    )
+
     expect(candidateCvRepositoryMock.updateCandidateCvAnalysisStatus).toHaveBeenNthCalledWith(
       1,
       'cv-1',
@@ -607,97 +618,6 @@ describe('candidateCvService', () => {
     })
   })
 
-  it('throws a 404 when the candidate profile does not exist for extracted data', async () => {
-    candidateCvRepositoryMock.findCandidateProfileByUserId.mockResolvedValueOnce(
-      null,
-    )
-
-    const { getCandidateCvExtractedData } = await importCandidateCvService()
-
-    await expect(
-      getCandidateCvExtractedData('user-1', 'cv-1'),
-    ).rejects.toMatchObject({
-      message: 'Profil candidat introuvable.',
-      statusCode: 404,
-    })
-
-    expect(candidateCvRepositoryMock.getCandidateCvExtractedData).not.toHaveBeenCalled()
-  })
-
-  it('throws a 404 when the CV is not found for the current profile scope', async () => {
-    candidateCvRepositoryMock.getCandidateCvExtractedData.mockResolvedValueOnce(
-      null,
-    )
-
-    const { getCandidateCvExtractedData } = await importCandidateCvService()
-
-    await expect(
-      getCandidateCvExtractedData('user-1', 'cv-1'),
-    ).rejects.toMatchObject({
-      message: 'CV introuvable.',
-      statusCode: 404,
-    })
-
-    expect(candidateCvRepositoryMock.getCandidateCvExtractedData).toHaveBeenCalledWith(
-      'cv-1',
-      'profile-1',
-    )
-  })
-
-  it.each(['NOT_ANALYZED', 'PROCESSING', 'FAILED'] as const)(
-    'throws the same 409 when analysis status is %s',
-    async (analysisStatus) => {
-      candidateCvRepositoryMock.getCandidateCvExtractedData.mockResolvedValueOnce({
-        id: 'cv-1',
-        label: 'CV 1',
-        originalFilename: 'cv-1.pdf',
-        analysisStatus,
-        lastAnalyzedAt: null,
-        cvExperiences: [],
-        cvSkills: [],
-        cvTrainings: [],
-      })
-
-      const { getCandidateCvExtractedData } = await importCandidateCvService()
-
-      await expect(
-        getCandidateCvExtractedData('user-1', 'cv-1'),
-      ).rejects.toMatchObject({
-        message: "Le CV n'a pas encore ete analyse.",
-        statusCode: 409,
-      })
-    },
-  )
-
-  it('returns extracted data when the analysis is completed', async () => {
-    candidateCvRepositoryMock.getCandidateCvExtractedData.mockResolvedValueOnce({
-      id: 'cv-1',
-      label: 'CV 1',
-      originalFilename: 'cv-1.pdf',
-      analysisStatus: 'COMPLETED',
-      lastAnalyzedAt: new Date('2026-01-03T00:00:00.000Z'),
-      cvExperiences: [{ id: 'exp-1' }],
-      cvSkills: [{ id: 'skill-1' }],
-      cvTrainings: [{ id: 'training-1' }],
-    })
-
-    const { getCandidateCvExtractedData } = await importCandidateCvService()
-
-    await expect(getCandidateCvExtractedData('user-1', 'cv-1')).resolves.toEqual({
-      cvId: 'cv-1',
-      cv: {
-        id: 'cv-1',
-        label: 'CV 1',
-        originalFilename: 'cv-1.pdf',
-        analysisStatus: 'COMPLETED',
-        lastAnalyzedAt: '2026-01-03T00:00:00.000Z',
-      },
-      experiences: [{ id: 'exp-1' }],
-      skills: [{ id: 'skill-1' }],
-      trainings: [{ id: 'training-1' }],
-    })
-  })
-
   it('throws when the extracted text is empty after trim', async () => {
     const { buildCandidateCvAnalysisPrompt } = await importCandidateCvService()
 
@@ -707,6 +627,41 @@ describe('candidateCvService', () => {
         statusCode: 400,
       }),
     )
+  })
+
+  it('returns all extracted data for the authenticated candidate profile', async () => {
+    candidateCvRepositoryMock.getProfileExtractedData.mockResolvedValueOnce({
+      experiences: [{ jobTitle: 'Developpeur' }],
+      skills: [{ name: 'TypeScript' }],
+      trainings: [{ title: 'Formation web' }],
+    })
+
+    const { getProfileExtractedData } = await importCandidateCvService()
+
+    await expect(getProfileExtractedData('user-1')).resolves.toEqual({
+      experiences: [{ jobTitle: 'Developpeur' }],
+      skills: [{ name: 'TypeScript' }],
+      trainings: [{ title: 'Formation web' }],
+    })
+
+    expect(candidateCvRepositoryMock.findCandidateProfileByUserId).toHaveBeenCalledWith(
+      'user-1',
+    )
+    expect(candidateCvRepositoryMock.getProfileExtractedData).toHaveBeenCalledWith(
+      'profile-1',
+    )
+  })
+
+  it('throws when the candidate profile does not exist for aggregated extracted data', async () => {
+    candidateCvRepositoryMock.findCandidateProfileByUserId.mockResolvedValueOnce(null)
+
+    const { getProfileExtractedData } = await importCandidateCvService()
+
+    await expect(getProfileExtractedData('user-1')).rejects.toMatchObject({
+      message: 'Profil candidat introuvable.',
+      statusCode: 404,
+    })
+    expect(candidateCvRepositoryMock.getProfileExtractedData).not.toHaveBeenCalled()
   })
 
   it('throws when the extracted text contains only whitespace', async () => {

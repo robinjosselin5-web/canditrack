@@ -68,15 +68,7 @@ export interface ICandidateCvAnalysisResponse {
   trainings: ICandidateCvTraining[]
 }
 
-export interface ICandidateCvExtractedDataResponse {
-  cvId: string
-  cv: {
-    id: string
-    label: string
-    originalFilename: string
-    analysisStatus: 'NOT_ANALYZED' | 'PROCESSING' | 'COMPLETED' | 'FAILED'
-    lastAnalyzedAt: string | null
-  }
+export interface IProfileExtractedDataResponse {
   experiences: ICandidateCvExperience[]
   skills: ICandidateCvSkill[]
   trainings: ICandidateCvTraining[]

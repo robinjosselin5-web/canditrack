@@ -10,7 +10,7 @@ import {
   createCandidateProfile,
   findCandidateCvById,
   findCandidateCvsByProfileId,
-  getCandidateCvExtractedData as getCandidateCvExtractedDataRepository,
+  getProfileExtractedData as getProfileExtractedDataRepository,
   findCandidateProfileByUserId,
   saveCandidateCvAnalysis,
   updateCandidateCvAnalysisStatus,
@@ -24,8 +24,8 @@ import {
 import type {
   ICandidateCvListItem,
   ICandidateCvListResponse,
-  ICandidateCvExtractedDataResponse,
   ICandidateCvPublic,
+  IProfileExtractedDataResponse,
 } from '../types/candidateCv.types.js'
 const CV_ANALYSIS_OUTPUT_FORMAT = `{
   "experiences": [
@@ -126,43 +126,16 @@ export async function getCandidateCvs(
   }
 }
 
-export async function getCandidateCvExtractedData(
+export async function getProfileExtractedData(
   userId: string,
-  candidateCvId: string,
-): Promise<ICandidateCvExtractedDataResponse> {
+): Promise<IProfileExtractedDataResponse> {
   const candidateProfile = await findCandidateProfileByUserId(userId)
 
   if (!candidateProfile) {
     throw new AppError('Profil candidat introuvable.', 404)
   }
 
-  const candidateCvExtractedData = await getCandidateCvExtractedDataRepository(
-    candidateCvId,
-    candidateProfile.id,
-  )
-
-  if (!candidateCvExtractedData) {
-    throw new AppError('CV introuvable.', 404)
-  }
-
-  if (candidateCvExtractedData.analysisStatus !== 'COMPLETED') {
-    throw new AppError("Le CV n'a pas encore ete analyse.", 409)
-  }
-
-  return {
-    cvId: candidateCvExtractedData.id,
-    cv: {
-      id: candidateCvExtractedData.id,
-      label: candidateCvExtractedData.label,
-      originalFilename: candidateCvExtractedData.originalFilename,
-      analysisStatus: candidateCvExtractedData.analysisStatus,
-      lastAnalyzedAt:
-        candidateCvExtractedData.lastAnalyzedAt?.toISOString() ?? null,
-    },
-    experiences: candidateCvExtractedData.cvExperiences,
-    skills: candidateCvExtractedData.cvSkills,
-    trainings: candidateCvExtractedData.cvTrainings,
-  }
+  return getProfileExtractedDataRepository(candidateProfile.id)
 }
 
 export async function analyzeCandidateCv(
@@ -254,7 +227,8 @@ export async function analyzeCandidateCv(
     })
 
     await saveCandidateCvAnalysis(
-      candidateCvId,
+      candidateCv.id,
+      candidateCv.candidateProfileId,
       parsedCandidateCvAnalysisResponse,
       extractedText,
     )
