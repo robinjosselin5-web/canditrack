@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const candidateCvRepositoryMock = vi.hoisted(() => ({
@@ -34,6 +35,17 @@ const fsMock = vi.hoisted(() => ({
   readFile: vi.fn(),
   unlink: vi.fn(),
 }))
+
+function getCandidateCvStoragePath(userId: string) {
+  return path.join(
+    process.cwd(),
+    'uploads',
+    'users',
+    userId,
+    'cvs',
+    'cv-uuid-1.pdf',
+  )
+}
 
 vi.mock('../repositories/candidateCvRepository.js', () => candidateCvRepositoryMock)
 vi.mock('./aiService.js', () => aiServiceMock)
@@ -257,9 +269,7 @@ describe('candidateCvService', () => {
     ).rejects.toBe(dbError)
 
     expect(fsMock.unlink).toHaveBeenCalledTimes(1)
-    expect(fsMock.unlink).toHaveBeenCalledWith(
-      expect.stringContaining('uploads\\users\\user-1\\cvs\\cv-uuid-1.pdf'),
-    )
+    expect(fsMock.unlink).toHaveBeenCalledWith(getCandidateCvStoragePath('user-1'))
   })
 
   it('does not try to rollback when mkdir fails before the database step', async () => {
@@ -282,11 +292,11 @@ describe('candidateCvService', () => {
     await importCandidateCv('user-1', buildPdfFile({ originalname: 'candidate.pdf' }))
 
     expect(fsMock.mkdir).toHaveBeenCalledWith(
-      expect.stringContaining('uploads\\users\\user-1\\cvs'),
+      path.join(process.cwd(), 'uploads', 'users', 'user-1', 'cvs'),
       { recursive: true },
     )
     expect(fsMock.writeFile).toHaveBeenCalledWith(
-      expect.stringContaining('uploads\\users\\user-1\\cvs\\cv-uuid-1.pdf'),
+      getCandidateCvStoragePath('user-1'),
       expect.any(Buffer),
     )
     expect(candidateCvRepositoryMock.createCandidateCv).toHaveBeenCalledTimes(1)
