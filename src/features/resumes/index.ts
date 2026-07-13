@@ -10,8 +10,8 @@ export {
   analyzeCandidateCv,
   createCandidateCv,
   deleteCandidateCv,
-  getCandidateCvExtractedData,
   getCandidateCvs,
+  getProfileExtractedData,
   type ICreateCandidateCvPayload,
 } from './services/candidateResumeService'
 export type {
@@ -19,8 +19,7 @@ export type {
   ICandidateCvExperience,
   ICandidateCvSkill,
   ICandidateCvTraining,
-  ICandidateCvExtractedDataResponse,
-  ICandidateCvExtractedDataCvSummary,
   ICandidateCvListItem,
   ICandidateCvListResponse,
+  IProfileExtractedDataResponse,
 } from './types/candidateResume.types'

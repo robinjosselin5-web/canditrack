@@ -9,6 +9,9 @@ export function useDeleteCandidateCv() {
     mutationFn: (cvId: string) => deleteCandidateCv(cvId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: resumesQueryKeys.all })
+      await queryClient.invalidateQueries({
+        queryKey: resumesQueryKeys.profileExtractedData(),
+      })
     },
   })
 }

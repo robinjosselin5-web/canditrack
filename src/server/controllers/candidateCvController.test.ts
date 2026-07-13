@@ -10,7 +10,7 @@ const candidateCvServiceMock = vi.hoisted(() => ({
   analyzeCandidateCv: vi.fn(),
   deleteCandidateCv: vi.fn(),
   getCandidateCvs: vi.fn(),
-  getCandidateCvExtractedData: vi.fn(),
+  getProfileExtractedData: vi.fn(),
   importCandidateCv: vi.fn(),
 }))
 
@@ -45,187 +45,46 @@ describe('candidateCvController', () => {
     authMock.getAuthenticatedUserId.mockReturnValue('user-1')
   })
 
-  describe('getCandidateCvExtractedDataController', () => {
-    it.each([
-      ['abc'],
-      ['12345'],
-      [''],
-      ['123e4567-e89b-62d3-a456-426614174000'],
-      ['123e4567-e89b-12d3-c456-426614174000'],
-    ])('rejects invalid CV ids: %s', async (cvId) => {
-      const { getCandidateCvExtractedDataController } =
+  describe('getProfileExtractedDataController', () => {
+    it('reads aggregated extracted data for the authenticated user without URL params', async () => {
+      const { getProfileExtractedDataController } =
         await importCandidateCvController()
-
-      const request = {
-        params: { cvId },
-      } as Request<{ cvId: string }>
-
-      await expect(
-        getCandidateCvExtractedDataController(request, response),
-      ).rejects.toMatchObject({
-        message: 'Identifiant de CV invalide.',
-        statusCode: 400,
-      })
-    })
-
-    it('accepts a valid uppercase UUID', async () => {
-      const { getCandidateCvExtractedDataController } =
-        await importCandidateCvController()
-
-      candidateCvServiceMock.getCandidateCvExtractedData.mockResolvedValueOnce({
-        cvId: '123E4567-E89B-12D3-A456-426614174000',
-        cv: {
-          id: '123E4567-E89B-12D3-A456-426614174000',
-          label: 'CV',
-          originalFilename: 'cv.pdf',
-          analysisStatus: 'COMPLETED',
-          lastAnalyzedAt: null,
-        },
+      const extractedData = {
         experiences: [],
         skills: [],
         trainings: [],
-      })
-
-      const request = {
-        params: { cvId: '123E4567-E89B-12D3-A456-426614174000' },
-      } as Request<{ cvId: string }>
-
-      await getCandidateCvExtractedDataController(request, response)
-
-      expect(candidateCvServiceMock.getCandidateCvExtractedData).toHaveBeenCalledWith(
-        'user-1',
-        '123E4567-E89B-12D3-A456-426614174000',
+      }
+      candidateCvServiceMock.getProfileExtractedData.mockResolvedValueOnce(
+        extractedData,
       )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
 
-    it('throws a 401 when request.userId is absent', async () => {
-      authMock.getAuthenticatedUserId.mockImplementationOnce(() => {
-        throw new AppError('Authentification requise.', 401)
-      })
+      const request = {} as Request
 
-      const { getCandidateCvExtractedDataController } =
-        await importCandidateCvController()
-
-      const request = {
-        params: { cvId: '123e4567-e89b-12d3-a456-426614174000' },
-      } as Request<{ cvId: string }>
-
-      await expect(
-        getCandidateCvExtractedDataController(request, response),
-      ).rejects.toMatchObject({
-        message: 'Authentification requise.',
-        statusCode: 401,
-      })
-
-      expect(candidateCvServiceMock.getCandidateCvExtractedData).not.toHaveBeenCalled()
-    })
-
-    it('passes a valid UUID to the service', async () => {
-      const { getCandidateCvExtractedDataController } =
-        await importCandidateCvController()
-
-      candidateCvServiceMock.getCandidateCvExtractedData.mockResolvedValueOnce({
-        cvId: '123e4567-e89b-12d3-a456-426614174000',
-        cv: {
-          id: '123e4567-e89b-12d3-a456-426614174000',
-          label: 'CV',
-          originalFilename: 'cv.pdf',
-          analysisStatus: 'COMPLETED',
-          lastAnalyzedAt: null,
-        },
-        experiences: [],
-        skills: [],
-        trainings: [],
-      })
-
-      const request = {
-        params: { cvId: '123e4567-e89b-12d3-a456-426614174000' },
-      } as Request<{ cvId: string }>
-
-      await getCandidateCvExtractedDataController(request, response)
+      await getProfileExtractedDataController(request, response)
 
       expect(authMock.getAuthenticatedUserId).toHaveBeenCalledWith(request)
-      expect(candidateCvServiceMock.getCandidateCvExtractedData).toHaveBeenCalledWith(
+      expect(candidateCvServiceMock.getProfileExtractedData).toHaveBeenCalledWith(
         'user-1',
-        '123e4567-e89b-12d3-a456-426614174000',
       )
       expect(response.status).toHaveBeenCalledWith(200)
       expect(response.json).toHaveBeenCalledWith({
         success: true,
-        data: {
-          cvId: '123e4567-e89b-12d3-a456-426614174000',
-          cv: {
-            id: '123e4567-e89b-12d3-a456-426614174000',
-            label: 'CV',
-            originalFilename: 'cv.pdf',
-            analysisStatus: 'COMPLETED',
-            lastAnalyzedAt: null,
-          },
-          experiences: [],
-          skills: [],
-          trainings: [],
-        },
+        data: extractedData,
       })
     })
 
-    it('propagates a 404 from the service when the candidate profile is missing', async () => {
-      const { getCandidateCvExtractedDataController } =
+    it('propagates the missing candidate profile error', async () => {
+      const { getProfileExtractedDataController } =
         await importCandidateCvController()
-
-      candidateCvServiceMock.getCandidateCvExtractedData.mockRejectedValueOnce(
+      candidateCvServiceMock.getProfileExtractedData.mockRejectedValueOnce(
         new AppError('Profil candidat introuvable.', 404),
       )
 
-      const request = {
-        params: { cvId: '123e4567-e89b-12d3-a456-426614174000' },
-      } as Request<{ cvId: string }>
-
       await expect(
-        getCandidateCvExtractedDataController(request, response),
+        getProfileExtractedDataController({} as Request, response),
       ).rejects.toMatchObject({
         message: 'Profil candidat introuvable.',
         statusCode: 404,
-      })
-    })
-
-    it('propagates a 404 from the service when the CV is missing', async () => {
-      const { getCandidateCvExtractedDataController } =
-        await importCandidateCvController()
-
-      candidateCvServiceMock.getCandidateCvExtractedData.mockRejectedValueOnce(
-        new AppError('CV introuvable.', 404),
-      )
-
-      const request = {
-        params: { cvId: '123e4567-e89b-12d3-a456-426614174000' },
-      } as Request<{ cvId: string }>
-
-      await expect(
-        getCandidateCvExtractedDataController(request, response),
-      ).rejects.toMatchObject({
-        message: 'CV introuvable.',
-        statusCode: 404,
-      })
-    })
-
-    it('propagates a 409 from the service when analysis is not completed', async () => {
-      const { getCandidateCvExtractedDataController } =
-        await importCandidateCvController()
-
-      candidateCvServiceMock.getCandidateCvExtractedData.mockRejectedValueOnce(
-        new AppError("Le CV n'a pas encore ete analyse.", 409),
-      )
-
-      const request = {
-        params: { cvId: '123e4567-e89b-12d3-a456-426614174000' },
-      } as Request<{ cvId: string }>
-
-      await expect(
-        getCandidateCvExtractedDataController(request, response),
-      ).rejects.toMatchObject({
-        message: "Le CV n'a pas encore ete analyse.",
-        statusCode: 409,
       })
     })
   })

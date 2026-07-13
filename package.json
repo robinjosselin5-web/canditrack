@@ -10,6 +10,7 @@
     "server:build": "tsc -p tsconfig.server.json",
     "server:start": "node dist/server/index.js",
     "test": "vitest run --config vitest.config.mjs --configLoader runner --pool threads",
+    "test:integration": "vitest run --config vitest.config.mjs --configLoader runner --pool threads src/server/integration/candidateCvExtractedData.integration.test.ts",
     "test:watch": "vitest --config vitest.config.mjs --configLoader runner --pool threads",
     "prisma:generate": "prisma generate",
     "prisma:validate": "prisma validate",

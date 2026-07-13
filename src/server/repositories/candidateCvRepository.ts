@@ -58,59 +58,50 @@ export async function findCandidateCvById(candidateCvId: string) {
   })
 }
 
-export async function getCandidateCvExtractedData(
-  candidateCvId: string,
-  candidateProfileId: string,
-) {
-  return prisma.candidateCv.findFirst({
-    where: {
-      id: candidateCvId,
-      candidateProfileId,
-    },
-    select: {
-      id: true,
-      label: true,
-      originalFilename: true,
-      analysisStatus: true,
-      lastAnalyzedAt: true,
-      cvExperiences: {
-        orderBy: { createdAt: 'asc' },
-        select: {
-          jobTitle: true,
-          companyName: true,
-          startDate: true,
-          endDate: true,
-          isCurrent: true,
-          location: true,
-          description: true,
-        },
+export async function getProfileExtractedData(candidateProfileId: string) {
+  const [experiences, skills, trainings] = await Promise.all([
+    prisma.cvExperience.findMany({
+      where: { candidateProfileId },
+      orderBy: [{ startDate: 'desc' }, { createdAt: 'desc' }],
+      select: {
+        jobTitle: true,
+        companyName: true,
+        startDate: true,
+        endDate: true,
+        isCurrent: true,
+        location: true,
+        description: true,
       },
-      cvSkills: {
-        orderBy: [{ category: 'asc' }, { createdAt: 'asc' }],
-        select: {
-          name: true,
-          category: true,
-          confidence: true,
-          source: true,
-        },
+    }),
+    prisma.cvSkill.findMany({
+      where: { candidateProfileId },
+      orderBy: [{ category: 'asc' }, { name: 'asc' }],
+      select: {
+        name: true,
+        category: true,
+        confidence: true,
+        source: true,
       },
-      cvTrainings: {
-        orderBy: { createdAt: 'asc' },
-        select: {
-          title: true,
-          organizationName: true,
-          degree: true,
-          fieldOfStudy: true,
-          startDate: true,
-          endDate: true,
-          description: true,
-          location: true,
-          isCertification: true,
-          certificationType: true,
-        },
+    }),
+    prisma.cvTraining.findMany({
+      where: { candidateProfileId },
+      orderBy: [{ startDate: 'desc' }, { createdAt: 'desc' }],
+      select: {
+        title: true,
+        organizationName: true,
+        degree: true,
+        fieldOfStudy: true,
+        startDate: true,
+        endDate: true,
+        description: true,
+        location: true,
+        isCertification: true,
+        certificationType: true,
       },
-    },
-  })
+    }),
+  ])
+
+  return { experiences, skills, trainings }
 }
 
 export async function deleteCandidateCvAndReassignDefault(
@@ -161,6 +152,7 @@ export async function updateCandidateCvAnalysisStatus(
 
 export async function saveCandidateCvAnalysis(
   candidateCvId: string,
+  candidateProfileId: string,
   analysis: ICandidateCvAnalysisResponse,
   extractedText: string,
 ): Promise<void> {
@@ -180,6 +172,7 @@ export async function saveCandidateCvAnalysis(
     if (analysis.experiences.length > 0) {
       await tx.cvExperience.createMany({
         data: analysis.experiences.map((experience) => ({
+          candidateProfileId,
           candidateCvId,
           jobTitle: experience.jobTitle,
           companyName: experience.companyName,
@@ -195,6 +188,7 @@ export async function saveCandidateCvAnalysis(
     if (analysis.skills.length > 0) {
       await tx.cvSkill.createMany({
         data: analysis.skills.map((skill) => ({
+          candidateProfileId,
           candidateCvId,
           name: skill.name,
           category: skill.category,
@@ -207,6 +201,7 @@ export async function saveCandidateCvAnalysis(
     if (analysis.trainings.length > 0) {
       await tx.cvTraining.createMany({
         data: analysis.trainings.map((training) => ({
+          candidateProfileId,
           candidateCvId,
           title: training.title,
           organizationName: training.organizationName,
