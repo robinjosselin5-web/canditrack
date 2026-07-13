@@ -1,4 +1,4 @@
-import { Button, Modal } from '@/components/ui'
+import { Alert, Button, Modal } from '@/components/ui'
 
 interface ConfirmationModalProps {
   isOpen: boolean
@@ -7,6 +7,7 @@ interface ConfirmationModalProps {
   confirmLabel?: string
   cancelLabel?: string
   isLoading?: boolean
+  error?: string | null
   onConfirm: () => void
   onClose: () => void
 }
@@ -16,6 +17,7 @@ export function ConfirmationModal({
   confirmLabel = 'Confirmer',
   isLoading = false,
   isOpen,
+  error = null,
   message,
   onClose,
   onConfirm,
@@ -24,6 +26,7 @@ export function ConfirmationModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
       <div className="space-y-6">
+        {error ? <Alert variant="error">{error}</Alert> : null}
         <p className="text-sm leading-6 text-text-secondary">{message}</p>
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <Button

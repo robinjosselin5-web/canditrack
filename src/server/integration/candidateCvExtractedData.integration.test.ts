@@ -87,6 +87,14 @@ describe.skipIf(!runRealDbIntegrationTests)('candidate CV extracted data Postgre
 
   it('reanalyzes one CV without deleting another CV data', async () => {
     await createExtractedRows(fixture.profileId, fixture.cvAId, 'old')
+    await prisma.cvExperience.create({
+      data: {
+        candidateProfileId: fixture.profileId,
+        candidateCvId: fixture.cvAId,
+        jobTitle: 'Experience manual',
+        source: 'MANUAL',
+      },
+    })
     await createExtractedRows(fixture.profileId, fixture.cvBId, 'B')
 
     await saveCandidateCvAnalysis(fixture.cvAId, fixture.profileId, {
@@ -96,22 +104,40 @@ describe.skipIf(!runRealDbIntegrationTests)('candidate CV extracted data Postgre
     }, 'updated text')
 
     const data = await getProfileExtractedData(fixture.userId)
-    expect(data.experiences.map((row) => row.jobTitle).sort()).toEqual(['Experience B', 'Experience new'].sort())
+    expect(data.experiences.map((row) => row.jobTitle).sort()).toEqual(
+      ['Experience B', 'Experience manual', 'Experience new'].sort(),
+    )
+    expect(data.experiences.find((row) => row.jobTitle === 'Experience manual')).toMatchObject({
+      source: 'MANUAL',
+      candidateCvId: fixture.cvAId,
+    })
     expect(data.skills.map((row) => row.name).sort()).toEqual(['Skill B', 'Skill new'].sort())
     expect(data.trainings.map((row) => row.title).sort()).toEqual(['Training B', 'Training new'].sort())
   })
 
   it('keeps extracted data and nulls CV provenance after CV deletion', async () => {
     await createExtractedRows(fixture.profileId, fixture.cvAId, 'A')
+    await prisma.cvExperience.create({
+      data: {
+        candidateProfileId: fixture.profileId,
+        candidateCvId: fixture.cvAId,
+        jobTitle: 'Experience manual',
+        source: 'MANUAL',
+      },
+    })
 
     await deleteCandidateCvAndReassignDefault(fixture.cvAId, fixture.profileId)
 
     const data = await getProfileExtractedData(fixture.userId)
-    expect(data.experiences).toHaveLength(1)
+    expect(data.experiences).toHaveLength(2)
     expect(data.skills).toHaveLength(1)
     expect(data.trainings).toHaveLength(1)
     expect(await prisma.candidateCv.findUnique({ where: { id: fixture.cvAId } })).toBeNull()
     expect(await prisma.cvExperience.findFirst({ where: { candidateProfileId: fixture.profileId } })).toMatchObject({ candidateCvId: null })
+    expect(await prisma.cvExperience.findFirst({ where: { candidateProfileId: fixture.profileId, source: 'MANUAL' } })).toMatchObject({
+      candidateCvId: null,
+      jobTitle: 'Experience manual',
+    })
     expect(await prisma.cvSkill.findFirst({ where: { candidateProfileId: fixture.profileId } })).toMatchObject({ candidateCvId: null })
     expect(await prisma.cvTraining.findFirst({ where: { candidateProfileId: fixture.profileId } })).toMatchObject({ candidateCvId: null })
   })

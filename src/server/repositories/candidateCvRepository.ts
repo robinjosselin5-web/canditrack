@@ -64,6 +64,8 @@ export async function getProfileExtractedData(candidateProfileId: string) {
       where: { candidateProfileId },
       orderBy: [{ startDate: 'desc' }, { createdAt: 'desc' }],
       select: {
+        id: true,
+        candidateCvId: true,
         jobTitle: true,
         companyName: true,
         startDate: true,
@@ -71,6 +73,7 @@ export async function getProfileExtractedData(candidateProfileId: string) {
         isCurrent: true,
         location: true,
         description: true,
+        source: true,
       },
     }),
     prisma.cvSkill.findMany({
@@ -158,7 +161,7 @@ export async function saveCandidateCvAnalysis(
 ): Promise<void> {
   await prisma.$transaction(async (tx) => {
     await tx.cvExperience.deleteMany({
-      where: { candidateCvId },
+      where: { candidateCvId, source: 'AI' },
     })
 
     await tx.cvSkill.deleteMany({
@@ -174,6 +177,7 @@ export async function saveCandidateCvAnalysis(
         data: analysis.experiences.map((experience) => ({
           candidateProfileId,
           candidateCvId,
+          source: 'AI',
           jobTitle: experience.jobTitle,
           companyName: experience.companyName,
           startDate: experience.startDate,

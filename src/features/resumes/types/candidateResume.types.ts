@@ -26,7 +26,12 @@ export interface ICandidateCvListResponse {
   cvs: ICandidateCvListItem[]
 }
 
+export type CandidateDataSource = 'AI' | 'MANUAL'
+
 export interface ICandidateCvExperience {
+  id: string
+  candidateCvId: string | null
+  source: CandidateDataSource
   jobTitle: string
   companyName: string | null
   startDate: string | null
@@ -34,6 +39,22 @@ export interface ICandidateCvExperience {
   isCurrent: boolean
   location: string | null
   description: string | null
+}
+
+export interface ICreateCandidateExperiencePayload {
+  jobTitle: string
+  companyName?: string | null
+  startDate?: string | null
+  endDate?: string | null
+  location?: string | null
+}
+
+export interface IUpdateCandidateExperiencePayload {
+  jobTitle?: string
+  companyName?: string | null
+  startDate?: string | null
+  endDate?: string | null
+  location?: string | null
 }
 
 export interface ICandidateCvSkill {

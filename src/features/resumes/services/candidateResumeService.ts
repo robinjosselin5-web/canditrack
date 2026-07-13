@@ -2,8 +2,11 @@ import { httpClient } from '@/services/httpClient'
 import type { IApiResponse } from '@/types/api'
 import type {
   ICandidateCv,
+  ICandidateCvExperience,
   ICandidateCvListItem,
   ICandidateCvListResponse,
+  ICreateCandidateExperiencePayload,
+  IUpdateCandidateExperiencePayload,
   IProfileExtractedDataResponse,
 } from '../types/candidateResume.types'
 
@@ -49,6 +52,39 @@ export async function getProfileExtractedData(): Promise<IProfileExtractedDataRe
   )
 
   return response.data.data
+}
+
+export async function createCandidateExperience(
+  payload: ICreateCandidateExperiencePayload,
+): Promise<ICandidateCvExperience> {
+  const response = await httpClient.post<IApiResponse<ICandidateCvExperience>>(
+    '/profile/experiences',
+    payload,
+  )
+
+  return response.data.data
+}
+
+export async function updateCandidateExperience(
+  experienceId: string,
+  payload: IUpdateCandidateExperiencePayload,
+): Promise<ICandidateCvExperience> {
+  const response = await httpClient.patch<IApiResponse<ICandidateCvExperience>>(
+    `/profile/experiences/${experienceId}`,
+    payload,
+  )
+
+  return response.data.data
+}
+
+export async function deleteCandidateExperience(
+  experienceId: string,
+): Promise<string> {
+  const response = await httpClient.delete<
+    IApiResponse<{ message: string }>
+  >(`/profile/experiences/${experienceId}`)
+
+  return response.data.data.message
 }
 
 export async function analyzeCandidateCv(cvId: string): Promise<void> {
