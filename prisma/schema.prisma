@@ -38,6 +38,11 @@ enum CvSkillCategory {
   @@map("cv_skill_category")
 }
 
+enum CandidateDataSource {
+  AI
+  MANUAL
+}
+
 model User {
   id                     String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firstname              String     @db.VarChar(100)
@@ -113,6 +118,7 @@ model CvExperience {
   isCurrent          Boolean    @default(false) @map("is_current")
   location           String?
   description        String?
+  source             CandidateDataSource @default(AI)
   createdAt          DateTime   @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt          DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)

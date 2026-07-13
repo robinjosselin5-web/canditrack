@@ -78,7 +78,7 @@ describe('candidateCvRepository.saveCandidateCvAnalysis', () => {
     await saveCandidateCvAnalysis('cv-a', 'profile-1', analysis, 'CV text')
 
     expect(transactionModels.cvExperience.deleteMany).toHaveBeenCalledWith({
-      where: { candidateCvId: 'cv-a' },
+      where: { candidateCvId: 'cv-a', source: 'AI' },
     })
     expect(transactionModels.cvSkill.deleteMany).toHaveBeenCalledWith({
       where: { candidateCvId: 'cv-a' },
@@ -88,7 +88,7 @@ describe('candidateCvRepository.saveCandidateCvAnalysis', () => {
     })
 
     expect(transactionModels.cvExperience.createMany).toHaveBeenCalledWith({
-      data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a' })],
+      data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a', source: 'AI' })],
     })
     expect(transactionModels.cvSkill.createMany).toHaveBeenCalledWith({
       data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a' })],
@@ -106,7 +106,7 @@ describe('candidateCvRepository.getProfileExtractedData', () => {
 
   it('queries all extracted data directly by profile and preserves null CV provenance', async () => {
     transactionModels.cvExperience.findMany.mockResolvedValueOnce([
-      { jobTitle: 'Developpeur', candidateCvId: null },
+      { id: 'experience-1', jobTitle: 'Developpeur', candidateCvId: null, source: 'MANUAL' },
     ])
     transactionModels.cvSkill.findMany.mockResolvedValueOnce([
       { name: 'TypeScript', candidateCvId: null },
@@ -118,7 +118,7 @@ describe('candidateCvRepository.getProfileExtractedData', () => {
     const { getProfileExtractedData } = await import('./candidateCvRepository.js')
 
     await expect(getProfileExtractedData('profile-1')).resolves.toEqual({
-      experiences: [{ jobTitle: 'Developpeur', candidateCvId: null }],
+      experiences: [{ id: 'experience-1', jobTitle: 'Developpeur', candidateCvId: null, source: 'MANUAL' }],
       skills: [{ name: 'TypeScript', candidateCvId: null }],
       trainings: [{ title: 'Formation web', candidateCvId: null }],
     })
