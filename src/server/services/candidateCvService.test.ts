@@ -397,9 +397,7 @@ describe('candidateCvService', () => {
       'cv-1',
       'profile-1',
     )
-    expect(fsMock.unlink).toHaveBeenCalledWith(
-      expect.stringContaining('uploads\\users\\user-1\\cvs\\cv-uuid-1.pdf'),
-    )
+    expect(fsMock.unlink).toHaveBeenCalledWith(getCandidateCvStoragePath('user-1'))
     expect(candidateCvRepositoryMock.deleteCandidateCvAndReassignDefault.mock.invocationCallOrder[0]).toBeLessThan(
       fsMock.unlink.mock.invocationCallOrder[0],
     )
