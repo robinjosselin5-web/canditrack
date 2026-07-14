@@ -87,7 +87,7 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
       aria-describedby={descriptionId}
       aria-labelledby={titleId}
       aria-modal="true"
-      className="fixed inset-0 z-[60] overflow-y-auto bg-text-primary/30 px-3 py-3 sm:px-4 sm:py-6"
+      className="fixed inset-0 z-60 overflow-y-auto bg-text-primary/30 px-3 py-3 sm:px-4 sm:py-6"
       role="dialog"
       ref={dialogRef}
       tabIndex={-1}
@@ -100,7 +100,7 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
         type="button"
       />
 
-      <div className="relative mx-auto my-0 w-full max-w-[600px] max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-modal border border-border bg-surface p-5 shadow-large sm:my-6 sm:max-h-[calc(100dvh-3rem)] sm:p-8">
+      <div className="relative mx-auto my-0 w-full max-w-150 max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-modal border border-border bg-surface p-5 shadow-large sm:my-6 sm:max-h-[calc(100dvh-3rem)] sm:p-8">
         <div className="flex items-start justify-between gap-4 sm:gap-6">
           <h2
             className="text-lg font-semibold leading-7 text-text-primary sm:text-xl"
