@@ -34,7 +34,8 @@ describe('candidateCvHelpers', () => {
   })
 
   it('formatCvSkillCategory maps known categories to display labels', () => {
-    expect(formatCvSkillCategory('LANGUAGES')).toBe('Langages')
+    expect(formatCvSkillCategory('SPOKEN_LANGUAGES')).toBe('Langues parlées')
+    expect(formatCvSkillCategory('PROGRAMMING_LANGUAGES')).toBe('Langages de programmation')
     expect(formatCvSkillCategory('FRAMEWORKS_LIBRARIES')).toBe(
       'Frameworks & Bibliotheques',
     )

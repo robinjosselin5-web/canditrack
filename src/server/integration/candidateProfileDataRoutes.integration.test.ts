@@ -417,7 +417,7 @@ describe.skipIf(!runRealDbIntegrationTests)('candidate profile data API PostgreS
     const otherToken = createToken(fixture.secondUserId)
     const createResult = await requestJson('/api/v1/profile/skills', ownerToken, {
       method: 'POST',
-      body: JSON.stringify({ name: 'TypeScript', category: 'LANGUAGES' }),
+      body: JSON.stringify({ name: 'TypeScript', category: 'PROGRAMMING_LANGUAGES' }),
     })
     expect(createResult.status).toBe(201)
     expect(createResult.body.data).toMatchObject({ candidateCvId: null, dataSource: 'MANUAL', source: null, name: 'TypeScript' })

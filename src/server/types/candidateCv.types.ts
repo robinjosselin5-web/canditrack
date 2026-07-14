@@ -28,6 +28,15 @@ export interface ICandidateCvListResponse {
 
 export type CandidateDataSource = 'AI' | 'MANUAL'
 
+export type CvSkillCategory =
+  | 'SPOKEN_LANGUAGES'
+  | 'PROGRAMMING_LANGUAGES'
+  | 'FRAMEWORKS_LIBRARIES'
+  | 'TOOLS_TECHNOLOGIES'
+  | 'METHODOLOGIES'
+  | 'SOFT_SKILLS'
+  | 'OTHER'
+
 export interface ICandidateCvAnalysisExperience {
   jobTitle: string
   companyName: string | null
@@ -40,13 +49,7 @@ export interface ICandidateCvAnalysisExperience {
 
 export interface ICandidateCvAnalysisSkill {
   name: string
-  category:
-    | 'LANGUAGES'
-    | 'FRAMEWORKS_LIBRARIES'
-    | 'TOOLS_TECHNOLOGIES'
-    | 'METHODOLOGIES'
-    | 'SOFT_SKILLS'
-    | 'OTHER'
+  category: CvSkillCategory
   confidence: number | null
   source: string | null
 }
@@ -74,13 +77,7 @@ export interface ICandidateCvSkill {
   id: string
   candidateCvId: string | null
   name: string
-  category:
-    | 'LANGUAGES'
-    | 'FRAMEWORKS_LIBRARIES'
-    | 'TOOLS_TECHNOLOGIES'
-    | 'METHODOLOGIES'
-    | 'SOFT_SKILLS'
-    | 'OTHER'
+  category: CvSkillCategory
   confidence: number | null
   source: string | null
   dataSource: CandidateDataSource

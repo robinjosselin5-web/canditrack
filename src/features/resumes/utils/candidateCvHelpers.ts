@@ -24,8 +24,10 @@ export function formatCvPeriod(
 
 export function formatCvSkillCategory(category: string): string {
   switch (category) {
-    case 'LANGUAGES':
-      return 'Langages'
+    case 'SPOKEN_LANGUAGES':
+      return 'Langues parlées'
+    case 'PROGRAMMING_LANGUAGES':
+      return 'Langages de programmation'
     case 'FRAMEWORKS_LIBRARIES':
       return 'Frameworks & Bibliotheques'
     case 'TOOLS_TECHNOLOGIES':

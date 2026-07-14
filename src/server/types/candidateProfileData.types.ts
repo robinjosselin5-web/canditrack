@@ -1,5 +1,4 @@
-import type { ICandidateCvExperience } from './candidateCv.types.js'
-import type { CvSkillCategory } from '@prisma/client'
+import type { CvSkillCategory, ICandidateCvExperience } from './candidateCv.types.js'
 
 export type CandidateExperience = ICandidateCvExperience
 

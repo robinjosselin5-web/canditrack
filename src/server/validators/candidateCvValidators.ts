@@ -7,7 +7,8 @@ import {
 } from './validationConstants.js'
 
 export const cvSkillCategorySchema = z.enum([
-  'LANGUAGES',
+  'SPOKEN_LANGUAGES',
+  'PROGRAMMING_LANGUAGES',
   'FRAMEWORKS_LIBRARIES',
   'TOOLS_TECHNOLOGIES',
   'METHODOLOGIES',

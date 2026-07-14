@@ -138,11 +138,11 @@ describe('candidateResumeService', () => {
   })
 
   it('creates and deletes a skill with the expected endpoints', async () => {
-    const skill = { id: 'skill-1', name: 'TypeScript', category: 'LANGUAGES', candidateCvId: null, dataSource: 'MANUAL', confidence: null, source: null }
+    const skill = { id: 'skill-1', name: 'TypeScript', category: 'PROGRAMMING_LANGUAGES', candidateCvId: null, dataSource: 'MANUAL', confidence: null, source: null }
     httpClientMock.post.mockResolvedValueOnce({ data: { data: skill } })
     httpClientMock.delete.mockResolvedValueOnce({ data: { data: { message: 'Competence supprimee avec succes.' } } })
     const service = await import('./candidateResumeService.js')
-    const payload = { name: 'TypeScript', category: 'LANGUAGES' as const }
+    const payload = { name: 'TypeScript', category: 'PROGRAMMING_LANGUAGES' as const }
 
     await expect(service.createCandidateSkill(payload)).resolves.toEqual(skill)
     await expect(service.deleteCandidateSkill('skill-1')).resolves.toBe('Competence supprimee avec succes.')

@@ -111,7 +111,7 @@ describe('candidateProfileDataRepository', () => {
     prismaMock.cvSkill.deleteMany.mockResolvedValueOnce({ count: 1 })
     const repository = await import('./candidateProfileDataRepository.js')
 
-    await repository.createCandidateSkill('profile-1', { name: 'TypeScript', category: 'LANGUAGES' })
+    await repository.createCandidateSkill('profile-1', { name: 'TypeScript', category: 'PROGRAMMING_LANGUAGES' })
     await expect(repository.deleteCandidateSkillByIdForProfile('skill-1', 'profile-1')).resolves.toBe(true)
 
     expect(prismaMock.cvSkill.create).toHaveBeenCalledWith(expect.objectContaining({

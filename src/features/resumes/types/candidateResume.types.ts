@@ -27,7 +27,14 @@ export interface ICandidateCvListResponse {
 }
 
 export type CandidateDataSource = 'AI' | 'MANUAL'
-export type CvSkillCategory = 'LANGUAGES' | 'FRAMEWORKS_LIBRARIES' | 'TOOLS_TECHNOLOGIES' | 'METHODOLOGIES' | 'SOFT_SKILLS' | 'OTHER'
+export type CvSkillCategory =
+  | 'SPOKEN_LANGUAGES'
+  | 'PROGRAMMING_LANGUAGES'
+  | 'FRAMEWORKS_LIBRARIES'
+  | 'TOOLS_TECHNOLOGIES'
+  | 'METHODOLOGIES'
+  | 'SOFT_SKILLS'
+  | 'OTHER'
 
 export interface ICandidateCvExperience {
   id: string

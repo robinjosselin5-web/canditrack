@@ -22,7 +22,15 @@ export function SkillsPage() {
   const deleteSkillMutation = useDeleteCandidateSkill()
 
   const groupedSkills = useMemo(() => {
-    const categories: CvSkillCategory[] = ['LANGUAGES', 'FRAMEWORKS_LIBRARIES', 'TOOLS_TECHNOLOGIES', 'METHODOLOGIES', 'SOFT_SKILLS', 'OTHER']
+    const categories: CvSkillCategory[] = [
+      'SPOKEN_LANGUAGES',
+      'PROGRAMMING_LANGUAGES',
+      'FRAMEWORKS_LIBRARIES',
+      'TOOLS_TECHNOLOGIES',
+      'METHODOLOGIES',
+      'SOFT_SKILLS',
+      'OTHER',
+    ]
     return categories.map((category) => ({
       category,
       title: formatCvSkillCategory(category),

@@ -54,7 +54,7 @@ describe('candidateCvRepository.saveCandidateCvAnalysis', () => {
       skills: [
         {
           name: 'TypeScript',
-          category: 'LANGUAGES' as const,
+          category: 'PROGRAMMING_LANGUAGES' as const,
           confidence: 0.9,
           source: 'Projet',
         },

@@ -171,8 +171,8 @@ describe('candidateProfileDataService', () => {
     candidateCvRepositoryMock.findCandidateProfileByUserId.mockResolvedValueOnce({ id: 'profile-1' })
     candidateProfileDataRepositoryMock.createCandidateSkill.mockResolvedValueOnce({ id: 'skill-1', dataSource: 'MANUAL' })
     const { createSkillForUser } = await import('./candidateProfileDataService.js')
-    await expect(createSkillForUser('user-1', { name: 'TypeScript', category: 'LANGUAGES' })).resolves.toMatchObject({ dataSource: 'MANUAL' })
-    expect(candidateProfileDataRepositoryMock.createCandidateSkill).toHaveBeenCalledWith('profile-1', { name: 'TypeScript', category: 'LANGUAGES' })
+    await expect(createSkillForUser('user-1', { name: 'TypeScript', category: 'PROGRAMMING_LANGUAGES' })).resolves.toMatchObject({ dataSource: 'MANUAL' })
+    expect(candidateProfileDataRepositoryMock.createCandidateSkill).toHaveBeenCalledWith('profile-1', { name: 'TypeScript', category: 'PROGRAMMING_LANGUAGES' })
   })
 
   it('deletes a skill only within the authenticated profile scope', async () => {

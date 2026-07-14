@@ -7,7 +7,7 @@ import {
 
 const validSkill = {
   name: 'TypeScript',
-  category: 'LANGUAGES',
+  category: 'PROGRAMMING_LANGUAGES',
   confidence: 0.98,
   source: 'Developpement TypeScript',
 }
@@ -237,7 +237,8 @@ describe('candidateCvValidators', () => {
     })
 
     it.each([
-      'LANGUAGES',
+      'SPOKEN_LANGUAGES',
+      'PROGRAMMING_LANGUAGES',
       'FRAMEWORKS_LIBRARIES',
       'TOOLS_TECHNOLOGIES',
       'METHODOLOGIES',
@@ -267,6 +268,17 @@ describe('candidateCvValidators', () => {
               category: 'INVALID_CATEGORY',
             },
           ],
+        }),
+      )
+
+      expect(result.success).toBe(false)
+    })
+
+    it('rejects the legacy language category', () => {
+      const legacyCategory = 'LANG' + 'UAGES'
+      const result = candidateCvAnalysisResponseSchema.safeParse(
+        buildSchemaPayload({
+          skills: [{ ...validSkill, category: legacyCategory }],
         }),
       )
 
@@ -384,7 +396,7 @@ describe('candidateCvValidators', () => {
     )
 
     expect(parsed.experiences).toHaveLength(1)
-    expect(parsed.skills[0]?.category).toBe('LANGUAGES')
+    expect(parsed.skills[0]?.category).toBe('PROGRAMMING_LANGUAGES')
     expect(parsed.trainings).toHaveLength(0)
   })
 
@@ -400,7 +412,7 @@ describe('candidateCvValidators', () => {
     )
 
     expect(parsed.experiences).toHaveLength(1)
-    expect(parsed.skills[0]?.category).toBe('LANGUAGES')
+    expect(parsed.skills[0]?.category).toBe('PROGRAMMING_LANGUAGES')
   })
 
   it('parseCandidateCvAnalysisResponse rejects raw text without JSON', () => {
