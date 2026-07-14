@@ -1,8 +1,37 @@
 import { prisma } from '../config/prisma.js'
 import type {
   ICreateCandidateExperienceInput,
+  ICreateCandidateSkillInput,
+  ICreateCandidateTrainingInput,
   IUpdateCandidateExperienceRepositoryInput,
+  IUpdateCandidateTrainingRepositoryInput,
 } from '../types/candidateProfileData.types.js'
+
+const candidateSkillSelect = {
+  id: true,
+  candidateCvId: true,
+  name: true,
+  category: true,
+  confidence: true,
+  source: true,
+  dataSource: true,
+} as const
+
+const candidateTrainingSelect = {
+  id: true,
+  candidateCvId: true,
+  title: true,
+  organizationName: true,
+  degree: true,
+  fieldOfStudy: true,
+  startDate: true,
+  endDate: true,
+  description: true,
+  location: true,
+  isCertification: true,
+  certificationType: true,
+  source: true,
+} as const
 
 const candidateExperienceSelect = {
   id: true,
@@ -30,6 +59,18 @@ export async function createCandidateExperience(
     },
     select: candidateExperienceSelect,
   })
+}
+
+export async function createCandidateSkill(candidateProfileId: string, data: ICreateCandidateSkillInput) {
+  return prisma.cvSkill.create({
+    data: { ...data, candidateProfileId, candidateCvId: null, dataSource: 'MANUAL', confidence: null, source: null },
+    select: candidateSkillSelect,
+  })
+}
+
+export async function deleteCandidateSkillByIdForProfile(skillId: string, candidateProfileId: string): Promise<boolean> {
+  const result = await prisma.cvSkill.deleteMany({ where: { id: skillId, candidateProfileId } })
+  return result.count > 0
 }
 
 export async function findCandidateExperienceByIdForProfile(
@@ -76,5 +117,49 @@ export async function deleteCandidateExperienceByIdForProfile(
     },
   })
 
+  return result.count > 0
+}
+
+export async function createCandidateTraining(
+  candidateProfileId: string,
+  data: ICreateCandidateTrainingInput,
+) {
+  return prisma.cvTraining.create({
+    data: { ...data, candidateProfileId, candidateCvId: null, source: 'MANUAL' },
+    select: candidateTrainingSelect,
+  })
+}
+
+export async function findCandidateTrainingByIdForProfile(
+  trainingId: string,
+  candidateProfileId: string,
+) {
+  return prisma.cvTraining.findFirst({
+    where: { id: trainingId, candidateProfileId },
+    select: candidateTrainingSelect,
+  })
+}
+
+export async function updateCandidateTrainingByIdForProfile(
+  trainingId: string,
+  candidateProfileId: string,
+  data: IUpdateCandidateTrainingRepositoryInput,
+) {
+  const result = await prisma.cvTraining.updateMany({
+    where: { id: trainingId, candidateProfileId },
+    data,
+  })
+
+  if (result.count === 0) return null
+  return findCandidateTrainingByIdForProfile(trainingId, candidateProfileId)
+}
+
+export async function deleteCandidateTrainingByIdForProfile(
+  trainingId: string,
+  candidateProfileId: string,
+): Promise<boolean> {
+  const result = await prisma.cvTraining.deleteMany({
+    where: { id: trainingId, candidateProfileId },
+  })
   return result.count > 0
 }

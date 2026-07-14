@@ -95,4 +95,58 @@ describe('candidateResumeService', () => {
       '/profile/experiences/experience-1',
     )
   })
+
+  it('creates a training with the expected endpoint and returns the response data', async () => {
+    const training = { id: 'training-1', title: 'Formation web', source: 'MANUAL' }
+    const payload = { title: 'Formation web', isCertification: false, certificationType: null }
+    httpClientMock.post.mockResolvedValueOnce({ data: { data: training } })
+
+    const { createCandidateTraining } = await import('./candidateResumeService.js')
+
+    await expect(createCandidateTraining(payload)).resolves.toEqual(training)
+    expect(httpClientMock.post).toHaveBeenCalledWith('/profile/trainings', payload)
+  })
+
+  it('updates a training with PATCH and preserves explicit null values', async () => {
+    const training = { id: 'training-1', title: 'Formation avancee', certificationType: null, source: 'MANUAL' }
+    const payload = { title: 'Formation avancee', certificationType: null }
+    httpClientMock.patch.mockResolvedValueOnce({ data: { data: training } })
+
+    const { updateCandidateTraining } = await import('./candidateResumeService.js')
+
+    await expect(updateCandidateTraining('training-1', payload)).resolves.toEqual(training)
+    expect(httpClientMock.patch).toHaveBeenCalledWith('/profile/trainings/training-1', payload)
+  })
+
+  it('deletes a training and returns the API message', async () => {
+    httpClientMock.delete.mockResolvedValueOnce({
+      data: { data: { message: 'Formation supprimee avec succes.' } },
+    })
+
+    const { deleteCandidateTraining } = await import('./candidateResumeService.js')
+
+    await expect(deleteCandidateTraining('training-1')).resolves.toBe('Formation supprimee avec succes.')
+    expect(httpClientMock.delete).toHaveBeenCalledWith('/profile/trainings/training-1')
+  })
+
+  it('propagates HTTP errors for training mutations', async () => {
+    const error = new Error('network failure')
+    httpClientMock.post.mockRejectedValueOnce(error)
+    const { createCandidateTraining } = await import('./candidateResumeService.js')
+
+    await expect(createCandidateTraining({ title: 'Formation web' })).rejects.toBe(error)
+  })
+
+  it('creates and deletes a skill with the expected endpoints', async () => {
+    const skill = { id: 'skill-1', name: 'TypeScript', category: 'LANGUAGES', candidateCvId: null, dataSource: 'MANUAL', confidence: null, source: null }
+    httpClientMock.post.mockResolvedValueOnce({ data: { data: skill } })
+    httpClientMock.delete.mockResolvedValueOnce({ data: { data: { message: 'Competence supprimee avec succes.' } } })
+    const service = await import('./candidateResumeService.js')
+    const payload = { name: 'TypeScript', category: 'LANGUAGES' as const }
+
+    await expect(service.createCandidateSkill(payload)).resolves.toEqual(skill)
+    await expect(service.deleteCandidateSkill('skill-1')).resolves.toBe('Competence supprimee avec succes.')
+    expect(httpClientMock.post).toHaveBeenCalledWith('/profile/skills', payload)
+    expect(httpClientMock.delete).toHaveBeenCalledWith('/profile/skills/skill-1')
+  })
 })

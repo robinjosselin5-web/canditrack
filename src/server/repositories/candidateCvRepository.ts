@@ -80,16 +80,21 @@ export async function getProfileExtractedData(candidateProfileId: string) {
       where: { candidateProfileId },
       orderBy: [{ category: 'asc' }, { name: 'asc' }],
       select: {
+        id: true,
+        candidateCvId: true,
         name: true,
         category: true,
         confidence: true,
         source: true,
+        dataSource: true,
       },
     }),
     prisma.cvTraining.findMany({
       where: { candidateProfileId },
       orderBy: [{ startDate: 'desc' }, { createdAt: 'desc' }],
       select: {
+        id: true,
+        candidateCvId: true,
         title: true,
         organizationName: true,
         degree: true,
@@ -98,8 +103,9 @@ export async function getProfileExtractedData(candidateProfileId: string) {
         endDate: true,
         description: true,
         location: true,
-        isCertification: true,
-        certificationType: true,
+         isCertification: true,
+         certificationType: true,
+         source: true,
       },
     }),
   ])
@@ -165,11 +171,11 @@ export async function saveCandidateCvAnalysis(
     })
 
     await tx.cvSkill.deleteMany({
-      where: { candidateCvId },
+      where: { candidateCvId, dataSource: 'AI' },
     })
 
     await tx.cvTraining.deleteMany({
-      where: { candidateCvId },
+      where: { candidateCvId, source: 'AI' },
     })
 
     if (analysis.experiences.length > 0) {
@@ -194,6 +200,7 @@ export async function saveCandidateCvAnalysis(
         data: analysis.skills.map((skill) => ({
           candidateProfileId,
           candidateCvId,
+          dataSource: 'AI',
           name: skill.name,
           category: skill.category,
           confidence: skill.confidence,
@@ -206,8 +213,9 @@ export async function saveCandidateCvAnalysis(
       await tx.cvTraining.createMany({
         data: analysis.trainings.map((training) => ({
           candidateProfileId,
-          candidateCvId,
-          title: training.title,
+           candidateCvId,
+           source: 'AI',
+           title: training.title,
           organizationName: training.organizationName,
           degree: training.degree,
           fieldOfStudy: training.fieldOfStudy,

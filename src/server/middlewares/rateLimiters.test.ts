@@ -5,7 +5,13 @@ vi.mock('express-rate-limit', () => ({
   rateLimit: (options: unknown) => options,
 }))
 
-const { emailVerificationRateLimit, forgotPasswordRateLimit, loginRateLimit } = await import(
+const {
+  candidateCvUploadRateLimit,
+  candidateProfileDataCreateRateLimit,
+  emailVerificationRateLimit,
+  forgotPasswordRateLimit,
+  loginRateLimit,
+} = await import(
   './rateLimiters.js'
 )
 
@@ -82,6 +88,24 @@ describe('rateLimiters', () => {
       3,
       15 * 60 * 1000,
       'Trop de demandes de reinitialisation. Reessayez dans 15 minutes.',
+    )
+  })
+
+  it('candidateCvUploadRateLimit blocks after 10 requests in 1 hour', () => {
+    expectRateLimit(
+      candidateCvUploadRateLimit as unknown as RateLimitConfig,
+      10,
+      60 * 60 * 1000,
+      "Trop d'envois de CV. Reessayez dans 1 heure.",
+    )
+  })
+
+  it('candidateProfileDataCreateRateLimit blocks after 30 requests in 1 hour', () => {
+    expectRateLimit(
+      candidateProfileDataCreateRateLimit as unknown as RateLimitConfig,
+      30,
+      60 * 60 * 1000,
+      'Trop de creations de donnees extraites. Reessayez dans 1 heure.',
     )
   })
 })

@@ -98,7 +98,7 @@ async function createCandidateCv(profileId: string) {
   })
 }
 
-describe.skipIf(!runRealDbIntegrationTests)('candidate profile experiences API PostgreSQL integration', () => {
+describe.skipIf(!runRealDbIntegrationTests)('candidate profile data API PostgreSQL integration', () => {
   let fixture: Fixture
 
   beforeEach(async () => {
@@ -275,5 +275,155 @@ describe.skipIf(!runRealDbIntegrationTests)('candidate profile experiences API P
         }),
       ]),
     )
+  })
+
+  it('creates, updates and deletes a manual training with ownership protection', async () => {
+    const ownerToken = createToken(fixture.userId)
+    const otherToken = createToken(fixture.secondUserId)
+
+    const createResult = await requestJson('/api/v1/profile/trainings', ownerToken, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: 'Formation web',
+        organizationName: 'Acme',
+        degree: 'Master',
+        startDate: '2022',
+      }),
+    })
+
+    expect(createResult.status).toBe(201)
+    expect(createResult.body.data).toMatchObject({
+      title: 'Formation web',
+      organizationName: 'Acme',
+      candidateCvId: null,
+      source: 'MANUAL',
+    })
+
+    const trainingId = createResult.body.data.id as string
+    const profile = await prisma.candidateProfile.findUnique({ where: { userId: fixture.userId } })
+    expect(profile).not.toBeNull()
+    fixture.profileId = profile?.id ?? ''
+
+    expect(await prisma.cvTraining.findUnique({ where: { id: trainingId } })).toMatchObject({
+      candidateProfileId: fixture.profileId,
+      candidateCvId: null,
+      source: 'MANUAL',
+    })
+
+    const updateResult = await requestJson(`/api/v1/profile/trainings/${trainingId}`, ownerToken, {
+      method: 'PATCH',
+      body: JSON.stringify({ degree: 'Master specialise', certificationType: 'Ancienne valeur' }),
+    })
+    expect(updateResult.status).toBe(200)
+    expect(updateResult.body.data).toMatchObject({ degree: 'Master specialise', source: 'MANUAL' })
+    expect(await prisma.cvTraining.findUnique({ where: { id: trainingId } })).toMatchObject({
+      degree: 'Master specialise',
+      source: 'MANUAL',
+    })
+
+    expect((await requestJson(`/api/v1/profile/trainings/${trainingId}`, otherToken, {
+      method: 'PATCH',
+      body: JSON.stringify({ title: 'Intrusion' }),
+    })).status).toBe(404)
+    expect((await requestJson(`/api/v1/profile/trainings/${trainingId}`, otherToken, { method: 'DELETE' })).status).toBe(404)
+    expect((await requestJson('/api/v1/profile/trainings/not-a-training', ownerToken, { method: 'DELETE' })).status).toBe(400)
+
+    expect((await requestJson(`/api/v1/profile/trainings/${trainingId}`, ownerToken, { method: 'DELETE' })).status).toBe(200)
+    expect(await prisma.cvTraining.findUnique({ where: { id: trainingId } })).toBeNull()
+  })
+
+  it('keeps manual trainings and corrected AI trainings during re-analysis', async () => {
+    const ownerToken = createToken(fixture.userId)
+    const profile = await prisma.candidateProfile.create({ data: { userId: fixture.userId } })
+    const cv = await createCandidateCv(profile.id)
+    fixture.profileId = profile.id
+    fixture.cvId = cv.id
+
+    const correctedAiTraining = await prisma.cvTraining.create({
+      data: {
+        candidateProfileId: profile.id,
+        candidateCvId: cv.id,
+        source: 'AI',
+        title: 'Formation IA corrigee',
+        organizationName: 'Ancien organisme',
+      },
+    })
+    await prisma.cvTraining.create({
+      data: {
+        candidateProfileId: profile.id,
+        candidateCvId: cv.id,
+        source: 'AI',
+        title: 'Formation IA obsolete',
+      },
+    })
+    const manualTraining = await prisma.cvTraining.create({
+      data: {
+        candidateProfileId: profile.id,
+        candidateCvId: null,
+        source: 'MANUAL',
+        title: 'Formation ajoutee manuellement',
+      },
+    })
+
+    const updateResult = await requestJson(`/api/v1/profile/trainings/${correctedAiTraining.id}`, ownerToken, {
+      method: 'PATCH',
+      body: JSON.stringify({ title: 'Formation IA corrigee par utilisateur', organizationName: 'Nouvel organisme' }),
+    })
+    expect(updateResult.status).toBe(200)
+
+    await saveCandidateCvAnalysis(cv.id, profile.id, {
+      experiences: [],
+      skills: [],
+      trainings: [{
+        title: 'Formation IA nouvelle',
+        organizationName: 'Nouvelle source',
+        degree: null,
+        fieldOfStudy: null,
+        startDate: null,
+        endDate: null,
+        description: null,
+        location: null,
+        isCertification: false,
+        certificationType: null,
+      }],
+    }, 're-analyzed text')
+
+    const trainings = await prisma.cvTraining.findMany({ where: { candidateProfileId: profile.id } })
+    expect(trainings).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        id: correctedAiTraining.id,
+        title: 'Formation IA corrigee par utilisateur',
+        organizationName: 'Nouvel organisme',
+        candidateCvId: cv.id,
+        source: 'MANUAL',
+      }),
+      expect.objectContaining({
+        id: manualTraining.id,
+        title: 'Formation ajoutee manuellement',
+        candidateCvId: null,
+        source: 'MANUAL',
+      }),
+      expect.objectContaining({
+        title: 'Formation IA nouvelle',
+        candidateCvId: cv.id,
+        source: 'AI',
+      }),
+    ]))
+    expect(trainings.some((training) => training.title === 'Formation IA obsolete')).toBe(false)
+  })
+
+  it('creates and deletes a manual skill with profile ownership protection', async () => {
+    const ownerToken = createToken(fixture.userId)
+    const otherToken = createToken(fixture.secondUserId)
+    const createResult = await requestJson('/api/v1/profile/skills', ownerToken, {
+      method: 'POST',
+      body: JSON.stringify({ name: 'TypeScript', category: 'LANGUAGES' }),
+    })
+    expect(createResult.status).toBe(201)
+    expect(createResult.body.data).toMatchObject({ candidateCvId: null, dataSource: 'MANUAL', source: null, name: 'TypeScript' })
+    const skillId = createResult.body.data.id as string
+    expect((await requestJson(`/api/v1/profile/skills/${skillId}`, otherToken, { method: 'DELETE' })).status).toBe(404)
+    expect((await requestJson('/api/v1/profile/skills/not-a-skill', ownerToken, { method: 'DELETE' })).status).toBe(400)
+    expect((await requestJson(`/api/v1/profile/skills/${skillId}`, ownerToken, { method: 'DELETE' })).status).toBe(200)
   })
 })

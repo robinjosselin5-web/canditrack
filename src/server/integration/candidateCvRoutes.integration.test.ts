@@ -104,6 +104,30 @@ describe('candidateCvRoutes integration', () => {
     )
   })
 
+  it('GET /profile/cv/extracted-data returns empty data when the service returns an empty state', async () => {
+    candidateCvServiceMock.getProfileExtractedData.mockResolvedValueOnce({
+      experiences: [],
+      skills: [],
+      trainings: [],
+    })
+
+    const result = await requestJson('/api/v1/profile/cv/extracted-data', {
+      headers: {
+        Authorization: `Bearer ${createToken()}`,
+      },
+    })
+
+    expect(result.status).toBe(200)
+    expect(result.body).toEqual({
+      success: true,
+      data: {
+        experiences: [],
+        skills: [],
+        trainings: [],
+      },
+    })
+  })
+
   it('GET /profile/cv/extracted-data remains protected', async () => {
     const result = await requestJson('/api/v1/profile/cv/extracted-data')
 

@@ -38,13 +38,7 @@ export interface ICandidateCvAnalysisExperience {
   description: string | null
 }
 
-export interface ICandidateCvExperience extends ICandidateCvAnalysisExperience {
-  id: string
-  candidateCvId: string | null
-  source: CandidateDataSource
-}
-
-export interface ICandidateCvSkill {
+export interface ICandidateCvAnalysisSkill {
   name: string
   category:
     | 'LANGUAGES'
@@ -57,7 +51,7 @@ export interface ICandidateCvSkill {
   source: string | null
 }
 
-export interface ICandidateCvTraining {
+export interface ICandidateCvAnalysisTraining {
   title: string
   organizationName: string | null
   degree: string | null
@@ -70,10 +64,48 @@ export interface ICandidateCvTraining {
   certificationType: string | null
 }
 
+export interface ICandidateCvExperience extends ICandidateCvAnalysisExperience {
+  id: string
+  candidateCvId: string | null
+  source: CandidateDataSource
+}
+
+export interface ICandidateCvSkill {
+  id: string
+  candidateCvId: string | null
+  name: string
+  category:
+    | 'LANGUAGES'
+    | 'FRAMEWORKS_LIBRARIES'
+    | 'TOOLS_TECHNOLOGIES'
+    | 'METHODOLOGIES'
+    | 'SOFT_SKILLS'
+    | 'OTHER'
+  confidence: number | null
+  source: string | null
+  dataSource: CandidateDataSource
+}
+
+export interface ICandidateCvTraining {
+  id: string
+  candidateCvId: string | null
+  title: string
+  organizationName: string | null
+  degree: string | null
+  fieldOfStudy: string | null
+  startDate: string | null
+  endDate: string | null
+  description: string | null
+  location: string | null
+  isCertification: boolean
+  certificationType: string | null
+  source: CandidateDataSource
+}
+
 export interface ICandidateCvAnalysisResponse {
   experiences: ICandidateCvAnalysisExperience[]
-  skills: ICandidateCvSkill[]
-  trainings: ICandidateCvTraining[]
+  skills: ICandidateCvAnalysisSkill[]
+  trainings: ICandidateCvAnalysisTraining[]
 }
 
 export interface IProfileExtractedDataResponse {

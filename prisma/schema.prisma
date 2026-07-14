@@ -135,6 +135,7 @@ model CvSkill {
   candidateCvId      String?        @map("candidate_cv_id") @db.Uuid
   name              String
   category          CvSkillCategory
+  dataSource        CandidateDataSource @default(AI) @map("data_source")
   confidence        Float?
   source            String?
   createdAt         DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
@@ -162,6 +163,7 @@ model CvTraining {
   location           String?
   isCertification    Boolean      @default(false) @map("is_certification")
   certificationType  String?      @map("certification_type")
+  source             CandidateDataSource @default(AI)
   createdAt          DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt          DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)

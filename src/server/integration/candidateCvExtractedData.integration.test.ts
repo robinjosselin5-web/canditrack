@@ -83,10 +83,14 @@ describe.skipIf(!runRealDbIntegrationTests)('candidate CV extracted data Postgre
     expect(data.experiences).toHaveLength(2)
     expect(data.skills).toHaveLength(2)
     expect(data.trainings).toHaveLength(2)
+    expect(data.skills[0]).toEqual(expect.objectContaining({ id: expect.any(String), candidateCvId: expect.any(String), dataSource: 'AI' }))
   })
 
   it('reanalyzes one CV without deleting another CV data', async () => {
     await createExtractedRows(fixture.profileId, fixture.cvAId, 'old')
+    await prisma.cvSkill.create({
+      data: { candidateProfileId: fixture.profileId, candidateCvId: null, name: 'Skill manual', category: 'OTHER', dataSource: 'MANUAL' },
+    })
     await prisma.cvExperience.create({
       data: {
         candidateProfileId: fixture.profileId,
@@ -100,7 +104,7 @@ describe.skipIf(!runRealDbIntegrationTests)('candidate CV extracted data Postgre
     await saveCandidateCvAnalysis(fixture.cvAId, fixture.profileId, {
       experiences: [{ jobTitle: 'Experience new', companyName: null, startDate: null, endDate: null, isCurrent: false, location: null, description: null }],
       skills: [{ name: 'Skill new', category: 'OTHER', confidence: null, source: null }],
-      trainings: [{ title: 'Training new', organizationName: null, degree: null, fieldOfStudy: null, startDate: null, endDate: null, description: null, location: null, isCertification: false, certificationType: null }],
+      trainings: [{ title: 'Training new', organizationName: null, degree: null, fieldOfStudy: null, startDate: null, endDate: null, description: null, location: null, isCertification: false, certificationType: null, source: 'AI' }],
     }, 'updated text')
 
     const data = await getProfileExtractedData(fixture.userId)
@@ -111,7 +115,8 @@ describe.skipIf(!runRealDbIntegrationTests)('candidate CV extracted data Postgre
       source: 'MANUAL',
       candidateCvId: fixture.cvAId,
     })
-    expect(data.skills.map((row) => row.name).sort()).toEqual(['Skill B', 'Skill new'].sort())
+    expect(data.skills.map((row) => row.name).sort()).toEqual(['Skill B', 'Skill manual', 'Skill new'].sort())
+    expect(data.skills.find((row) => row.name === 'Skill manual')).toMatchObject({ candidateCvId: null, dataSource: 'MANUAL' })
     expect(data.trainings.map((row) => row.title).sort()).toEqual(['Training B', 'Training new'].sort())
   })
 

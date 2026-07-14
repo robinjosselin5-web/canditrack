@@ -6,7 +6,7 @@ import {
   DATE_PARTIAL_REGEX,
 } from './validationConstants.js'
 
-const cvSkillCategorySchema = z.enum([
+export const cvSkillCategorySchema = z.enum([
   'LANGUAGES',
   'FRAMEWORKS_LIBRARIES',
   'TOOLS_TECHNOLOGIES',

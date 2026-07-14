@@ -58,3 +58,19 @@ export const candidateCvUploadRateLimit = rateLimit({
     })
   },
 })
+
+export const candidateProfileDataCreateRateLimit = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (request: Request) => request.userId ?? request.ip ?? 'anonymous',
+  handler: (_request: Request, response: Response) => {
+    response.status(429).json({
+      success: false,
+      message:
+        "Trop de creations de donnees extraites. Reessayez dans 1 heure.",
+      errors: [],
+    })
+  },
+})

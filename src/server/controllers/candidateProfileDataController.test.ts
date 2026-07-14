@@ -7,8 +7,13 @@ const authMock = vi.hoisted(() => ({
 
 const serviceMock = vi.hoisted(() => ({
   createExperienceForUser: vi.fn(),
+  createSkillForUser: vi.fn(),
+  deleteSkillForUser: vi.fn(),
   deleteExperienceForUser: vi.fn(),
   updateExperienceForUser: vi.fn(),
+  createTrainingForUser: vi.fn(),
+  deleteTrainingForUser: vi.fn(),
+  updateTrainingForUser: vi.fn(),
 }))
 
 vi.mock('../utils/auth.js', () => authMock)
@@ -119,5 +124,45 @@ describe('candidateProfileDataController', () => {
     await expect(deleteCandidateExperienceController(request, response)).rejects.toMatchObject({
       statusCode: 404,
     })
+  })
+
+  it('creates and updates a training for the authenticated user', async () => {
+    const controllers = await import('./candidateProfileDataController.js')
+    const response = createResponse()
+    authMock.getAuthenticatedUserId.mockReturnValue('user-1')
+    serviceMock.createTrainingForUser.mockResolvedValueOnce({ id: 'training-1' })
+    await controllers.createCandidateTrainingController({ body: { title: 'Formation' } } as Request, response)
+    expect(serviceMock.createTrainingForUser).toHaveBeenCalledWith('user-1', { title: 'Formation' })
+    expect(response.status).toHaveBeenCalledWith(201)
+
+    serviceMock.updateTrainingForUser.mockResolvedValueOnce({ id: 'training-1' })
+    await controllers.updateCandidateTrainingController({ params: { trainingId: '123e4567-e89b-12d3-a456-426614174000' }, body: { title: 'Master' } } as Request, response)
+    expect(serviceMock.updateTrainingForUser).toHaveBeenCalledWith('user-1', '123e4567-e89b-12d3-a456-426614174000', { title: 'Master' })
+  })
+
+  it('deletes a training and rejects invalid ids', async () => {
+    const controllers = await import('./candidateProfileDataController.js')
+    const response = createResponse()
+    authMock.getAuthenticatedUserId.mockReturnValue('user-1')
+    serviceMock.deleteTrainingForUser.mockResolvedValueOnce(true)
+    await controllers.deleteCandidateTrainingController({ params: { trainingId: '123e4567-e89b-12d3-a456-426614174000' } } as Request, response)
+    expect(serviceMock.deleteTrainingForUser).toHaveBeenCalledWith('user-1', '123e4567-e89b-12d3-a456-426614174000')
+    expect(response.json).toHaveBeenCalledWith({ success: true, data: { message: 'Formation supprimee avec succes.' } })
+    await expect(controllers.updateCandidateTrainingController({ params: { trainingId: 'bad' }, body: {} } as Request, response)).rejects.toMatchObject({ statusCode: 400 })
+  })
+
+  it('creates and deletes a skill with UUID validation', async () => {
+    const controllers = await import('./candidateProfileDataController.js')
+    const response = createResponse()
+    authMock.getAuthenticatedUserId.mockReturnValue('user-1')
+    serviceMock.createSkillForUser.mockResolvedValueOnce({ id: 'skill-1' })
+    await controllers.createCandidateSkillController({ body: { name: 'TypeScript', category: 'LANGUAGES' } } as Request, response)
+    expect(serviceMock.createSkillForUser).toHaveBeenCalledWith('user-1', { name: 'TypeScript', category: 'LANGUAGES' })
+    serviceMock.deleteSkillForUser.mockResolvedValueOnce(true)
+    await controllers.deleteCandidateSkillController({ params: { skillId: '123e4567-e89b-12d3-a456-426614174000' } } as Request, response)
+    expect(serviceMock.deleteSkillForUser).toHaveBeenCalledWith('user-1', '123e4567-e89b-12d3-a456-426614174000')
+    await expect(controllers.deleteCandidateSkillController({ params: { skillId: 'bad' } } as Request, response)).rejects.toMatchObject({ statusCode: 400 })
+    serviceMock.deleteSkillForUser.mockResolvedValueOnce(false)
+    await expect(controllers.deleteCandidateSkillController({ params: { skillId: '123e4567-e89b-12d3-a456-426614174000' } } as Request, response)).rejects.toMatchObject({ statusCode: 404 })
   })
 })

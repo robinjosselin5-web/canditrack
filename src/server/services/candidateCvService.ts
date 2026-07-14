@@ -27,6 +27,11 @@ import type {
   ICandidateCvPublic,
   IProfileExtractedDataResponse,
 } from '../types/candidateCv.types.js'
+const EMPTY_EXTRACTED_DATA: IProfileExtractedDataResponse = {
+  experiences: [],
+  skills: [],
+  trainings: [],
+}
 const CV_ANALYSIS_OUTPUT_FORMAT = `{
   "experiences": [
     {
@@ -132,7 +137,7 @@ export async function getProfileExtractedData(
   const candidateProfile = await findCandidateProfileByUserId(userId)
 
   if (!candidateProfile) {
-    throw new AppError('Profil candidat introuvable.', 404)
+    return EMPTY_EXTRACTED_DATA
   }
 
   return getProfileExtractedDataRepository(candidateProfile.id)
@@ -195,12 +200,6 @@ export async function analyzeCandidateCv(
       responseLength: candidateCvAnalysisResponse.length,
     })
 
-    console.info('[CV_ANALYZE_AI] response preview', {
-      candidateCvId,
-      responseStart: candidateCvAnalysisResponse.slice(0, 120),
-      responseEnd: candidateCvAnalysisResponse.slice(-120),
-    })
-
     let parsedCandidateCvAnalysisResponse
 
     try {
@@ -211,8 +210,6 @@ export async function analyzeCandidateCv(
       console.error('[CV_ANALYZE_AI] parse failed', {
         candidateCvId,
         responseLength: candidateCvAnalysisResponse.length,
-        responseStart: candidateCvAnalysisResponse.slice(0, 120),
-        responseEnd: candidateCvAnalysisResponse.slice(-120),
         error: error instanceof Error ? error.message : 'unknown_error',
       })
 

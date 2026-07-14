@@ -27,6 +27,7 @@ export interface ICandidateCvListResponse {
 }
 
 export type CandidateDataSource = 'AI' | 'MANUAL'
+export type CvSkillCategory = 'LANGUAGES' | 'FRAMEWORKS_LIBRARIES' | 'TOOLS_TECHNOLOGIES' | 'METHODOLOGIES' | 'SOFT_SKILLS' | 'OTHER'
 
 export interface ICandidateCvExperience {
   id: string
@@ -58,19 +59,23 @@ export interface IUpdateCandidateExperiencePayload {
 }
 
 export interface ICandidateCvSkill {
+  id: string
+  candidateCvId: string | null
+  dataSource: CandidateDataSource
   name: string
-  category:
-    | 'LANGUAGES'
-    | 'FRAMEWORKS_LIBRARIES'
-    | 'TOOLS_TECHNOLOGIES'
-    | 'METHODOLOGIES'
-    | 'SOFT_SKILLS'
-    | 'OTHER'
+  category: CvSkillCategory
   confidence: number | null
   source: string | null
 }
 
+export interface ICreateCandidateSkillPayload {
+  name: string
+  category: CvSkillCategory
+}
+
 export interface ICandidateCvTraining {
+  id: string
+  candidateCvId: string | null
   title: string
   organizationName: string | null
   degree: string | null
@@ -81,6 +86,33 @@ export interface ICandidateCvTraining {
   location: string | null
   isCertification: boolean
   certificationType: string | null
+  source: CandidateDataSource
+}
+
+export interface ICreateCandidateTrainingPayload {
+  title: string
+  organizationName?: string | null
+  degree?: string | null
+  fieldOfStudy?: string | null
+  startDate?: string | null
+  endDate?: string | null
+  description?: string | null
+  location?: string | null
+  isCertification?: boolean
+  certificationType?: string | null
+}
+
+export interface IUpdateCandidateTrainingPayload {
+  title?: string
+  organizationName?: string | null
+  degree?: string | null
+  fieldOfStudy?: string | null
+  startDate?: string | null
+  endDate?: string | null
+  description?: string | null
+  location?: string | null
+  isCertification?: boolean
+  certificationType?: string | null
 }
 
 export interface IProfileExtractedDataResponse {

@@ -660,16 +660,20 @@ describe('candidateCvService', () => {
     )
   })
 
-  it('throws when the candidate profile does not exist for aggregated extracted data', async () => {
+  it('returns empty extracted data when the authenticated user has no candidate profile', async () => {
     candidateCvRepositoryMock.findCandidateProfileByUserId.mockResolvedValueOnce(null)
 
     const { getProfileExtractedData } = await importCandidateCvService()
 
-    await expect(getProfileExtractedData('user-1')).rejects.toMatchObject({
-      message: 'Profil candidat introuvable.',
-      statusCode: 404,
+    await expect(getProfileExtractedData('user-1')).resolves.toEqual({
+      experiences: [],
+      skills: [],
+      trainings: [],
     })
     expect(candidateCvRepositoryMock.getProfileExtractedData).not.toHaveBeenCalled()
+    expect(candidateCvRepositoryMock.findCandidateProfileByUserId).toHaveBeenCalledWith(
+      'user-1',
+    )
   })
 
   it('throws when the extracted text contains only whitespace', async () => {

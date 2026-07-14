@@ -81,20 +81,20 @@ describe('candidateCvRepository.saveCandidateCvAnalysis', () => {
       where: { candidateCvId: 'cv-a', source: 'AI' },
     })
     expect(transactionModels.cvSkill.deleteMany).toHaveBeenCalledWith({
-      where: { candidateCvId: 'cv-a' },
+      where: { candidateCvId: 'cv-a', dataSource: 'AI' },
     })
     expect(transactionModels.cvTraining.deleteMany).toHaveBeenCalledWith({
-      where: { candidateCvId: 'cv-a' },
+      where: { candidateCvId: 'cv-a', source: 'AI' },
     })
 
     expect(transactionModels.cvExperience.createMany).toHaveBeenCalledWith({
       data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a', source: 'AI' })],
     })
     expect(transactionModels.cvSkill.createMany).toHaveBeenCalledWith({
-      data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a' })],
+      data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a', dataSource: 'AI' })],
     })
     expect(transactionModels.cvTraining.createMany).toHaveBeenCalledWith({
-      data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a' })],
+      data: [expect.objectContaining({ candidateProfileId: 'profile-1', candidateCvId: 'cv-a', source: 'AI' })],
     })
   })
 })
@@ -109,18 +109,18 @@ describe('candidateCvRepository.getProfileExtractedData', () => {
       { id: 'experience-1', jobTitle: 'Developpeur', candidateCvId: null, source: 'MANUAL' },
     ])
     transactionModels.cvSkill.findMany.mockResolvedValueOnce([
-      { name: 'TypeScript', candidateCvId: null },
+      { id: 'skill-1', name: 'TypeScript', candidateCvId: null, dataSource: 'MANUAL' },
     ])
     transactionModels.cvTraining.findMany.mockResolvedValueOnce([
-      { title: 'Formation web', candidateCvId: null },
+      { id: 'training-1', title: 'Formation web', candidateCvId: null, source: 'MANUAL' },
     ])
 
     const { getProfileExtractedData } = await import('./candidateCvRepository.js')
 
     await expect(getProfileExtractedData('profile-1')).resolves.toEqual({
       experiences: [{ id: 'experience-1', jobTitle: 'Developpeur', candidateCvId: null, source: 'MANUAL' }],
-      skills: [{ name: 'TypeScript', candidateCvId: null }],
-      trainings: [{ title: 'Formation web', candidateCvId: null }],
+      skills: [{ id: 'skill-1', name: 'TypeScript', candidateCvId: null, dataSource: 'MANUAL' }],
+      trainings: [{ id: 'training-1', title: 'Formation web', candidateCvId: null, source: 'MANUAL' }],
     })
 
     expect(transactionModels.cvExperience.findMany).toHaveBeenCalledWith(
@@ -139,6 +139,21 @@ describe('candidateCvRepository.getProfileExtractedData', () => {
       expect.objectContaining({
         where: { candidateProfileId: 'profile-1' },
         orderBy: [{ startDate: 'desc' }, { createdAt: 'desc' }],
+        select: expect.objectContaining({
+          id: true,
+          candidateCvId: true,
+          title: true,
+          organizationName: true,
+          degree: true,
+          fieldOfStudy: true,
+          startDate: true,
+          endDate: true,
+          description: true,
+          location: true,
+          isCertification: true,
+           certificationType: true,
+           source: true,
+        }),
       }),
     )
   })

@@ -3,6 +3,8 @@ import { AppError } from '../errors/appError.js'
 
 const ALLOWED_OPENROUTER_BASE_URLS = ['https://openrouter.ai/api/v1']
 const OPENROUTER_TIMEOUT_MS = 60_000
+const AI_SERVICE_UNAVAILABLE_MESSAGE =
+  "Le service d'analyse IA est temporairement indisponible. Veuillez reessayer ulterieurement."
 
 export async function generateCandidateCvAnalysis(
   prompt: string,
@@ -71,18 +73,10 @@ export async function generateCandidateCvAnalysis(
         model,
         status: response.status,
         durationMs,
+        errorBodyLength: errorBody.length,
       })
 
-      throw new AppError(
-        "Impossible de contacter le service d'analyse IA.",
-        502,
-        [
-          {
-            field: 'response',
-            message: errorBody || "Impossible de contacter le service d'analyse IA.",
-          },
-        ],
-      )
+      throw new AppError(AI_SERVICE_UNAVAILABLE_MESSAGE, 502)
     }
 
     const payload: unknown = await response.json()
@@ -105,10 +99,10 @@ export async function generateCandidateCvAnalysis(
     }
 
     if (error instanceof DOMException && error.name === 'AbortError') {
-      throw new AppError("Impossible de contacter le service d'analyse IA.", 504)
+      throw new AppError(AI_SERVICE_UNAVAILABLE_MESSAGE, 504)
     }
 
-    throw new AppError("Impossible de contacter le service d'analyse IA.", 502)
+    throw new AppError(AI_SERVICE_UNAVAILABLE_MESSAGE, 502)
   } finally {
     clearTimeout(timeoutId)
   }

@@ -3,10 +3,15 @@ import type { IApiResponse } from '@/types/api'
 import type {
   ICandidateCv,
   ICandidateCvExperience,
+  ICandidateCvTraining,
   ICandidateCvListItem,
   ICandidateCvListResponse,
   ICreateCandidateExperiencePayload,
   IUpdateCandidateExperiencePayload,
+  ICreateCandidateTrainingPayload,
+  ICreateCandidateSkillPayload,
+  ICandidateCvSkill,
+  IUpdateCandidateTrainingPayload,
   IProfileExtractedDataResponse,
 } from '../types/candidateResume.types'
 
@@ -84,6 +89,42 @@ export async function deleteCandidateExperience(
     IApiResponse<{ message: string }>
   >(`/profile/experiences/${experienceId}`)
 
+  return response.data.data.message
+}
+
+export async function createCandidateTraining(
+  payload: ICreateCandidateTrainingPayload,
+): Promise<ICandidateCvTraining> {
+  const response = await httpClient.post<IApiResponse<ICandidateCvTraining>>(
+    '/profile/trainings', payload,
+  )
+  return response.data.data
+}
+
+export async function updateCandidateTraining(
+  trainingId: string,
+  payload: IUpdateCandidateTrainingPayload,
+): Promise<ICandidateCvTraining> {
+  const response = await httpClient.patch<IApiResponse<ICandidateCvTraining>>(
+    `/profile/trainings/${trainingId}`, payload,
+  )
+  return response.data.data
+}
+
+export async function deleteCandidateTraining(trainingId: string): Promise<string> {
+  const response = await httpClient.delete<IApiResponse<{ message: string }>>(
+    `/profile/trainings/${trainingId}`,
+  )
+  return response.data.data.message
+}
+
+export async function createCandidateSkill(payload: ICreateCandidateSkillPayload): Promise<ICandidateCvSkill> {
+  const response = await httpClient.post<IApiResponse<ICandidateCvSkill>>('/profile/skills', payload)
+  return response.data.data
+}
+
+export async function deleteCandidateSkill(skillId: string): Promise<string> {
+  const response = await httpClient.delete<IApiResponse<{ message: string }>>(`/profile/skills/${skillId}`)
   return response.data.data.message
 }
 
