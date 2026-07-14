@@ -1,5 +1,6 @@
 export {
   createUser,
+  findUserAvatarByUserId,
   findUserByEmail,
   findUserById,
   findUserByValidPasswordResetToken,
@@ -9,5 +10,6 @@ export {
   saveEmailVerificationCode,
   savePasswordResetToken,
   updatePasswordAndClearResetToken,
+  updateUserAvatar,
   updateUserProfile,
 } from './userRepository.js'

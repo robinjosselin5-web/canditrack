@@ -26,7 +26,7 @@ export const errorHandler: ErrorRequestHandler = (
   if (error instanceof MulterError && error.code === 'LIMIT_FILE_SIZE') {
     response.status(413).json({
       success: false,
-      message: 'Le fichier dépasse la limite de 10 Mo.',
+      message: 'Le fichier dépasse la taille maximale autorisée.',
       errors: [],
     })
     return

@@ -55,6 +55,13 @@ model User {
   emailVerifiedAt        DateTime?  @map("email_verified_at") @db.Timestamp(6)
   emailVerificationCode  String?    @map("email_verification_code") @db.VarChar(255)
   emailVerificationExpiresAt DateTime? @map("email_verification_expires_at") @db.Timestamp(6)
+  age                    Int?
+  phone                  String?    @db.VarChar(30)
+  address                String?    @db.VarChar(255)
+  linkedin               String?    @db.VarChar(255)
+  github                 String?    @db.VarChar(255)
+  avatarStorageKey       String?    @map("avatar_storage_key") @db.VarChar(500)
+  avatarMimeType         String?    @map("avatar_mime_type") @db.VarChar(100)
   createdAt              DateTime   @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt              DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   categories             Category[]

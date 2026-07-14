@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { authStore } from '@/store/auth.store'
-import { updateUserProfile, type IUpdateProfilePayload } from '../services'
+import { uploadUserAvatar } from '../services'
 import { userProfileQueryKey } from './useUserProfile'
 
-export function useUpdateUserProfile() {
+export function useUploadUserAvatar() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (values: IUpdateProfilePayload) => updateUserProfile(values),
+    mutationFn: (file: File) => uploadUserAvatar(file),
     onSuccess: (user) => {
       authStore.updateUser(user)
       queryClient.setQueryData(userProfileQueryKey, user)

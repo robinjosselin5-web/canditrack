@@ -1,7 +1,10 @@
 import type { Request, Response } from 'express'
 import { getAuthenticatedUserId } from '../utils/auth.js'
 import {
+  getUserAvatar,
   getUserProfile,
+  resolveAvatarPath,
+  updateUserAvatar,
   updateUserProfile,
 } from '../services/userService.js'
 import type { IApiSuccessResponse } from '../types/api.types.js'
@@ -33,4 +36,28 @@ export async function updateUserProfileController(
     success: true,
     data: user,
   })
+}
+
+export async function uploadUserAvatarController(
+  request: Request,
+  response: Response<IApiSuccessResponse<IUserPublic>>,
+): Promise<void> {
+  const user = await updateUserAvatar(
+    getAuthenticatedUserId(request),
+    request.file,
+  )
+
+  response.status(200).json({
+    success: true,
+    data: user,
+  })
+}
+
+export async function getUserAvatarController(
+  request: Request,
+  response: Response,
+): Promise<void> {
+  const avatar = await getUserAvatar(getAuthenticatedUserId(request))
+
+  response.status(200).type(avatar.mimeType).sendFile(resolveAvatarPath(avatar.storageKey))
 }

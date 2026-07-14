@@ -59,6 +59,21 @@ export const candidateCvUploadRateLimit = rateLimit({
   },
 })
 
+export const userAvatarUploadRateLimit = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (request: Request) => request.userId ?? request.ip ?? 'anonymous',
+  handler: (_request: Request, response: Response) => {
+    response.status(429).json({
+      success: false,
+      message: "Trop d'envois de photo. Reessayez dans 1 heure.",
+      errors: [],
+    })
+  },
+})
+
 export const candidateProfileDataCreateRateLimit = rateLimit({
   windowMs: 60 * 60 * 1000,
   limit: 30,

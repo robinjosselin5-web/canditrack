@@ -180,17 +180,40 @@ export async function updatePasswordAndClearResetToken(
   })
 }
 
+export interface IUpdateUserProfileData {
+  firstname: string
+  lastname: string
+  email: string
+  age: number | null
+  phone: string | null
+  address: string | null
+  linkedin: string | null
+  github: string | null
+}
+
 export async function updateUserProfile(
   userId: string,
-  firstname: string,
-  lastname: string,
-  email: string,
+  data: IUpdateUserProfileData,
+): Promise<IUserPublic> {
+  const user = await prisma.user.update({
+    data,
+    where: {
+      id: userId,
+    },
+  })
+
+  return mapUser(user)
+}
+
+export async function updateUserAvatar(
+  userId: string,
+  avatarStorageKey: string,
+  avatarMimeType: string,
 ): Promise<IUserPublic> {
   const user = await prisma.user.update({
     data: {
-      email,
-      firstname,
-      lastname,
+      avatarStorageKey,
+      avatarMimeType,
     },
     where: {
       id: userId,
@@ -200,12 +223,41 @@ export async function updateUserProfile(
   return mapUser(user)
 }
 
+export async function findUserAvatarByUserId(
+  userId: string,
+): Promise<{ storageKey: string; mimeType: string } | null> {
+  const user = await prisma.user.findUnique({
+    select: {
+      avatarStorageKey: true,
+      avatarMimeType: true,
+    },
+    where: {
+      id: userId,
+    },
+  })
+
+  if (!user?.avatarStorageKey || !user.avatarMimeType) {
+    return null
+  }
+
+  return {
+    storageKey: user.avatarStorageKey,
+    mimeType: user.avatarMimeType,
+  }
+}
+
 function mapUser(user: User): IUserPublic {
   return {
     id: user.id,
     firstname: user.firstname,
     lastname: user.lastname,
     email: user.email,
+    age: user.age,
+    phone: user.phone,
+    address: user.address,
+    linkedin: user.linkedin,
+    github: user.github,
+    hasAvatar: Boolean(user.avatarStorageKey),
     createdAt: user.createdAt.toISOString(),
     updatedAt: user.updatedAt.toISOString(),
   }

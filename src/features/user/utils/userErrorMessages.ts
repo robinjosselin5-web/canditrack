@@ -48,6 +48,23 @@ export function getProfileErrorMessage(error: unknown): string | null {
   )
 }
 
+export function getAvatarErrorMessage(error: unknown): string | null {
+  const axiosError = getAxiosError(error)
+
+  if (!axiosError) {
+    return null
+  }
+
+  if (axiosError.response?.status === 413) {
+    return 'Le fichier dépasse la limite de 5 Mo.'
+  }
+
+  return getUnavailableOrFallbackMessage(
+    axiosError,
+    "L'envoi de la photo a echoue.",
+  )
+}
+
 export function getLogoutErrorMessage(error: unknown): string | null {
   const axiosError = getAxiosError(error)
 
