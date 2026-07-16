@@ -21,6 +21,7 @@ import {
   MyCVsPage,
   SkillsPage,
   TrainingPage,
+  GeneratedCvPublicPage,
 } from '@/features/resumes'
 import { StatisticsPage } from '@/features/statistics'
 import { SettingsPage } from '@/features/user'
@@ -55,6 +56,8 @@ export function AppRoutes() {
           <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
         </Route>
       </Route>
+
+      <Route path={ROUTES.GENERATED_CV_PUBLIC} element={<GeneratedCvPublicPage />} />
 
       <Route path="*" element={<Navigate to={ROUTES.DASHBOARD} replace />} />
     </Routes>

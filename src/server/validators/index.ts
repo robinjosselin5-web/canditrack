@@ -26,3 +26,7 @@ export {
   candidateCvAnalysisResponseSchema,
   parseCandidateCvAnalysisResponse,
 } from './candidateCvValidators.js'
+export {
+  createCandidateGeneratedCvBodySchema,
+  type CreateCandidateGeneratedCvBody,
+} from './candidateGeneratedCvValidators.js'

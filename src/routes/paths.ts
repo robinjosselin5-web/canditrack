@@ -14,6 +14,7 @@ export const ROUTES = {
   STATISTICS: '/statistics',
   REGISTER: '/register',
   VERIFY_EMAIL: '/verify-email',
+  GENERATED_CV_PUBLIC: '/:candidateSlug/:publicId',
 } as const;
 
 export function buildVerifyEmailPath(email: string): string {

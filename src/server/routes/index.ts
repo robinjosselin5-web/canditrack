@@ -5,6 +5,7 @@ import { companyRoutes } from './companyRoutes.js'
 import { userRoutes } from './userRoutes.js'
 import { candidateCvRoutes } from './candidateCvRoutes.js'
 import { candidateProfileDataRoutes } from './candidateProfileDataRoutes.js'
+import { candidateGeneratedCvRoutes } from './candidateGeneratedCvRoutes.js'
 
 export const apiRoutes = Router()
 
@@ -14,3 +15,4 @@ apiRoutes.use(companyRoutes)
 apiRoutes.use(userRoutes)
 apiRoutes.use(candidateCvRoutes)
 apiRoutes.use(candidateProfileDataRoutes)
+apiRoutes.use(candidateGeneratedCvRoutes)

@@ -26,7 +26,7 @@ L'installation de PostgreSQL est réalisée manuellement par le développeur.
 
 Ce document décrit le modèle de données officiel de CandiTrack.
 
-Il constitue l'unique source de vérité concernant :
+Il décrit les principes du modèle de données. Les sources de vérité techniques sont `prisma/schema.prisma` et `prisma/migrations`.
 
 - les tables
 - les colonnes
@@ -474,11 +474,17 @@ Les nouvelles relations doivent être documentées ici avant développement.
 
 ---
 
-# Source de vérité
+# CV générés et snapshots
 
-Ce document est la référence officielle du modèle de données.
+Un `CandidateGeneratedCv` est un snapshot autonome des informations personnelles de l'utilisateur et des éléments sélectionnés de son profil candidat. Les expériences, compétences, langues et formations sont conservées dans des tables typées avec une position d'affichage et des liens sources facultatifs. La suppression d'une source ne supprime pas le snapshot.
 
-En cas de doute :
+La visibilité `LINK_ONLY` permet une consultation sans authentification par identifiant public unique, sans rendre le CV indexable dans un annuaire. `PRIVATE` est prévu pour une désactivation future du lien.
+
+## Source de vérité technique
+
+`prisma/schema.prisma` et `prisma/migrations` font foi pour le modèle technique.
+
+Pour les principes fonctionnels documentés ici, en cas de doute :
 
 toujours suivre ce document.
 

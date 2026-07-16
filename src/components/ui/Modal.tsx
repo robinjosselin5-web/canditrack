@@ -13,7 +13,12 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
   const descriptionId = useId();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
+  const onCloseRef = useRef(onClose);
   const restoreFocusRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -32,7 +37,7 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
     const handleKeyDown = (event: KeyboardEvent): void => {
       if (event.key === "Escape") {
         event.preventDefault();
-        onClose();
+        onCloseRef.current();
         return;
       }
 
@@ -76,7 +81,7 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
       restoreFocusRef.current?.focus();
       restoreFocusRef.current = null;
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;

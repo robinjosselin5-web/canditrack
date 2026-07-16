@@ -44,30 +44,37 @@ enum CandidateDataSource {
   MANUAL
 }
 
+enum GeneratedCvVisibility {
+  PRIVATE   @map("private")
+  LINK_ONLY @map("link_only")
+
+  @@map("generated_cv_visibility")
+}
+
 model User {
-  id                     String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  firstname              String     @db.VarChar(100)
-  lastname               String     @db.VarChar(100)
-  email                  String     @unique @db.VarChar(255)
-  passwordHash           String     @map("password_hash") @db.VarChar(255)
-  passwordResetToken     String?    @map("password_reset_token") @db.VarChar(255)
-  passwordResetExpiresAt DateTime?  @map("password_reset_expires_at") @db.Timestamp(6)
-  emailVerifiedAt        DateTime?  @map("email_verified_at") @db.Timestamp(6)
-  emailVerificationCode  String?    @map("email_verification_code") @db.VarChar(255)
-  emailVerificationExpiresAt DateTime? @map("email_verification_expires_at") @db.Timestamp(6)
-  age                    Int?
-  phone                  String?    @db.VarChar(30)
-  address                String?    @db.VarChar(255)
-  linkedin               String?    @db.VarChar(255)
-  github                 String?    @db.VarChar(255)
-  avatarStorageKey       String?    @map("avatar_storage_key") @db.VarChar(500)
-  avatarMimeType         String?    @map("avatar_mime_type") @db.VarChar(100)
-  createdAt              DateTime   @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt              DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  categories             Category[]
-  companies              Company[]
-  resumes                Resume[]
-  candidateProfile       CandidateProfile?
+  id                         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstname                  String            @db.VarChar(100)
+  lastname                   String            @db.VarChar(100)
+  email                      String            @unique @db.VarChar(255)
+  passwordHash               String            @map("password_hash") @db.VarChar(255)
+  passwordResetToken         String?           @map("password_reset_token") @db.VarChar(255)
+  passwordResetExpiresAt     DateTime?         @map("password_reset_expires_at") @db.Timestamp(6)
+  emailVerifiedAt            DateTime?         @map("email_verified_at") @db.Timestamp(6)
+  emailVerificationCode      String?           @map("email_verification_code") @db.VarChar(255)
+  emailVerificationExpiresAt DateTime?         @map("email_verification_expires_at") @db.Timestamp(6)
+  age                        Int?
+  phone                      String?           @db.VarChar(30)
+  address                    String?           @db.VarChar(255)
+  linkedin                   String?           @db.VarChar(255)
+  github                     String?           @db.VarChar(255)
+  avatarStorageKey           String?           @map("avatar_storage_key") @db.VarChar(500)
+  avatarMimeType             String?           @map("avatar_mime_type") @db.VarChar(100)
+  createdAt                  DateTime          @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt                  DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  categories                 Category[]
+  companies                  Company[]
+  resumes                    Resume[]
+  candidateProfile           CandidateProfile?
 
   @@index([email], map: "users_email_idx")
   @@index([emailVerificationCode], map: "users_email_verification_code_idx")
@@ -76,37 +83,38 @@ model User {
 }
 
 model CandidateProfile {
-  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId        String       @unique @map("user_id") @db.Uuid
-  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String                 @unique @map("user_id") @db.Uuid
+  createdAt     DateTime               @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime               @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  user          User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   cvs           CandidateCv[]
   cvExperiences CvExperience[]
   cvSkills      CvSkill[]
   cvTrainings   CvTraining[]
+  generatedCvs  CandidateGeneratedCv[]
 
   @@map("candidate_profiles")
 }
 
 model CandidateCv {
-  id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  candidateProfileId String           @map("candidate_profile_id") @db.Uuid
+  id                 String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateProfileId String                    @map("candidate_profile_id") @db.Uuid
   // Keep in sync with MAX_CV_LABEL_LENGTH in src/config/candidateCvConstants.ts
-  label              String           @db.VarChar(50)
-  originalFilename   String           @map("original_filename") @db.VarChar(255)
-  storageFilename    String           @map("storage_filename") @db.VarChar(255)
-  storageKey         String           @map("storage_key") @db.VarChar(500)
-  mimeType           String           @map("mime_type") @db.VarChar(100)
-  fileSize           Int              @map("file_size")
-  isDefault          Boolean          @default(false) @map("is_default")
+  label              String                    @db.VarChar(50)
+  originalFilename   String                    @map("original_filename") @db.VarChar(255)
+  storageFilename    String                    @map("storage_filename") @db.VarChar(255)
+  storageKey         String                    @map("storage_key") @db.VarChar(500)
+  mimeType           String                    @map("mime_type") @db.VarChar(100)
+  fileSize           Int                       @map("file_size")
+  isDefault          Boolean                   @default(false) @map("is_default")
   analysisStatus     CandidateCvAnalysisStatus @default(NOT_ANALYZED) @map("analysis_status")
-  extractedText      String?          @map("extracted_text")
-  lastAnalyzedAt     DateTime?        @map("last_analyzed_at") @db.Timestamp(6)
-  uploadedAt         DateTime         @default(now()) @map("uploaded_at") @db.Timestamp(6)
-  createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt          DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  extractedText      String?                   @map("extracted_text")
+  lastAnalyzedAt     DateTime?                 @map("last_analyzed_at") @db.Timestamp(6)
+  uploadedAt         DateTime                  @default(now()) @map("uploaded_at") @db.Timestamp(6)
+  createdAt          DateTime                  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime                  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateProfile   CandidateProfile          @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
   cvExperiences      CvExperience[]
   cvSkills           CvSkill[]
   cvTrainings        CvTraining[]
@@ -116,21 +124,22 @@ model CandidateCv {
 }
 
 model CvExperience {
-  id                String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  candidateProfileId String      @map("candidate_profile_id") @db.Uuid
-  candidateCvId      String?     @map("candidate_cv_id") @db.Uuid
-  jobTitle           String      @map("job_title")
-  companyName        String?     @map("company_name")
-  startDate          String?     @map("start_date")
-  endDate            String?     @map("end_date")
-  isCurrent          Boolean    @default(false) @map("is_current")
-  location           String?
-  description        String?
-  source             CandidateDataSource @default(AI)
-  createdAt          DateTime   @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt          DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
-  candidateCv        CandidateCv? @relation(fields: [candidateCvId], references: [id], onDelete: SetNull)
+  id                   String                           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateProfileId   String                           @map("candidate_profile_id") @db.Uuid
+  candidateCvId        String?                          @map("candidate_cv_id") @db.Uuid
+  jobTitle             String                           @map("job_title")
+  companyName          String?                          @map("company_name")
+  startDate            String?                          @map("start_date")
+  endDate              String?                          @map("end_date")
+  isCurrent            Boolean                          @default(false) @map("is_current")
+  location             String?
+  description          String?
+  source               CandidateDataSource              @default(AI)
+  createdAt            DateTime                         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt            DateTime                         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateProfile     CandidateProfile                 @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  candidateCv          CandidateCv?                     @relation(fields: [candidateCvId], references: [id], onDelete: SetNull)
+  generatedCvSnapshots CandidateGeneratedCvExperience[]
 
   @@index([candidateCvId], map: "cv_experiences_candidate_cv_id_idx")
   @@index([candidateProfileId], map: "cv_experiences_candidate_profile_id_idx")
@@ -138,18 +147,20 @@ model CvExperience {
 }
 
 model CvSkill {
-  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  candidateProfileId String         @map("candidate_profile_id") @db.Uuid
-  candidateCvId      String?        @map("candidate_cv_id") @db.Uuid
-  name              String
-  category          CvSkillCategory
-  dataSource        CandidateDataSource @default(AI) @map("data_source")
-  confidence        Float?
-  source            String?
-  createdAt         DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt         DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  candidateProfile  CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
-  candidateCv       CandidateCv?     @relation(fields: [candidateCvId], references: [id], onDelete: SetNull)
+  id                           String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateProfileId           String                         @map("candidate_profile_id") @db.Uuid
+  candidateCvId                String?                        @map("candidate_cv_id") @db.Uuid
+  name                         String
+  category                     CvSkillCategory
+  dataSource                   CandidateDataSource            @default(AI) @map("data_source")
+  confidence                   Float?
+  source                       String?
+  createdAt                    DateTime                       @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt                    DateTime                       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateProfile             CandidateProfile               @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  candidateCv                  CandidateCv?                   @relation(fields: [candidateCvId], references: [id], onDelete: SetNull)
+  generatedCvSkillSnapshots    CandidateGeneratedCvSkill[]
+  generatedCvLanguageSnapshots CandidateGeneratedCvLanguage[]
 
   @@index([candidateCvId], map: "cv_skills_candidate_cv_id_idx")
   @@index([candidateCvId, category], map: "cv_skills_candidate_cv_id_category_idx")
@@ -158,24 +169,25 @@ model CvSkill {
 }
 
 model CvTraining {
-  id                 String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  candidateProfileId String       @map("candidate_profile_id") @db.Uuid
-  candidateCvId      String?      @map("candidate_cv_id") @db.Uuid
-  title              String
-  organizationName   String?      @map("organization_name")
-  degree             String?
-  fieldOfStudy       String?      @map("field_of_study")
-  startDate          String?      @map("start_date")
-  endDate            String?      @map("end_date")
-  description        String?
-  location           String?
-  isCertification    Boolean      @default(false) @map("is_certification")
-  certificationType  String?      @map("certification_type")
-  source             CandidateDataSource @default(AI)
-  createdAt          DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt          DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
-  candidateCv        CandidateCv? @relation(fields: [candidateCvId], references: [id], onDelete: SetNull)
+  id                   String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateProfileId   String                         @map("candidate_profile_id") @db.Uuid
+  candidateCvId        String?                        @map("candidate_cv_id") @db.Uuid
+  title                String
+  organizationName     String?                        @map("organization_name")
+  degree               String?
+  fieldOfStudy         String?                        @map("field_of_study")
+  startDate            String?                        @map("start_date")
+  endDate              String?                        @map("end_date")
+  description          String?
+  location             String?
+  isCertification      Boolean                        @default(false) @map("is_certification")
+  certificationType    String?                        @map("certification_type")
+  source               CandidateDataSource            @default(AI)
+  createdAt            DateTime                       @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt            DateTime                       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateProfile     CandidateProfile               @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  candidateCv          CandidateCv?                   @relation(fields: [candidateCvId], references: [id], onDelete: SetNull)
+  generatedCvSnapshots CandidateGeneratedCvTraining[]
 
   @@index([candidateCvId], map: "cv_trainings_candidate_cv_id_idx")
   @@index([candidateProfileId], map: "cv_trainings_candidate_profile_id_idx")
@@ -281,4 +293,104 @@ model ActionHistory {
   company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   @@map("action_history")
+}
+
+model CandidateGeneratedCv {
+  id                 String                           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  publicId           String                           @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  candidateProfileId String                           @map("candidate_profile_id") @db.Uuid
+  title              String                           @db.VarChar(150)
+  visibility         GeneratedCvVisibility            @default(LINK_ONLY)
+  firstname          String                           @db.VarChar(100)
+  lastname           String                           @db.VarChar(100)
+  email              String                           @db.VarChar(255)
+  phone              String?                          @db.VarChar(30)
+  address            String?                          @db.VarChar(255)
+  age                Int?
+  linkedin           String?                          @db.VarChar(255)
+  github             String?                          @db.VarChar(255)
+  avatarStorageKey   String?                          @map("avatar_storage_key") @db.VarChar(500)
+  avatarMimeType     String?                          @map("avatar_mime_type") @db.VarChar(100)
+  createdAt          DateTime                         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime                         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  candidateProfile   CandidateProfile                 @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  experiences        CandidateGeneratedCvExperience[]
+  skills             CandidateGeneratedCvSkill[]
+  trainings          CandidateGeneratedCvTraining[]
+  languages          CandidateGeneratedCvLanguage[]
+
+  @@index([candidateProfileId], map: "candidate_generated_cvs_candidate_profile_id_idx")
+  @@map("candidate_generated_cvs")
+}
+
+model CandidateGeneratedCvExperience {
+  id                     String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateGeneratedCvId String               @map("candidate_generated_cv_id") @db.Uuid
+  sourceExperienceId     String?              @map("source_experience_id") @db.Uuid
+  jobTitle               String               @map("job_title")
+  companyName            String?              @map("company_name")
+  startDate              String?              @map("start_date")
+  endDate                String?              @map("end_date")
+  isCurrent              Boolean              @default(false) @map("is_current")
+  location               String?
+  description            String?
+  position               Int
+  candidateGeneratedCv   CandidateGeneratedCv @relation(fields: [candidateGeneratedCvId], references: [id], onDelete: Cascade)
+  sourceExperience       CvExperience?        @relation(fields: [sourceExperienceId], references: [id], onDelete: SetNull)
+
+  @@unique([candidateGeneratedCvId, position], map: "candidate_generated_cv_experiences_cv_id_position_key")
+  @@index([candidateGeneratedCvId], map: "candidate_generated_cv_experiences_cv_id_idx")
+  @@map("candidate_generated_cv_experiences")
+}
+
+model CandidateGeneratedCvSkill {
+  id                     String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateGeneratedCvId String               @map("candidate_generated_cv_id") @db.Uuid
+  sourceSkillId          String?              @map("source_skill_id") @db.Uuid
+  name                   String
+  category               CvSkillCategory
+  position               Int
+  candidateGeneratedCv   CandidateGeneratedCv @relation(fields: [candidateGeneratedCvId], references: [id], onDelete: Cascade)
+  sourceSkill            CvSkill?             @relation(fields: [sourceSkillId], references: [id], onDelete: SetNull)
+
+  @@unique([candidateGeneratedCvId, position], map: "candidate_generated_cv_skills_cv_id_position_key")
+  @@index([candidateGeneratedCvId], map: "candidate_generated_cv_skills_cv_id_idx")
+  @@map("candidate_generated_cv_skills")
+}
+
+model CandidateGeneratedCvLanguage {
+  id                     String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateGeneratedCvId String               @map("candidate_generated_cv_id") @db.Uuid
+  sourceSkillId          String?              @map("source_skill_id") @db.Uuid
+  name                   String
+  position               Int
+  candidateGeneratedCv   CandidateGeneratedCv @relation(fields: [candidateGeneratedCvId], references: [id], onDelete: Cascade)
+  sourceSkill            CvSkill?             @relation(fields: [sourceSkillId], references: [id], onDelete: SetNull)
+
+  @@unique([candidateGeneratedCvId, position], map: "candidate_generated_cv_languages_cv_id_position_key")
+  @@index([candidateGeneratedCvId], map: "candidate_generated_cv_languages_cv_id_idx")
+  @@map("candidate_generated_cv_languages")
+}
+
+model CandidateGeneratedCvTraining {
+  id                     String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  candidateGeneratedCvId String               @map("candidate_generated_cv_id") @db.Uuid
+  sourceTrainingId       String?              @map("source_training_id") @db.Uuid
+  title                  String
+  organizationName       String?              @map("organization_name")
+  degree                 String?
+  fieldOfStudy           String?              @map("field_of_study")
+  startDate              String?              @map("start_date")
+  endDate                String?              @map("end_date")
+  description            String?
+  location               String?
+  isCertification        Boolean              @default(false) @map("is_certification")
+  certificationType      String?              @map("certification_type")
+  position               Int
+  candidateGeneratedCv   CandidateGeneratedCv @relation(fields: [candidateGeneratedCvId], references: [id], onDelete: Cascade)
+  sourceTraining         CvTraining?          @relation(fields: [sourceTrainingId], references: [id], onDelete: SetNull)
+
+  @@unique([candidateGeneratedCvId, position], map: "candidate_generated_cv_trainings_cv_id_position_key")
+  @@index([candidateGeneratedCvId], map: "candidate_generated_cv_trainings_cv_id_idx")
+  @@map("candidate_generated_cv_trainings")
 }

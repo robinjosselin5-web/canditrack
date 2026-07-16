@@ -6,6 +6,7 @@ export { ExperiencesPage } from './pages/ExperiencesPage'
 export { MyResumesPage as MyCVsPage } from './pages/MyResumesPage'
 export { SkillsPage } from './pages/SkillsPage'
 export { TrainingPage } from './pages/TrainingPage'
+export { GeneratedCvPublicPage } from './pages/GeneratedCvPublicPage'
 export {
   analyzeCandidateCv,
   createCandidateCv,
@@ -14,6 +15,13 @@ export {
   getProfileExtractedData,
   type ICreateCandidateCvPayload,
 } from './services/candidateResumeService'
+export {
+  createGeneratedCv,
+  getGeneratedCv,
+  getGeneratedCvs,
+  getGeneratedCvAvatar,
+  getPublicGeneratedCv,
+} from './services/generatedCvService'
 export type {
   ICandidateCv,
   ICandidateCvExperience,
@@ -23,3 +31,9 @@ export type {
   ICandidateCvListResponse,
   IProfileExtractedDataResponse,
 } from './types/candidateResume.types'
+export type {
+  ICreateGeneratedCvPayload,
+  IGeneratedCvDetail,
+  IGeneratedCvListItem,
+  IGeneratedCvRenderData,
+} from './types/generatedCv.types'
